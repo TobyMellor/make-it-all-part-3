@@ -1,0 +1,114 @@
+$duration: 0.2s;
+$ease: ease-out;
+
+#single-view {
+	width: 700px;
+	body > & {
+		animation: $duration $ease slidein;
+	}
+}
+body > div:not([class]) {
+	overflow: visible;
+	transform: translateX(100%);
+	width: 0;
+	animation: $duration $ease slideout;
+}
+@keyframes slidein {
+	from {
+		transform: translateX(100%);
+		width: 0;
+	}
+	to {
+		transform: translateX(0%);
+		width: 700px;
+	}
+}
+@keyframes slideout {
+	from {
+		transform: translateX(0%);
+		width: 700px;
+	}
+	50% {
+		width: 0;
+	}
+	to {
+		transform: translateX(100%);
+		width: 0;
+	}
+}
+
+// Hide columns when showing detail
+@mixin colhide($columns) {
+	#list-view:not(:last-of-type) table {
+		@mixin _colhide() { // mixin workaround for https://github.com/sass/sass/issues/1050
+			width: 0 !important;
+			font-size: 0;
+			padding: 0;
+			opacity: 0;
+			transition: $duration $ease colhide, font-size ($duration / 1) $ease;
+		}
+		th:nth-last-child(-n+#{$columns}), td:nth-last-child(-n+#{$columns}) {
+			@include _colhide();
+		}
+		@media (max-width: $display) {
+			th:nth-last-child(-n+#{$columns + 1}), td:nth-last-child(-n+#{$columns + 1}) {
+				@include _colhide();
+			}
+		}
+	}
+	@media (max-width: $display - 160px) {
+		#list-view {
+			flex-shrink: 1;
+		}
+	}
+}
+@keyframes colhide {
+	from {
+		opacity: 1;
+	}
+	20% {
+		opacity: 0;
+	}
+	50% {
+		width: 0;
+		padding: 0;
+	}
+}
+
+// Table row show/hide
+.row-hidden {
+	opacity: 0;
+	visibility: collapse;
+	> td {
+		padding-top: 0;
+		padding-bottom: 0;
+		border: none;
+	}
+	.fa {
+		display: none;
+	}
+}
+#table-section {
+	animation: $duration $ease blockhidden reverse;
+	.block-hidden {
+		animation: $duration $ease blockhidden;
+	}
+}
+@keyframes blockhidden {
+	from {
+		transform: translateY(0%);
+	}
+	to {
+		transform: translateY(100%);
+	}
+}
+
+body:not(.loading) * {
+	transition: all $duration $ease;
+}
+body {
+	box-shadow: 100px 0 0 $dark-blue inset;
+}
+body.loading {
+	height: 100vh;
+}

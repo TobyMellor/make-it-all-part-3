@@ -1,0 +1,29 @@
+/*
+Login page CSS, for displaying login form in the middle of the screen.
+This page does not contain any other functionality, as there is no
+navigation or other page features when not authenticated.
+ */
+
+@import "../main";
+
+body {
+	background: $cloudy-white;
+	// Display login form in the middle of the page
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+form {
+	background: $white;
+	width: 100%;
+	max-width: 640px; // Login form is responsive using max-width
+	margin: 0 auto;
+	padding: $comfortable;
+}
+
+// Login button
+.btn {
+	width: 160px;
+}

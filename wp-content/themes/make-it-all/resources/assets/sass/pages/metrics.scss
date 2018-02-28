@@ -1,0 +1,44 @@
+@import "../main";
+
+@include colhide(1); //Forces #list-view to use flex-shrink:1
+
+.collapsible {
+	display:none;
+}
+
+input.form-control[disabled=disabled] {
+	background-color:#ffffff;
+}
+
+.breaker {
+	margin-bottom:25px;
+}
+
+div.form-group.pull-right{
+	width:200px;
+}
+
+.card {
+	border-radius:0px;
+}
+
+h4 {
+	margin:0;
+}
+
+#list-view {
+	flex-shrink:1;
+}
+
+@media (min-width:1200px) {
+	#problem-type-card {
+		margin:auto;
+		width:50vh;
+	}
+}
+
+@media (max-width:$small) {
+	#problem-type-card {
+		margin:auto;
+	}
+}

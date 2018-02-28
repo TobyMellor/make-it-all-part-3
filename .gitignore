@@ -1,3 +1,7 @@
+wp-content/themes/make-it-all/css/*
+wp-content/themes/make-it-all/js/*
+wp-content/themes/make-it-all/node_modules
+
 .DS_Store
 *.log
 wp-config.php

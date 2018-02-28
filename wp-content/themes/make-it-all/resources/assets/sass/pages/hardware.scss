@@ -1,0 +1,75 @@
+@import "../main";
+
+.card-list {
+	overflow-y:auto; 
+	padding:0px;
+	max-height: 35vh;
+}
+
+span.filter {
+	font-size: 12px;
+	margin-left: 10px;
+}
+
+.card-header {
+	background-color: #ecf0f1;
+	border-bottom:2px solid rgb(128, 128, 128);	
+	font-weight: bold;
+	color:#2c3e50;
+}
+
+.list-group-item {
+	border-left:0;
+	border-right:0;
+	border-bottom:0;
+}
+
+.list-total {
+	font-size:14px;
+	margin-top:2px;
+	float:right;
+}
+
+div.card.mb-3 {
+	border:0;
+}
+
+#selectorLists {
+	display:flex;
+	flex-wrap:nowrap;
+	height:95vh;
+	overflow-y:hidden;
+}
+
+#selectorLists > div {
+	flex-grow:1;
+	border-right:1px solid $silver;
+	height:95vh;
+	box-sizing:content-box;
+	overflow-y:auto;
+}
+
+.selectorList th {
+	text-align:left!important;
+}
+
+.selectorList td {
+	text-align:left!important;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif!important;
+}
+
+.table tbody tr td:last-child {
+    width: initial;
+}
+
+.table tbody tr {
+	background-color:white;
+}
+
+.main-content {
+	height:95vh;
+}
+
+#table-section {
+	overflow-x:none;
+}

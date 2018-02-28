@@ -1,0 +1,100 @@
+/*
+Staff page CSS with styles for the single view showing
+staff details and information related to the employee.
+ */
+
+@import "../main";
+
+// Specific tweaks to list view for width of columns
+// where data is thinner than a normal column
+#list-view table {
+	// Icon columns
+	th:nth-last-child(-n+5):not(:last-child),
+	td:nth-last-child(-n+5):not(:last-child) {
+		width: $comfortable * 2;
+		text-align: center;
+	}
+
+	td:last-child {
+		text-align: center;
+	}	
+}
+
+@include colhide(7);
+
+// Staff details page section
+#single-view {
+	.container > .row {
+		&:not(.thin) {
+			padding-top: $comfortable;
+		}
+
+		&:first-child {
+			align-items: center;
+		}
+		@media (max-width: $small) {
+			padding: 0 ($comfortable * 2);
+		}
+	}
+
+	.card {
+		max-width: $comfortable * 16;
+		margin: $cosy $comfortable $cosy auto;
+		@media (max-width: $small) {
+			margin: 0 auto;
+			width: 180px;
+		}
+	}
+
+	.staff-info .row {
+		border-bottom: 1px solid $silver;
+		margin-bottom: 1rem;
+	}
+	
+	// List of permissions for user
+	[data-customslug="access"] > span {
+		// Separation between permissions
+		&:not(:first-child) {
+			margin-left: $comfortable;
+		}
+		// Separation between permission and icon
+		> span {
+			margin-left: $compact;
+		}
+	}
+}
+
+.table-compact-heading {
+	margin-bottom: $compact;
+	margin-right: $cosy;
+	color: $black;
+}
+
+.subtle {
+	color: $grey;
+	float: right;
+}
+
+// The integrated problem types view placed in the single-view
+// section, with the specific problem types associated with
+// an employee.
+.problem-type-picker {
+	&.readonly {
+		li {
+			.specialism-checkbox {
+				border: none !important;
+				cursor: initial !important;
+
+				i {
+					right: 7px;
+					top: 3px;
+					font-size: 16px;
+
+					&.fa-times {
+						display: initial;
+					}
+				}
+			}
+		}
+	}
+}
