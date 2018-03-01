@@ -53,12 +53,6 @@
 		{
 			"title": "No results",
 			"subtitle": "Get started, create a ticket.",
-			"button": {
-				"name": "New User",
-				"icon": "plus",
-				"type": "success",
-				"modal": "new-staff-modal"
-			},
 			"hidden": true
 		}
 	%}
@@ -77,7 +71,7 @@
 
 {% block single_view %}
 	<section id="single-view">
-		{% include "sections/top_nav.twig" with {"name": "Loading…", "buttonsmodal": "edit-ticket-modal"} %}
+		{% include "sections/top_nav.twig" with {"name": "Loading…", "closeable": true} %}
 
 		<div id="ticket-view">
 			<div class="row">
@@ -113,7 +107,6 @@
 				<div>
 					<p class="ticket-details">
 						<strong>Call History</strong>
-						<span class="subtle" id="show-new-call-modal" data-toggle="modal" data-target="#follow-up-call-modal">Register follow-up call</span>
 					</p>
 					<table class="table compact data" id="call-history-table">
 						<thead>
