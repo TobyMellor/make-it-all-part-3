@@ -115,7 +115,7 @@ export default class TicketManager extends Manager {
 	 * @return {Array} Array of Ticket instances in one of many given Status's
 	 */
 	getTicketsWithSlugIn(statusSlugs) {
-		let tickets = this.tickets;
+		let tickets = this.tickets.slice(0);
 
 		for (let i = tickets.length - 1; i >= 0; i--) {
 			if (statusSlugs.indexOf(tickets[i].status.slug) === -1) tickets.splice(i, 1);
