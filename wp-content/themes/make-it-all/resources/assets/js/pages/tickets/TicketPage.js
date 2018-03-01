@@ -184,9 +184,9 @@ export default class TicketPage extends DynamicPage {
 
 						if (post instanceof Comment) { // Comment
 							if (post.id !== ticket._solution) { // this comment is not a solution
-								$ticketFeed.append(this.getComment(post, me)).find('.media-side i').tooltip();
+								$ticketFeed.append(this.getComment(post, me)).find('.media-side i');
 							} else {
-								$ticketFeed.prepend(this.getComment(post, me, true)).find('.media-side i').tooltip();
+								$ticketFeed.prepend(this.getComment(post, me, true)).find('.media-side i');
 							}
 						} else { // Ticket Status Change (TicketStatus/StatusHistory)
 							let status = post.status,
@@ -227,9 +227,9 @@ export default class TicketPage extends DynamicPage {
 			'<li class="media ' + (isSolution ? 'solution' : '') + '" data-comment-id="' + post.id + '">' +
 				'<div class="media-side">' +
 					'<a href="' + (author.id === me.id ? '/settings' : '/staff#' + author.id) + '">' +
-						'<img src="/res/avatar/' + author.email + '" alt="' + author.name + '\'s Profile Picture">' +
+						'<img src="https://placehold.it/275x275" alt="' + author.name + '\'s Profile Picture">' +
 					'</a>' +
-					'<i class="fa fa-check" data-toggle="tooltip" data-placement="bottom" title="' + (isSolution ? 'Unmark' : 'Mark') + ' as solution"></i>' +
+					'<i class="fa fa-check"></i>' +
 				'</div>' +
 				'<div class="media-body">' +
 					'<h5 class="mt-0 mb-1">' +
@@ -260,6 +260,57 @@ export default class TicketPage extends DynamicPage {
 		var ticket = this.ticketManager.getTicket(ticketId);
 
 		this.refreshPage(ticket.status.slug, ticketId);
+	}
+
+	/**
+	 * Populate the View Call modal by loading in
+	 * the call details and its tickets.
+	 *
+	 * @param {Integer} callId representing Call.id
+	 */
+	showCallTicketsModal(callId) {
+		var call             = this.ticketManager.getCall(callId),
+			$callHistory     = $('#view-call-history-modal'),
+			$callTicketTable = $callHistory.find('#call-tickets-table tbody');
+
+		$callHistory.find('#call-id').text(call.id);
+		$callHistory.find('#call-caller').text(call.caller.name);
+		$callHistory.find('#call-operator').text(call.operator.name);
+		$callHistory.find('#call-date').text(call.time);
+
+		// Show modal with call data
+		$callTicketTable.empty();
+		$callHistory.modal('show');
+
+		// Load tickets related to call
+		call.tickets.forEach(async ticket => {
+			// Add each related ticket to call modal
+			$callTicketTable.append(
+				'<tr data-rowid="' + ticket.id + '" ' + (ticket.id === this.currentTicket.id ? 'class="highlight"' : '') + '>' +
+					'<td>' + ticket.id + '</td>' +
+					'<td>' + ticket.title + '</td>' +
+					'<td>' +
+						'<span class="filter filter-' + ticket.status.slug.split('_')[0] + '">' + ticket.status.name + '</span>' +
+					'</td>' +
+					'<td>' + ticket.created_at + '</td>' +
+					'<td>' +
+						'<i class="fa fa-eye"></i>' +
+					'</td>' +
+				'</tr>'
+			);
+		});
+
+		$callHistory.find('#no-call-notes').hide();
+		$callHistory.find('#call-notes').hide();
+
+		let callComment = this.ticketManager.getCallNotesByCallId(call.id);
+
+		if (callComment !== null) {
+			$callHistory.find('#call-notes').text(callComment.content);
+			$callHistory.find('#call-notes').show();
+		} else {
+			$callHistory.find('#no-call-notes').show();
+		}
 	}
 
 	/**

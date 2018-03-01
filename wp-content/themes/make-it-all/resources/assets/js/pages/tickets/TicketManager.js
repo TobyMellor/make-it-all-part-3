@@ -24,7 +24,7 @@ export default class TicketManager extends Manager {
 		this.tickets  = api.tickets.map(e => new Ticket(e));
 		this.comments = api.comments.map(e => new Comment(e));
 		this.statuses = api.statuses.map(e => new Status(e));
-		//this.ticketStatuses = api.ticketStatuses.map(e => new Status(e));
+		this.ticketStatuses = api.ticketStatuses.map(e => new TicketStatus(e));
 	}
 
 	/**
@@ -217,8 +217,8 @@ export default class TicketManager extends Manager {
 	 *
 	 * @returns {Array} containing Array of Comment instances
 	 */
-	getCommentsByTicketId(ticketId) {
-		return this.comments.filter(comment => comment._ticket === ticketId);
+	getCommentsByIds(ids) {
+		return this.comments.filter(comment => ids.indexOf(comment.id) > -1);
 	}
 
 	/**

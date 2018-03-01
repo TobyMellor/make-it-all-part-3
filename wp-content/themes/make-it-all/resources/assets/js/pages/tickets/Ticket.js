@@ -97,7 +97,7 @@ export default class Ticket {
 	}
 
 	get comments() {
-		return (new TicketManager()).getCommentsByTicketId(this.id);
+		return (new TicketManager()).getCommentsByIds(this._comments);
 	}
 
 	set comments(comments) {

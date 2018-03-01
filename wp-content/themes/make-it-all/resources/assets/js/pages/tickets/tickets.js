@@ -377,13 +377,3 @@ $(document).keyup(e => {
 			break;
 	}
 });
-
-$(document).on('click', '#ticket-comments .media:not(.solution) .fa-check', function() {
-	ticketPage.markCommentAsSolution(Number($(this).closest('.media').data('commentId')));
-	$('.tooltip').tooltip('hide')
-});
-
-$(document).on('click', '#ticket-comments .media.solution .fa-check', function() {
-	ticketPage.unmarkCommentAsSolution();
-	$('.tooltip').tooltip('hide')
-});
