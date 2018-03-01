@@ -17,10 +17,10 @@ if (!location.hash) staffPage.hideTableRowDetails();
 
 // Load staff details into page list-view
 // This action is asynchronous
-staffPage.showStaff().then(() => {
-	// Detect if page should load with a specific employee being shown
-	if (location.hash) staffPage.showTableRowDetails(parseInt(location.hash.substring(1)));
-});
+staffPage.showStaff();
+
+// Detect if page should load with a specific employee being shown
+if (location.hash) staffPage.showTableRowDetails(parseInt(location.hash.substring(1)));
 
 // When there is no matching staff in select picker,
 // one can click the no results option to create a new

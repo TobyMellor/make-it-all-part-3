@@ -53,9 +53,9 @@ if (location.hash) {
 }
 
 //Handles displaying the page as if the passed device has already been selected
-async function hasLocationHash() {
+function hasLocationHash() {
 	var id = parseInt(location.hash.substring(1));
-	hardwarePage.device = await hardwarePage.hardwareManager.get(id);
+	hardwarePage.device = hardwarePage.hardwareManager.get(id);
 	hardwarePage.type = hardwarePage.device.type;
 	hardwarePage.make = hardwarePage.device.make;
 	hardwarePage.showTableRowDetails(id); //Opens the full view for the selected device

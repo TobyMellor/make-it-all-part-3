@@ -24,30 +24,32 @@ it is commonly associated with.
 {% endblock %}
 
 {% block single_view %}
-	{% include "sections/top_nav.twig" with {"name": "", "buttonsmodal": "edit-program-modal"} %}
-	<div class="main-content">
-		<div class="card mb-3">
-			<h6 class="card-header main-content-title">
-				<i class="fa fa-ticket"></i> Tickets
-				<span id="ticket-total" class="text-muted list-total">Total: </span>
-			</h6>
-			<div class="card-body card-list">
-				<ul id="tickets" class="list-group">
-					
-				</ul>
+	<section id="single-view">
+		{% include "sections/top_nav.twig" with {"name": "", "buttonsmodal": "edit-program-modal"} %}
+		<div class="main-content">
+			<div class="card mb-3">
+				<h6 class="card-header main-content-title">
+					<i class="fa fa-ticket"></i> Tickets
+					<span id="ticket-total" class="text-muted list-total">Total: </span>
+				</h6>
+				<div class="card-body card-list">
+					<ul id="tickets" class="list-group">
+						
+					</ul>
+				</div>
+			</div>
+
+			<div class="card mb-3">
+				<h6 class="card-header main-content-title">
+					<i class="fa fa-file-code-o"></i> Related Hardware
+					<span id="hardware-total" class="text-muted list-total">Total: </span>
+				</h6>
+				<div class="card-body card-list">
+					<ul id="hardware" class="list-group">
+
+					</ul>
+				</div>
 			</div>
 		</div>
-
-		<div class="card mb-3">
-			<h6 class="card-header main-content-title">
-				<i class="fa fa-file-code-o"></i> Related Hardware
-				<span id="hardware-total" class="text-muted list-total">Total: </span>
-			</h6>
-			<div class="card-body card-list">
-				<ul id="hardware" class="list-group">
-
-				</ul>
-			</div>
-		</div>
-	</div>
+	</section>
 {% endblock %}

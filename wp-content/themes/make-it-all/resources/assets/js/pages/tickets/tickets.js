@@ -2,6 +2,7 @@ import "../../main";
 import TicketPage from "./TicketPage";
 import ProblemTypePage from "../problem_types/ProblemTypePage";
 import StaffProblemTypePage from "../staff/StaffProblemTypePage";
+import API from "../API";
 
 /**
  * tickets.js
@@ -17,16 +18,22 @@ import StaffProblemTypePage from "../staff/StaffProblemTypePage";
  * on the tickets page.
  */
 
-let ticketPage = window.ticketPage = new TicketPage();
-let problemTypePage = window.problemTypePage = new ProblemTypePage(true);
-let staffProblemTypePage = window.staffProblemTypePage = new StaffProblemTypePage();
+let ticketPage, problemTypePage, staffProblemTypePage, api;
 
-if (!location.hash) ticketPage.hideTableRowDetails(); // show the table view if there's no hash in the URL
+window.init = function(data) {
+	api = window.api = new API(data);
 
-// Initialization: Show tickets with the statuses "New", "Pending - In Progress" and "Resolved"
-ticketPage.showFilteredTickets('new,pending_in_progress,resolved').then(() => {
+	ticketPage           = window.ticketPage           = new TicketPage();
+	problemTypePage      = window.problemTypePage      = new ProblemTypePage(true);
+	staffProblemTypePage = window.staffProblemTypePage = new StaffProblemTypePage();
+
+	if (!location.hash) ticketPage.hideTableRowDetails(); // show the table view if there's no hash in the URL
+
+	// Initialization: Show tickets with the statuses "New", "Pending - In Progress" and "Resolved"
+	ticketPage.showFilteredTickets('new,pending_in_progress,resolved');
+
 	if (location.hash) ticketPage.showTicketView(parseInt(location.hash.substring(1)));
-});
+}
 
 // Filter the list when clicking on statuses in the left side nav bar
 $('.side-nav-bar-nested ul li[data-slug]').on('click', function () {
@@ -73,7 +80,7 @@ $('#new-ticket-modal #create-new-ticket, #create-follow-up-call').on('click', fu
 });
 
 // When a ticket is updated, validate and send to TicketManager
-$('#edit-ticket-modal #edit-existing-ticket').on('click', async function () {
+$('#edit-ticket-modal #edit-existing-ticket').on('click', function () {
 	var formData = $('#edit-ticket-modal form').serializeObject(true);
 
 	if (formData.isValid()) {
@@ -85,7 +92,7 @@ $('#edit-ticket-modal #edit-existing-ticket').on('click', async function () {
 			ticket.assigned_to_operator = null;
 		}
 
-		ticket = await ticketPage.ticketManager.updateTicket(
+		ticket = ticketPage.ticketManager.updateTicket(
 			Number(ticket.id),
 			ticket.status,
 			ticket.title,
@@ -146,16 +153,16 @@ $(document).on('keyup', '#accordion .card .collapse input[name*="title"]', funct
 });
 
 // Append a hardware div with its information under the hardware select field
-$(document).on('change', '.selectpicker.add-hardware-device', async function() {
+$(document).on('change', '.selectpicker.add-hardware-device', function() {
 	if ($(this).val() !== "") { // not the default select option
-		await ticketPage.appendHardwareDevice($(this).closest('.row').next().find('.affected-items'), Number($(this).val()), $(this).closest('.card').data('cardid') || 'this');
+		ticketPage.appendHardwareDevice($(this).closest('.row').next().find('.affected-items'), Number($(this).val()), $(this).closest('.card').data('cardid') || 'this');
 		$(this).closest('.card-block').scrollTop(1E10); // scroll to the top of the page
 	}
 });
 
-$(document).on('change', '.selectpicker.add-software-program', async function() {
+$(document).on('change', '.selectpicker.add-software-program', function() {
 	if ($(this).val() !== "") { // not the default select option
-		await ticketPage.appendSoftwareProgram($(this).closest('.row').next().find('.affected-items'), Number($(this).val()), $(this).closest('.card').data('cardid') || 'this');
+		ticketPage.appendSoftwareProgram($(this).closest('.row').next().find('.affected-items'), Number($(this).val()), $(this).closest('.card').data('cardid') || 'this');
 		$(this).closest('.card-block').scrollTop(1E10);
 	}
 });
@@ -176,7 +183,7 @@ $(document).on('click', '#view-call-history-modal #call-tickets-table tbody tr:n
 });
 
 // When the create follow up call modal is shown, clear and populate the accordion
-$('#follow-up-call-modal').on('shown.bs.modal', async function() {
+$('#follow-up-call-modal').on('shown.bs.modal', function() {
 	var $firstAccordionHeader = $(this).find('#accordion .card-header a'),
 		$addExistingTicket    = $('#add-existing-ticket');
 
@@ -186,7 +193,7 @@ $('#follow-up-call-modal').on('shown.bs.modal', async function() {
 
 	$addExistingTicket.html('<option selected hidden>Select an Existing Ticket</option>');
 
-	let tickets = await ticketPage.ticketManager.tickets,
+	let tickets = ticketPage.ticketManager.tickets,
 		ticket;
 
 	// Load existing tickets
@@ -203,20 +210,20 @@ $('#follow-up-call-modal').on('shown.bs.modal', async function() {
 });
 
 // Populate the Choose a Caller select field in the new ticket modal when it's shown
-$('#new-ticket-modal').on('show.bs.modal', async function() {
-	ticketPage.populateSelectField($(this).find('select[name="caller"]'), 'Choose a caller…', await ticketPage.staffManager.staff);
+$('#new-ticket-modal').on('show.bs.modal', function() {
+	ticketPage.populateSelectField($(this).find('select[name="caller"]'), 'Choose a caller…', ticketPage.staffManager.staff);
 });
 
 // Populate the Choose a Caller select field in the new follow up call modal when it's shown
 // Automatically selects the last caller of the ticket
-$('#follow-up-call-modal').on('show.bs.modal', async function() {
+$('#follow-up-call-modal').on('show.bs.modal', function() {
 	let calls        = ticketPage.currentTicket._calls,
 		lastCallId   = calls[calls.length - 1],
-		lastCall     = await ticketPage.ticketManager.getCall(lastCallId),
+		lastCall     = ticketPage.ticketManager.getCall(lastCallId),
 		lastCallerId = lastCall._caller,
 		$select      = $(this).find('select[name="caller"]');
 
-	ticketPage.populateSelectField($select, 'Choose a caller…', await ticketPage.staffManager.staff, lastCallerId);
+	ticketPage.populateSelectField($select, 'Choose a caller…', ticketPage.staffManager.staff, lastCallerId);
 	$select.trigger('change'); // trigger change so the Caller Information is shown on the right
 });
 
@@ -226,16 +233,14 @@ $('#new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function() {
 	$(this).find('.staff-information').text('No staff member has been selected yet!');
 	$(this).find('#accordion .card .type-columns').empty();
 
-	(async() => {
-		$(this).find('input[name*="assigned_to.self"]').val((await window.auth.me()).id); // The ID of the user (hidden to the user)
-		$(this).find('input[name*="assigned_to.self_showcase"]').val((await ticketPage.staffManager.currentUser(true)).name); // _showcase fields are what the user see's. This is never submitted to the DB
-	})();
+	$(this).find('input[name*="assigned_to.self"]').val(window.auth.me().id); // The ID of the user (hidden to the user)
+	$(this).find('input[name*="assigned_to.self_showcase"]').val(ticketPage.staffManager.currentUser(true).name); // _showcase fields are what the user see's. This is never submitted to the DB
 
 	$(this).find('input[name*="assigned_to.specialist"]').val('');
 	$(this).find('input[name*="assigned_to.specialist_showcase"]').val('Problem Type not yet chosen');
 	$(this).find('.form-check .form-check-input[value="self"]').click();
 
-	(async() => { ticketPage.populateSelectField($(this).find('select[name*=assigned_to]'), 'Choose an operator…', await ticketPage.staffManager.getEmployeesWithPermission('operator', true)) })();
+	ticketPage.populateSelectField($(this).find('select[name*=assigned_to]'), 'Choose an operator…', ticketPage.staffManager.getEmployeesWithPermission('operator', true));
 
 	problemTypePage.loadSubExpertiseTypes($(this).find('.type-columns'));
 
@@ -246,22 +251,22 @@ $('#new-ticket-modal, #follow-up-call-modal').on('show.bs.modal', function() {
 $('#new-ticket-modal, #follow-up-call-modal, #edit-ticket-modal').on('show.bs.modal', function() {
 	$(this).find('.affected-items').empty();
 
-	(async() => ticketPage.populateSelectField($(this).find('.selectpicker.add-hardware-device'), 'Type a serial number…', await ticketPage.hardwareManager.devices, null, 'serial_no'))();
-	(async() => ticketPage.populateSelectField($(this).find('.selectpicker.add-software-program'), 'Choose a program…', await ticketPage.softwareManager.programs, null, 'name', function(program) {
+	ticketPage.populateSelectField($(this).find('.selectpicker.add-hardware-device'), 'Type a serial number…', ticketPage.hardwareManager.devices, null, 'serial_no');
+	ticketPage.populateSelectField($(this).find('.selectpicker.add-software-program'), 'Choose a program…', ticketPage.softwareManager.programs, null, 'name', function(program) {
 		return program.operating_system ? '(OS)' : '';
-	}))();
+	});
 });
 
 // When the edit ticket modal is shown, populate it
 $('#edit-ticket-modal').on('show.bs.modal', function() {
 	let currentTicket = ticketPage.currentTicket;
 
-	(async() => ticketPage.populateSelectField($(this).find('select[name*=assigned_to]'), 'Choose an operator…', await ticketPage.staffManager.getEmployeesWithPermission('operator', true), ((await ticketPage.getAssignedToType(currentTicket)) === 'operator' ? currentTicket._assigned_to_operator : null)))();
+	ticketPage.populateSelectField($(this).find('select[name*=assigned_to]'), 'Choose an operator…', ticketPage.staffManager.getEmployeesWithPermission('operator', true), (ticketPage.getAssignedToType(currentTicket) === 'operator' ? currentTicket._assigned_to_operator : null));
 	ticketPage.populateTicketModal($(this), currentTicket, 'this');
 			
 	$(this).find('.form-check .form-check-label input[value="' + ticketPage.getAssignedToType(currentTicket) + '"]').click(); // click the correct assigned to type
 
-	(async() => problemTypePage.loadExpertiseType($(this).find('.type-columns'), (await currentTicket.expertise_type_staff)._expertise_type))();
+	problemTypePage.loadExpertiseType($(this).find('.type-columns'), currentTicket.expertise_type_staff._expertise_type);
 });
 
 // Navigate through the problem type picker, load in the children and get the best specialist for the job
@@ -270,11 +275,9 @@ $(document).on('click', '.problem-type-picker:not(.problem-type-checkboxes) .typ
 
 	problemTypePage.loadSubExpertiseTypes($(this).closest('.type-columns'), $(this), expertiseTypeId);
 
-	(async() => {
-		let bestExpertiseTypeStaff = await ticketPage.setSpecialist(expertiseTypeId, $(this).closest('.card').length > 0 ? $(this).closest('.card').find('.assigned-to-options') : $(this).closest('.modal').find('.assigned-to-options'));
+	let bestExpertiseTypeStaff = ticketPage.setSpecialist(expertiseTypeId, $(this).closest('.card').length > 0 ? $(this).closest('.card').find('.assigned-to-options') : $(this).closest('.modal').find('.assigned-to-options'));
 
-		$(this).closest('.problem-type-picker').siblings('input[name*=expertise_type_staff]').val(bestExpertiseTypeStaff !== null ? bestExpertiseTypeStaff.id : '');
-	})();
+	$(this).closest('.problem-type-picker').siblings('input[name*=expertise_type_staff]').val(bestExpertiseTypeStaff !== null ? bestExpertiseTypeStaff.id : '');
 });
 
 // When a checkbox for a problem type is clicked, load in the children
@@ -308,7 +311,7 @@ $(document).on('click', '.create-problem-type', function() {
 		parentExpertiseTypeId = null;
 	}
 
-	(async() => await problemTypePage.createExpertiseType($(this).parent().siblings('input').val(), parentExpertiseTypeId))();
+	problemTypePage.createExpertiseType($(this).parent().siblings('input').val(), parentExpertiseTypeId);
 });
 
 // When the user toggles between "Assign to myself", "Assign to another Operator" and "Assign to Specialist of Problem Type", show the correct _showcase input field
@@ -327,10 +330,10 @@ $(document).on('click', '.assigned-to-section .form-check input', function() {
 });
 
 // Remove the accordion, put the ticket back into the existing tickets list
-$(document).on('click', '.card.existing .remove-accordion', async function() {
+$(document).on('click', '.card.existing .remove-accordion', function() {
 	var $addExistingTicket = $(this).closest('.modal').find('#add-existing-ticket'),
 		ticketId           = Number($(this).closest('.card-header').siblings('input[name*="id"]').val()),
-		ticket             = await ticketPage.ticketManager.getTicket(ticketId);
+		ticket             = ticketPage.ticketManager.getTicket(ticketId);
 
 	$addExistingTicket.prepend('<option value="' + ticketId + '">' + '#' + ticketId + ' ' + ticket.title.substring(0, 35) + '</option>');
 	$addExistingTicket.selectpicker('refresh');

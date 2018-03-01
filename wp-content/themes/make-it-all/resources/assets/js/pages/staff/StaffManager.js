@@ -1,6 +1,5 @@
 import Manager from "../Manager";
 import Employee from "./Employee";
-import API from "../API";
 
 /**
  * StaffManager
@@ -14,17 +13,9 @@ import API from "../API";
 export default class StaffManager extends Manager {
 	constructor() {
 		super();
-	}
 
-	/**
-	 * Get all staff in table
-	 *
-	 * @returns {Promise<Array>}
-	 */
-	get staff() {
-		return (async() => {
-			return (await API.call("/api/staff")).map(e => new Employee(e));
-		})();
+		this.staff       = api.staff.map(e => new Employee(e));
+		this.departments = api.departments;
 	}
 
 	/**
@@ -33,8 +24,8 @@ export default class StaffManager extends Manager {
 	 * @param id The ID number of the employee to return
 	 * @returns {Employee}
 	 */
-	async get(id) {
-		return new Employee(await API.call("/api/staff/" + id));
+	get(id) {
+		return this.staff.find(employee => employee.id === id) || null;
 	}
 
 	/**
@@ -43,39 +34,8 @@ export default class StaffManager extends Manager {
 	 * @param permission The permission to search for
 	 * @param value The value of the permission (true/false) for whether the permission is granted
 	 */
-	async getEmployeesWithPermission(permission, value) {
-		return (await this.staff).filter(employee => employee.access[permission] == value);
-	}
-
-	/**
-	 * Create a new employee with the given data
-	 * and add employee to the list of employees
-	 *
-	 * @param data The employee's data
-	 * @returns {Promise}
-	 */
-	createEmployee(data = {}) {
-		// Prepare data for API endpoint
-		data = Employee.prepareData(data);
-
-		// Ask user to provide initial password for user, for them to change themselves after login
-		data.password = prompt("Enter a new password for the user.", "Testing123");
-
-		// Perform API call to create new employee
-		return API.call("/api/staff", "POST", data);
-	}
-
-	/**
-	 * Change an existing employee's information
-	 *
-	 * @param data The employee's data
-	 */
-	updateEmployee(data = {}) {
-		// Prepare data for API endpoint
-		data = Employee.prepareData(data);
-
-		// Perform API call to create new employee
-		return API.call("/api/staff/" + data.id, "PATCH", data);
+	getEmployeesWithPermission(permission, value) {
+		return this.staff.filter(employee => employee.access[permission] == value);
 	}
 	
 	/**
@@ -83,12 +43,14 @@ export default class StaffManager extends Manager {
 	 *
 	 * @param asEmployee method returns ID by default or Employee if truthy
 	 */
-	async currentUser(asEmployee = false) {
-		let id = (await window.auth.me())["id"];
+	currentUser(asEmployee = false) {
+		let id = 1; // TODO: get user from WP
+
 		// Get Employee with ID
 		if (asEmployee) {
-			return await this.get(id);
+			return this.get(id);
 		}
+
 		return id;
 	}
 
@@ -97,14 +59,17 @@ export default class StaffManager extends Manager {
 	 *
 	 * @param expertiseTypeId The ID of the expertise type to find employees for
 	 */
-	async getSpecialists(expertiseType) {
-		let staff = await this.staff;
-		let filter = id => employee => employee._specialisms.indexOf(id) > -1;
+	getSpecialists(expertiseType) {
+		let staff  = this.staff,
+		    filter = id => employee => employee._specialisms.indexOf(id) > -1;
+
 		if (typeof expertiseType === "object") {
 			let output = [];
+
 			for (let id of expertiseType) {
 				output.push(staff.filter(filter(id)));
 			}
+
 			return output;
 		} else {
 			return staff.filter(filter(expertiseType));
@@ -129,17 +94,7 @@ export default class StaffManager extends Manager {
 	 * @param properties The properties to search through
 	 * @returns All matching results to the query
 	 */
-	async search(query, properties) {
-		return super.search(await this.staff, query, properties);
-	}
-
-	/**
-	 * Get all departments which employees can be a member of
-	 * @returns All departments
-	 */
-	get departments() {
-		return this._departments || (async() => {
-			return this._departments = await API.call("/api/departments");
-		})();
+	search(query, properties) {
+		return super.search(this.staff, query, properties);
 	}
 }

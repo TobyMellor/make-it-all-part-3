@@ -33,11 +33,6 @@ $context['pages'] = [
 	"staff" => [
 		"icon" => "user-circle-o",
 		"name" => "Staff"
-	],
-	"settings" => [
-		"icon"    => "cog",
-		"name"    => "Settings",
-		"breaker" => true
 	]
 ];
 

@@ -41,14 +41,7 @@ help desk.
 					"slug": "access.admin",
 					"icon": "shield"
 				}
-			],
-			"button": {
-				"name": "New User",
-				"type": "success",
-				"icon": "plus",
-				"class": "new-user",
-				"modal": "new-staff-modal"
-			}
+			]
 		}
 	%}
 {% endblock %}
@@ -106,66 +99,68 @@ help desk.
 {% endblock %}
 
 {% block single_view %}
-	{% include "sections/top_nav.twig" with {"name": "Loading…", "buttonsmodal": "new-staff-modal"} %}
+	<section id="single-view">
+		{% include "sections/top_nav.twig" with {"name": "Loading…", "buttonsmodal": "new-staff-modal"} %}
 
-	<div class="container">
-		<div class="row m-0">
-			<div class="col-lg-6">
-				<div class="card text-center">
-					<img class="card-img-top" alt="User profile photo" data-customslug="avatar">
-					<div class="card-body">
-						<h4 class="card-title" data-slug="name"></h4>
-						<p class="card-text" data-slug="job"></p>
+		<div class="container">
+			<div class="row m-0">
+				<div class="col-lg-6">
+					<div class="card text-center">
+						<img class="card-img-top" alt="User profile photo" data-customslug="avatar">
+						<div class="card-body">
+							<h4 class="card-title" data-slug="name"></h4>
+							<p class="card-text" data-slug="job"></p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 staff-info">
+					<span class="subtle">#<span data-slug="id"></span></span>
+					<div class="row">
+						<label>Email</label>
+						<div class="col-sm-12">
+							<span data-slug="email"></span>
+						</div>
+					</div>
+					<div class="row">
+						<label>Job</label>
+						<div class="col-sm-12">
+							<span data-slug="job"></span>
+						</div>
+					</div>
+					<div class="row">
+						<label>Department</label>
+						<div class="col-sm-12">
+							<span data-slug="department"></span>
+						</div>
+					</div>
+					<div class="row">
+						<label>Phone No</label>
+						<div class="col-sm-12">
+							<span data-slug="phone"></span>
+						</div>
+					</div>
+					<div class="row">
+						<label>Access Permissions</label>
+						<div class="col-sm-12">
+							<span data-customslug="access"></span>
+						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-6 staff-info">
-				<span class="subtle">#<span data-slug="id"></span></span>
-				<div class="row">
-					<label>Email</label>
-					<div class="col-sm-12">
-						<span data-slug="email"></span>
-					</div>
-				</div>
-				<div class="row">
-					<label>Job</label>
-					<div class="col-sm-12">
-						<span data-slug="job"></span>
-					</div>
-				</div>
-				<div class="row">
-					<label>Department</label>
-					<div class="col-sm-12">
-						<span data-slug="department"></span>
-					</div>
-				</div>
-				<div class="row">
-					<label>Phone No</label>
-					<div class="col-sm-12">
-						<span data-slug="phone"></span>
-					</div>
-				</div>
-				<div class="row">
-					<label>Access Permissions</label>
-					<div class="col-sm-12">
-						<span data-customslug="access"></span>
+			<div class="row">
+				<p class="col-md-9 text-right">
+					<strong class="table-compact-heading">Find <span data-slug="name"></span>'s</strong>
+					<a class="btn btn-primary"><i class="fa fa-ticket"></i> Tickets (<span data-customslug="tickets.assigned"></span>)</a>
+				</p>
+			</div>
+			<div class="row thin">
+				<div class="col-md-12">
+					<strong class="table-compact-heading"><span data-slug="name"></span>'s Specialisms</strong>
+					<div class="problem-type-picker problem-type-checkboxes readonly">
+						<div class="type-columns"></div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="row">
-			<p class="col-md-9 text-right">
-				<strong class="table-compact-heading">Find <span data-slug="name"></span>'s</strong>
-				<a class="btn btn-primary"><i class="fa fa-ticket"></i> Tickets (<span data-customslug="tickets.assigned"></span>)</a>
-			</p>
-		</div>
-		<div class="row thin">
-			<div class="col-md-12">
-				<strong class="table-compact-heading"><span data-slug="name"></span>'s Specialisms</strong>
-				<div class="problem-type-picker problem-type-checkboxes readonly">
-					<div class="type-columns"></div>
-				</div>
-			</div>
-		</div>
-	</div>
+	</section>
 {% endblock %}

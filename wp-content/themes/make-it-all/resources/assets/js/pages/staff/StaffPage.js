@@ -11,7 +11,7 @@ export default class StaffPage extends DynamicPage {
 	constructor() {
 		super();
 		// Managers
-		this.staffManager = new StaffManager();
+		this.staffManager  = new StaffManager();
 		this.ticketManager = new TicketManager();
 
 		// No employee detail shown by default
@@ -21,7 +21,7 @@ export default class StaffPage extends DynamicPage {
 	/**
 	 * Obtain and show all staff in list view table on page
 	 */
-	async showStaff() {
+	showStaff() {
 		// Ensure no locally-cached data is present in staff table before populating
 		$(this.tableSelector).find("tbody").empty();
 
@@ -33,7 +33,7 @@ export default class StaffPage extends DynamicPage {
 		let staffForTickets = [];
 
 		// Put each staff member on table
-		let staff = await this.staffManager.staff;
+		let staff = this.staffManager.staff;
 
 		// Add each staff member to a new row in the table
 		for (let employee of staff) {
@@ -48,7 +48,7 @@ export default class StaffPage extends DynamicPage {
 		(async(ids) => {
 			// Get number of assigned tickets and fill column
 			let $rows = $(this.tableSelector).find("tbody").children("tr");
-			let tickets = await this.ticketManager.getTicketsAssignedTo(ids);
+			let tickets = this.ticketManager.getTicketsAssignedTo(ids);
 			$rows.each((i, el) => {
 				el.children[ticketsColumnIndex].textContent = tickets[i] ? (tickets[i].length || 0) : 0;
 			});
@@ -63,9 +63,9 @@ export default class StaffPage extends DynamicPage {
 	 *
 	 * @param id The ID of the employee to show detail
 	 */
-	async showTableRowDetails(id) {
+	showTableRowDetails(id) {
 		// Get employee with ID
-		this.employee = await this.staffManager.get(id);
+		this.employee = this.staffManager.get(id);
 		// Catch invalid IDs and show message
 		if (!this.employee) {
 			// Hide single view if no detail is able to be presented
@@ -105,7 +105,7 @@ export default class StaffPage extends DynamicPage {
 				case "tickets.assigned":
 					el.textContent = "…";
 					(async(el) => {
-						el.textContent = (await this.ticketManager.getTicketsAssignedTo(this.employee.id)).length;
+						el.textContent = this.ticketManager.getTicketsAssignedTo(this.employee.id).length;
 					})(el);
 					break;
 
@@ -180,7 +180,7 @@ export default class StaffPage extends DynamicPage {
 			// Define properties of employees to be searched for query match
 			var properties = ["id", "name", "job", "department", "phone"];
 			// Perform the search using super search and assign results
-			super.search(query, await this.staffManager.search(query, properties), obj => Object.assign({}, obj), properties);
+			super.search(query, this.staffManager.search(query, properties), obj => Object.assign({}, obj), properties);
 
 		} else {
 			// Default to showing all staff if query is missing or insufficient

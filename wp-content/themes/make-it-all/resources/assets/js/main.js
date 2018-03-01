@@ -1,32 +1,6 @@
-// Initialise authentication, set up token store
-import Auth from "./pages/login/Auth";
-window.auth = window.auth || new Auth();
-
-// Initialise Turbolinks for page linking
-window.Turbolinks.start();
-window.Turbolinks.setProgressBarDelay(10);
-$(document).off(); // Turbolinks maintains event handlers between pages without this
-// Fade in for list view
-$(document).on("turbolinks:before-render", e => {
-	$(e.originalEvent.data.newBody).addClass("loading").find("#list-view, #single-view").css("opacity", "0");
-});
-$(document).on("turbolinks:load", e => {
-	setTimeout(() => {
-		$(document.body).removeClass("loading").find("#list-view, #single-view").removeAttr("style");
-	}, 1000);
-});
 // Since nav element is persisted between pages, we need to manually set the active button
 $("#nav").on("click", "ul li a", e => {
 	$(e.currentTarget).parent().addClass("active").siblings().removeClass("active");
-});
-
-// Placeholder for each page making an authenticated request to the server
-window.auth.me().done(() => setTimeout(() => window.auth.refresh(), 3600 * 60 * 60 - 600));
-
-// Sign out button on all pages
-$(".fa-sign-out").parent().click(e => {
-	e.preventDefault();
-	window.auth.logout();
 });
 
 // Tooltips activated on all elements with a relevant tooltip HTML attribute

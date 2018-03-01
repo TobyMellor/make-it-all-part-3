@@ -26,11 +26,7 @@ to display their own content.
 	{# Single view area for displaying more information
 	     e.g. for a table row being clicked, showing further
 	          details about that row #}
-	{% if hasSingleView %}
-		<section id="single-view">
-			{% block single_view %}{% endblock %}
-		</section>
-	{% endif %}
+	{% block single_view %}{% endblock %}
 
 	{# Any modals which may need to be displayed on the page
 	     are inserted at the end and presented using JavaScript #}

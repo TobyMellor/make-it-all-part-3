@@ -28,9 +28,9 @@ export default class SoftwarePage extends DynamicPage {
 	}
 	
 	//Handles adding all programs in the system to the Software table
-	async showPrograms() {
+	showPrograms() {
 		$(this.tableSelector).find("tbody").empty();
-		var programs = await this.softwareManager.programs;
+		var programs = this.softwareManager.programs;
 		for (let program of programs) {
 			this.appendTableRow(program);
 			$(".table.table-hover.table-responsive.data tbody tr:last-child td:nth-child(3)").html(program.getSoftwareType());
@@ -40,8 +40,8 @@ export default class SoftwarePage extends DynamicPage {
 	
 	//Handles opening the full view of the selected device, including 
 	//populating related tickets and hardware.
-	async showTableRowDetails(id) {
-		this.program = await this.softwareManager.get(id);
+	showTableRowDetails(id) {
+		this.program = this.softwareManager.get(id);
 		if (!this.program) {
 			this.hideTableRowDetails();
 			alert("No software with ID " + id);
@@ -65,12 +65,12 @@ export default class SoftwarePage extends DynamicPage {
 		$("#tickets").html("");
 		$("#hardware").html("");
 		var devices = [];
-		var tickets = await this.program.tickets;
+		var tickets = this.program.tickets;
 
 		for (var i = 0; i < tickets.length; i++) {
 			var statusClass = "pending";
 			var ticket = tickets[i];
-			var status = await ticket.status;
+			var status = ticket.status;
 			var statusText = status.name;
 			switch (statusText) {
 				case "New":
@@ -96,7 +96,7 @@ export default class SoftwarePage extends DynamicPage {
 			`);
 
 			if (devices.length < 20) {
-				var ticketDevices = await ticket.devices;
+				var ticketDevices = ticket.devices;
 				for (var j = 0; j < ticketDevices.length; j++) {
 					var device = ticketDevices[j];
 					if (devices.findIndex(d => d.id == device.id) == -1) {

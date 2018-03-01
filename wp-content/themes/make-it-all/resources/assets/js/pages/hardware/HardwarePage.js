@@ -42,11 +42,11 @@ export default class HardwarePage extends DynamicPage {
 	}
 	
 	//Handles adding all unique device types to the Types column
-	async populateTypes() {
+	populateTypes() {
 		var typeList = $('#typeList');
 		typeList.empty();
 
-		var uniqueTypes = await this.hardwareManager.uniqueTypes();
+		var uniqueTypes = this.hardwareManager.uniqueTypes();
 		for (let type of uniqueTypes) {
 			var row = "<tr><td data-type='" + type + "'>" + type + "</td></tr>";
 			typeList.append(row);
@@ -54,12 +54,12 @@ export default class HardwarePage extends DynamicPage {
 	}
 
 	//Handles adding all unique device makes under the selected Type to the Make column
-	async populateMake() {
+	populateMake() {
 		var makeList = $('#makeList');
 		makeList.empty();
 		this.clearTable();
 
-		let uniqueMake = await this.hardwareManager.uniqueMakesOfType(this.type);
+		let uniqueMake = this.hardwareManager.uniqueMakesOfType(this.type);
 		for (let make of uniqueMake) {
 			if (this.make == make) {
 
@@ -70,12 +70,12 @@ export default class HardwarePage extends DynamicPage {
 	}
 	
 	//Handles adding all devices of the selected make and type to the table
-	async showDevices() {
+	showDevices() {
 		var type = this.type;
 		var make = this.make;
 		this.clearTable();
 
-		var results = await this.hardwareManager.getDevicesOfTypeAndMake(type,make);
+		var results = this.hardwareManager.getDevicesOfTypeAndMake(type,make);
 		for (let device of results) {
 			this.appendTableRow(device);
 		}
@@ -83,8 +83,8 @@ export default class HardwarePage extends DynamicPage {
 
 	//Handles opening the full view of the selected device, including populating related
 	//tickets and software.
-	async showTableRowDetails(id) {
-		this.device = await this.hardwareManager.get(id);
+	showTableRowDetails(id) {
+		this.device = this.hardwareManager.get(id);
 		if (!this.device) {
 			this.hideTableRowDetails();
 			alert("No hardware with ID " + id);
@@ -94,13 +94,13 @@ export default class HardwarePage extends DynamicPage {
 		$("#tickets").html("");
 		$("#software").html("");
 		var programs = [];
-		var tickets = await this.device.tickets;
+		var tickets = this.device.tickets;
 
 		for (var i = 0; i < tickets.length; i++) {
 			var statusClass = "pending";
 			var ticket = tickets[i];
-			var status = await ticket.status;
-			var statusText = await status.name;
+			var status = ticket.status;
+			var statusText = status.name;
 			
 			switch (statusText) { 
 				case "New":

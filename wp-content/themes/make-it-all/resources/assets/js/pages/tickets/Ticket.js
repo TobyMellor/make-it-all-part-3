@@ -31,8 +31,8 @@ export default class Ticket {
 	}) {
 		this.id                   = id;
 		this.author               = author;
-		this.calls                = calls;    // ID of calls, get method returns instances of Call's
-		this.status               = status;
+		this.calls                = calls;  // ID of calls, get method returns instances of Call's
+		this.status               = status; // ID of status, get method returns instance of Status
 		this.status_history       = statusHistory;
 		this.title                = title;
 		this.description          = description;
@@ -55,8 +55,16 @@ export default class Ticket {
 	set calls(calls) {
 		this._calls = calls;
 	}
+
+	get status() {
+		return (new TicketManager()).getStatus(this._status);
+	}
+
+	set status(status) {
+		this._status = status;
+	}
 	
-	get statusHistory() {
+	get status_history() {
 		return (new TicketManager()).getStatusHistory(this._status_history);
 	}
 

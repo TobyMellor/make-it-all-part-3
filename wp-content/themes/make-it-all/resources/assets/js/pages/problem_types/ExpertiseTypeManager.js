@@ -1,7 +1,6 @@
 import Manager from "../Manager";
 import ExpertiseType from "./ExpertiseType";
 import ExpertiseTypeStaff from "./ExpertiseTypeStaff";
-import API from "../API";
 
 /**
  * ExpertiseTypeManager
@@ -14,17 +13,9 @@ import API from "../API";
 export default class ExpertiseTypeManager extends Manager {
 	constructor() {
 		super();
-	}
 
-	/**
-	 * Get all ExpertiseType's from the DB
-	 *
-	 * @return {Promise<Array>} Array of All ExpertiseTypes
-	 */
-	get expertiseTypes() {
-		return (async() => {
-			return (await API.call("/api/expertise-types")).map(e => new ExpertiseType(e));
-		})();
+		this.expertiseTypes     = api.expertiseTypes.map(e => new ExpertiseType(e));
+		this.expertiseTypeStaff = api.expertiseTypeStaff.map(e => new ExpertiseTypeStaff(e));
 	}
 
 	/**
@@ -32,8 +23,8 @@ export default class ExpertiseTypeManager extends Manager {
 	 *
 	 * @return {Array}
 	 */
-	async getRootExpertiseTypes() {
-		return (await this.expertiseTypes).filter(expertiseType => expertiseType._parent == null);
+	getRootExpertiseTypes() {
+		return this.expertiseTypes.filter(expertiseType => expertiseType._parent == null);
 	}
 
 	/**
@@ -42,8 +33,8 @@ export default class ExpertiseTypeManager extends Manager {
 	 * @param {Integer} expertiseTypeId representing ExpertiseType.id
 	 * @return {ExpertiseType}
 	 */
-	async getExpertiseType(expertiseTypeId) {
-		return (await this.expertiseTypes).find(expertiseType => expertiseType.id === expertiseTypeId);
+	getExpertiseType(expertiseTypeId) {
+		return this.expertiseTypes.find(expertiseType => expertiseType.id === expertiseTypeId);
 	}
 
 	/**
@@ -52,8 +43,8 @@ export default class ExpertiseTypeManager extends Manager {
 	 * @param {Array} expertiseTypeIds Array of Integers representing ExpertiseType.id's
 	 * @return {Array} Array of ExpertiseTypes satisfying the condition
 	 */
-	async getExpertiseTypes(expertiseTypeIds) {
-		return (await this.expertiseTypes).filter(expertiseType => expertiseTypeIds.indexOf(expertiseType.id) > -1);
+	getExpertiseTypes(expertiseTypeIds) {
+		return this.expertiseTypes.filter(expertiseType => expertiseTypeIds.indexOf(expertiseType.id) > -1);
 	}
 
 	/**
@@ -62,8 +53,8 @@ export default class ExpertiseTypeManager extends Manager {
 	 * @param {Integer} expertiseTypeId representing ExpertiseType.id
 	 * @return {Array} Array of corresponding ExpertiseTypeStaff's linking to ExpertiseType
 	 */
-	async getExpertiseTypeStaffByExpertiseTypeId(expertiseTypeId) {
-		return (await this.expertiseTypeStaff).filter(expertiseTypeStaff => expertiseTypeStaff._expertise_type === expertiseTypeId);
+	getExpertiseTypeStaffByExpertiseTypeId(expertiseTypeId) {
+		return this.expertiseTypeStaff.filter(expertiseTypeStaff => expertiseTypeStaff._expertise_type === expertiseTypeId);
 	}
 
 	/**
@@ -72,12 +63,12 @@ export default class ExpertiseTypeManager extends Manager {
 	 * @param {ExpertiseType} expertiseType starting ExpertiseType to find parents from
 	 * @return {Array} Array of ExpertiseType parents, and the starting ExpertiseType
 	 */
-	async getExpertiseTypeChain(expertiseType) {
+	getExpertiseTypeChain(expertiseType) {
 		var expertiseTypeParent = expertiseType,
 			expertiseTypes      = [expertiseTypeParent];
 
 		while (expertiseTypeParent != null) {
-			expertiseTypeParent = await expertiseTypeParent.parent;
+			expertiseTypeParent = expertiseTypeParent.parent;
 
 			if (expertiseTypeParent != null) {
 				expertiseTypes.push(expertiseTypeParent);
@@ -88,43 +79,6 @@ export default class ExpertiseTypeManager extends Manager {
 	}
 
 	/**
-	 * Create an expertise type
-	 *
-	 * @param {String} name The name of the ExpertiseType
-	 * @param {Integer} parentExpertiseTypeId the ID of the parent the new ExpertiseType sits under
-	 * @return {ExpertiseType} the created ExpertiseType
-	 */
-	createExpertiseType(name, parentExpertiseTypeId) {
-		return API.call("/api/expertise-types", "POST", {
-			name,
-			parent_id: parentExpertiseTypeId
-		});
-	}
-
-	/**
-	 * Delete a expertise type
-	 *
-	 * @param {Integer} id representing ExpertiseType.id
-	 * @return null
-	 */
-	deleteExpertiseType(id) {
-		return API.call("/api/expertise-types/" + id, "DELETE");
-	}
-
-	/**
-	 * Get all ExpertiseTypeStaff's from the DB
-	 *
-	 * @return {Promise<Array>} Array of All ExpertiseTypeStaff
-	 */
-	get expertiseTypeStaff() {
-		return (async() => {
-			let expertiseTypeStaff = await API.call("/api/expertise-type-staff");
-
-			return expertiseTypeStaff ? expertiseTypeStaff.map(e => new ExpertiseTypeStaff(e)) : [];
-		})();
-	}
-
-	/**
 	 * Get a specific ExpertiseTypeStaff record, with an exact
 	 * ExpertiseTypeStaff._staff and ExpertiseTypeStaff._expertise_type ID pair
 	 *
@@ -132,10 +86,8 @@ export default class ExpertiseTypeManager extends Manager {
 	 * @param {Integer} staffId representing ExpertiseTypeStaff._staff
 	 * @return {ExpertiseTypeStaff} null, or the record desired
 	 */
-	async getExpertiseTypeStaffByStaffId(expertiseTypeId, staffId) {
-		let expertiseTypeStaff = await this.expertiseTypeStaff;
-
-		return expertiseTypeStaff.find(expertiseTypeStaff => expertiseTypeStaff._staff === staffId && expertiseTypeStaff._expertise_type) || null;
+	getExpertiseTypeStaffByStaffId(expertiseTypeId, staffId) {
+		return this.expertiseTypeStaff.find(expertiseTypeStaff => expertiseTypeStaff._staff === staffId && expertiseTypeStaff._expertise_type) || null;
 	}
 
 	/**
@@ -144,13 +96,11 @@ export default class ExpertiseTypeManager extends Manager {
 	 * @param {Integer} expertiseTypeStaffId representing ExpertiseTypeStaff.id
 	 * @return {ExpertiseTypeStaff}
 	 */
-	async getExpertiseTypeStaff(expertiseTypeStaffId) {
-		return new ExpertiseTypeStaff(
-			await API.call("/api/expertise-type-staff/" + expertiseTypeStaffId)
-		);
+	getExpertiseTypeStaff(expertiseTypeStaffId) {
+		return this.expertiseTypeStaff.find(expertiseTypeStaff => expertiseTypeStaff.id === expertiseTypeStaffId) || null;
 	}
 
-	async search(query, properties) {
-		return super.search((await this.expertiseTypes), query, properties);
+	search(query, properties) {
+		return super.search(this.expertiseTypes, query, properties);
 	}
 }
