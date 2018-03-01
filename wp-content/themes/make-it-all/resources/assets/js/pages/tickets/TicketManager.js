@@ -233,9 +233,9 @@ export default class TicketManager extends Manager {
 	 */
 	getTicketsByExpertiseTypeId(expertiseTypeId) {
 		let expertiseTypes = this.expertiseTypeManager.getExpertiseTypeStaffByExpertiseTypeId(expertiseTypeId),
-			rawTickets     = [].concat(...expertiseTypes.map(e => e.tickets)); // move all of expertiseTypes[i].tickets into a single array
+			ticketIds      = [].concat(...expertiseTypes.map(e => e.tickets)); // move all of expertiseTypes[i].tickets into a single array
 
-		return rawTickets ? rawTickets.map(e => new Ticket(e)) : [];
+		return this.getTicketsWithIdIn(ticketIds);
 	}
 
 	/**

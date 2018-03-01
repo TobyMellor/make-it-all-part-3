@@ -1,6 +1,6 @@
 <?php
 
-$page = 'tickets';
+$page = 'problem_types';
 
 $context = Timber::get_context();
 
