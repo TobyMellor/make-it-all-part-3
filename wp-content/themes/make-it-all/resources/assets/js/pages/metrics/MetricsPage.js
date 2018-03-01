@@ -1,7 +1,7 @@
 import DynamicPage from "../DynamicPage";
 import TicketManager from "../tickets/TicketManager";
 import StaffManager from "../staff/StaffManager";
-import ProblemTypeManager from "../problem_types/ExpertiseTypeManager";
+import ExpertiseTypeManager from "../problem_types/ExpertiseTypeManager";
 import SoftwareManager from "../software/SoftwareManager";
 import HardwareManager from "../hardware/HardwareManager";
 
@@ -16,25 +16,27 @@ import HardwareManager from "../hardware/HardwareManager";
 export default class MetricsPage extends DynamicPage {
 	constructor() {
 		super();
+
 		//Declearing managers
-		this.ticketManager = new TicketManager();
-		this.staffManager = new StaffManager();
-		this.softwareManager = new SoftwareManager();
-		this.hardwareManager = new HardwareManager();
-		this.problemTypeManager = new ProblemTypeManager();
+		this.ticketManager        = new TicketManager();
+		this.staffManager         = new StaffManager();
+		this.softwareManager      = new SoftwareManager();
+		this.hardwareManager      = new HardwareManager();
+		this.expertiseTypeManager = new ExpertiseTypeManager();
+
 		this.loggedInUser = null;
 		this.pageLoad();
 	}
 
-	async pageLoad() {
-		this.loggedInUser = await this.staffManager.currentUser(true);
+	pageLoad() {
+		this.loggedInUser = this.staffManager.currentUser(true);
 		var tickets = null;
 
 		if (this.loggedInUser.isAnalyst) { //If an analyst is logged in
 			//Load all staff members into Staff Drop down box, and display
 			//system-wide statistics (using tickets assigned to any operator) 
 			this.populateStaffNameSearch();
-			tickets = await this.ticketManager.tickets;
+			tickets = this.ticketManager.tickets;
 			this.showStats(true, tickets)
 		} else {
 			//If not, display the name of the logged in user and force
@@ -42,22 +44,22 @@ export default class MetricsPage extends DynamicPage {
 			$("#StaffNameSearch").append("<option style='color:grey' value='" + this.loggedInUser.id + "' selected>" + this.loggedInUser.name + "</option>");
 			$("#StaffNameSearch").attr("disabled","true");
 			$("#StaffNameSearch").selectpicker('refresh');
-			tickets = await this.ticketManager.getTicketsAssignedTo(this.loggedInUser.id);
+			tickets = this.ticketManager.getTicketsAssignedToStaffId(this.loggedInUser.id);
 			this.openStaffInfo(this.loggedInUser, tickets);
 		}
 	}
 
 	//Handles display data in the "Statistics" section
-	async showStats(showingGlobalInfo, tickets) {
+	showStats(showingGlobalInfo, tickets) {
 		if (showingGlobalInfo) { 
 			//If user is an Analyst and has not selected a specific staff member to view
 			//Display information about Hardware and Software
 			$("#HW_SW").attr("style","")
-			var programs = await this.softwareManager.programs;
+			var programs = this.softwareManager.programs;
 			var noOfSoftware = programs.length;
 			var noOfSoftwareWithIssues = programs.filter(p => p._tickets.length > 0).length;
 			
-			var devices = await this.hardwareManager.devices;
+			var devices = this.hardwareManager.devices;
 			var noOfHardware = devices.length;
 			var noOfHardwareWithIssues = devices.filter(d => d._tickets.length > 0).length;
 
@@ -71,20 +73,31 @@ export default class MetricsPage extends DynamicPage {
 		}
 
 		$("#totalTicketsAssigned").val(tickets.length); //Number of tickets in the system
-		var solvedTickets = tickets.filter(t => t._status == "resolved"); //Number of resolved tickets in the system
+		var solvedTickets = tickets.filter(t => t.status.slug == "resolved"); //Number of resolved tickets in the system
 		$("#totalTicketsSolved").val(solvedTickets.length);
 
 		var totalTime = 0;
 		var totalReplies = 0;
 		for (var i = 0; i < tickets.length; i++) {
-			totalReplies += (await tickets[i].comments).length;
+			totalReplies += tickets[i].comments.length;
+			var ticketStatusHistory = this.ticketManager.getTicketStatusesByTicketId(tickets[i].id);
+			var resolvedTicketStatus = ticketStatusHistory.filter(t => t._status == 1);
+
+			if (resolvedTicketStatus.length > 0) {
+				var ticketCreated = new Date(tickets[i].created_at_real);
+				var lastResolved = resolvedTicketStatus[resolvedTicketStatus.length - 1]
+				var ticketResolved = new Date(lastResolved.created_at_real);
+				var timeDiff = Math.abs(ticketResolved.getTime() - ticketCreated.getTime());
+				var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+				totalTime += diffDays;
+			}
 		}
 
-		// $("#avgTimeToSolveTicket").val(""); 
-
 		if (!(tickets.length)) {
-			$("#avgRepliesPerTicket").val(0); //If there are no tickets, use this so we don't divide by 0
+			$("#avgTimeToSolveTicket").val("-"); 
+			$("#avgRepliesPerTicket").val("-"); //If there are no tickets, use this so we don't divide by 0
 		} else {
+			$("#avgTimeToSolveTicket").val(totalTime/tickets.length); 
 			$("#avgRepliesPerTicket").val(totalReplies/tickets.length); //Calculates average replies per ticket
 		}
 
@@ -94,20 +107,20 @@ export default class MetricsPage extends DynamicPage {
 
 	//This function takes a staff member object, and relevant tickets for that 
 	//staff member and appropriately fills in values on the page
-	async openStaffInfo(staff,tickets) {
+	openStaffInfo(staff,tickets) {
 		$(".collapsible").css("display","block");
 		$("#name").val(staff.name);
 		$("#phone").val(staff.phone);
 		$("#role").val(staff.job);
-		$("#statsTitle").text("Statistics for " + staff.name);
-		$("#ticketTitle").text("Ticket Backlog for " + staff.name);
+		$("#statsTitle").text("Statistics - " + staff.name);
+		$("#ticketTitle").text("Ticket Backlog - " + staff.name);
 		this.showStats(false,tickets);
 	}
 
 	//Function used to load all staff members in the system in the drop down box.
-	async populateStaffNameSearch() {
+	populateStaffNameSearch() {
 		$("#StaffNameSearch").html("");
-		var staffMembers = await this.staffManager.staff;
+		var staffMembers = this.staffManager.staff;
 		$("#StaffNameSearch").append("<option>Search...</option>");
 		for (var i = 0; i < staffMembers.length; i++) {
 			$("#StaffNameSearch").append("<option value='" + staffMembers[i].id + "'>" + staffMembers[i].name + "</option>");
@@ -116,12 +129,12 @@ export default class MetricsPage extends DynamicPage {
 	}
 
 	//Handles a new item is selected in the drop down box.
-	async staffDropdownChange() {
+	staffDropdownChange() {
 		var index = $('#StaffNameSearch')[0].selectedIndex;
 		if (index > 0) { //Staff Member selected
 			var id = $('#StaffNameSearch').val();
-			var staff = await this.staffManager.get(id)
-			tickets = await this.ticketManager.getTicketsAssignedTo(staff.id);
+			var staff = this.staffManager.get(id)
+			tickets = this.ticketManager.getTicketsAssignedToStaffId(staff.id);
 			this.openStaffInfo(staff, tickets); //Display correct page info for selected staff member
 		} else { //Default option selected - close staff details
 			$(".collapsible").css("display","none");
@@ -130,16 +143,13 @@ export default class MetricsPage extends DynamicPage {
 			$("#role").val("");
 			$("#statsTitle").text("Statistics");
 			$("#ticketTitle").text("Ticket Backlog");
-			var tickets = await this.ticketManager.tickets;
+			var tickets = this.ticketManager.tickets;
 			this.showStats(true, tickets)
-			this.createLineGraph(tickets); //recreate graphs using data for whole system
-			this.createPieChart(tickets);
 		}
 	}
 
 	//Responsible for displaying the backlog graph. Takes the paramater "tickets" and uses it calculate values tp display 
 	createLineGraph(tickets) {
-		var ctx = document.getElementById("operatorStatistics").getContext('2d');
 		var now = new Date();
 		var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 		var months = new Array();
@@ -158,9 +168,12 @@ export default class MetricsPage extends DynamicPage {
 			var opened = tickets.filter(t => new Date(t.created_at_real).getMonth() == months[j])
 			ticketsOpened.push(opened.length);
 			//Gets all unresolved tickets that were opened in the current month
-			var unresolved = tickets.filter(t => (new Date(t.created_at_real).getMonth() == months[j] && t._status != "resolved"))
+			var unresolved = tickets.filter(t => (new Date(t.created_at_real).getMonth() == months[j] && t.status.slug != "resolved"))
 			ticketsUnresolved.push(unresolved.length);
 		}
+
+		$('#ticket-backlog').html("<canvas id='ticketBacklog'></canvas>");
+		var ctx = document.getElementById("ticketBacklog").getContext('2d');
 
 		var opStatChart = new Chart(ctx, {
 			type: 'line',
@@ -195,29 +208,30 @@ export default class MetricsPage extends DynamicPage {
 		});
 	}
 
-	async createPieChart(t) {
-		var tickets = t;
-		var rootProblemTypes = await this.problemTypeManager.getRootExpertiseTypes(); //Gets the major/root Expertise types
+	createPieChart(tickets) {
+		var rootProblemTypes = this.expertiseTypeManager.getRootExpertiseTypes(); //Gets the major/root Expertise types
 		
 		var ProblemTypeNames = new Array();
 		var ticketsPerProblemType = new Array();
 		for (var i = 0; i < rootProblemTypes.length; i++) {
 			ProblemTypeNames.push(rootProblemTypes[i].name); //Adds the names of each root Expertise type to an array 
 
-			var t = new Array();
+			var ticketCount = new Array();
 			for (var j = 0; j < tickets.length; j++) {
-				var probTypeChain = await this.problemTypeManager.getExpertiseTypeChain(await tickets[j].expertise_type);
+				var probTypeChain = this.expertiseTypeManager.getExpertiseTypeChain(tickets[j].expertise_type);
 				var rootProblemType = probTypeChain[probTypeChain.length - 1]; //Gets the root problem type for the current ticket.
 				if (rootProblemTypes[i].id == rootProblemType.id) { //If the current ticket's root problem type and the currently selected problem type are the same
 					//We add the ticket to an array and remove it from tickets (so we no longer have to search it each iteration. Helps to speed things up)	
-					t.push(tickets[j]);
+					ticketCount.push(tickets[j]);
 					tickets.splice(j,1);
+					--j;
 				}
 			}
 
-			ticketsPerProblemType.push(t.length); 
+			ticketsPerProblemType.push(ticketCount.length); 
 		}
 
+		$('#problem-type-card').html("<canvas id='problemTypeSolved'></canvas>");
 		var ctx = document.getElementById("problemTypeSolved").getContext('2d');
 		var probTypeChart = new Chart(ctx, {
 			type: 'doughnut',
