@@ -18,6 +18,7 @@ import ExpertiseTypeManager from "../problem_types/ExpertiseTypeManager";
 export default class TicketManager extends Manager {
 	constructor() {
 		super();
+
 		this.expertiseTypeManager = window.expertiseTypeManager || new ExpertiseTypeManager();
 
 		this.calls    = api.calls.map(e => new Call(e));
@@ -157,7 +158,7 @@ export default class TicketManager extends Manager {
 	}
 
 	getMyTickets() {
-		return this.getTicketsAssignedTo(this.staffManager.currentUser());
+		return this.getTicketsAssignedToStaffId(ticketPage.staffManager.currentUser());
 	}
 
 	/**
