@@ -19,26 +19,6 @@ export default class HardwarePage extends DynamicPage {
 		this.ticketManager   = new TicketManager();
 		this.hardwareManager = new HardwareManager();
 		this.softwareManager = new SoftwareManager();
-
-		//Creating action buttons
-		$('#list-view .top-nav').append(`
-			<button class="btn btn-success btn-sm pull-right" id='show-new-device-modal' data-toggle="modal" data-target="#new-device-modal">
-				<i class="fa fa-plus"></i> New Device
-			</button>`
-		);
-
-		$('#single-view .top-nav').append(`
-		<button class="btn btn-sm btn-warning float-right" id='show-edit-device-modal' data-toggle="modal" data-target="#edit-device-modal">
-			<i class="fa fa-pencil"></i> Edit
-		</button>
-		`);
-
-		$('#single-view .top-nav').prepend(`
-			<button class="btn btn-sm float-left" data-action="close">
-				<i class="fa fa-times"></i> Close
-			</button>
-		`);
-		
 	}
 	
 	//Handles adding all unique device types to the Types column
@@ -127,7 +107,7 @@ export default class HardwarePage extends DynamicPage {
 
 			if (programs.length < 20) { //Limiting program list size to 20
 				for (var j = 0; j < ticket.programs.length; j++) {
-					var program = this.softwareManager.getProgram(ticket._programs[j]);
+					var program = this.softwareManager.get(ticket._programs[j]);
 					if (programs.indexOf(program) == -1) {
 						programs.push(program);
 					}

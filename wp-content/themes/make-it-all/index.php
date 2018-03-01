@@ -1,6 +1,6 @@
 <?php
 
-$page = 'problem_types';
+$page = 'hardware';
 
 $context = Timber::get_context();
 
