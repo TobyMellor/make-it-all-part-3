@@ -32,28 +32,39 @@ export default class TicketPage extends DynamicPage {
 	 * @param {Array} Array of strings representing status slugs
 	 */
 	showFilteredTickets(statusSlugs) {
-		let status, filteredTickets, filteredTicket, i, j;
+		let status, filteredTickets, filteredTicket, i, j,
+			splitStatusSlugs = statusSlugs.split(',');
 
 		if (statusSlugs.indexOf('assigned_to') > -1) {
 			filteredTickets = this.ticketManager.getMyTickets();
 		} else {
-			filteredTickets = this.ticketManager.getTicketsWithSlugIn(statusSlugs.split(','));
+			filteredTickets = this.ticketManager.getTicketsWithSlugIn(splitStatusSlugs);
 		}
 
-		this.clearTable();
+		let $rows = $(this.tableSelector).find('tbody tr');
 
-		for (j = 0; j < filteredTickets.length; j++) {
-			filteredTicket = filteredTickets[j];
-			status         = filteredTicket.status;
+		if ($rows.length === 0) {
+			for (j = 0; j < filteredTickets.length; j++) {
+				filteredTicket = filteredTickets[j];
+				status         = filteredTicket.status;
 
-			this.appendTableRow({
-				id: filteredTicket.id,
-				title: filteredTicket.title,
-				status_name: '<span class="filter filter-' + status.slug.split('_')[0] + '">' + status.name + '</span>',
-				created_at: filteredTicket.created_at,
-				updated_at: filteredTicket.updated_at
-			});
+				this.appendTableRow({
+					id: filteredTicket.id,
+					title: filteredTicket.title,
+					status_name: '<span class="filter filter-' + status.slug.split('_')[0] + '" data-slug="' + status.slug + '">' + status.name + '</span>',
+					created_at: filteredTicket.created_at,
+					updated_at: filteredTicket.updated_at
+				});
+			}
 		}
+
+		$rows.each(function() {
+			if (splitStatusSlugs.indexOf($(this).find('td span.filter').data('slug')) === -1) {
+				$(this).addClass('row-hidden');
+			} else {
+				$(this).removeClass('row-hidden');
+			}
+		});
 
 		this.updateSplashScreen();
 

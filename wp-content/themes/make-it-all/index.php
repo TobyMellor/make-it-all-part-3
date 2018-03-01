@@ -1,6 +1,6 @@
 <?php
 
-$page = 'staff';
+$page = 'tickets';
 
 $context = Timber::get_context();
 
