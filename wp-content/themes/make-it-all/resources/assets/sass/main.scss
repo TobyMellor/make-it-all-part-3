@@ -100,15 +100,13 @@ nav ul {
 			}
 
 			&:hover {
-				.fa {
-					-webkit-text-stroke: 0.5 $dark-blue-hover;
-				}
-			}
-
-			&:hover:not(:last-child) {
 				background-color: $dark-blue-hover;
 				border-left: 3px $blue-hover solid;
 				padding-right: 3px; // Offset $thin border indentation
+
+				.fa {
+					-webkit-text-stroke: 0.5 $dark-blue-hover;
+				}
 			}
 
 			.fa {
