@@ -1,6 +1,6 @@
 import "../../main";
 import TicketPage from "./TicketPage";
-import ProblemTypePage from "../problem-types/ProblemTypePage";
+import ProblemTypePage from "../problem_types/ProblemTypePage";
 import StaffProblemTypePage from "../staff/StaffProblemTypePage";
 
 /**

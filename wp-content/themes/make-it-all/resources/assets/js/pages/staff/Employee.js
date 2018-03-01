@@ -1,4 +1,4 @@
-import ExpertiseTypeManager from "../problem-types/ExpertiseTypeManager";
+import ExpertiseTypeManager from "../problem_types/ExpertiseTypeManager";
 
 /**
  * Employee

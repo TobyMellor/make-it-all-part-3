@@ -5,7 +5,7 @@ import Status from "./Status";
 import Ticket from "./Ticket";
 import TicketStatus from "./TicketStatus";
 import API from "../API";
-import ExpertiseTypeManager from "../problem-types/ExpertiseTypeManager";
+import ExpertiseTypeManager from "../problem_types/ExpertiseTypeManager";
 
 /**
  * TicketManager

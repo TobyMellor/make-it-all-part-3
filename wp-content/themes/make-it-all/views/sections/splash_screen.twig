@@ -1,0 +1,21 @@
+{#
+Splash screen inserted where table has no results
+#}
+
+<div class="splash-screen {% if hidden is defined %}block-hidden{% endif %}">
+	{# Main textual content of the splash screen #}
+	<h1>{{ title }}</h1>
+
+	{% if subtitle is defined %}
+		<p>{{ subtitle }}</p>
+	{% endif %}
+
+	{# Splash screen call-to-action, usually for creation of an item
+	     since splash screen is usually shown when there are no results #}
+	{% if button is defined %}
+		<button class="btn btn-{{ button.type }} btn-lg" data-toggle="modal" data-target="#{{ button.modal }}">
+			<i class="fa fa-{{ button.icon }}"></i>
+			{{ button.name }}
+		</button>
+	{% endif %}
+</div>

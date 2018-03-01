@@ -1,0 +1,46 @@
+{#
+Top-nav bar shown at the top of list view and single view
+with the title of the displayed content.
+
+For a list view, this is the number of results in the list,
+with a suffix about what the list contains and potentially
+search functionality with a search box on the right.
+
+For a single view, this shows the title of the content
+as well as with close and edit buttons if relevant.
+#}
+<nav class="top-nav">
+	{# Close button #}
+	{% if buttonsmodal is defined %}
+		<button class="btn btn-sm float-left" data-action="close">
+			<i class="fa fa-times"></i>
+			Close
+		</button>
+	{% endif %}
+
+	{# Icon #}
+	{% if icon is defined %}
+		<i class="fa fa-{{ icon }}"></i>
+	{% endif %}
+
+	{# Name #}
+	<h4 class="main-content-title">{{ name }}</h4>
+
+	{# Search field #}
+	{% if search is defined %}
+		<div class="input-group search-field float-right">
+			<span class="input-group-addon">
+				<i class="fa fa-search"></i>
+			</span>
+			<input type="text" class="form-control" placeholder="Search…">
+		</div>
+	{% endif %}
+
+	{# Edit button #}
+	{% if buttonsmodal is defined %}
+		<button class="btn btn-sm btn-warning float-right" data-action="edit" data-toggle="modal" data-target="#{{ buttonsmodal }}">
+			<i class="fa fa-pencil"></i>
+			Edit
+		</button>
+	{% endif %}
+</nav>

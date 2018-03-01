@@ -18,7 +18,7 @@ let resources = name => "resources/assets/" + folder(name) + name;
 let output = name => folder(name).replace("sass", "css") + name;
 
 // List of pages' folders to iterate through contents to get JS and CSS for compilation
-let pages = ["tickets", "staff", "hardware", "software", "metrics", "problem-types", "settings", "login"];
+let pages = ["tickets", "staff", "hardware", "software", "metrics", "problem_types", "settings", "login"];
 
 // Compile common JS across many pages
 mix.js(["main.js", "pages/DynamicPage.js", "pages/Manager.js"].map(resources), output("main.js"));

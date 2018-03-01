@@ -1,7 +1,7 @@
 import DynamicPage from "../DynamicPage";
 import TicketManager from "../tickets/TicketManager";
 import StaffManager from "../staff/StaffManager";
-import ProblemTypeManager from "../problem-types/ExpertiseTypeManager";
+import ProblemTypeManager from "../problem_types/ExpertiseTypeManager";
 import SoftwareManager from "../software/SoftwareManager";
 import HardwareManager from "../hardware/HardwareManager";
 

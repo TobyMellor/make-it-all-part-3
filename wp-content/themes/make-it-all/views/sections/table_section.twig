@@ -1,0 +1,40 @@
+{#
+Main table content for list view in page
+Contains the main data to be presented on pages
+where tabular representation of the content is most useful
+#}
+<div id="table-section">
+	<table class="table table-hover table-responsive data">
+		<thead>
+			<tr>
+				<th data-slug="id">ID</th>
+				{# Columns are generated automatically
+				     from the list of columns provided by the page #}
+				{% for slug, name in columns %}
+					<th data-slug="{{ slug }}"
+						{# Some columns may be just an icon column, so the
+						     column needs a title to be displayed as a tooltip #}
+						{% if name.title is defined %}
+							data-toggle="tooltip" title="{{ name.title }}"
+						{% endif %}
+					>
+						{# Insert content of the column heading: icon or name #}
+						{% if name.icon is defined %}
+							<i class="fa fa-{{ name.icon }}"></i>
+						{% else %}
+							{% if name.name is defined %}
+								{{ name.name|upper }}
+							{% else %}
+								{{ name|upper }}
+							{% endif %}
+						{% endif %}
+					</th>
+				{% endfor %}
+
+				{# The eye when hovering a table row #}
+				<th data-slug="eye"></th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+</div>

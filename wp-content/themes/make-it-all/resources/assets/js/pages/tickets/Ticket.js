@@ -2,7 +2,7 @@ import TicketManager from "./TicketManager";
 import StaffManager from "../staff/StaffManager";
 import HardwareManager from "../hardware/HardwareManager";
 import SoftwareManager from "../software/SoftwareManager";
-import ExpertiseTypeManager from "../problem-types/ExpertiseTypeManager";
+import ExpertiseTypeManager from "../problem_types/ExpertiseTypeManager";
 
 /**
  * Ticket

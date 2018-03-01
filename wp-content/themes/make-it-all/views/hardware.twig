@@ -1,0 +1,78 @@
+{#
+Hardware page with table listing all devices, categories by Type and Make. Each device can 
+clicked to show more information about the device, such as what tickets it's assigned to and
+what software it is commonly associated with. 
+#}
+
+{% extends "layouts/content.twig" %}
+
+{% block top_nav %}
+	{% include "sections/top_nav.twig" with {"name": "Hardware", "icon": "laptop"} %}
+{% endblock %}
+
+{% block list_view %}
+	<div id="selectorLists">
+		<div class="selectorList">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>TYPE</th>
+					</tr>
+				</thead>
+				<tbody id="typeList">
+					<tr>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="selectorList">
+			<table class="table">
+				<thead>
+					<tr>
+						<th data-slug="make">MAKE</th>
+					</tr>
+				</thead>
+				<tbody id="makeList">
+					<tr>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		{% include "sections/table_section.twig" with
+			{
+				"columns": {
+					"serial_no": "Serial No",
+					"created_at": "Created",
+					"updated_at": "Updated"
+				}
+			}
+		%}
+	</div>
+{% endblock %}
+
+
+{% block single_view %}
+	{% include "sections/top_nav.twig" with {"name": ""} %}
+
+	<div class="main-content">
+		<div class="card mb-3">
+			<h6 class="card-header main-content-title">
+				<i class="fa fa-ticket"></i> Tickets
+				<span id="ticket-total" class="text-muted list-total">Total: </span>
+			</h6>
+			<div class="card-body card-list">
+				<ul id="tickets" class="list-group"></ul>
+			</div>
+		</div>
+
+		<div class="card mb-3">
+			<h6 class="card-header main-content-title">
+					<i class="fa fa-file-code-o"></i> Software
+				<span id="software-total" class="text-muted list-total">Total: </span>
+			</h6>
+			<div class="card-body card-list">
+				<ul id="software" class="list-group"></ul>
+			</div>
+		</div>
+	</div>
+{% endblock %}

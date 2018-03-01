@@ -1,0 +1,11 @@
+{#
+Footer partial to be inserted at the bottom of every page
+Page does not have a visible footer, just loads JS for the page
+JS is loaded in footer instead of head because Turbolinks manages execution
+#}
+
+{# Run specific page JS #}
+<script src="js/pages/{{ activePage }}.js"></script>
+
+</body>
+</html>
