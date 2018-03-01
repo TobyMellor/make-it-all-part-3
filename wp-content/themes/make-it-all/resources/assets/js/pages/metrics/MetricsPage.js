@@ -132,7 +132,7 @@ export default class MetricsPage extends DynamicPage {
 	staffDropdownChange() {
 		var index = $('#StaffNameSearch')[0].selectedIndex;
 		if (index > 0) { //Staff Member selected
-			var id = $('#StaffNameSearch').val();
+			var id = Number($('#StaffNameSearch').val());
 			var staff = this.staffManager.get(id)
 			tickets = this.ticketManager.getTicketsAssignedToStaffId(staff.id);
 			this.openStaffInfo(staff, tickets); //Display correct page info for selected staff member
