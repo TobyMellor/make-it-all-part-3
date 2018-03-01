@@ -12,19 +12,12 @@ import SoftwareManager from "../software/SoftwareManager";
 export default class SoftwarePage extends DynamicPage {
 	constructor() {
 		super();
+
 		this.program = null;
+		
 		this.ticketManager   = new TicketManager();
 		this.hardwareManager = new HardwareManager();
 		this.softwareManager = new SoftwareManager();
-
-		//Creating action buttons
-		if ($(".btn.btn-success.btn-sm.pull-right[data-target='#new-program-modal']").length == 0) {
-			$('#list-view .top-nav').append(`
-				<button class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#new-program-modal">
-					<i class="fa fa-plus"></i> New Program
-				</button>`
-			);
-		}
 	}
 	
 	//Handles adding all programs in the system to the Software table

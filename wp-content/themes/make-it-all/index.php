@@ -1,6 +1,6 @@
 <?php
 
-$page = 'hardware';
+$page = 'software';
 
 $context = Timber::get_context();
 

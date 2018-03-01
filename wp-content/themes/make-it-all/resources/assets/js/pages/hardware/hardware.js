@@ -1,6 +1,6 @@
-/*
-JS specific to Hardware page, used to handle front end interactions such as
-event handlers for buttons , 
+/**
+ * JS specific to Hardware page, used to handle front end interactions such as
+ * event handlers for buttons , 
  */
 
 import MakeItAll from "../../main";
