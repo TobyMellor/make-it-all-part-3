@@ -56,12 +56,6 @@ help desk.
 		{
 			"title": "No results",
 			"subtitle": "Get started, create a new staff member.",
-			"button": {
-				"name": "New User",
-				"icon": "plus",
-				"type": "success",
-				"modal": "new-staff-modal"
-			},
 			"hidden": true
 		}
 	%}
@@ -100,7 +94,7 @@ help desk.
 
 {% block single_view %}
 	<section id="single-view">
-		{% include "sections/top_nav.twig" with {"name": "Loading…", "buttonsmodal": "new-staff-modal"} %}
+		{% include "sections/top_nav.twig" with {"name": "Loading…", "closeable": true} %}
 
 		<div class="container">
 			<div class="row m-0">

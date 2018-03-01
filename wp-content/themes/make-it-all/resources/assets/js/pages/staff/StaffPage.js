@@ -10,6 +10,7 @@ import TicketManager from "../tickets/TicketManager";
 export default class StaffPage extends DynamicPage {
 	constructor() {
 		super();
+
 		// Managers
 		this.staffManager  = new StaffManager();
 		this.ticketManager = new TicketManager();
@@ -48,9 +49,9 @@ export default class StaffPage extends DynamicPage {
 		(async(ids) => {
 			// Get number of assigned tickets and fill column
 			let $rows = $(this.tableSelector).find("tbody").children("tr");
-			let tickets = this.ticketManager.getTicketsAssignedTo(ids);
+			let tickets = this.ticketManager.getTicketsAssignedToStaffIds(ids);
 			$rows.each((i, el) => {
-				el.children[ticketsColumnIndex].textContent = tickets[i] ? (tickets[i].length || 0) : 0;
+				el.children[ticketsColumnIndex].textContent = tickets[i+1] ? (tickets[i+1].length || 0) : 0;
 			});
 		})(staffForTickets);
 	}
@@ -99,13 +100,13 @@ export default class StaffPage extends DynamicPage {
 					break;
 
 				case "avatar":
-					el.src = "/res/avatar/" + this.employee.email;
+					el.src = "https://placehold.it/275x275";
 					break;
 
 				case "tickets.assigned":
 					el.textContent = "…";
 					(async(el) => {
-						el.textContent = this.ticketManager.getTicketsAssignedTo(this.employee.id).length;
+						el.textContent = this.ticketManager.getTicketsAssignedToStaffId(this.employee.id).length;
 					})(el);
 					break;
 

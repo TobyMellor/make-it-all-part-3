@@ -142,13 +142,16 @@ export default class TicketManager extends Manager {
 	}
 
 	getTicketsAssignedToStaffIds(staffIds) {
-		let result = {};
+		let expertiseTypeStaff = this.expertiseTypeManager.expertiseTypeStaff,
+			tickets            = this.tickets,
+			result             = {};
 
-		for (let i = 0; i < staffIds.length; i++) {
-			let staffId = staffIds[i];
-
-			result[staffId] = this.getTicketsAssignedToStaffId(staffId);
-		}
+		staffIds.forEach(staffId => {
+			result[staffId] = tickets.filter(ticket => {
+				return ticket._assigned_to_operator === staffId
+						|| expertiseTypeStaff.find(e => e.id === ticket._expertise_type_staff)._staff === staffId;
+			});
+		});
 
 		return result;
 	}
