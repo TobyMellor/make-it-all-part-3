@@ -5,8 +5,6 @@
 
 import MakeItAll from "../../main";
 import SoftwarePage from "./SoftwarePage";
-import "./modals/new-program-modal";
-import "./modals/edit-program-modal";
 import API from "../API";
 
 let softwarePage, api;
