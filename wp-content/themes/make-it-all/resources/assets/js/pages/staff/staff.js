@@ -6,7 +6,6 @@
 
 import "../../main";
 import StaffPage from "./StaffPage";
-import "./modals/new-staff-modal";
 import StaffProblemTypePage from "./StaffProblemTypePage";
 import API from "../API";
 
