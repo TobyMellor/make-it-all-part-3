@@ -123,7 +123,7 @@ class MakeItAll {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function define_public_hooks() {
+	private function definePublicHooks() {
 		$pluginPublic = new MakeItAllPublic($this->getPluginName(), $this->getVersion());
 
 		$this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
