@@ -88,16 +88,16 @@ function make_it_all_custom_post_type() {
         'rewrite' => true, 
         'capability_true' => 'post',
         'hierarchical' => false,
-        'support' => array(
+        'supports' => array(
             'title',
             'editor',
             'revisions',
-            'custom-fields'
-            
-            
+            'custom-fields' 
         ),
         'menu_position' => 0,
-        'exclude_from_search' => false
+        'exclude_from_search' => false,
+        //Will look into metaboxes for custom fields?
+        'register_meta_box_cb' => 'wpt_add_event_metaboxes'
     );
     register_post_type('ticket', $args);
 }
