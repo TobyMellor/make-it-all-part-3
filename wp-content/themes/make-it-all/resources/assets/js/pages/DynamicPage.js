@@ -197,20 +197,19 @@ class DynamicPage {
 	 * @param objectCallback a callback returning an object (the row structure)
 	 * @param searchKeys the properties in objectCallback to highlight
 	 */
-	async search(query, elements = [], objectCallback, searchKeys = []) {
+	search(query, elements = [], objectCallback, searchKeys = []) {
 		let page = this;
 
 		page.clearTable();
 
 		if (elements.length > 0) {
-			elements.forEach(async function(el) {
-				var object = await objectCallback(el);
+			elements.forEach(function(el) {
+				var object = objectCallback(el);
 
 				searchKeys.forEach(key => {
 					object[key] = String(object[key]).replace(new RegExp('(' + query + ')', 'ig'), '<strong>$1</strong>');
 				});
 
-				// This is asynchronous function, so query may have changed since the results were queried
 				if (query === $(".search-field input").val()) {
 					page.appendTableRow(object);
 					page.updateSplashScreen(`${elements.length} result${elements.length !== 1 ? "s" : ""} for ‘${query}’`);
