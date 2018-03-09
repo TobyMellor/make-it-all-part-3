@@ -11,7 +11,12 @@ abstract class Migration {
 
 		$this->prefix = $wpdb->prefix . 'mia_';
 	}
-
+	
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 */
 	abstract public function up();
 
 	/**
@@ -20,7 +25,7 @@ abstract class Migration {
 	 * @return void
 	 */
 	public function down() {
-		if ($this->isTable) $this->sqlStatement = "DROP TABLE IF EXISTS {$this->prefix}{$this->table}";
+		if ($this->isTable) $this->sqlStatement = "DROP TABLE IF EXISTS {$this->prefix}{$this->table};";
 	}
 
 	function __destruct() {

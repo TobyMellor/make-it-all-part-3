@@ -49,9 +49,15 @@ class MakeItAllMigrator {
 	 * Removes the database tables
 	 */
 	public function down() {
+		global $wpdb;
+
+		$wpdb->query('SET FOREIGN_KEY_CHECKS = 0'); // Some tables, e.g. Comment and Ticket, are dual locked
+
 		foreach (array_reverse($this->migrations) as $migration) {
 			$this->factory($migration)->down();
 		}
+
+		$wpdb->query('SET FOREIGN_KEY_CHECKS = 1');
 	}
 
 	private function factory($className) {
