@@ -48,7 +48,7 @@ class MakeItAllPublic {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueueStyles() {
+	public function enqueue_styles() {
 		wp_enqueue_style($this->pluginName, plugin_dir_url(__FILE__) . 'css/plugin-name-public.css', [], $this->version, 'all');
 
 		//
@@ -59,7 +59,7 @@ class MakeItAllPublic {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueueScripts() {
+	public function enqueue_scripts() {
 		wp_enqueue_script($this->pluginName, plugin_dir_url(__FILE__) . 'js/plugin-name-public.js', ['jquery'], $this->version, false);
 
 		//

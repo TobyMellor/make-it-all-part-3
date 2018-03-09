@@ -17,6 +17,9 @@ class MakeItAllDeactivator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
-		//
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/database/class-make-it-all-migrator.php';
+
+		$migrator = new MakeItAllMigrator;
+		$migrator->down();
 	}
 }
