@@ -10,7 +10,7 @@ class CreateTicketDeviceTable extends Migration {
 	 */
 	public function up() {
 		$this->sqlStatement = "
-			CREATE TABLE {$this->prefix}{$this->table} (
+			CREATE TABLE IF NOT EXISTS {$this->prefix}{$this->table} (
 				id int(10) unsigned NOT NULL AUTO_INCREMENT,
 				ticket_id int(10) unsigned DEFAULT NULL,
 				device_id int(10) unsigned DEFAULT NULL,

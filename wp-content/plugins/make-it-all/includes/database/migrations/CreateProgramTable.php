@@ -10,7 +10,7 @@ class CreateProgramTable extends Migration {
 	 */
 	public function up() {
 		$this->sqlStatement = "
-			CREATE TABLE {$this->prefix}{$this->table} (
+			CREATE TABLE IF NOT EXISTS {$this->prefix}{$this->table} (
 				id int(10) unsigned NOT NULL AUTO_INCREMENT,
 				name varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
 				expiry_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

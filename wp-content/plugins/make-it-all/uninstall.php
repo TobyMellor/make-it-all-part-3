@@ -14,4 +14,10 @@ if (!defined('WP_UNINSTALL_PLUGIN')) {
     die;
 }
 
-// TODO: uninstall
+/**
+ * Responsible for removing the database tables.
+ */
+require_once plugin_dir_path(dirname(__FILE__)) . 'includes/database/class-make-it-all-migrator.php';
+
+$migrator = new MakeItAllMigrator;
+$migrator->down();

@@ -10,7 +10,7 @@ class CreateStaffTable extends Migration {
 	 */
 	public function up() {
 		$this->sqlStatement = "
-			CREATE TABLE {$this->prefix}{$this->table} (
+			CREATE TABLE IF NOT EXISTS {$this->prefix}{$this->table} (
 				id int(10) unsigned NOT NULL AUTO_INCREMENT,
 				department_id int(10) unsigned NOT NULL,
 				email varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,

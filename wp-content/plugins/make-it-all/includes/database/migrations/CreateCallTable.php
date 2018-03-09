@@ -10,7 +10,7 @@ class CreateCallTable extends Migration {
 	 */
 	public function up() {
 		$this->sqlStatement = "
-			CREATE TABLE {$this->prefix}{$this->table} (
+			CREATE TABLE IF NOT EXISTS {$this->prefix}{$this->table} (
 				id int(10) unsigned NOT NULL AUTO_INCREMENT,
 				time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 				operator_id int(10) unsigned NOT NULL,

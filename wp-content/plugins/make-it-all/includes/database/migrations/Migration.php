@@ -7,11 +7,9 @@ abstract class Migration {
 	protected $prefix;
 
 	function __construct() {
-		global $wpdb;
-
-		$this->prefix = $wpdb->prefix . 'mia_';
+		global $wpdb; $this->prefix = $wpdb->prefix . 'mia_';
 	}
-	
+
 	/**
 	 * Run the migrations.
 	 *
@@ -30,9 +28,7 @@ abstract class Migration {
 
 	function __destruct() {
 		if ($this->sqlStatement !== null) { // null for down Update migrations
-			global $wpdb;
-
-			$wpdb->query($this->sqlStatement);
+			global $wpdb; $wpdb->query($this->sqlStatement);
 		}
 	}
 }

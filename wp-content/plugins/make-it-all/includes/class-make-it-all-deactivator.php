@@ -17,6 +17,11 @@ class MakeItAllDeactivator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
+		// TODO: Remove this before submission. Don't delete the database tables when they deactivate, only when uninstalling.
+
+		/**
+		 * Responsible for removing the database tables.
+		 */
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/database/class-make-it-all-migrator.php';
 
 		$migrator = new MakeItAllMigrator;

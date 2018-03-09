@@ -10,7 +10,7 @@ class CreateDepartmentTable extends Migration {
 	 */
 	public function up() {
 		$this->sqlStatement = "
-			CREATE TABLE {$this->prefix}{$this->table} (
+			CREATE TABLE IF NOT EXISTS {$this->prefix}{$this->table} (
 				id int(10) unsigned NOT NULL AUTO_INCREMENT,
 				name varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
 				phone_number varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
