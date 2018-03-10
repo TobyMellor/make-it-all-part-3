@@ -57,6 +57,9 @@ register_deactivation_hook(__FILE__, 'deactivate_make_it_all');
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-make-it-all.php';
 
+
+require_once plugin_dir_path(__FILE__) . 'includes/data-display/display.php';
+add_action('admin_menu', 'mia_display_tickets');
 /**
  * Begins execution of the plugin.
  *
