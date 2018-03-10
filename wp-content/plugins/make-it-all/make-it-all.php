@@ -59,7 +59,9 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-make-it-all.php';
 
 
 require_once plugin_dir_path(__FILE__) . 'includes/data-display/display.php';
-add_action('admin_menu', 'mia_display_tickets');
+add_action('admin_menu', 'mia_add_menus');
+add_action( 'admin_menu', 'mia_add_options');
+add_action('wp_loaded', 'mia_add_style');
 /**
  * Begins execution of the plugin.
  *
