@@ -68,10 +68,7 @@ function mia_ticket_pane(){
 function mia_add_ticket_pane(){
     require_once plugin_dir_path(__FILE__) . 'ticketForm.php';
     //All the code for adding new tickets.
-    echo "<div class='new_tickets_container'>";
-    echo "<h1> Create Ticket(s) </h1>";
-    echo "<div class='caller_section'>";
-    echo "<div class='caller_left'>";
+    echo "<div class='new_tickets_container'><h1> Create Ticket(s) </h1><div class='caller_section'><div class='caller_left'>";
     //Caller select dropdown
     echo "<h2>Caller*<h2>";
     //TODO - ACTUAL VALUES 
@@ -82,12 +79,7 @@ function mia_add_ticket_pane(){
             <option value='3'> 3 - Tableleg </option>
          </select>
          ";
-    echo "<h2>Date of Call</h2>";
-    echo "<input type='text' name='currentDate' value='". date("d/m/y h:i A")."'>";
-    
-    
-    echo "</div>";//End Caller left
-    
+    echo "<h2>Date of Call</h2><input type='text' name='currentDate' value='". date("d/m/y h:i A")."'></div>";//End Caller left
     echo "<div class='caller_right'>";
     echo "<div class='caller_information'>";
     echo "<h2> Caller Information</h2>";
@@ -108,11 +100,9 @@ function mia_add_ticket_pane(){
     
     
     echo "</div>"; //End Ticket details section
+    //Cant do this locally. 
+    echo "<form action='".plugin_dir_path(__FILE__) . 'ticketForm.php' ." method='get'><input type='submit'></form>";
     echo "</div>"; //END Ticket Container
-}
-
-function consoleLog($data){
-    echo "<script> console.log('$data'); </script>";
 }
 
 
