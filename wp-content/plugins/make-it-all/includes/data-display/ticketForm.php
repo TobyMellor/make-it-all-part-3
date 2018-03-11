@@ -1,8 +1,8 @@
 <?php 
-    function mia_print_ticket_form(){
+function mia_print_ticket_form(){
         global $wpdb; 
-      
-        echo "<form class='ticket_form'>
+        $toReturn = "";
+        $toReturn .= "<form class='ticket_form'>
         <div class='ticket_form_top'>
         <div class='ticket_form_left'>
         <h2>Status</h2>
@@ -37,18 +37,19 @@
         ON exptype.id = wp_mia_expertise_type_staff.expertise_type_id";
         $problems = $wpdb->get_results($problemQuery);
         
-        echo "<select name='ticketPType' size='".sizeof($problems)."'>";
+        $toReturn .= "<select name='ticketPType' size='".sizeof($problems)."'>";
         //Each option is a value from db query
         
 
         for($i = 0; $i < sizeof($problems); $i++){
             //For each result make a dropdown menu
-            echo "<option value='" . $problems[$i]->{"id"}  . "'> " . $problems[$i]->{"name"}. " ".$problems[$i]->{"idcount"}."</option>";
+            $toReturn .= "<option value='" . $problems[$i]->{"id"}  . "'> " . $problems[$i]->{"name"}. " ".$problems[$i]->{"idcount"}."</option>";
         }
-        echo "</select></form>"; //END Ticket form
+        $toReturn .= "</select></form>"; //END Ticket form
         
-       
+       echo $toReturn;
     }
+
 
 
 ?>
