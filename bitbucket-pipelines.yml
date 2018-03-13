@@ -4,4 +4,7 @@ pipelines:
   default:
     - step:
         script:
+          - cd wp-content/themes/make-it-all
+          - npm install mocha chai babel-plugin-transform-runtime babel-preset-es2015 babel-preset-stage-3
+          - npm test
           - git ftp push --user $INTEROUTE_USER --passwd $INTEROUTE_PASS sftp://$INTEROUTE_IP/var/www/html
