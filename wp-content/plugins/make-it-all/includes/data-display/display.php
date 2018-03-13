@@ -37,7 +37,6 @@ function mia_ticket_pane(){
     if($result){
         //Make table headers
         echo "<table>";
-        
         echo "<tr id='headers'>";
         for($j = 0; $j < sizeof($cols); $j++){
             echo "<th>" . $cols[$j]->{"Column_name"} . "</th>";
@@ -77,7 +76,7 @@ function mia_add_ticket_pane(){
         <h1> Create Ticket(s) </h1>
         <div class='caller_section'>
             <div class='caller_left'>
-                <h2>Caller*<h2>
+                <h2>Caller<span id='red'>*</span><h2>
                 <select onchange='callerChange($staffJSRes, this)'>
                 <option value='none'>Select Caller</option>";
                     //Get possible values from dbase. This will be from staff table for now.
@@ -89,7 +88,7 @@ function mia_add_ticket_pane(){
     
     echo "          
                 </select>
-                <h2>Date of Call</h2>
+                <h2>Date of Call<span id='red'>*</span></h2>
                 <input type='text' name='currentDate' value='". date("d/m/y h:i A")."'>
             </div>
             <div class='caller_right'>
@@ -105,7 +104,7 @@ function mia_add_ticket_pane(){
     echo $form;
     echo "</div>"; //End Ticket details section
     //Cant do this locally. 
-    echo "<button onclick='addTicketForm()'>Add additional ticket</button>";
+    echo "<button class='ticketForm' onclick='addTicketForm()'>Add additional ticket</button>";
     echo "</div>"; //END Ticket Container
 }
 ?>
