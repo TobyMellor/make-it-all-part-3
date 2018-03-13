@@ -5,7 +5,12 @@
     
 }
 .caller_section{
+    margin: 0 auto;
     margin-bottom: 30px;
+
+}
+.ticketDec {
+    height: 100px;
 }
 
 .caller_right {
@@ -43,13 +48,24 @@ select[name="ticketPType"]{
     margin-bottom: 10px;
 }
 .problemSelection span {
-    display: block;
     text-align: center;
     cursor: pointer;
     padding: 5px 5px;
 }
+.problemRight {
+    display: flex;
+}
+.problemArrow {
+    min-width: 15px;
+}
 .problemChildren span {
     display: none;
+}
+.parentProblem, .childProblem {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: 150px;
 }
 .parentProblem:hover, .childProblem:hover{
     background-color: grey;

@@ -4,6 +4,7 @@ function mia_add_assets(){
     //Getting path the other way is messing up. 
     wp_register_style('mia_ticket_forms', plugins_url() . '/make-it-all/resources/css/ticketForms.css');
     wp_enqueue_script('test', plugins_url() . '/make-it-all/resources/js/ticket.js');
+    wp_enqueue_script('fontAw', "https://use.fontawesome.com/releases/v5.0.8/js/all.js");
     wp_enqueue_style('mia_ticket_forms');
 }
 

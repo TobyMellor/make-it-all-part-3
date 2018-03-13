@@ -1,3 +1,4 @@
+
 function addTicketForm() {
     var div = document.getElementsByClassName("formWrapper")[0];
     var clone = div.cloneNode(true);
@@ -18,41 +19,41 @@ function callerChange(datas, sel) {
 
 function openChildren(clicked, parentID) {
     //Open all children with parentID
-    console.log(clicked);
     var formParent = clicked.parentElement.parentElement;
     var parentElements = formParent.getElementsByClassName("parentProblem");
     var childrenElements = formParent.getElementsByClassName("childProblem");
     var elmsToShow = formParent.getElementsByClassName("p" + parentID);
     if (clicked.classList.contains("parentProblem")) {
+        //Reset all parent nodes
         for (var i = 0; i < childrenElements.length; i++) {
             childrenElements[i].style.display = "none";
             //Remove any active classes. 
         }
     } else if (clicked.classList.contains("childProblem")) {
-        //Get the div number
+        //Reset child nodes 
         var clickedParent = clicked.parentNode;
         var number = parseInt(clickedParent.classList.item(1)) + 1;
         console.log(number);
-        //Get total divs
+        //Get number of divs to loop through
         var pp = clickedParent.parentNode.childElementCount - 1;
-        console.log(pp);
         for (var k = 0; k < pp; k++) {
             var elm = formParent.getElementsByClassName("problemChildren " + number)[0];
-            var elmChildren = elm.childNodes;
-
-
-
+           
+            var elmChildren = elm.getElementsByClassName("childProblem");
+            console.log(elmChildren);
             for (var l = 0; l < elmChildren.length; l++) {
                 elmChildren[l].style.display = "none";
                 //Remove any active classes. 
             }
+            
 
 
         }
 
     }
+    //Show the children elements we want
     for (var i = 0; i < elmsToShow.length; i++) {
-        elmsToShow[i].style.display = "block";
+        elmsToShow[i].style.display = "flex";
     }
     //Remove all active classes   
     for (var i = 0; i < parentElements.length; i++) {
@@ -61,7 +62,10 @@ function openChildren(clicked, parentID) {
     for (var i = 0; i < childrenElements.length; i++) {
         childrenElements[i].classList.remove("active");
     }
+    //Add active class to clicked element
     clicked.classList.add("active");
+    
+    //Specialist Assignment 
     var hasSpec = clicked.getAttribute("data-has-specialists");
     if (hasSpec == "true") {
         var radio = document.getElementsByClassName("specAssign");

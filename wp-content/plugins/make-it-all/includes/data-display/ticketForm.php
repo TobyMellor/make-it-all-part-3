@@ -6,7 +6,7 @@ function mia_print_ticket_form(){
         $toReturn .= "
         <div class='formWrapper'>
         <div class='ticket_nav'>
-        <div class='minButton' onclick='minimise(this)'>V</div>
+        <div class='minButton' onclick='minimise(this)'><i class='fas fa-angle-down'></i></div>
         </div>
         <form class='ticket_form'>
  
@@ -36,7 +36,7 @@ $toReturn .= "
       </div>
       </div>
       <h2>Ticket Description<span id='red'>*</span></h2>
-      <textarea></textarea>
+      <textarea class='ticketDec'></textarea>
       <h2>Problem Type<span id='red'>*</span></h2>";
         
         $expType = $dbPre."_expertise_type";
@@ -57,17 +57,34 @@ $toReturn .= "
         foreach($problems as $id => $problem){
             if(!$problem->{"parent_id"}){
                 $customAttribute = "false";
+                $manIcon = "<i class='fas fa-user-times'></i>";
                 if((int)$problem->{"idcount"} > 0){
                     $customAttribute = "true";
+                    $manIcon = "<i class='fas fa-user'></i>";
                 }
                 
                 if(findChildren(array($problem->{"id"}), "COUNT", $problems)){
                     //Draw option with arrow
                    
-                        $toReturn .= "<span class='parentProblem' data-has-specialists='$customAttribute' onclick='openChildren(this, " . $problem->{"id"}  . ")'> " . $problem->{"name"}. " ".$problem->{"idcount"}." > </span>";
+                        $toReturn .= "
+                        <span class='parentProblem' 
+                        data-has-specialists='$customAttribute' 
+                        onclick='openChildren(this, " . $problem->{"id"}  . ")'> " ."
+                        <div class='problemLeft'>". $problem->{"name"}. "</div>
+                        <div class='problemRight'> ".$problem->{"idcount"}." $manIcon
+                        <div class='problemArrow'><i class='fas fa-angle-right'></i> </div>
+                        </div>
+                        </span>";
                 } else {
                     //Draw without arrow
-                        $toReturn .= "<span class='parentProblem' data-has-specialists='$customAttribute' onclick='openChildren(this, " . $problem->{"id"}  . ")'> " . $problem->{"name"}. " ".$problem->{"idcount"}."</span>";
+                        $toReturn .= "
+                        <span data-has-specialists='$customAttribute' 
+                        class='parentProblem' 
+                        onclick='openChildren(this, ".$problem->{"id"}.")'> 
+                        <div class='problemLeft'>".$problem->{"name"}."</div>
+                        <div class='problemRight'> ".$problem->{"idcount"}." $manIcon 
+                        <div class='problemArrow'></div>
+                        </div></span>";
                 }
                 
             
@@ -105,14 +122,32 @@ $toReturn .= "
                         $childCount++; 
                         //Print the option
                         $customAttribute = "false";
+                        $manIcon = "<i class='fas fa-user-times'></i>";
                         if((int)$problem->{"idcount"} > 0){
                         $customAttribute = "true";
+                        $manIcon = "<i class='fas fa-user'></i>";
                         }
                         if( findChildren( array($problem->{"id"}), "COUNT", $problems)){
-                            $children .= "<span data-has-specialists='$customAttribute' class='childProblem p".$problem->{"parent_id"}. "'onclick='openChildren(this, ".$problem->{"id"}.")' >".$problem->{"name"}." ".$problem->{"idcount"}." > </span>";
+                        $children .= "
+                        <span class='childProblem p".$problem->{"parent_id"}."'
+                        data-has-specialists='$customAttribute'
+                        onclick='openChildren(this, " . $problem->{"id"}  . ")'> ".
+                        "<div class='problemLeft'>". $problem->{"name"}. "</div>
+                        <div class='problemRight'> ".$problem->{"idcount"}." $manIcon 
+                        <div class='problemArrow'><i class='fas fa-angle-right'></i> </div>
+                        </div>
+                        </span>";
                             
                         } else {
-                                                    $children .= "<span data-has-specialists='$customAttribute' class='childProblem p".$problem->{"parent_id"}. "'onclick='openChildren(this, ".$problem->{"id"}.")'>".$problem->{"name"}." ".$problem->{"idcount"}."</span>";
+                            $children .= "
+                            <span data-has-specialists='$customAttribute' 
+                            class='childProblem p".$problem->{"parent_id"}."'
+                            onclick='openChildren(this, ".$problem->{"id"}.")'>
+                            <div class='problemLeft'>".$problem->{"name"}."</div>
+                            <div class='problemRight'> ".$problem->{"idcount"}." $manIcon 
+                            <div class='problemArrow'></div>
+                            </div>
+                            </span>";
                         }
 
                         //Add the id of this problem to new array so we can find its children later
