@@ -11,4 +11,4 @@ pipelines:
         script:
           - apt-get update
           - apt-get -qq install git-ftp
-          - git ftp push --user $INTEROUTE_USER --passwd $INTEROUTE_PASS sftp://195.21.141.54/var/www/html
+          - git ftp init --user $INTEROUTE_USER --passwd $INTEROUTE_PASS sftp://195.21.141.54/var/www/html
