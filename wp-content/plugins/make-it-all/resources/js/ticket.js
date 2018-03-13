@@ -19,9 +19,10 @@ function callerChange(datas, sel) {
 function openChildren(clicked, parentID) {
     //Open all children with parentID
     console.log(clicked);
-    var parentElements = document.getElementsByClassName("parentProblem");
-    var childrenElements = document.getElementsByClassName("childProblem");
-    var elmsToShow = document.getElementsByClassName("p" + parentID);
+    var formParent = clicked.parentElement.parentElement;
+    var parentElements = formParent.getElementsByClassName("parentProblem");
+    var childrenElements = formParent.getElementsByClassName("childProblem");
+    var elmsToShow = formParent.getElementsByClassName("p" + parentID);
     if (clicked.classList.contains("parentProblem")) {
         for (var i = 0; i < childrenElements.length; i++) {
             childrenElements[i].style.display = "none";
@@ -36,7 +37,7 @@ function openChildren(clicked, parentID) {
         var pp = clickedParent.parentNode.childElementCount - 1;
         console.log(pp);
         for (var k = 0; k < pp; k++) {
-            var elm = document.getElementsByClassName("problemChildren " + number)[0];
+            var elm = formParent.getElementsByClassName("problemChildren " + number)[0];
             var elmChildren = elm.childNodes;
 
 
