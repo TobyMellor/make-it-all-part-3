@@ -32,29 +32,40 @@ function mia_ticket_pane() {
     
     if ($result) {
         // Make table headers
-        echo "<table>";
-        echo "<tr id='headers'>";
-        for($j = 0; $j < sizeof($cols); $j++) {
-            echo "<th>" . $cols[$j]->{"Column_name"} . "</th>";
+        echo '
+            <table>
+                <tr id="headers">
+        ';
+
+        for ($i = 0; $i < sizeof($cols); $i++) {
+            echo '
+                    <th>' . $cols[$i]->{'Column_name'} . '</th>
+            ';
         }
-        echo "</tr>";
+
+        echo '
+                </tr>
+        ';
         
         
         for ($i = 0; $i < sizeof($result); $i++) {
-            echo "<tr>";
-            for($j = 0; $j < sizeof($cols); $j++) {
-                if(!($result[$i]->{$cols[$j]->{"Column_name"}})) {
-                    echo "<td> NULL </td>";
+            echo '<tr>';
+            
+            for ($j = 0; $j < sizeof($cols); $j++) {
+                if (!($result[$i]->{$cols[$j]->{'Column_name'}})) {
+                    echo '<td> NULL </td>';
                 } else {
-                echo "<td>" . $result[$i]->{$cols[$j]->{"Column_name"}} . "</td>";
+                    echo '<td>' . $result[$i]->{$cols[$j]->{'Column_name'}} . '</td>';
                 }
             }
-            echo "</tr>";
+
+            echo '</tr>';
         }
-        echo "</table>";
+
+        echo '</table>';
         
     } else {
-        // Some nice display for DB error.
+        // TODO: Some nice display for DB error.
     }
 }
 
@@ -62,6 +73,7 @@ function mia_add_ticket_pane() {
     require_once plugin_dir_path(__FILE__) . 'ticketForm.php';
 
     global $wpdb;
+    
     $staffQuery = "SELECT id, name, email, job_title, phone_number FROM " . $wpdb->prefix . "mia_staff";
     $staffResult = $wpdb->get_results($staffQuery);
     $staffJSRes = json_encode($staffResult);
