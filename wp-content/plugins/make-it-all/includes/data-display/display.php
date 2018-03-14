@@ -115,7 +115,7 @@ function mia_add_ticket_pane() {
 
     echo '
             </div>
-            <button class="ticket-form" onclick="addTicketForm()">Add additional ticket</button>
+            <button class="add-form-button" onclick="addTicketForm()">Add additional ticket</button>
         </div>
     '; // END Ticket Container
 }
