@@ -83,7 +83,7 @@ select[name="ticket-ptype"] {
     background-color: grey;
 }
 
-.active {
+.ticket-active {
     background-color: darkgray;
 }
 
