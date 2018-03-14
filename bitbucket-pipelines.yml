@@ -8,8 +8,8 @@ pipelines:
             - node
           script:
             - cd wp-content/themes/make-it-all
-            - npm install mocha chai babel-register babel-preset-env
+            - npm install
             - npm test
             - cd ../../.. # back to the base directory
-            - git reset --hard # npm install changed it, reset it back to what it was before
+            - git status
             - git ftp push --user $INTEROUTE_USER --passwd $INTEROUTE_PASS sftp://$INTEROUTE_IP/var/www/html
