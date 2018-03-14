@@ -3,8 +3,12 @@ image: tobymellor/php-git-ftp:latest
 pipelines:
   default:
     - step:
+        caches:
+          - node
         script:
           - cd wp-content/themes/make-it-all
-          - npm install mocha chai babel-plugin-transform-runtime babel-preset-es2015 babel-preset-stage-3
+          - npm install mocha chai babel-register babel-preset-env
           - npm test
+          - cd ../../.. # back to the base directory
+          - git reset --hard # npm install changed it, reset it back to what it was before
           - git ftp push --user $INTEROUTE_USER --passwd $INTEROUTE_PASS sftp://$INTEROUTE_IP/var/www/html

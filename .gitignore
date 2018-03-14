@@ -1,6 +1,7 @@
 wp-content/themes/make-it-all/css/*
 wp-content/themes/make-it-all/js/*
 wp-content/themes/make-it-all/node_modules
+wp-content/themes/make-it-all/package-lock.json
 
 .DS_Store
 *.log
