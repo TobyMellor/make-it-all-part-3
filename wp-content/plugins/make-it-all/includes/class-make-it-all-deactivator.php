@@ -16,7 +16,7 @@ class MakeItAllDeactivator {
 	 *
 	 * @since    1.0.0
 	 */
-	public static function deactivate() {
+	function __construct() {
 		// TODO: Remove this before submission. Don't delete the database tables when they deactivate, only when uninstalling.
 
 		/**

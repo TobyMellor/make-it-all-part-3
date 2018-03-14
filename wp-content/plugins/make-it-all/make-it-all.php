@@ -36,7 +36,7 @@ define('PLUGIN_NAME_VERSION', '1.0.0');
  */
 function activate_make_it_all() {
 	require_once plugin_dir_path(__FILE__) . 'includes/class-make-it-all-activator.php';
-	MakeItAllActivator::activate();
+	new MakeItAllActivator();
 }
 
 /**
@@ -45,7 +45,7 @@ function activate_make_it_all() {
  */
 function deactivate_make_it_all() {
 	require_once plugin_dir_path(__FILE__) . 'includes/class-make-it-all-deactivator.php';
-	MakeItAllDeactivator::deactivate();
+	new MakeItAllDeactivator();
 }
 
 register_activation_hook(__FILE__, 'activate_make_it_all');
@@ -56,13 +56,12 @@ register_deactivation_hook(__FILE__, 'deactivate_make_it_all');
  * admin-specific hooks, and public-facing site hooks.
  */
 require plugin_dir_path(__FILE__) . 'includes/class-make-it-all.php';
-require_once plugin_dir_path(__FILE__) . 'includes/data-display/display.php';
-require_once plugin_dir_path(__FILE__) . 'includes/data-display/ticketForm.php';
+require_once plugin_dir_path(__FILE__) . 'includes/views/display.php';
+require_once plugin_dir_path(__FILE__) . 'includes/views/ticketForm.php';
 
 // load in scripts and styles
-add_action('admin_menu', 'mia_add_menus');
-add_action('admin_menu', 'mia_add_options');
-add_action('wp_loaded', 'mia_add_assets');
+//add_action('admin_menu', 'mia_add_menus');
+//add_action('admin_menu', 'mia_add_options');
 
 /**
  * Begins execution of the plugin.

@@ -1,14 +1,5 @@
 <?php 
 
-// I should probs make an object so that query data can be kept?
-function mia_add_assets() {
-    // Getting path the other way is messing up. 
-    wp_register_style('mia_ticket_forms', plugins_url() . '/make-it-all/resources/css/ticketForms.css');
-    wp_enqueue_script('test', plugins_url() . '/make-it-all/resources/js/ticket.js');
-    wp_enqueue_script('fontAw', "https://use.fontawesome.com/releases/v5.0.8/js/all.js");
-    wp_enqueue_style('mia_ticket_forms');
-}
-
 function mia_add_menus() {
     add_menu_page('tickets', 'Tickets', 'manage_options', 'ticket_page', 'mia_ticket_pane', 'dashicons-tickets-alt', 2);
 }
