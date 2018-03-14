@@ -20,7 +20,7 @@ function mia_print_ticket_form(){
         for($i = 0; $i < sizeof($statusResults); $i++){
             $toReturn .= "<option value='" . $statusResults[$i]->{"id"}."'>".$statusResults[$i]->{"name"}."</option>";
         }
-$toReturn .= "
+    $toReturn .= "
       </select>
       <h2>Ticket Title<span id='red'>*</span></h2>
       <input type='text'>
@@ -48,7 +48,7 @@ $toReturn .= "
         SELECT expstaff.expertise_type_id, count(expstaff.expertise_type_id) as idcount 
         FROM $expStaff as expstaff GROUP BY expstaff.expertise_type_id
         ) $expStaff
-        ON exptype.id = wp_mia_expertise_type_staff.expertise_type_id";
+        ON exptype.id = $expStaff.expertise_type_id";
         $problems = $wpdb->get_results($problemQuery);
         $toReturn .= "<div class='problemSelection'>";
         $toReturn .= "<div class='ticketPType'>";
