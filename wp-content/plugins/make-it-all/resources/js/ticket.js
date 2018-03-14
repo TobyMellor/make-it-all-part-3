@@ -91,7 +91,7 @@ function openChildren(clicked, parentID) {
 function minimise(formNav) {
     var formWrapper = formNav.parentElement.parentElement;
     // Parent is form wrapper, minimise/maximise the form in the wrapper
-    var ticketForm = formWrapper.getElementsByClassName('ticket_form')[0];
+    var ticketForm = formWrapper.getElementsByClassName('ticket-form')[0];
 
     if (ticketForm.style.display == 'flex' || ticketForm.style.display == '') {
         ticketForm.style.display = 'none';
