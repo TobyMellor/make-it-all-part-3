@@ -91,7 +91,7 @@ select[name="ticket-ptype"] {
     color: red;
 }
 
-.ticket-form {
+.add-form-button {
     display: block;
     margin: 0 auto;
     padding: 5px 5px;
