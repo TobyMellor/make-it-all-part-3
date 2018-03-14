@@ -5,17 +5,17 @@ function mia_print_ticket_form() {
     $dbPre = $wpdb->prefix . "mia";
 
     $form = '
-        <div class="formWrapper">
-            <div class="ticket_nav">
-                <div class="minButton" onclick="minimise(this)">
+        <div class="form-wrapper">
+            <div class="ticket-nav">
+                <div class="min-button" onclick="minimise(this)">
                     <i class="fas fa-angle-down"></i>
                 </div>
             </div>
-            <form class="ticket_form">
-                <div class="ticket_form_top">
-                    <div class="ticket_form_left">
+            <form class="ticket-form">
+                <div class="ticket-form-top">
+                    <div class="ticket-form-left">
                         <h2>Status<span id="red">*</span></h2>
-                        <select id="status_select">
+                        <select id="status-select">
     ';
 
     // Get status from dbase
@@ -31,23 +31,23 @@ function mia_print_ticket_form() {
                         <h2>Ticket Title<span id="red">*</span></h2>
                         <input type="text">
                     </div>
-                    <div class="ticket_form_right">
+                    <div class="ticket-form-right">
                         <h2>Assigned To<span id="red">*</span></h2>
                         <input type="text" value="Mr Tickets" readonly>
-                        <div class="assignOptions">
-                            <input type="radio" class="specAssign" name="assign" id="assign1" value="assignSelf">
+                        <div class="assign-options">
+                            <input type="radio" class="spec-assign" name="assign" id="assign1" value="assign_self">
                             <label for="assign1">Assign to myself</label>
                             <br>
-                            <input type="radio" class="specAssign" name="assign" id="assign2" value="assignOp">
+                            <input type="radio" class="spec-assign" name="assign" id="assign2" value="assign_op">
                             <label for="assign2">Assign to another Operator</label>
                             <br>
-                            <input type="radio" class="specAssign" name="assign" id="assign3" value="assignSpec">
+                            <input type="radio" class="spec-assign" name="assign" id="assign3" value="assign_spec">
                             <label for="assign3">Assign to Specialist of Problem Type</label>
                         </div>
                     </div>
                 </div>
                 <h2>Ticket Description<span id="red">*</span></h2>
-                <textarea class="ticketDec"></textarea>
+                <textarea class="ticket-dec"></textarea>
                 <h2>Problem Type<span id="red">*</span></h2>
     ';
         
@@ -68,8 +68,8 @@ function mia_print_ticket_form() {
     $problems = $wpdb->get_results($problemQuery);
 
     $form .= '
-                <div class="problemSelection">
-                    <div class="ticketPType">
+                <div class="problem-selection">
+                    <div class="ticket-ptype">
     ';
 
     // Each option is a value from db query
@@ -89,13 +89,13 @@ function mia_print_ticket_form() {
                 // Draw option with arrow
                 $form .= '
                     <span
-                        class="parentProblem"
+                        class="parent-problem"
                         data-has-specialists="' . $customAttribute . '"
                         onclick="openChildren(this, ' . $problem->{'id'}  . ')"
                     >
-                        <div class="problemLeft">' . $problem->{'name'} . '</div>
-                        <div class="problemRight"> ' . $problem->{'idcount'} . $manIcon . '
-                            <div class="problemArrow">
+                        <div class="problem-left">' . $problem->{'name'} . '</div>
+                        <div class="problem-right"> ' . $problem->{'idcount'} . $manIcon . '
+                            <div class="problem-arrow">
                                 <i class="fas fa-angle-right"></i>
                             </div>
                         </div>
@@ -106,12 +106,12 @@ function mia_print_ticket_form() {
                 $form .= '
                     <span 
                         data-has-specialists="' . $customAttribute . '"
-                        class="parentProblem"
+                        class="parent-problem"
                         onclick="openChildren(this, ' . $problem->{'id'} . ')"
                     > 
-                        <div class="problemLeft">' . $problem->{'name'} . '</div>
-                        <div class="problemRight">' . $problem->{'idcount'} . $manIcon . '
-                            <div class="problemArrow"></div>
+                        <div class="problem-left">' . $problem->{'name'} . '</div>
+                        <div class="problem-right">' . $problem->{'idcount'} . $manIcon . '
+                            <div class="problem-arrow"></div>
                         </div>
                     </span>
                 ';
@@ -126,51 +126,52 @@ function mia_print_ticket_form() {
     $form .= '</div>';
     $form .= findChildren($idFind, '', $problems);
 
-    $form .= "</div></form></div>"; // END Ticket form
+    $form .= '</div></form></div>'; // END Ticket form
 
     echo $form;
 }
 
 function findChildren($idFind, $count, $problems) {
-        $divNum = 0;
-        $children = "";
-        $childCount = 0;
-        while (sizeof($idFind) > 0) {
+    $divNum = 0;
+    $children = '';
+    $childCount = 0;
+
+    while (sizeof($idFind) > 0) {
         // Find all the children from $idFind
         $newFind = [];
 
-        $children .= "<div class='problemChildren $divNum'>";
+        $children .= '<div class="problem-children ' . $divNum . '">';
 
         for ($i = 0; $i < sizeof($idFind); $i++) {
             // For each ID we have to find children for, loop through the problems array.
             foreach ($problems as $id => $problem) {
                 // If parent id of problem matched the id in array we have found a child. 
                 
-                if ($idFind[$i] === $problem->{"parent_id"}) {
+                if ($idFind[$i] === $problem->{'parent_id'}) {
                     $childCount++;
 
                     // Print the option
-                    $customAttribute = "false";
-                    $manIcon = "<i class='fas fa-user-times'></i>";
+                    $customAttribute = 'false';
+                    $manIcon = '<i class="fas fa-user-times"></i>';
 
-                    if ((int) $problem->{"idcount"} > 0) {
-                        $customAttribute = "true";
-                        $manIcon = "<i class='fas fa-user'></i>";
+                    if ((int) $problem->{'idcount'} > 0) {
+                        $customAttribute = 'true';
+                        $manIcon = '<i class="fas fa-user"></i>';
                     }
 
-                    if (findChildren( array($problem->{"id"}), "COUNT", $problems)) {
+                    if (findChildren([$problem->{'id'}], 'COUNT', $problems)) {
                         $children .= '
                             <span
-                                class="childProblem p' . $problem->{'parent_id'} . '
+                                class="child-problem p' . $problem->{'parent_id'} . '"
                                 data-has-specialists="' . $customAttribute . '"
                                 onclick="openChildren(this, ' . $problem->{'id'}  . ')"
                             >
-                                <div class="problemLeft">
+                                <div class="problem-left">
                                     ' . $problem->{'name'} . '
                                 </div>
-                                <div class="problemRight">
+                                <div class="problem-right">
                                     ' . $problem->{'idcount'} . $manIcon . '
-                                    <div class="problemArrow">
+                                    <div class="problem-arrow">
                                         <i class="fas fa-angle-right"></i>
                                     </div>
                                 </div>
@@ -181,19 +182,19 @@ function findChildren($idFind, $count, $problems) {
                         $children .= '
                             <span
                                 data-has-specialists="' . $customAttribute . '" 
-                                class="childProblem p' . $problem->{'parent_id'} . '"
+                                class="child-problem p' . $problem->{'parent_id'} . '"
                                 onclick="openChildren(this, ' . $problem->{'id'} . ')"
                             >
-                                <div class="problemLeft">' . $problem->{'name'} . '</div>
-                                <div class="problemRight">' . $problem->{'idcount'} . $manIcon . '
-                                    <div class="problemArrow"></div>
+                                <div class="problem-left">' . $problem->{'name'} . '</div>
+                                <div class="problem-right">' . $problem->{'idcount'} . $manIcon . '
+                                    <div class="problem-arrow"></div>
                                 </div>
                             </span>
                         ';
                     }
 
                     // Add the id of this problem to new array so we can find its children later
-                    array_push($newFind, $problem->{"id"});
+                    array_push($newFind, $problem->{'id'});
                     unset($problems[$id]);
                 }
             }

@@ -73,17 +73,17 @@ function mia_add_ticket_pane() {
     require_once plugin_dir_path(__FILE__) . 'ticketForm.php';
 
     global $wpdb;
-    
+
     $staffQuery = "SELECT id, name, email, job_title, phone_number FROM " . $wpdb->prefix . "mia_staff";
     $staffResult = $wpdb->get_results($staffQuery);
     $staffJSRes = json_encode($staffResult);
 
     // All the code for adding new tickets.
     echo '
-        <div class="new_tickets_container">
+        <div class="new-tickets-container">
             <h1> Create Ticket(s) </h1>
-            <div class="caller_section">
-                <div class="caller_left">
+            <div class="caller-section">
+                <div class="caller-left">
                     <h2>Caller<span id="red">*</span><h2>
                     <select onchange="callerChange(' . htmlspecialchars($staffJSRes) . ', this)">
                         <option value="none">Select Caller</option>
@@ -98,16 +98,16 @@ function mia_add_ticket_pane() {
     echo '          
                     </select>
                     <h2>Date of Call<span id="red">*</span></h2>
-                    <input type="text" name="currentDate" value="' . date('d/m/y h:i A') . '">
+                    <input type="text" name="current_date" value="' . date('d/m/y h:i A') . '">
                 </div>
-                <div class="caller_right">
-                    <div class="caller_information">
+                <div class="caller-right">
+                    <div class="caller-information">
                         <h2> Caller Information</h2>
                         <div class="caller"></div>
                     </div>
                 </div>
             </div>
-            <div class="ticket_details_section">
+            <div class="ticket-details-section">
     ';
 
     // All ticket forms here
@@ -115,7 +115,7 @@ function mia_add_ticket_pane() {
 
     echo '
             </div>
-            <button class="ticketForm" onclick="addTicketForm()">Add additional ticket</button>
+            <button class="ticket-form" onclick="addTicketForm()">Add additional ticket</button>
         </div>
     '; // END Ticket Container
 }

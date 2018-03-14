@@ -1,19 +1,19 @@
-.caller_section, .ticket_form_top {
+.caller-section, .ticket-form-top {
     width: 90%;
     display: flex;
     justify-content: space-around;
 }
 
-.caller_section {
+.caller-section {
     margin: 0 auto;
     margin-bottom: 30px;
 }
 
-.ticketDec {
+.ticket-dec {
     height: 100px;
 }
 
-.caller_right {
+.caller-right {
     min-width: 300px;
 }
 
@@ -23,7 +23,7 @@ input[type=text] {
     margin: 0 auto;
 }
 
-.ticket_form {
+.ticket-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -31,20 +31,20 @@ input[type=text] {
     border: solid 1px grey;
 }
 
-.ticket_form textarea {
+.ticket-form textarea {
     width: 90%;
     margin: 0 auto;
 }
 
-select[name="ticketPType"] {
+select[name="ticket-ptype"] {
     height: 100px;
 }
 
-.caller_det span {
+.caller-det span {
     display: block;
 }
 
-.problemSelection {
+.problem-selection {
     display: flex;
     align-items: flex-start;
     max-height: 500px;
@@ -54,32 +54,32 @@ select[name="ticketPType"] {
     margin-bottom: 10px;
 }
 
-.problemSelection span {
+.problem-selection span {
     text-align: center;
     cursor: pointer;
     padding: 5px 5px;
 }
 
-.problemRight {
+.problem-right {
     display: flex;
 }
 
-.problemArrow {
+.problem-arrow {
     min-width: 15px;
 }
 
-.problemChildren span {
+.problem-children span {
     display: none;
 }
 
-.parentProblem, .childProblem {
+.parent-problem, .child-problem {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     min-width: 150px;
 }
 
-.parentProblem:hover, .childProblem:hover{
+.parent-problem:hover, .child-problem:hover{
     background-color: grey;
 }
 
@@ -91,31 +91,31 @@ select[name="ticketPType"] {
     color: red;
 }
 
-.ticketForm {
+.ticket-form {
     display: block;
     margin: 0 auto;
     padding: 5px 5px;
     margin-top: 10px;
 }
 
-.ticket_nav {
+.ticket-nav {
     display: flex;
     justify-content: flex-end;
     background-color: lightgray;
     margin-top: 20px;
 }
 
-.minButton {
+.min-button {
     width: 20px;
     height: 20px;
     padding: 5px;
     cursor: pointer;
 }
 
-.minButton:hover {
+.min-button:hover {
     color: black;
 }
 
-.formWrapper {
+.form-wrapper {
     margin-right: 10px;
 }
