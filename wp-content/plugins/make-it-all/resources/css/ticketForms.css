@@ -1,14 +1,14 @@
-.caller_section, .ticket_form_top{
+.caller_section, .ticket_form_top {
     width: 90%;
     display: flex;
     justify-content: space-around;
-    
 }
-.caller_section{
+
+.caller_section {
     margin: 0 auto;
     margin-bottom: 30px;
-
 }
+
 .ticketDec {
     height: 100px;
 }
@@ -16,11 +16,13 @@
 .caller_right {
     min-width: 300px;
 }
+
 input[type=text] {
     display: block;
     width: 100%;
     margin: 0 auto;
 }
+
 .ticket_form {
     display: flex;
     flex-direction: column;
@@ -28,16 +30,20 @@ input[type=text] {
     align-items: center;
     border: solid 1px grey;
 }
+
 .ticket_form textarea {
     width: 90%;
     margin: 0 auto;
 }
-select[name="ticketPType"]{
+
+select[name="ticketPType"] {
     height: 100px;
 }
+
 .caller_det span {
     display: block;
 }
+
 .problemSelection {
     display: flex;
     align-items: flex-start;
@@ -47,59 +53,69 @@ select[name="ticketPType"]{
     border: solid 1px grey;
     margin-bottom: 10px;
 }
+
 .problemSelection span {
     text-align: center;
     cursor: pointer;
     padding: 5px 5px;
 }
+
 .problemRight {
     display: flex;
 }
+
 .problemArrow {
     min-width: 15px;
 }
+
 .problemChildren span {
     display: none;
 }
+
 .parentProblem, .childProblem {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     min-width: 150px;
 }
+
 .parentProblem:hover, .childProblem:hover{
     background-color: grey;
 }
-.active{
+
+.active {
     background-color: darkgray;
 }
 
 #red {
     color: red;
 }
+
 .ticketForm {
     display: block;
     margin: 0 auto;
     padding: 5px 5px;
     margin-top: 10px;
 }
-.ticket_nav{
+
+.ticket_nav {
     display: flex;
     justify-content: flex-end;
     background-color: lightgray;
     margin-top: 20px;
-    
-    
 }
+
 .minButton {
     width: 20px;
     height: 20px;
     padding: 5px;
     cursor: pointer;
 }
+
 .minButton:hover {
     color: black;
 }
+
 .formWrapper {
     margin-right: 10px;
 }

@@ -1,7 +1,7 @@
-
 function addTicketForm() {
     var div = document.getElementsByClassName("formWrapper")[0];
     var clone = div.cloneNode(true);
+
     //Forms that are added need a close button.
     clone.getElementsByClassName("ticket_nav")[0].innerHTML += "<div class='minButton' onclick='closeForm(this)'>X</div>";
     document.getElementsByClassName("ticket_details_section")[0].append(clone);
@@ -23,6 +23,7 @@ function openChildren(clicked, parentID) {
     var parentElements = formParent.getElementsByClassName("parentProblem");
     var childrenElements = formParent.getElementsByClassName("childProblem");
     var elmsToShow = formParent.getElementsByClassName("p" + parentID);
+    
     if (clicked.classList.contains("parentProblem")) {
         //Reset all parent nodes
         for (var i = 0; i < childrenElements.length; i++) {
@@ -36,6 +37,7 @@ function openChildren(clicked, parentID) {
         console.log(number);
         //Get number of divs to loop through
         var pp = clickedParent.parentNode.childElementCount - 1;
+
         for (var k = 0; k < pp; k++) {
             var elm = formParent.getElementsByClassName("problemChildren " + number)[0];
            
@@ -45,30 +47,32 @@ function openChildren(clicked, parentID) {
                 elmChildren[l].style.display = "none";
                 //Remove any active classes. 
             }
-            
-
-
         }
-
     }
+
     //Show the children elements we want
     for (var i = 0; i < elmsToShow.length; i++) {
         elmsToShow[i].style.display = "flex";
     }
+
     //Remove all active classes   
     for (var i = 0; i < parentElements.length; i++) {
         parentElements[i].classList.remove("active");
     }
+
     for (var i = 0; i < childrenElements.length; i++) {
         childrenElements[i].classList.remove("active");
     }
+
     //Add active class to clicked element
     clicked.classList.add("active");
     
     //Specialist Assignment 
     var hasSpec = clicked.getAttribute("data-has-specialists");
+
     if (hasSpec == "true") {
         var radio = document.getElementsByClassName("specAssign");
+
         for (var i = 0; i < radio.length; i++) {
             if (radio[i].checked) {
                 if (radio[i].value == "assignSpec") {
@@ -85,12 +89,12 @@ function minimise(formNav) {
     //Parent is form wrapper, minimise/maximise the form in the wrapper
     var ticketForm = formWrapper.getElementsByClassName("ticket_form")[0];
     console.log(ticketForm.style.display);
+
     if (ticketForm.style.display == "flex" || ticketForm.style.display == "") {
         ticketForm.style.display = "none";
     } else {
         ticketForm.style.display = "flex";
     }
-
 }
 
 function closeForm(formNav) {
