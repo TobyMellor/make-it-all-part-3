@@ -61,15 +61,15 @@ function openChildren(clicked, parentID) {
 
     // Remove all active classes   
     for (var i = 0; i < parentElements.length; i++) {
-        parentElements[i].classList.remove('active');
+        parentElements[i].classList.remove('ticket-active');
     }
 
     for (var i = 0; i < childrenElements.length; i++) {
-        childrenElements[i].classList.remove('active');
+        childrenElements[i].classList.remove('ticket-active');
     }
 
     // Add active class to clicked element
-    clicked.classList.add('active');
+    clicked.classList.add('ticket-active');
     
     // Specialist Assignment 
     var hasSpec = clicked.getAttribute('data-has-specialists');
