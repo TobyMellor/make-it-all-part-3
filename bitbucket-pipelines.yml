@@ -11,5 +11,4 @@ pipelines:
             - npm install
             - npm test
             - cd ../../.. # back to the base directory
-            - git status
             - git ftp push --user $INTEROUTE_USER --passwd $INTEROUTE_PASS sftp://$INTEROUTE_IP/var/www/html
