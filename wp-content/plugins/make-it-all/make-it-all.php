@@ -56,12 +56,6 @@ register_deactivation_hook(__FILE__, 'deactivate_make_it_all');
  * admin-specific hooks, and public-facing site hooks.
  */
 require plugin_dir_path(__FILE__) . 'includes/class-make-it-all.php';
-require_once plugin_dir_path(__FILE__) . 'includes/views/display.php';
-require_once plugin_dir_path(__FILE__) . 'includes/views/ticketForm.php';
-
-// load in scripts and styles
-//add_action('admin_menu', 'mia_add_menus');
-//add_action('admin_menu', 'mia_add_options');
 
 /**
  * Begins execution of the plugin.

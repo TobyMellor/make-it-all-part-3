@@ -19,7 +19,7 @@ class MakeItAllLoader {
 	 * @access   protected
 	 * @var      array    $actions    The actions registered with WordPress to fire when the plugin loads.
 	 */
-	protected $actions;
+	protected $actions = [];
 
 	/**
 	 * The array of filters registered with WordPress.
@@ -28,7 +28,7 @@ class MakeItAllLoader {
 	 * @access   protected
 	 * @var      array    $filters    The filters registered with WordPress to fire when the plugin loads.
 	 */
-	protected $filters;
+	protected $filters = [];
 
 	/**
 	 * Initialize the collections used to maintain the actions and filters.
@@ -36,8 +36,18 @@ class MakeItAllLoader {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		$this->actions = [];
-		$this->filters = [];
+		/**
+		 * Register all of the pages
+		 */
+		$pages = [
+			'TicketPage'
+		];
+
+		foreach ($pages as $pageName) {
+			require_once(plugin_dir_path(dirname(__FILE__)) . 'includes/views/' . $pageName . '.php');
+
+			$this->add_action('admin_menu', new $pageName, 'init');
+		}
 	}
 
 	/**

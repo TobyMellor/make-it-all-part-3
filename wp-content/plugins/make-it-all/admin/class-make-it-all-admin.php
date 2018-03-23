@@ -48,7 +48,7 @@ class MakeItAllAdmin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-		wp_enqueue_style($this->pluginName . '_tickets', plugin_dir_url(__FILE__) . 'css/tickets.css', [], $this->version, 'all');
+		wp_enqueue_style($this->pluginName . '_tickets', plugin_dir_url(__FILE__) . '../resources/css/tickets.css', [], $this->version, 'all');
 		wp_enqueue_style($this->pluginName . '_font_awesome', 'https://use.fontawesome.com/releases/v5.0.8/js/all.js');
 	}
 
@@ -58,6 +58,6 @@ class MakeItAllAdmin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-		wp_enqueue_script($this->pluginName . '_tickets', plugin_dir_url(__FILE__) . 'js/tickets.js', ['jquery'], $this->version, false);
+		wp_enqueue_script($this->pluginName . '_tickets', plugin_dir_url(__FILE__) . '../resources/js/tickets.js', ['jquery'], $this->version, false);
 	}
 }
