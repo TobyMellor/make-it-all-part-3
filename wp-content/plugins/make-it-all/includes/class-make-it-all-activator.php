@@ -51,23 +51,23 @@ class MakeItAllActivator {
 	private function edit_roles() {
 		global $wp_roles;
 
-        if (!isset($wp_roles)) $wp_roles = new WP_Roles();
+		if (!isset($wp_roles)) $wp_roles = new WP_Roles();
 
-        // Should be able to view data only
-        $wp_roles->roles['subscriber']['name'] = 'Viewer';
-        $wp_roles->role_names['subscriber']    = 'Viewer';
+		// Should be able to view data only
+		$wp_roles->roles['subscriber']['name'] = 'Viewer';
+		$wp_roles->role_names['subscriber']    = 'Viewer';
 
-        // Ability to create/edit/delete, plus perms from Viewer
-        $wp_roles->roles['contributor']['name'] = 'Operator';
-        $wp_roles->role_names['contributor']    = 'Operator';
+		// Ability to create/edit/delete, plus perms from Viewer
+		$wp_roles->roles['contributor']['name'] = 'Operator';
+		$wp_roles->role_names['contributor']    = 'Operator';
 
-        // Ability to vie global metrics, plus perms from Operator
-        $wp_roles->roles['author']['name'] = 'Analyst';
-        $wp_roles->role_names['author']    = 'Analyst';
+		// Ability to vie global metrics, plus perms from Operator
+		$wp_roles->roles['author']['name'] = 'Analyst';
+		$wp_roles->role_names['author']    = 'Analyst';
 
-        remove_role('editor'); // we don't have an editor
+		remove_role('editor'); // we don't have an editor
 
-        foreach ($wp_roles->role_objects as $key => $role) {
+		foreach ($wp_roles->role_objects as $key => $role) {
 			if ($role->has_cap('read')) {
 				$role->add_cap('read_make_it_all');
 			}
@@ -75,6 +75,6 @@ class MakeItAllActivator {
 			if ($role->has_cap('edit_posts')) {
 				$role->add_cap('edit_make_it_all');
 			}
-        }
+		}
 	}
 }
