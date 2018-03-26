@@ -13,7 +13,7 @@ class TicketPage extends MakeItAllPage {
 
 		$context = $this->get_context('View Tickets');
 
-		$this->render_pane($context);
+		$this->render_pane($context); // render page before inserting table
 
 		$ticketTable = new TicketTable();
 		$ticketTable->prepare_items();
@@ -23,8 +23,12 @@ class TicketPage extends MakeItAllPage {
 
 	public function create_pane() {
 		$context = $this->get_context('Create Tickets');
+		// global $wpdb;
 
-		return $this->render_pane($context);
+		$context['description_editor'] = $this->get_wp_editor('Hey there!', 'create_ticket_editor');
+
+		$this->render_pane($context); // render page before initializing WYSIWYG editor
+
 
 		/*global $wpdb;
 

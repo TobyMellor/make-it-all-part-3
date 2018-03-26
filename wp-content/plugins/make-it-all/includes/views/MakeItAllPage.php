@@ -43,7 +43,7 @@ abstract class MakeItAllPage {
 	protected function get_context($pageName) {
 		$context = Timber::get_context();
 		$context['page_name'] = $pageName; // e.g. Create Ticket
-		
+
 		return $context;
 	}
 
@@ -55,5 +55,16 @@ abstract class MakeItAllPage {
 			'.twig',
 			$context
 		); // e.g. backend/tickets/create_ticket.twig
+	}
+
+	protected function get_wp_editor($content, $id) {
+		ob_start();
+
+		wp_editor($content, $id);
+		$editor = ob_get_contents();
+
+		ob_end_clean();
+
+		return $editor;
 	}
 }

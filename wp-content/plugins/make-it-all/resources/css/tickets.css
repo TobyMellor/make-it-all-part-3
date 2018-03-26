@@ -79,7 +79,7 @@ select[name="ticket-ptype"] {
 	min-width: 150px;
 }
 
-.parent-problem:hover, .child-problem:hover{
+.parent-problem:hover, .child-problem:hover {
 	background-color: grey;
 }
 
@@ -118,4 +118,35 @@ select[name="ticket-ptype"] {
 
 .form-wrapper {
 	margin-right: 10px;
+}
+
+.accordions > .accordion-handle {
+	padding: 12px;
+	background-color: #3498db;
+	color: #ffffff;
+	display: flex;
+}
+
+.accordions > .accordion-handle .accordion-icon {
+	flex: 1 0 0;
+}
+
+.accordions > .accordion-handle .accordion-title {
+	flex: 4 0 0;
+	font-size: 14px;
+    font-weight: 500;
+}
+
+.number-circle {
+    border-radius: 50%;
+    
+    width: 14px;
+    height: 14px;
+    padding: 4px;
+    
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    text-align: center;
+
+    font: 12px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }

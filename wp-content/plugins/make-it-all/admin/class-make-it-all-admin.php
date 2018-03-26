@@ -58,6 +58,7 @@ class MakeItAllAdmin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-		wp_enqueue_script($this->pluginName . '_tickets', plugin_dir_url(__FILE__) . '../resources/js/tickets.js', ['jquery'], $this->version, false);
+		wp_enqueue_script('jquery-ui-accordion', plugin_dir_url(__FILE__) . 'js/plugins/jquery-ui.js', ['jquery'], '1.12.1', false);
+		wp_enqueue_script($this->pluginName . '_tickets', plugin_dir_url(__FILE__) . '../resources/js/tickets.js', ['jquery', 'jquery-ui-accordion'], $this->version, false);
 	}
 }

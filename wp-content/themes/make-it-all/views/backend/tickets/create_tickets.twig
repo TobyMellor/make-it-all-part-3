@@ -1,21 +1,90 @@
-{% extends "backend/layouts/crud/create.twig" %}
+{% extends "backend/layouts/page.twig" %}
 
-{% block content %}
+{% block main %}
+
+{# 	<form name="post" action="post.php" method="post" id="post">
+		<div id="poststuff">
+			<div id="post-body" class="metabox-holder columns-2">
+				<div id="post-body-content" style="position: relative;">
+					<div class="accordions">
+						<h3>Section 1</h3>
+						<div>
+							<div id="titlediv">
+								<div id="titlewrap">
+									<input name="post_title" id="title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here">
+								</div>
+							</div>
+							{{ description_editor }}
+							<br class="clear">
+						</div>
+						<h3>Section 2</h3>
+						<div>
+							<div id="titlediv">
+								<div id="titlewrap">
+									<input name="post_title" id="title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here">
+								</div>
+							</div>
+							{{ description_editor }}
+							<br class="clear">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form> #}
+	
+	<div class="accordion-header">
+		TODO: Create header and finish styling this accordion/page
+	</div>
+	<div class="accordions">
+		<div class="accordion-handle">
+			<div class="accordion-icon">
+				<div class="number-circle">1</div>
+			</div>
+			<div class="accordion-title">
+				Section 1
+			</div>
+		</div>
+		<div>
+			<div id="titlediv">
+				<div id="titlewrap">
+					<input name="post_title" id="title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here">
+				</div>
+			</div>
+			{{ description_editor }}
+			<br class="clear">
+		</div>
+		<div class="accordion-handle">Section 2</div>
+		<div>
+			<div id="titlediv">
+				<div id="titlewrap">
+					<input name="post_title" id="title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here">
+				</div>
+			</div>
+			{{ description_editor }}
+			<br class="clear">
+		</div>
+	</div>
+{# 
 	<div class="new-tickets-container">
-		<h1> Create Ticket(s) </h1>
 		<div class="caller-section">
 			<div class="caller-left">
-				<h2>Caller<span id="red">*</span><h2>
+				<h2>
+					Caller <span id="red">*</span>
+				<h2>
 				<select onchange="alert('TODO: Load in staff info')">
 					<option value="none">Select Caller</option>
-					<option value="ID_HERE">ID HERE - John Smith</option>        
+					<option value="ID_HERE">ID HERE - John Smith</option>
 				</select>
-				<h2>Date of Call<span id="red">*</span></h2>
-				<input type="text" name="current_date" value="CURRENT DATE HERE">
+
+				<h2>
+					Date of Call <span id="red">*</span>
+				</h2>
+				<input type="text" name="current_date" value="{{ "now"|date('d/m/y h:i A') }}">
 			</div>
 			<div class="caller-right">
 				<div class="caller-information">
-					<h2> Caller Information</h2>
+					<h2>Caller Information</h2>
 					<div class="caller"></div>
 				</div>
 			</div>
@@ -30,11 +99,16 @@
 				<form class="ticket-form">
 					<div class="ticket-form-top">
 						<div class="ticket-form-left">
-							<h2>Status<span id="red">*</span></h2>
+							<h2>
+								Status <span id="red">*</span>
+							</h2>
 							<select id="status-select">
-								<option value="Status ID 1">Status Name</option>'
+								<option value="Status ID 1">Status Name</option>
 							</select>
-							<h2>Ticket Title<span id="red">*</span></h2>
+
+							<h2>
+								Ticket Title<span id="red">*</span>
+							</h2>
 							<input type="text">
 						</div>
 						<div class="ticket-form-right">
@@ -43,19 +117,23 @@
 							<div class="assign-options">
 								<input type="radio" class="spec-assign" name="assign" id="assign1" value="assign_self">
 								<label for="assign1">Assign to myself</label>
-								<br>
+
 								<input type="radio" class="spec-assign" name="assign" id="assign2" value="assign_op">
 								<label for="assign2">Assign to another Operator</label>
-								<br>
+
 								<input type="radio" class="spec-assign" name="assign" id="assign3" value="assign_spec">
 								<label for="assign3">Assign to Specialist of Problem Type</label>
 							</div>
 						</div>
 					</div>
-					<h2>Ticket Description<span id="red">*</span></h2>
+					<h2>
+						Ticket Description <span id="red">*</span>
+					</h2>
 					<textarea class="ticket-dec"></textarea>
-					<h2>Problem Type<span id="red">*</span></h2>
-		
+
+					<h2>
+						Problem Type <span id="red">*</span>
+					</h2>
 					<div class="problem-selection">
 						<div class="ticket-ptype">TODO</div>
 					</div>
@@ -63,5 +141,5 @@
 			</div>
 		</div>
 		<button class="add-form-button" onclick="addTicketForm()">Add additional ticket</button>
-	</div>
-{% endblock content %}
+	</div> #}
+{% endblock %}

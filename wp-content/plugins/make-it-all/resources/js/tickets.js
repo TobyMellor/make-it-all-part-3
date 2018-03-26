@@ -1,3 +1,10 @@
+jQuery(() => {
+	$('.accordions').accordion({
+		heightStyle: 'content',
+		handle: '.accordion-handle',
+	});
+});
+
 function addTicketForm() {
 	var div = document.getElementsByClassName('form-wrapper')[0];
 	var clone = div.cloneNode(true);
