@@ -1,6 +1,7 @@
 <?php
 
 require_once(plugin_dir_path(dirname(__FILE__)) . 'views/MakeItAllPage.php');
+require_once(plugin_dir_path(dirname(__FILE__)) . 'views/tables/TicketTable.php');
 
 class TicketPage extends MakeItAllPage {
 	protected $name     = 'Ticket';
@@ -8,55 +9,15 @@ class TicketPage extends MakeItAllPage {
 	protected $position = 2;
 
 	public function read_pane() {
-		if (!current_user_can('manage_options')) wp_die(__('You do not have sufficient permissions to access this page.'));
+		if (!current_user_can('read_make_it_all')) wp_die(__('You do not have sufficient permissions to access this page.'));
+
+		$ticketTable = new TicketTable();
+		$ticketTable->prepare_items();
 		
-		// Want all the column names then all the data.
-		global $wpdb; 
-		$prefix = $wpdb->prefix . 'mia_' . 'ticket';
-		$colQuery = "SELECT Column_name FROM Information_schema.columns WHERE Table_name like '$prefix'";
-		$cols = $wpdb->get_results($colQuery);
-		$query = "SELECT * FROM $prefix";
-		
-		// Returns assoc object thingy
-		$result = $wpdb->get_results($query);
-		
-		if ($result) {
-			// Make table headers
-			echo '
-				<table>
-					<tr id="headers">
-			';
-		
-			for ($i = 0; $i < sizeof($cols); $i++) {
-				echo '
-						<th>' . $cols[$i]->{'Column_name'} . '</th>
-				';
-			}
-		
-			echo '
-					</tr>
-			';
-			
-			
-			for ($i = 0; $i < sizeof($result); $i++) {
-				echo '<tr>';
-				
-				for ($j = 0; $j < sizeof($cols); $j++) {
-					if (!($result[$i]->{$cols[$j]->{'Column_name'}})) {
-						echo '<td> NULL </td>';
-					} else {
-						echo '<td>' . $result[$i]->{$cols[$j]->{'Column_name'}} . '</td>';
-					}
-				}
-		
-				echo '</tr>';
-			}
-		
-			echo '</table>';
-			
-		} else {
-			// TODO: Some nice display for DB error.
-		}
+		echo '<div class="wrap">';
+			echo $ticketTable->display();
+		echo '</div>';
+
 	}
 
 	public function create_pane() {
