@@ -1,0 +1,67 @@
+{% extends "backend/layouts/crud/create.twig" %}
+
+{% block content %}
+	<div class="new-tickets-container">
+		<h1> Create Ticket(s) </h1>
+		<div class="caller-section">
+			<div class="caller-left">
+				<h2>Caller<span id="red">*</span><h2>
+				<select onchange="alert('TODO: Load in staff info')">
+					<option value="none">Select Caller</option>
+					<option value="ID_HERE">ID HERE - John Smith</option>        
+				</select>
+				<h2>Date of Call<span id="red">*</span></h2>
+				<input type="text" name="current_date" value="CURRENT DATE HERE">
+			</div>
+			<div class="caller-right">
+				<div class="caller-information">
+					<h2> Caller Information</h2>
+					<div class="caller"></div>
+				</div>
+			</div>
+		</div>
+		<div class="ticket-details-section">
+			<div class="form-wrapper">
+				<div class="ticket-nav">
+					<div class="min-button" onclick="minimise(this)">
+						<i class="fas fa-angle-down"></i>
+					</div>
+				</div>
+				<form class="ticket-form">
+					<div class="ticket-form-top">
+						<div class="ticket-form-left">
+							<h2>Status<span id="red">*</span></h2>
+							<select id="status-select">
+								<option value="Status ID 1">Status Name</option>'
+							</select>
+							<h2>Ticket Title<span id="red">*</span></h2>
+							<input type="text">
+						</div>
+						<div class="ticket-form-right">
+							<h2>Assigned To<span id="red">*</span></h2>
+							<input type="text" value="Mr Tickets" readonly>
+							<div class="assign-options">
+								<input type="radio" class="spec-assign" name="assign" id="assign1" value="assign_self">
+								<label for="assign1">Assign to myself</label>
+								<br>
+								<input type="radio" class="spec-assign" name="assign" id="assign2" value="assign_op">
+								<label for="assign2">Assign to another Operator</label>
+								<br>
+								<input type="radio" class="spec-assign" name="assign" id="assign3" value="assign_spec">
+								<label for="assign3">Assign to Specialist of Problem Type</label>
+							</div>
+						</div>
+					</div>
+					<h2>Ticket Description<span id="red">*</span></h2>
+					<textarea class="ticket-dec"></textarea>
+					<h2>Problem Type<span id="red">*</span></h2>
+		
+					<div class="problem-selection">
+						<div class="ticket-ptype">TODO</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<button class="add-form-button" onclick="addTicketForm()">Add additional ticket</button>
+	</div>
+{% endblock content %}

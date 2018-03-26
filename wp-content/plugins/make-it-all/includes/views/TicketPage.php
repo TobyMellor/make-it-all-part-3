@@ -11,17 +11,22 @@ class TicketPage extends MakeItAllPage {
 	public function read_pane() {
 		if (!current_user_can('read_make_it_all')) wp_die(__('You do not have sufficient permissions to access this page.'));
 
+		$context = $this->get_context('View Tickets');
+
+		$this->render_pane($context);
+
 		$ticketTable = new TicketTable();
 		$ticketTable->prepare_items();
 		
-		echo '<div class="wrap">';
-			echo $ticketTable->display();
-		echo '</div>';
-
+		$ticketTable->display();
 	}
 
 	public function create_pane() {
-		global $wpdb;
+		$context = $this->get_context('Create Tickets');
+
+		return $this->render_pane($context);
+
+		/*global $wpdb;
 
 		$staffQuery = "SELECT id, name, email, job_title, phone_number FROM " . $wpdb->prefix . "mia_staff";
 		$staffResult = $wpdb->get_results($staffQuery);
@@ -196,6 +201,7 @@ class TicketPage extends MakeItAllPage {
 				<button class="add-form-button" onclick="addTicketForm()">Add additional ticket</button>
 			</div>
 		'; // END Ticket Container
+		*/
 	}
 
 	private function findChildren($idFind, $count, $problems) {

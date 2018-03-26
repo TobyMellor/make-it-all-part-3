@@ -39,4 +39,21 @@ abstract class MakeItAllPage {
 	abstract public function create_pane();
 	abstract public function update_pane();
 	abstract public function delete_pane();
+
+	protected function get_context($pageName) {
+		$context = Timber::get_context();
+		$context['page_name'] = $pageName; // e.g. Create Ticket
+		
+		return $context;
+	}
+
+	protected function render_pane($context) {
+		Timber::render(
+			'backend/' .
+			strtolower($this->name) . 's/' .
+			str_replace(' ', '_', strtolower($context['page_name'])) .
+			'.twig',
+			$context
+		); // e.g. backend/tickets/create_ticket.twig
+	}
 }
