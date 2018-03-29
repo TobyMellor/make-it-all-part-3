@@ -1,0 +1,152 @@
+.caller-section, .ticket-form-top {
+	width: 90%;
+	display: flex;
+	justify-content: space-around;
+}
+
+.caller-section {
+	margin: 0 auto;
+	margin-bottom: 30px;
+}
+
+.ticket-dec {
+	height: 100px;
+}
+
+.caller-right {
+	min-width: 300px;
+}
+
+/*input[type=text] {
+	display: block;
+	width: 100%;
+	margin: 0 auto;
+}*/
+
+.ticket-form {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	border: solid 1px grey;
+}
+
+.ticket-form textarea {
+	width: 90%;
+	margin: 0 auto;
+}
+
+select[name="ticket-ptype"] {
+	height: 100px;
+}
+
+.caller-det span {
+	display: block;
+}
+
+.problem-selection {
+	display: flex;
+	align-items: flex-start;
+	max-height: 500px;
+	min-width: 96%;
+	overflow-y: auto;
+	border: solid 1px grey;
+	margin-bottom: 10px;
+}
+
+.problem-selection span {
+	text-align: center;
+	cursor: pointer;
+	padding: 5px 5px;
+}
+
+.problem-right {
+	display: flex;
+}
+
+.problem-arrow {
+	min-width: 15px;
+}
+
+.problem-children span {
+	display: none;
+}
+
+.parent-problem, .child-problem {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	min-width: 150px;
+}
+
+.parent-problem:hover, .child-problem:hover {
+	background-color: grey;
+}
+
+.ticket-active {
+	background-color: darkgray;
+}
+
+#red {
+	color: red;
+}
+
+.add-form-button {
+	display: block;
+	margin: 0 auto;
+	padding: 5px 5px;
+	margin-top: 10px;
+}
+
+.ticket-nav {
+	display: flex;
+	justify-content: flex-end;
+	background-color: lightgray;
+	margin-top: 20px;
+}
+
+.min-button {
+	width: 20px;
+	height: 20px;
+	padding: 5px;
+	cursor: pointer;
+}
+
+.min-button:hover {
+	color: black;
+}
+
+.form-wrapper {
+	margin-right: 10px;
+}
+
+.accordions > .accordion-handle {
+	padding: 12px;
+	background-color: #3498db;
+	color: #ffffff;
+	display: flex;
+}
+
+.accordions > .accordion-handle .accordion-icon {
+	flex: 1 0 0;
+}
+
+.accordions > .accordion-handle .accordion-title {
+	flex: 4 0 0;
+	font-size: 14px;
+    font-weight: 500;
+}
+
+.number-circle {
+    border-radius: 50%;
+    
+    width: 14px;
+    height: 14px;
+    padding: 4px;
+    
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    text-align: center;
+
+    font: 12px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
