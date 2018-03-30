@@ -17,6 +17,7 @@ abstract class MakeItAllPage {
 
 		add_menu_page('View ' . $name, $name . 's', 'read_make_it_all', $parentSlug, [$this, 'read_pane'], $this->icon, $this->position);
 
+		// Create submenu for each page in Pages, e.g. Create [Ticket], Update [Ticket]
 		foreach ($this->pages as $pageName) {
 			$pageNameLower = strtolower($pageName);
 			$title         = $pageName . ' ' . $name;
@@ -33,6 +34,9 @@ abstract class MakeItAllPage {
 				]
 			);
 		}
+
+		// Style only used for this page, e.g. tickets.css NOT main.css
+		wp_enqueue_style('mit_' . $parentSlug, plugin_dir_url(__FILE__) . '../resources/css/' . $parentSlug . '.css', [], '1.0.0', 'all');
 	}
 
 	abstract public function read_pane();
