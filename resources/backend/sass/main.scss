@@ -1,36 +1,123 @@
+// Colours
+$white: #ffffff;
+$cloudy-white: #f9f9f9;
+$blue: #3498db;
+$silver: #bdc3c7;
+$silver-hover: rgba(189, 195, 199, .5);
+$grey: #899194;
+
+//
+// Overridden WordPress Styles
+//
+
+.wp-heading-inline {
+	font-weight: bold   !important;
+	font-size: 25px     !important;
+	margin-bottom: 14px !important;
+}
+
+//
+// Common Make-It-All styles for Admin pages
+//
+
+.row {
+	margin-left: 0;
+	margin-right: 0;
+}
+
 .accordions {
 	.accordion-handle {
-		padding: 12px;
-		background-color: #3498db;
-		color: #ffffff;
-		display: flex;
+		padding: 8px;
+		background-color: $blue;
+		color: $white;
+		cursor: pointer;
 
 		.accordion-icon {
-			flex: 1 0 0;
+			padding: 0;
+			padding-left: 5px;
+
+			.number-circle {
+				border-radius: 50%;
+				
+				width: 14px;
+				height: 14px;
+				padding: 4px;
+				
+				border: 1px solid $white;
+				color: $white;
+				text-align: center;
+
+				font: 12px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+			}
 		}
 
 		.accordion-title {
-			flex: 4 0 0;
-			font-size: 14px;
-			font-weight: 500;
+			font-size: 17px;
+			font-weight: 600;
+			line-height: 22px;
+			padding-left: 9px;
 		}
 	}
 
 	.accordion-body {
-		
+		border-left: 1px solid $silver;
+		border-right: 1px solid $silver;
+
+		&:last-child {
+			border-bottom: 1px solid $silver;
+		}
 	}
 }
 
-.number-circle {
-	border-radius: 50%;
-	
-	width: 14px;
-	height: 14px;
-	padding: 4px;
-	
-	border: 1px solid #ffffff;
-	color: #ffffff;
-	text-align: center;
+.mit-field-group {
+	& > div {
+		border-bottom: 1px solid $silver-hover;
+	}
 
-	font: 12px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+	& > div:first-child {
+		padding: 12px;
+		background-color: $cloudy-white;
+		border-right: 1px solid $silver;
+
+		p {
+			margin: 0;
+
+			&.label {
+				font-weight: bold;
+				font-size: 14px;
+				margin-bottom: 2px;
+			}
+
+			&.details {
+				color: $grey;
+				font-size: 12px;
+			}
+		}
+	}
+
+	& > div:last-child {
+		padding: 12px;
+		background-color: $white;
+
+		input {
+			width: 100%;
+			padding: 6px 8px;
+		}
+
+		input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+			color: $silver;
+		}
+
+		input::-moz-placeholder { /* Firefox 19+ */
+			color: $silver;
+		}
+
+		input:-ms-input-placeholder { /* IE 10+ */
+			color: $silver;
+		}
+
+		input:-moz-placeholder { /* Firefox 18- */
+			color: $silver;
+		}
+	}
 }

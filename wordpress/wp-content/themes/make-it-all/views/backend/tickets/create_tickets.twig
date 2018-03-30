@@ -1,68 +1,71 @@
 {% extends "backend/layouts/page.twig" %}
 
 {% block main %}
-
-{# 	<form name="post" action="post.php" method="post" id="post">
-		<div id="poststuff">
-			<div id="post-body" class="metabox-holder columns-2">
-				<div id="post-body-content" style="position: relative;">
-					<div class="accordions">
-						<h3>Section 1</h3>
-						<div>
-							<div id="titlediv">
-								<div id="titlewrap">
-									<input name="post_title" id="title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here">
-								</div>
-							</div>
-							{{ description_editor }}
-							<br class="clear">
-						</div>
-						<h3>Section 2</h3>
-						<div>
-							<div id="titlediv">
-								<div id="titlewrap">
-									<input name="post_title" id="title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here">
-								</div>
-							</div>
-							{{ description_editor }}
-							<br class="clear">
-						</div>
+	
+	<div class="row">
+		<div class="col-xs-9">
+			<div class="accordions">
+				<div class="accordion-handle row">
+					<div class="accordion-icon col-xs-3">
+						<div class="number-circle">1</div>
+					</div>
+					<div class="accordion-title col-xs-9">
+						Section 1
 					</div>
 				</div>
-			</div>
-		</div>
-	</form> #}
-	
-	<div class="accordion-header">
-		TODO: Create header and finish styling this accordion/page
-	</div>
-	<div class="accordions">
-		<div class="accordion-handle">
-			<div class="accordion-icon">
-				<div class="number-circle">1</div>
-			</div>
-			<div class="accordion-title">
-				Section 1
-			</div>
-		</div>
-		<div>
-			<div id="titlediv">
-				<div id="titlewrap">
-					<input name="post_title" id="title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here">
+				<div class="accordion-body">
+					<div class="row mit-field-group">
+						<div class="col-xs-3">
+							<p class="label">
+								Title <span class="required">*</span>
+							</p>
+
+							<p class="details">
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+							</p>
+						</div>
+						<div class="col-xs-9">
+							<input name="post_title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here">
+						</div>
+					</div>
+					<div class="row mit-field-group">
+						<div class="col-xs-3">
+							<p class="label">
+								Description <span class="required">*</span>
+							</p>
+
+							<p class="details">
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+							</p>
+						</div>
+						<div class="col-xs-9">
+							{{ description_editor }}
+						</div>
+					</div>
+					<br class="clear">
+				</div>
+
+				<div class="accordion-handle">
+					<div class="accordion-icon">
+						<div class="number-circle">2</div>
+					</div>
+					<div class="accordion-title">
+						Section 2
+					</div>
+				</div>
+				<div class="accordion-body">
+					<div id="titlediv">
+						<div id="titlewrap">
+							<input name="post_title" id="title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here">
+						</div>
+					</div>
+					{{ description_editor }}
+					<br class="clear">
 				</div>
 			</div>
-			{{ description_editor }}
-			<br class="clear">
 		</div>
-		<div class="accordion-handle">Section 2</div>
-		<div>
-			<div id="titlediv">
-				<div id="titlewrap">
-					<input name="post_title" id="title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here">
-				</div>
-			</div>
-			{{ description_editor }}
-			<br class="clear">
+		<div class="col-xs-3">
+			Helpful information about tickets will go here...
 		</div>
 	</div>
 {# 
