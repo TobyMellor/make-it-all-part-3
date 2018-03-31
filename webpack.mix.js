@@ -52,7 +52,7 @@ function compileBackend() {
 	mix.js(backendResources("main.js"), backendOutput("main.js"));
 	mix.sass(backendResources("main.scss"), backendOutput("main.css"))
 
-	let pages = ["tickets"];
+	let pages = ["ticket"];
 
 	for (let page of pages) {
 		mix.js(backendResources(page + ".js"), backendOutput(page + ".js"));

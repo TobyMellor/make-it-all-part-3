@@ -35,8 +35,14 @@ abstract class MakeItAllPage {
 			);
 		}
 
-		// Style only used for this page, e.g. tickets.css NOT main.css
-		wp_enqueue_style('mit_' . $parentSlug, plugin_dir_url(__FILE__) . '../resources/css/' . $parentSlug . '.css', [], '1.0.0', 'all');
+		add_action('admin_enqueue_scripts', [$this, 'enqueue_dependencies']); // Style/script only used for this page, e.g. ticket.css NOT main.css
+	}
+
+	public function enqueue_dependencies() {
+		$fileName = strtolower($this->name);
+
+		wp_enqueue_style('mit_' . $fileName, plugin_dir_url(__FILE__) . '../../resources/css/' . $fileName . '.css', [], '1.0.0', 'all');
+		wp_enqueue_script('mit_' . $fileName, plugin_dir_url(__FILE__) . '../../resources/js/' . $fileName . '.js', ['jquery', 'jquery-ui-accordion'], '1.0.0', false);
 	}
 
 	abstract public function read_pane();

@@ -2,8 +2,8 @@
 $white: #ffffff;
 $cloudy-white: #f9f9f9;
 $blue: #3498db;
-$silver: #bdc3c7;
-$silver-hover: rgba(189, 195, 199, .5);
+$silver: #e5e5e5;
+$silver-hover: rgba(229, 229, 229, .5);
 $grey: #899194;
 
 //
@@ -11,8 +11,6 @@ $grey: #899194;
 //
 
 .wp-heading-inline {
-	font-weight: bold   !important;
-	font-size: 25px     !important;
 	margin-bottom: 14px !important;
 }
 
@@ -23,6 +21,10 @@ $grey: #899194;
 .row {
 	margin-left: 0;
 	margin-right: 0;
+
+	&.no-padding > div {
+		padding: 0;
+	}
 }
 
 .accordions {
@@ -99,9 +101,10 @@ $grey: #899194;
 		padding: 12px;
 		background-color: $white;
 
-		input {
+		input, select {
 			width: 100%;
 			padding: 6px 8px;
+			height: auto;
 		}
 
 		input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
@@ -118,6 +121,63 @@ $grey: #899194;
 
 		input:-moz-placeholder { /* Firefox 18- */
 			color: $silver;
+		}
+	}
+}
+
+.mit-panel {
+	position: relative;
+	border: 1px solid #e5e5e5;
+	box-shadow: 0 1px 1px rgba(0,0,0,.04);
+	background: #fff;
+	font-size: 13px;
+	line-height: 2.1em;
+	margin-bottom: 16px;
+
+	&.call-panel > .row {
+		& > div:last-child {
+			border-left: 1px solid $silver;
+		}
+
+		.mit-field-group:last-child > div {
+			border-bottom: 0;
+		}
+	}
+
+	h2 {
+		margin: 0;
+		font-size: 21px;
+		font-weight: 400;
+		line-height: 1.2;
+	}
+
+	p {
+		font-size: 16px;
+		margin: 0;
+	}
+	
+	.mit-field-group:first-child {
+		border-top: 1px solid $silver;
+	}
+
+	.mit-panel-heading, .mit-panel-body {
+		padding: 16px;
+
+		&.negative-margin {
+			margin: -16px;
+		}
+	}
+}
+
+.staff-information {
+	margin-top: 16px;
+	
+	p {
+		margin-bottom: 0;
+		font-size: 14px;
+
+		strong {
+			float: right;
 		}
 	}
 }

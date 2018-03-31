@@ -49,7 +49,6 @@ class MakeItAllAdmin {
 	 */
 	public function enqueue_styles() {
 		wp_enqueue_style('flexboxgrid', '//cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css', [], '6.3.1', 'all');
-		wp_enqueue_style($this->pluginName . '_main', plugin_dir_url(__FILE__) . '../resources/css/main.css', ['flexboxgrid'], $this->version, 'all');
 		wp_enqueue_style($this->pluginName . '_font_awesome', 'https://use.fontawesome.com/releases/v5.0.8/js/all.js');
 	}
 
@@ -60,6 +59,6 @@ class MakeItAllAdmin {
 	 */
 	public function enqueue_scripts() {
 		wp_enqueue_script('jquery-ui-accordion', plugin_dir_url(__FILE__) . 'js/plugins/jquery-ui.js', ['jquery'], '1.12.1', false);
-		wp_enqueue_script($this->pluginName . '_tickets', plugin_dir_url(__FILE__) . '../resources/js/tickets.js', ['jquery', 'jquery-ui-accordion'], $this->version, false);
+		wp_enqueue_script($this->pluginName, plugin_dir_url(__FILE__) . '../resources/js/main.js', ['jquery', 'jquery-ui-accordion'], $this->version, false);
 	}
 }

@@ -1,9 +1,89 @@
 {% extends "backend/layouts/page.twig" %}
 
 {% block main %}
-	
 	<div class="row">
 		<div class="col-xs-9">
+			<div class="mit-panel call-panel">
+				<div class="row no-padding">
+					<div class="col-xs-8">
+						<div class="mit-panel-heading">
+							<h2>Call Information</h2>
+							<p>Enter some information about the call to get started:</p>
+						</div>
+						<div class="mit-panel-body negative-margin">
+							<div class="row mit-field-group">
+								<div class="col-xs-3">
+									<p class="label">
+										Caller <span class="required">*</span>
+									</p>
+								</div>
+								<div class="col-xs-9">
+									<select>
+										<option value="1">Andy Hinnigan</option>
+										<option value="2">Aron Bettison</option>
+										<option value="3">Daniel White</option>
+										<option value="4">Ghassan Nabeel</option>
+										<option value="5">Toby Mellor</option>
+									</select>
+								</div>
+							</div>
+							<div class="row mit-field-group">
+								<div class="col-xs-3">
+									<p class="label">
+										Date of call <span class="required">*</span>
+									</p>
+								</div>
+								<div class="col-xs-9">
+									<input name="post_title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter date of call here">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-4">
+						<div class="mit-panel-heading">
+							<div id="no-caller">
+								<h2>Caller Information</h2>
+								<p>Please select a caller.</p>
+							</div>
+
+							<div class="staff-information">
+								<p>
+									ID Number: <strong>1</strong>
+								</p>
+								<p>
+									Name: <strong>Dana Gibson</strong>
+								</p>
+								<p>
+									Job: <strong>Executive Officer</strong>
+								</p>
+								<p>
+									Department: <strong>Computer Science</strong>
+								</p>
+								<p>
+									Phone: <strong>(686) 917-4585</strong>
+								</p>
+								<p>
+									<strong>
+										<span>
+											<i class="fa fa-eye"></i>
+											<span>Read</span>
+										</span>
+										<span>
+											<i class="fa fa-user-secret"></i>
+											<span>Operator</span>
+										</span>
+										<span>
+											<i class="fa fa-line-chart"></i>
+											<span>Analyst</span>
+										</span>
+									</strong>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<div class="accordions">
 				<div class="accordion-handle row">
 					<div class="accordion-icon col-xs-3">
@@ -68,7 +148,7 @@
 			Helpful information about tickets will go here...
 		</div>
 	</div>
-{# 
+
 	<div class="new-tickets-container">
 		<div class="caller-section">
 			<div class="caller-left">
@@ -144,5 +224,5 @@
 			</div>
 		</div>
 		<button class="add-form-button" onclick="addTicketForm()">Add additional ticket</button>
-	</div> #}
+	</div>
 {% endblock %}
