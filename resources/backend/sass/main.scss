@@ -123,6 +123,14 @@ $grey: #899194;
 			color: $silver;
 		}
 	}
+
+	.has-button {
+		display: flex;
+		
+		button {
+			flex-grow: 0;
+		}
+	}
 }
 
 .mit-panel {
@@ -171,13 +179,40 @@ $grey: #899194;
 
 .staff-information {
 	margin-top: 16px;
-	
+
 	p {
 		margin-bottom: 0;
 		font-size: 14px;
 
 		strong {
 			float: right;
+		}
+	}
+}
+
+.date-time-picker {
+	line-height: 24px;
+	margin-top: -1px;
+	flex-grow: 1;
+	width: 100%;
+
+	span {
+		&:nth-child(odd) {
+			border-bottom: 1px solid $grey;
+			font-size: 14px;
+			font-weight: 600;
+			margin: 1px;
+			width: 20px;
+			display: inline-block;
+			text-align: center;
+		}
+
+		&:nth-child(even) {
+			color: $grey;
+		}
+
+		&:nth-child(5) {
+			margin-right: 12px;
 		}
 	}
 }
