@@ -49,7 +49,7 @@ class MakeItAllAdmin {
 	 */
 	public function enqueue_styles() {
 		wp_enqueue_style('flexboxgrid', '//cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css', [], '6.3.1', 'all');
-		wp_enqueue_style($this->pluginName . '_font_awesome', 'https://use.fontawesome.com/releases/v5.0.8/js/all.js');
+		wp_enqueue_style($this->pluginName . '_font_awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 	}
 
 	/**
