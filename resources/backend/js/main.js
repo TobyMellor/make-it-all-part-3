@@ -1,7 +1,18 @@
 $(() => {
+	/**
+	 * Initializations
+	 */
+
 	$('.mit-picker input').datetimepicker({
 		controlType: 'slider'
 	});
+
+	// Set current date
+	$('.mit-picker input').datepicker('setDate', new Date());
+
+	/**
+	 * Event Listeners
+	 */
 
 	// Forward click on button to hidden input with datetimepicker
 	$('.mit-picker').click(function(e) {
