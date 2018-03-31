@@ -1,7 +1,5 @@
-wordpress/wp-content/themes/make-it-all/css/*
-wordpress/wp-content/themes/make-it-all/js/*
-wordpress/wp-content/plugins/make-it-all/resources/css/*
-wordpress/wp-content/plugins/make-it-all/resources/js/*
+wordpress/wp-content/themes/make-it-all/*/css/*
+wordpress/wp-content/themes/make-it-all/*/js/*
 
 node_modules
 package-lock.json
