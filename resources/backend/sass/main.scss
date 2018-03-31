@@ -8,6 +8,10 @@ $silver-hover: rgba(229, 229, 229, .5);
 $grey: #899194;
 $highlight: rgba(241, 196, 15, 0.2);
 $highlight-hover: rgba(241, 196, 15, 0.3);
+$green: #28a745;
+$green-hover: #218838;
+$orange: #f39c12;
+$orange-hover: #e67e22;
 
 //
 // Overridden WordPress Styles
@@ -110,6 +114,11 @@ $highlight-hover: rgba(241, 196, 15, 0.3);
 			height: auto;
 		}
 
+		select {
+			padding-left: 4px;
+			padding-right: 4px;
+		}
+
 		input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 			color: $silver;
 		}
@@ -130,9 +139,17 @@ $highlight-hover: rgba(241, 196, 15, 0.3);
 	.has-button {
 		display: flex;
 		
-		button {
-			flex-grow: 0;
+		div:first-child {
+			flex-grow: 1;
 		}
+	}
+
+	.filter {
+		margin-top: 3px;
+    	margin-right: 3px;
+		margin-left: 15px;
+		float: right;
+		cursor: pointer;
 	}
 }
 
@@ -190,6 +207,25 @@ $highlight-hover: rgba(241, 196, 15, 0.3);
 		strong {
 			float: right;
 		}
+	}
+}
+
+span.filter {
+	display: inline-block; // don't break on wrap
+	padding: 2px 9px;
+	background-color: $blue;
+	border-radius: 3px;
+	border: 0;
+	color: $white;
+	font-weight: 600;
+	font-size: 16px;
+	
+	&.filter-green, &.filter-resolved {
+		background-color: $green;
+	}
+
+	&.filter-pending {
+		background-color: $orange;
 	}
 }
 
