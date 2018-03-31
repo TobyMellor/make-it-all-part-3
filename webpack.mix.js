@@ -15,11 +15,11 @@ let folder = (baseFolder, name) => baseFolder + (name.endsWith("js") ? "js/" : (
 // - get full path to resources for a file name, to decide where to get file
 let resources = (baseFolder, name) => folder(baseFolder, name) + name;
 // - get output filepath for deciding where to place built files
-let output = (baseFolder, name) => folder(baseFolder, name).replace("sass", "css") + name
+let output = (baseFolder, name) => "wordpress/wp-content/themes/make-it-all/" + folder(baseFolder, name).replace("sass", "css") + name
 
 function compileFrontend() {
 	frontendResources = name => resources("resources/frontend/", name); // baseFolder always "frontend" for frontend files
-	frontendOutput    = name => output("wordpress/wp-content/themes/make-it-all/", name); // set output directory
+	frontendOutput    = name => output("frontend/", name); // set output directory
 
 	// List of pages' folders to iterate through contents to get JS and CSS for compilation (must be in order)
 	let pages = ["tickets", "staff", "hardware", "software", "metrics", "problem_types", "settings"];
@@ -47,7 +47,7 @@ function compileFrontend() {
 
 function compileBackend() {
 	backendResources = name => resources("resources/backend/", name); // baseFolder always "backend" for backend files
-	backendOutput    = name => output("wordpress/wp-content/plugins/make-it-all/resources/", name); // set output directory
+	backendOutput    = name => output("backend/", name); // set output directory
 
 	mix.js(backendResources("main.js"), backendOutput("main.js"));
 	mix.sass(backendResources("main.scss"), backendOutput("main.css"))

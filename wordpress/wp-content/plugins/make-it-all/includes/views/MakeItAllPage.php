@@ -41,8 +41,8 @@ abstract class MakeItAllPage {
 	public function enqueue_dependencies() {
 		$fileName = strtolower($this->name);
 
-		wp_enqueue_style('mit_' . $fileName, plugin_dir_url(__FILE__) . '../../resources/css/' . $fileName . '.css', [], '1.0.0', 'all');
-		wp_enqueue_script('mit_' . $fileName, plugin_dir_url(__FILE__) . '../../resources/js/' . $fileName . '.js', ['jquery', 'jquery-ui-accordion'], '1.0.0', false);
+		wp_enqueue_style('mit_' . $fileName, get_template_directory_uri() . '/backend/css/' . $fileName . '.css', [], '1.0.0', 'all');
+		wp_enqueue_script('mit_' . $fileName, get_template_directory_uri() . '/backend/js/' . $fileName . '.js', ['jquery', 'jquery-ui-accordion'], '1.0.0', false);
 	}
 
 	abstract public function read_pane();
@@ -59,7 +59,7 @@ abstract class MakeItAllPage {
 
 	protected function render_pane($context) {
 		Timber::render(
-			'backend/' .
+			'backend/views/' .
 			strtolower($this->name) . 's/' .
 			str_replace(' ', '_', strtolower($context['page_name'])) .
 			'.twig',

@@ -58,7 +58,7 @@ class MakeItAllAdmin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-		wp_enqueue_script('jquery-ui-accordion', plugin_dir_url(__FILE__) . 'js/plugins/jquery-ui.js', ['jquery'], '1.12.1', false);
-		wp_enqueue_script($this->pluginName, plugin_dir_url(__FILE__) . '../resources/js/main.js', ['jquery', 'jquery-ui-accordion'], $this->version, false);
+		wp_enqueue_script('mit_dependencies', get_template_directory_uri() . '/backend/js/vendor.js', ['jquery'], '1.0.0', false); // A collection of plugins
+		wp_enqueue_script($this->pluginName, get_template_directory_uri() . '/backend/js/main.js', ['jquery', 'mit_dependencies'], $this->version, false);
 	}
 }
