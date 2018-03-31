@@ -9,6 +9,10 @@
 
 let mix = require("laravel-mix");
 
+mix.options({
+	processCssUrls: false
+});
+
 // Lambda functions for performing small string operations
 // - used for deciding where to place different types of file
 let folder = (baseFolder, name) => baseFolder + (name.endsWith("js") ? "js/" : (name.endsWith("css") ? "sass/" : ""));
@@ -38,11 +42,7 @@ function compileFrontend() {
 	// Can be re-enabled if there is a use case for purely using the main CSS
 	//mix.sass("resources/assets/sass/app.scss", "public/css");
 
-	// Compile vendor JS and CSS
-	// Get all files in vendor folder and compile into single file
-	let vendor = name => frontendResources("vendor/" + name);
-	mix.js(vendor("vendor.js"), frontendOutput("vendor.js"));
-	mix.sass(vendor("vendor.scss"), frontendOutput("vendor.css"));
+	compileVendors(frontendResources, frontendOutput);
 }
 
 function compileBackend() {
@@ -59,9 +59,16 @@ function compileBackend() {
 		mix.sass(backendResources(page + ".scss"), backendOutput(page + ".css"));
 	}
 
-	// Compile vendor JS and CSS
-	// Get all files in vendor folder and compile into single file
-	mix.js([backendResources("vendor/jquery-ui.js")], backendOutput("vendor.js"));
+	compileVendors(backendResources, backendOutput);
+}
+
+// Compile vendor JS and CSS
+// Get all files in vendor folder and compile into single file
+function compileVendors(resources, output) {
+	let vendor = name => resources("vendor/" + name);
+
+	mix.js(vendor("vendor.js"), output("vendor.js"));
+	mix.sass(vendor("vendor.scss"), output("vendor.css"));
 }
 
 compileFrontend(); // frontend theme
