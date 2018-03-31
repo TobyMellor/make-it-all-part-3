@@ -1,16 +1,5 @@
 $(() => {
 	/**
-	 * Initializations
-	 */
-
-	$('.mit-picker input').datetimepicker({
-		controlType: 'slider'
-	});
-
-	// Set current date
-	$('.mit-picker input').datepicker('setDate', new Date());
-
-	/**
 	 * Event Listeners
 	 */
 
@@ -51,6 +40,19 @@ $(() => {
 			$(this).remove();
 		});
 	});
+
+	/**
+	 * Initializations
+	 */
+
+	$('.mit-picker input').datetimepicker({
+		controlType: 'slider'
+	});
+
+	// Set current date
+	setTimeout(function() {
+		$('.hasDatepicker').datepicker('setDate', new Date());
+	}, 500);
 });
 
 function setDateDisplay($spans, date) {
