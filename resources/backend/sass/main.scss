@@ -108,7 +108,7 @@ $orange-hover: #e67e22;
 		padding: 12px;
 		background-color: $white;
 
-		input, select {
+		input[type="text"], select {
 			width: 100%;
 			padding: 6px 8px;
 			height: auto;
@@ -143,14 +143,6 @@ $orange-hover: #e67e22;
 			flex-grow: 1;
 		}
 	}
-
-	.filter {
-		margin-top: 3px;
-    	margin-right: 3px;
-		margin-left: 15px;
-		float: right;
-		cursor: pointer;
-	}
 }
 
 .mit-panel {
@@ -161,16 +153,6 @@ $orange-hover: #e67e22;
 	font-size: 13px;
 	line-height: 2.1em;
 	margin-bottom: 16px;
-
-	&.call-panel > .row {
-		& > div:last-child {
-			border-left: 1px solid $silver;
-		}
-
-		.mit-field-group:last-child > div {
-			border-bottom: 0;
-		}
-	}
 
 	h2 {
 		margin: 0;
@@ -197,22 +179,9 @@ $orange-hover: #e67e22;
 	}
 }
 
-.staff-information {
-	margin-top: 16px;
-
-	p {
-		margin-bottom: 0;
-		font-size: 14px;
-
-		strong {
-			float: right;
-		}
-	}
-}
-
 span.filter {
 	display: inline-block; // don't break on wrap
-	padding: 2px 9px;
+	padding: 5px 9px;
 	background-color: $blue;
 	border-radius: 3px;
 	border: 0;
@@ -228,128 +197,3 @@ span.filter {
 		background-color: $orange;
 	}
 }
-
-//
-// Time Picker
-//
-
-.date-time-picker {
-	line-height: 24px;
-	margin-top: -1px;
-	flex-grow: 1;
-	width: 100%;
-
-	span {
-		&:nth-child(odd) {
-			border-bottom: 1px solid $grey;
-			font-size: 14px;
-			font-weight: 600;
-			margin: 1px;
-			width: 20px;
-			display: inline-block;
-			text-align: center;
-		}
-
-		&:nth-child(even) {
-			color: $grey;
-		}
-
-		&:nth-child(5) {
-			margin-right: 12px;
-		}
-	}
-}
-
-.mit-picker input {
-	visibility: hidden;
-	width: 0 !important;
-    height: 0 !important;
-    padding: 0 !important;
-    margin: -3px;
-}
-
-.ui-datepicker {
-    margin-top: 50px !important;
-
-    .ui-icon {
-    	cursor: pointer;
-    }
-
-    select {
-    	width: 100%;
-    }
-
-    button {
-    	background: #0085ba;
-		border-color: #0073aa #006799 #006799;
-		box-shadow: 0 1px 0 #006799;
-		color: #fff;
-		text-decoration: none;
-		text-shadow: 0 -1px 1px #006799,1px 0 1px #006799,0 1px 1px #006799,-1px 0 1px #006799;
-		font-size: 13px;
-		margin: 0;
-		padding: 0 10px 1px;
-		cursor: pointer;
-		border-width: 1px;
-		border-style: solid;
-		-webkit-appearance: none;
-		border-radius: 3px;
-		white-space: nowrap;
-
-		&:hover {
-			background: #008ec2;
-			border-color: #006799;
-		}
-    }
-
-    .ui_tpicker_time_input {
-    	width: 100% !important;
-    	border: 1px solid #ddd !important;
-    	padding: 5px 6px;
-    }
-
-    .ui_tpicker_time_label, .ui_tpicker_hour_label, .ui_tpicker_minute_label {
-    	font-weight: 600;
-    }
-
-    td a {
-		border: 1px solid #dddddd;
-		background-color: $silver;
-		text-align: center;
-		font-weight: 600;
-		border-radius: 3px;
-		box-shadow: 0 1px 0 #ccc;
-		margin-bottom: 1px;
-
-		&:hover {
-			background-color: $silver-hover;
-		}
-
-		&.ui-state-highlight {
-			background-color: $highlight;
-
-			&:hover {
-				background-color: $highlight-hover;
-			}
-		}
-
-		&.ui-state-active {
-			border: 1px solid $blue-hover;
-			background-color: $blue;
-			color: $white;
-   			box-shadow: 0 1px 0 #006799;
-
-			&:hover {
-				background-color: $blue-hover;
-			}
-		}
-    }
-
-    .ui-datepicker-header {
-    	background-color: $silver;
-    }
-}
-
-//
-//
-//

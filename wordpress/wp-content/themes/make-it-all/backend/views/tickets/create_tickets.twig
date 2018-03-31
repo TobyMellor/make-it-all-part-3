@@ -67,41 +67,86 @@
 						<div class="mit-panel-heading">
 							<div>
 								<h2>Caller Information</h2>
+								<p class="staff-information">Who called in?</p>
 								<p id="no-caller">Please select a caller.</p>
 							</div>
 
 							<div class="staff-information">
-								<p>
-									ID Number: <strong>1</strong>
-								</p>
-								<p>
-									Name: <strong>Dana Gibson</strong>
-								</p>
-								<p>
-									Job: <strong>Executive Officer</strong>
-								</p>
-								<p>
-									Department: <strong>Computer Science</strong>
-								</p>
-								<p>
-									Phone: <strong>(686) 917-4585</strong>
-								</p>
-								<p>
-									<strong>
-										<span>
-											<i class="fa fa-eye"></i>
-											<span>Read</span>
-										</span>
-										<span>
-											<i class="fa fa-user-secret"></i>
-											<span>Operator</span>
-										</span>
-										<span>
-											<i class="fa fa-line-chart"></i>
-											<span>Analyst</span>
-										</span>
-									</strong>
-								</p>
+								<div class="row mit-field-group">
+									<div class="col-xs-5">
+										<p class="label">
+											Name
+										</p>
+									</div>
+									<div class="col-xs-7">
+										<input name="post_title" spellcheck="true" autocomplete="off" type="text" readonly="readonly" value="Toby Mellor">
+									</div>
+								</div>
+								<div class="row mit-field-group">
+									<div class="col-xs-5">
+										<p class="label">
+											ID Number
+										</p>
+									</div>
+									<div class="col-xs-7">
+										<input name="post_title" spellcheck="true" autocomplete="off" type="text" readonly="readonly" value="B619693">
+									</div>
+								</div>
+								<div class="row mit-field-group">
+									<div class="col-xs-5">
+										<p class="label">
+											Job
+										</p>
+									</div>
+									<div class="col-xs-7">
+										<input name="post_title" spellcheck="true" autocomplete="off" type="text" readonly="readonly" value="Developer">
+									</div>
+								</div>
+								<div class="row mit-field-group">
+									<div class="col-xs-5">
+										<p class="label">
+											Department
+										</p>
+									</div>
+									<div class="col-xs-7">
+										<input name="post_title" spellcheck="true" autocomplete="off" type="text" readonly="readonly" value="Computer Science">
+									</div>
+								</div>
+								<div class="row mit-field-group">
+									<div class="col-xs-5">
+										<p class="label">
+											Phone
+										</p>
+									</div>
+									<div class="col-xs-7">
+										<input name="post_title" spellcheck="true" autocomplete="off" type="text" readonly="readonly" value="(686) 917-4585">
+									</div>
+								</div>
+								<div class="row mit-field-group">
+									<div class="col-xs-5">
+										<p class="label">
+											Permissions
+										</p>
+									</div>
+									<div class="col-xs-7">
+										<div class="mit-permissions">
+											<strong>
+												<span>
+													<i class="fa fa-eye"></i>
+													<span>Read</span>
+												</span>
+												<span>
+													<i class="fa fa-user-secret"></i>
+													<span>Operator</span>
+												</span>
+												<span>
+													<i class="fa fa-line-chart"></i>
+													<span>Analyst</span>
+												</span>
+											</strong>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -142,6 +187,116 @@
 									New
 									<i class="fa fa-times"></i>
 								</span>
+							</div>
+						</div>
+					</div>
+					<div class="row mit-field-group">
+						<div class="col-xs-3">
+							<p class="label">
+								Assigned to <span class="required">*</span>
+							</p>
+
+							<p class="details">
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+							</p>
+						</div>
+						<div class="col-xs-9">
+							<div class="assign-options">
+								<div>
+									<label>
+										<input name="tickets[1].assigned_to_type" value="self" type="radio">
+										Myself
+									</label><br />
+								
+									<label>
+										<input name="tickets[1].assigned_to_type" value="operator" type="radio">
+										Another operator
+									</label><br />
+
+									<label>
+										<input name="tickets[1].assigned_to_type" value="specialist" type="radio">
+										Specialist of problem type
+									</label>
+								</div>
+								<div>
+									<div class="assigned-to-details">
+										<div class="row mit-field-group">
+											<div class="col-xs-3">
+												<p class="label">
+													Name
+												</p>
+											</div>
+											<div class="col-xs-9">
+												<input name="post_title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here" readonly="readonly" value="Toby Mellor">
+											</div>
+										</div>
+										<div class="row mit-field-group">
+											<div class="col-xs-3">
+												<p class="label">
+													ID Number
+												</p>
+											</div>
+											<div class="col-xs-9">
+												<input name="post_title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here" readonly="readonly" value="B619693">
+											</div>
+										</div>
+										<div class="row mit-field-group">
+											<div class="col-xs-3">
+												<p class="label">
+													Job
+												</p>
+											</div>
+											<div class="col-xs-9">
+												<input name="post_title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here" readonly="readonly" value="Developer">
+											</div>
+										</div>
+										<div class="row mit-field-group">
+											<div class="col-xs-3">
+												<p class="label">
+													Department
+												</p>
+											</div>
+											<div class="col-xs-9">
+												<input name="post_title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here" readonly="readonly" value="Computer Science">
+											</div>
+										</div>
+										<div class="row mit-field-group">
+											<div class="col-xs-3">
+												<p class="label">
+													Phone
+												</p>
+											</div>
+											<div class="col-xs-9">
+												<input name="post_title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here" readonly="readonly" value="(686) 917-4585">
+											</div>
+										</div>
+										<div class="row mit-field-group">
+											<div class="col-xs-3">
+												<p class="label">
+													Permissions
+												</p>
+											</div>
+											<div class="col-xs-9">
+												<div class="mit-permissions">
+													<strong>
+														<span>
+															<i class="fa fa-eye"></i>
+															<span>Read</span>
+														</span>
+														<span>
+															<i class="fa fa-user-secret"></i>
+															<span>Operator</span>
+														</span>
+														<span>
+															<i class="fa fa-line-chart"></i>
+															<span>Analyst</span>
+														</span>
+													</strong>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>

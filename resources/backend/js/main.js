@@ -56,7 +56,7 @@ $(() => {
 });
 
 function setDateDisplay($spans, date) {
-	let setDigit = ($span, digit) => $span.text(("0" + digit).slice(-2));
+	let setDigit = ($span, digit) => $span.text(('0' + digit).slice(-2));
 
 	setDigit($spans.eq(0), date.getDay());
 	setDigit($spans.eq(2), date.getMonth());
