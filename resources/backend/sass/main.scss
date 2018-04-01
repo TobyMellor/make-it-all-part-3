@@ -75,6 +75,10 @@ $orange-hover: #e67e22;
 		&:last-child {
 			border-bottom: 1px solid $silver;
 		}
+
+		.mit-field-group:first-child {
+			border-top: 0;
+		}
 	}
 }
 

@@ -25,7 +25,7 @@
 .mit-field-group {
 	.filter {
 		margin-top: 1px;
-    	margin-right: 3px;
+		margin-right: 3px;
 		margin-left: 15px;
 		float: right;
 		cursor: pointer;
@@ -150,24 +150,24 @@
 .mit-picker input {
 	visibility: hidden;
 	width: 0 !important;
-    height: 0 !important;
-    padding: 0 !important;
-    margin: -3px;
+	height: 0 !important;
+	padding: 0 !important;
+	margin: -3px;
 }
 
 .ui-datepicker {
-    margin-top: 50px !important;
+	margin-top: 50px !important;
 
-    .ui-icon {
-    	cursor: pointer;
-    }
+	.ui-icon {
+		cursor: pointer;
+	}
 
-    select {
-    	width: 100%;
-    }
+	select {
+		width: 100%;
+	}
 
-    button {
-    	background: #0085ba;
+	button {
+		background: #0085ba;
 		border-color: #0073aa #006799 #006799;
 		box-shadow: 0 1px 0 #006799;
 		color: #fff;
@@ -187,19 +187,19 @@
 			background: #008ec2;
 			border-color: #006799;
 		}
-    }
+	}
 
-    .ui_tpicker_time_input {
-    	width: 100% !important;
-    	border: 1px solid #ddd !important;
-    	padding: 5px 6px;
-    }
+	.ui_tpicker_time_input {
+		width: 100% !important;
+		border: 1px solid #ddd !important;
+		padding: 5px 6px;
+	}
 
-    .ui_tpicker_time_label, .ui_tpicker_hour_label, .ui_tpicker_minute_label {
-    	font-weight: 600;
-    }
+	.ui_tpicker_time_label, .ui_tpicker_hour_label, .ui_tpicker_minute_label {
+		font-weight: 600;
+	}
 
-    td a {
+	td a {
 		border: 1px solid #dddddd;
 		background-color: $silver;
 		text-align: center;
@@ -224,17 +224,17 @@
 			border: 1px solid $blue-hover;
 			background-color: $blue;
 			color: $white;
-   			box-shadow: 0 1px 0 #006799;
+			box-shadow: 0 1px 0 #006799;
 
 			&:hover {
 				background-color: $blue-hover;
 			}
 		}
-    }
+	}
 
-    .ui-datepicker-header {
-    	background-color: $silver;
-    }
+	.ui-datepicker-header {
+		background-color: $silver;
+	}
 }
 
 //

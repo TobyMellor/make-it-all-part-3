@@ -152,201 +152,208 @@
 					</div>
 				</div>
 			</div>
-
-			<div class="accordions">
-				<div class="accordion-handle row">
-					<div class="accordion-icon col-xs-3">
-						<div class="number-circle">1</div>
-					</div>
-					<div class="accordion-title col-xs-9">
-						Section 1
-					</div>
+			<div class="mit-panel ticket-panel">
+				<div class="mit-panel-heading">
+					<h2>Ticket Information</h2>
+					<p>Enter information about one or more tickets:</p>
 				</div>
-				<div class="accordion-body">
-					<div class="row mit-field-group">
-						<div class="col-xs-3">
-							<p class="label">
-								Status <span class="required">*</span>
-							</p>
-
-							<p class="details">
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-							</p>
-						</div>
-						<div class="col-xs-9 has-button">
-							<div>
-								<select>
-									<option disabled>Select a status here...</option>
-									<option value="new">New</option>
-									<option value="pending_-_awaiting_parts">Pending - Awaiting Parts</option>
-									<option value="resolved">Resolved</option>
-								</select>
+				<div class="mit-panel-body negative-margin">
+					<div class="accordions">
+						<div class="accordion-handle row">
+							<div class="accordion-icon col-xs-3">
+								<div class="number-circle">1</div>
 							</div>
-							<div>
-								<span class="filter filter-new">
-									New
-									<i class="fa fa-times"></i>
-								</span>
+							<div class="accordion-title col-xs-9">
+								Section 1
 							</div>
 						</div>
-					</div>
-					<div class="row mit-field-group">
-						<div class="col-xs-3">
-							<p class="label">
-								Assigned to <span class="required">*</span>
-							</p>
+						<div class="accordion-body">
+							<div class="row mit-field-group">
+								<div class="col-xs-3">
+									<p class="label">
+										Status <span class="required">*</span>
+									</p>
 
-							<p class="details">
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-							</p>
-						</div>
-						<div class="col-xs-9">
-							<div class="assign-options">
-								<div>
-									<label>
-										<input name="tickets[1].assigned_to_type" value="self" type="radio">
-										Myself
-									</label><br />
-								
-									<label>
-										<input name="tickets[1].assigned_to_type" value="operator" type="radio">
-										Another operator
-									</label><br />
-
-									<label>
-										<input name="tickets[1].assigned_to_type" value="specialist" type="radio">
-										Specialist of problem type
-									</label>
+									<p class="details">
+										Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+									</p>
 								</div>
-								<div>
-									<div class="assigned-to-details">
-										<div class="row mit-field-group">
-											<div class="col-xs-3">
-												<p class="label">
-													Name
-												</p>
-											</div>
-											<div class="col-xs-9">
-												<input name="post_title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here" readonly="readonly" value="Toby Mellor">
-											</div>
+								<div class="col-xs-9 has-button">
+									<div>
+										<select>
+											<option disabled>Select a status here...</option>
+											<option value="new">New</option>
+											<option value="pending_-_awaiting_parts">Pending - Awaiting Parts</option>
+											<option value="resolved">Resolved</option>
+										</select>
+									</div>
+									<div>
+										<span class="filter filter-new">
+											New
+											<i class="fa fa-times"></i>
+										</span>
+									</div>
+								</div>
+							</div>
+							<div class="row mit-field-group">
+								<div class="col-xs-3">
+									<p class="label">
+										Assigned to <span class="required">*</span>
+									</p>
+
+									<p class="details">
+										Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+									</p>
+								</div>
+								<div class="col-xs-9">
+									<div class="assign-options">
+										<div>
+											<label>
+												<input name="tickets[1].assigned_to_type" value="self" type="radio">
+												Myself
+											</label><br />
+										
+											<label>
+												<input name="tickets[1].assigned_to_type" value="operator" type="radio">
+												Another operator
+											</label><br />
+
+											<label>
+												<input name="tickets[1].assigned_to_type" value="specialist" type="radio">
+												Specialist of problem type
+											</label>
 										</div>
-										<div class="row mit-field-group">
-											<div class="col-xs-3">
-												<p class="label">
-													ID Number
-												</p>
-											</div>
-											<div class="col-xs-9">
-												<input name="post_title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here" readonly="readonly" value="B619693">
-											</div>
-										</div>
-										<div class="row mit-field-group">
-											<div class="col-xs-3">
-												<p class="label">
-													Job
-												</p>
-											</div>
-											<div class="col-xs-9">
-												<input name="post_title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here" readonly="readonly" value="Developer">
-											</div>
-										</div>
-										<div class="row mit-field-group">
-											<div class="col-xs-3">
-												<p class="label">
-													Department
-												</p>
-											</div>
-											<div class="col-xs-9">
-												<input name="post_title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here" readonly="readonly" value="Computer Science">
-											</div>
-										</div>
-										<div class="row mit-field-group">
-											<div class="col-xs-3">
-												<p class="label">
-													Phone
-												</p>
-											</div>
-											<div class="col-xs-9">
-												<input name="post_title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here" readonly="readonly" value="(686) 917-4585">
-											</div>
-										</div>
-										<div class="row mit-field-group">
-											<div class="col-xs-3">
-												<p class="label">
-													Permissions
-												</p>
-											</div>
-											<div class="col-xs-9">
-												<div class="mit-permissions">
-													<strong>
-														<span>
-															<i class="fa fa-eye"></i>
-															<span>Read</span>
-														</span>
-														<span>
-															<i class="fa fa-user-secret"></i>
-															<span>Operator</span>
-														</span>
-														<span>
-															<i class="fa fa-line-chart"></i>
-															<span>Analyst</span>
-														</span>
-													</strong>
+										<div>
+											<div class="assigned-to-details">
+												<div class="row mit-field-group">
+													<div class="col-xs-3">
+														<p class="label">
+															Name
+														</p>
+													</div>
+													<div class="col-xs-9">
+														<input name="post_title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here" readonly="readonly" value="Toby Mellor">
+													</div>
+												</div>
+												<div class="row mit-field-group">
+													<div class="col-xs-3">
+														<p class="label">
+															ID Number
+														</p>
+													</div>
+													<div class="col-xs-9">
+														<input name="post_title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here" readonly="readonly" value="B619693">
+													</div>
+												</div>
+												<div class="row mit-field-group">
+													<div class="col-xs-3">
+														<p class="label">
+															Job
+														</p>
+													</div>
+													<div class="col-xs-9">
+														<input name="post_title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here" readonly="readonly" value="Developer">
+													</div>
+												</div>
+												<div class="row mit-field-group">
+													<div class="col-xs-3">
+														<p class="label">
+															Department
+														</p>
+													</div>
+													<div class="col-xs-9">
+														<input name="post_title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here" readonly="readonly" value="Computer Science">
+													</div>
+												</div>
+												<div class="row mit-field-group">
+													<div class="col-xs-3">
+														<p class="label">
+															Phone
+														</p>
+													</div>
+													<div class="col-xs-9">
+														<input name="post_title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here" readonly="readonly" value="(686) 917-4585">
+													</div>
+												</div>
+												<div class="row mit-field-group">
+													<div class="col-xs-3">
+														<p class="label">
+															Permissions
+														</p>
+													</div>
+													<div class="col-xs-9">
+														<div class="mit-permissions">
+															<strong>
+																<span>
+																	<i class="fa fa-eye"></i>
+																	<span>Read</span>
+																</span>
+																<span>
+																	<i class="fa fa-user-secret"></i>
+																	<span>Operator</span>
+																</span>
+																<span>
+																	<i class="fa fa-line-chart"></i>
+																	<span>Analyst</span>
+																</span>
+															</strong>
+														</div>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					</div>
-					<div class="row mit-field-group">
-						<div class="col-xs-3">
-							<p class="label">
-								Title <span class="required">*</span>
-							</p>
+							<div class="row mit-field-group">
+								<div class="col-xs-3">
+									<p class="label">
+										Title <span class="required">*</span>
+									</p>
 
-							<p class="details">
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-							</p>
-						</div>
-						<div class="col-xs-9">
-							<input name="post_title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here">
-						</div>
-					</div>
-					<div class="row mit-field-group">
-						<div class="col-xs-3">
-							<p class="label">
-								Description <span class="required">*</span>
-							</p>
+									<p class="details">
+										Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+									</p>
+								</div>
+								<div class="col-xs-9">
+									<input name="post_title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here">
+								</div>
+							</div>
+							<div class="row mit-field-group">
+								<div class="col-xs-3">
+									<p class="label">
+										Description <span class="required">*</span>
+									</p>
 
-							<p class="details">
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-							</p>
+									<p class="details">
+										Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+									</p>
+								</div>
+								<div class="col-xs-9">
+									{{ description_editor }}
+								</div>
+							</div>
+							<br class="clear">
 						</div>
-						<div class="col-xs-9">
+
+						<div class="accordion-handle">
+							<div class="accordion-icon">
+								<div class="number-circle">2</div>
+							</div>
+							<div class="accordion-title">
+								Section 2
+							</div>
+						</div>
+						<div class="accordion-body">
+							<div id="titlediv">
+								<div id="titlewrap">
+									<input name="post_title" id="title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here">
+								</div>
+							</div>
 							{{ description_editor }}
+							<br class="clear">
 						</div>
 					</div>
-					<br class="clear">
-				</div>
-
-				<div class="accordion-handle">
-					<div class="accordion-icon">
-						<div class="number-circle">2</div>
-					</div>
-					<div class="accordion-title">
-						Section 2
-					</div>
-				</div>
-				<div class="accordion-body">
-					<div id="titlediv">
-						<div id="titlewrap">
-							<input name="post_title" id="title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here">
-						</div>
-					</div>
-					{{ description_editor }}
-					<br class="clear">
 				</div>
 			</div>
 		</div>
