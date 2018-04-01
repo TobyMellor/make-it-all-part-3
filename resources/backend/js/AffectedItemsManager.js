@@ -36,7 +36,7 @@ export default class AffectedItemsManager {
 			affectedItem     = this.getAffectedItem(affectedItems, Number($selectField.val())); // contains the info we need, e.g. .name, .id
 
 		$affectedItems.append(`
-			<li data-id="${affectedItem.id}">
+			<li data-id="${affectedItem.id}" data-type="${affectedItemType}">
 				<input name="tickets[1].${affectedItemType}[${affectedItem.id}]" value="${affectedItem.id}" type="text" hidden="">
 				<h4>${affectedItem.name || affectedItem.type}</h4>
 				<p>(${this.getTypeName(affectedItem)})</p>
@@ -48,6 +48,26 @@ export default class AffectedItemsManager {
 
 		$selectField.prop('selectedIndex', 0);
 		$selectField.find('option[value="' + affectedItem.id + '"]').remove();
+	}
+
+	removeAffectedItem($button) {
+		let $affectedItem    = $button.parent(), // .affected-item
+			affectedItemType = $affectedItem.data('type'), // devices or programs
+			affectedItem     = this.getAffectedItem(this[affectedItemType], Number($affectedItem.data('id'))), // contains the info we need, e.g. .name, .id
+			shownProperty    = affectedItemType === 'devices' ? 'serial_no' : 'name'; // what is shown in the select options
+
+		$affectedItem.fadeOut(250, function() {
+			// add to select field
+			$affectedItem
+				.parent() // .affected-items
+				.siblings('select') // select field to populate
+				.prepend(`
+					<option value="${affectedItem.id}">#${affectedItem.id} – ${affectedItem[shownProperty]}</option>
+				`);
+
+			// remove .affected-item
+			$(this).remove();
+		});
 	}
 
 	getTypeName(affectedItem) {

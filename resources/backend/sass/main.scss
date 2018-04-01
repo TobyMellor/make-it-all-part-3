@@ -26,12 +26,14 @@ $red-hover: #c0392b;
 
 .button {
 	&.button-danger {
-		background: $red;
-		border-color: $red-hover;
-		box-shadow: 0 1px 0 $red-hover;
-		color: $white;
-		text-decoration: none;
-		text-shadow: 0 -1px 1px $red-hover, 1px 0 1px $red-hover, 0 1px 1px $red-hover, -1px 0 1px $red-hover;
+		&, &:focus {
+			background: $red;
+			border-color: $red-hover;
+			box-shadow: 0 1px 0 $red-hover;
+			color: $white;
+			text-decoration: none;
+			text-shadow: 0 -1px 1px $red-hover, 1px 0 1px $red-hover, 0 1px 1px $red-hover, -1px 0 1px $red-hover;
+		}
 
 		&:hover {
 			background: $red-hover;

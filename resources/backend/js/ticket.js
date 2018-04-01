@@ -116,6 +116,10 @@ jQuery(() => {
 		affectedItemsManager.addAffectedItem($(this));
 	});
 
+	$(document).on('click', '.remove-affected-item', function() {
+		affectedItemsManager.removeAffectedItem($(this));
+	});
+
 	$('.accordions').accordion({
 		heightStyle: 'content',
 		handle: '.accordion-handle'
