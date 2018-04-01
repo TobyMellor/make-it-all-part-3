@@ -76,13 +76,13 @@ $orange-hover: #e67e22;
 			border-bottom: 1px solid $silver;
 		}
 
-		.mit-field-group:first-child {
+		.mia-field-group:first-child {
 			border-top: 0;
 		}
 	}
 }
 
-.mit-field-group {
+.mia-field-group {
 	& > div {
 		border-bottom: 1px solid $silver-hover;
 	}
@@ -149,7 +149,7 @@ $orange-hover: #e67e22;
 	}
 }
 
-.mit-panel {
+.mia-panel {
 	position: relative;
 	border: 1px solid #e5e5e5;
 	box-shadow: 0 1px 1px rgba(0,0,0,.04);
@@ -170,11 +170,11 @@ $orange-hover: #e67e22;
 		margin: 0;
 	}
 	
-	.mit-field-group:first-child {
+	.mia-field-group:first-child {
 		border-top: 1px solid $silver;
 	}
 
-	.mit-panel-heading, .mit-panel-body {
+	.mia-panel-heading, .mia-panel-body {
 		padding: 16px;
 
 		&.negative-margin {

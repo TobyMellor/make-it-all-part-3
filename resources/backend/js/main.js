@@ -4,14 +4,14 @@ $(() => {
 	 */
 
 	// Forward click on button to hidden input with datetimepicker
-	$('.mit-picker').click(function(e) {
-		$('.mit-picker input').datepicker('show');
+	$('.mia-picker').click(function(e) {
+		$('.mia-picker input').datepicker('show');
 	});
 
 	// Update the visual date/time when they finish with the datetimepicker
-	$('.mit-picker input').change(function() {
+	$('.mia-picker input').change(function() {
 		let date            = new Date($(this).val()),
-			$spans          = $(this).closest('.mit-field-group').find('.date-time-picker span');
+			$spans          = $(this).closest('.mia-field-group').find('.date-time-picker span');
 
 		setDateDisplay($spans, date);
 	});
@@ -45,7 +45,7 @@ $(() => {
 	 * Initializations
 	 */
 
-	$('.mit-picker input').datetimepicker({
+	$('.mia-picker input').datetimepicker({
 		controlType: 'slider'
 	});
 

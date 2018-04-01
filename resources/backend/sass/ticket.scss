@@ -7,7 +7,7 @@
 .staff-information {
 	margin: 16px -16px -16px -16px;
 
-	.mit-field-group {
+	.mia-field-group {
 		& > div {
 			padding: 8px 12px;
 		}
@@ -16,13 +16,13 @@
 			margin-top: 5px;
 		}
 
-		.mit-permissions {
+		.mia-permissions {
 			line-height: 16px;
 		}
 	}
 }
 
-.mit-field-group {
+.mia-field-group {
 	.filter {
 		margin-top: 1px;
 		margin-right: 3px;
@@ -31,7 +31,7 @@
 		cursor: pointer;
 	}
 
-	.mit-permissions {
+	.mia-permissions {
 		overflow-x: auto;
 		background-color: #eeeeee;
 		border: 1px solid #ddd;
@@ -83,7 +83,7 @@
 		margin: -12px;
 		overflow: scroll;
 
-		.mit-field-group {
+		.mia-field-group {
 			p {
 				margin-top: 5px;
 			}
@@ -99,7 +99,7 @@
 	}
 }
 
-.mit-panel {
+.mia-panel {
 	&.call-panel > .row {
 		& > div:last-child {
 			border-left: 1px solid $silver;
@@ -110,7 +110,7 @@
 			right: 0;
 		}
 
-		.mit-field-group:last-child > div {
+		.mia-field-group:last-child > div {
 			border-bottom: 0;
 		}
 	}
@@ -147,7 +147,7 @@
 	}
 }
 
-.mit-picker input {
+.mia-picker input {
 	visibility: hidden;
 	width: 0 !important;
 	height: 0 !important;
