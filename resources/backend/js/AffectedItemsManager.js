@@ -61,7 +61,8 @@ export default class AffectedItemsManager {
 			$affectedItem
 				.parent() // .affected-items
 				.siblings('select') // select field to populate
-				.prepend(`
+				.find('option:first-child') // insert after the default disabled option
+				.after(`
 					<option value="${affectedItem.id}">#${affectedItem.id} – ${affectedItem[shownProperty]}</option>
 				`);
 
