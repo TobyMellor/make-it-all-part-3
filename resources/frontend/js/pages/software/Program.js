@@ -15,13 +15,13 @@ export default class Program {
 		updated_at_human: updated_at,
 	}) 
 	{
-		this.id         		= id;
-		this.name       		= name;
-		this._tickets			= tickets;
-		this.operating_system	= operating_system;
-		this.expiry_date		= expiry_date;
-		this.created_at 		= created_at;
-		this.updated_at 		= updated_at;
+		this.id               = id;
+		this.name             = name;
+		this._tickets	      = tickets;
+		this.operating_system = operating_system;
+		this.expiry_date      = expiry_date;
+		this.created_at       = created_at;
+		this.updated_at       = updated_at;
 	}
 
 	/**
@@ -42,13 +42,13 @@ export default class Program {
 	}
 
 	getSoftwareType() { 
-		//Gets a human-readable string to describe whether the program is an operting system or not
+		// Gets a human-readable string to describe whether the program is an operting system or not
 		if (this.operating_system) {
 			return "Operating System";
 		} else if (!this.operating_system) {
 			return "Application";
-		} else {
-			return "-";
 		}
+
+		return "–";
 	}
 }

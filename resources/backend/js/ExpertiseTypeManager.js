@@ -1,6 +1,9 @@
 export default class ExpertiseTypeManager {
 	constructor(expertiseTypes) {
 		this.expertiseTypes = expertiseTypes;
+
+		// load root problem types
+		this.loadChildrenExpertiseTypes($('.type-columns'));
 	}
 
 	/**

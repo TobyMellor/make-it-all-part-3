@@ -13,6 +13,8 @@ $green: #28a745;
 $green-hover: #218838;
 $orange: #f39c12;
 $orange-hover: #e67e22;
+$red: #e74c3c;
+$red-hover: #c0392b;
 
 //
 // Overridden WordPress Styles
@@ -20,6 +22,24 @@ $orange-hover: #e67e22;
 
 .wp-heading-inline {
 	margin-bottom: 14px !important;
+}
+
+.button {
+	&.button-danger {
+		background: $red;
+		border-color: $red-hover;
+		box-shadow: 0 1px 0 $red-hover;
+		color: $white;
+		text-decoration: none;
+		text-shadow: 0 -1px 1px $red-hover, 1px 0 1px $red-hover, 0 1px 1px $red-hover, -1px 0 1px $red-hover;
+
+		&:hover {
+			background: $red-hover;
+			color: $white;
+			border-color: $red-hover;
+			box-shadow: 0 1px 0 $black;
+		}
+	}
 }
 
 //
