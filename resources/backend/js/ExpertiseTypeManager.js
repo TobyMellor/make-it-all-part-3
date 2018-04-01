@@ -72,7 +72,7 @@ export default class ExpertiseTypeManager {
 		});
 
 		// Append the new .type-column, scroll to the right to view it
-		$typeColumns.append($typeColumn);
+		if (clickedExpertiseTypeChildren.length > 0) $typeColumns.append($typeColumn);
 		$typeColumns.scrollLeft($typeColumns.width());
 	}
 

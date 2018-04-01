@@ -198,6 +198,50 @@
 							<div class="row mia-field-group">
 								<div class="col-xs-3">
 									<p class="label">
+										Title <span class="required">*</span>
+									</p>
+
+									<p class="details">
+										Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+									</p>
+								</div>
+								<div class="col-xs-9">
+									<input name="post_title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here">
+								</div>
+							</div>
+							<div class="row mia-field-group">
+								<div class="col-xs-3">
+									<p class="label">
+										Description <span class="required">*</span>
+									</p>
+
+									<p class="details">
+										Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+									</p>
+								</div>
+								<div class="col-xs-9">
+									{{ description_editor }}
+								</div>
+							</div>
+							<div class="row mia-field-group">
+								<div class="col-xs-3">
+									<p class="label">
+										Problem Type <span class="required">*</span>
+									</p>
+
+									<p class="details">
+										Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+									</p>
+								</div>
+								<div class="col-xs-9">
+									<div class="problem-type-picker">
+										<div class="type-columns"></div>
+									</div>
+								</div>
+							</div>
+							<div class="row mia-field-group">
+								<div class="col-xs-3">
+									<p class="label">
 										Assigned to <span class="required">*</span>
 									</p>
 
@@ -305,52 +349,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="row mia-field-group">
-								<div class="col-xs-3">
-									<p class="label">
-										Title <span class="required">*</span>
-									</p>
-
-									<p class="details">
-										Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-									</p>
-								</div>
-								<div class="col-xs-9">
-									<input name="post_title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here">
-								</div>
-							</div>
-							<div class="row mia-field-group">
-								<div class="col-xs-3">
-									<p class="label">
-										Description <span class="required">*</span>
-									</p>
-
-									<p class="details">
-										Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-									</p>
-								</div>
-								<div class="col-xs-9">
-									{{ description_editor }}
-								</div>
-							</div>
-							<div class="row mia-field-group">
-								<div class="col-xs-3">
-									<p class="label">
-										Problem Type <span class="required">*</span>
-									</p>
-
-									<p class="details">
-										Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-									</p>
-								</div>
-								<div class="col-xs-9">
-									<div class="problem-type-picker">
-										<div class="type-columns"></div>
-									</div>
-								</div>
-							</div>
 						</div>
-
 						<div class="accordion-handle">
 							<div class="accordion-icon">
 								<div class="number-circle">2</div>
