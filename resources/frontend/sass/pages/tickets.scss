@@ -248,7 +248,7 @@ span.filter {
 			position: absolute;
 			bottom: $cosy;
 			left: calc(50% - 65px);
-    		width: 130px;
+			width: 130px;
 		}
 	}
 }
@@ -290,15 +290,15 @@ span.filter {
 		.type-column {
 			li {
 				&.no-children {
-	    			cursor: pointer !important;
+					cursor: pointer !important;
 
-	    			&:hover {
-	    				background-color: #2980b9 !important;
+					&:hover {
+						background-color: #2980b9 !important;
 						color: #fff !important;
-	    			}
-	    		}
-	    	}
-	    }
+					}
+				}
+			}
+		}
 	}
 }
 

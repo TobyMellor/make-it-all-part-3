@@ -1,113 +1,81 @@
+import ExpertiseTypeManager from "./ExpertiseTypeManager";
+
 jQuery(() => {
+	let expertiseTypes = [
+		{
+			id: 0,
+			name: 'Printer',
+			parent_id: null,
+			children: [1, 2]
+		},
+		{
+			id: 1,
+			name: 'Ink',
+			parent_id: 0,
+			children: [3]
+		},
+		{
+			id: 2,
+			name: 'Paper',
+			parent_id: 0,
+			children: []
+		},
+		{
+			id: 3,
+			name: 'Low Ink',
+			parent_id: 1,
+			children: [4]
+		},
+		{
+			id: 4,
+			name: 'Low Magenta',
+			parent_id: 3,
+			children: []
+		},
+		{
+			id: 5,
+			name: 'Spillage',
+			parent_id: 1,
+			children: []
+		},
+		{
+			id: 6,
+			name: 'Vending Machine',
+			parent_id: null,
+			children: []
+		}
+	];
+
+	let expertiseTypeManager = new ExpertiseTypeManager(expertiseTypes);
+
+	// load root problem types
+	expertiseTypeManager.loadChildrenExpertiseTypes($('.type-columns'));
+
 	$('.accordions').accordion({
 		heightStyle: 'content',
-		handle: '.accordion-handle',
+		handle: '.accordion-handle'
+	});
+
+	// On clicking a problem type, load and display all children of this type
+	$(document).on('click', '.type-column li', function() {
+		let id = Number($(this).data('expertiseTypeId'));
+
+		// show the children of the selected type in the main view
+		expertiseTypeManager.loadChildrenExpertiseTypes($('.type-columns'), $(this));
+	});
+
+	// Creating a new problem type with the name given by the user
+	$(document).on('click', '.create-problem-type', function() {
+		// Get the new name of a problem type
+		let name = $(this).parent().siblings('input').val();
+
+		// Check if a name has been given, don't create a problem type with no name
+		if (!name) return;
+
+		// Get the parent if it exists for the new problem type to be added to
+		const parentId = $(this).closest('.type-column').prev().find('.active').data("expertiseTypeId");
+
+		// Create problem type
+		expertiseTypeManager.createExpertiseType(name, parentId);
 	});
 });
-
-function addTicketForm() {
-	var div = document.getElementsByClassName('form-wrapper')[0];
-	var clone = div.cloneNode(true);
-
-	// Forms that are added need a close button.
-	clone.getElementsByClassName('ticket-nav')[0].innerHTML += '<div class="min-button" onclick="closeForm(this)">X</div>';
-	document.getElementsByClassName('ticket-details-section')[0].append(clone);
-}
-
-function callerChange(datas, sel) {
-	var selValue = sel.options[sel.selectedIndex].value;
-	var ind = selValue - 1;
-	var staffMember = datas[ind];
-	var staffDetails = 
-		'<div class="caller-det">' +
-			'<span> ID Number: <b>' + staffMember.id + '</b></span>' +
-			'<span> Name: <b>' + staffMember.name + '</b></span>' + 
-			'<span> Email: <b> ' + staffMember.email + '</b></span>' +
-			'<span>Job: <b>' + staffMember.job_title + '</b></span>' +
-			'<span> Phone: <b>' + staffMember.phone_number + '</b></span>' +
-		'</div>';
-
-	document.getElementsByClassName('caller')[0].innerHTML = staffDetails;
-}
-
-function openChildren(clicked, parentID) {
-	// Open all children with parentID
-	var formParent = clicked.parentElement.parentElement;
-	var parentElements = formParent.getElementsByClassName('parent-problem');
-	var childrenElements = formParent.getElementsByClassName('child-problem');
-	var elmsToShow = formParent.getElementsByClassName('p' + parentID);
-	
-	if (clicked.classList.contains('parent-problem')) {
-		// Reset all parent nodes
-		for (var i = 0; i < childrenElements.length; i++) {
-			childrenElements[i].style.display = 'none';
-			// Remove any active classes. 
-		}
-	} else if (clicked.classList.contains('child-problem')) {
-		// Reset child nodes 
-		var clickedParent = clicked.parentNode;
-		var number = parseInt(clickedParent.classList.item(1)) + 1;
-		// Get number of divs to loop through
-		var pp = clickedParent.parentNode.childElementCount - 1;
-
-		for (var k = 0; k < pp; k++) {
-			var elm = formParent.getElementsByClassName("problem-children " + number)[0];
-		   
-			var elmChildren = elm.getElementsByClassName("child-problem");
-
-			for (var l = 0; l < elmChildren.length; l++) {
-				elmChildren[l].style.display = 'none'; // Remove any active classes. 
-			}
-		}
-	}
-
-	// Show the children elements we want
-	for (var i = 0; i < elmsToShow.length; i++) {
-		elmsToShow[i].style.display = 'flex';
-	}
-
-	// Remove all active classes   
-	for (var i = 0; i < parentElements.length; i++) {
-		parentElements[i].classList.remove('ticket-active');
-	}
-
-	for (var i = 0; i < childrenElements.length; i++) {
-		childrenElements[i].classList.remove('ticket-active');
-	}
-
-	// Add active class to clicked element
-	clicked.classList.add('ticket-active');
-	
-	// Specialist Assignment 
-	var hasSpec = clicked.getAttribute('data-has-specialists');
-
-	if (hasSpec == 'true') {
-		var radio = document.getElementsByClassName('spec-assign');
-
-		for (var i = 0; i < radio.length; i++) {
-			if (radio[i].checked) {
-				if (radio[i].value == 'assign_spec') {
-					// Try to reassign best specialist to the ticket .  
-					console.log('Would try and reassign');
-				}
-			}
-		}
-	}
-}
-
-function minimise(formNav) {
-	var formWrapper = formNav.parentElement.parentElement;
-	// Parent is form wrapper, minimise/maximise the form in the wrapper
-	var ticketForm = formWrapper.getElementsByClassName('ticket-form')[0];
-
-	if (ticketForm.style.display == 'flex' || ticketForm.style.display == '') {
-		ticketForm.style.display = 'none';
-	} else {
-		ticketForm.style.display = 'flex';
-	}
-}
-
-function closeForm(formNav) {
-	var formWrapper = formNav.parentElement.parentElement;
-	formWrapper.remove();
-}
