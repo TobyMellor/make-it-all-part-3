@@ -1,5 +1,6 @@
 import ExpertiseTypeManager from "./ExpertiseTypeManager";
 import AffectedItemsManager from "./AffectedItemsManager";
+import StaffManager from "./StaffManager";
 
 jQuery(() => {
 	// TODO: Get in this format from WP db
@@ -112,13 +113,47 @@ jQuery(() => {
 
 	let affectedItemsManager = new AffectedItemsManager(devices, programs);
 
+	let employees = [
+		{
+			id: 1,
+			name: 'Toby Mellor',
+			job_title: 'Developer',
+			department: 'Computer Science',
+			phone_number: '(686) 917-4585',
+			operator: 1,
+			analyst: 1,
+			specialist: 0
+		},
+		{
+			id: 2,
+			name: 'Dana Gibson',
+			job_title: 'Executive Officer',
+			department: 'Mathematics',
+			phone_number: '(121) 258-8985',
+			operator: 1,
+			analyst: 0,
+			specialist: 1
+		}
+	];
+
+	let staffManager = new StaffManager(employees);
+
 	initTinyMCE();
 	initAccordions();
 	clearAccordion($('.mia-panel-body')); // clear all fields
 
 	$('.call-panel select').change(function() {
-		let $callPanel = $('.call-panel > .row');
+		let $callPanel         = $('.call-panel > .row'),
+			$staffInformation  = $('.call-panel .staff-information'),
+			selectedEmployeeId = Number($(this).val());
 
+		// populate the caller information
+		let employee = staffManager.getEmployee(selectedEmployeeId);
+
+		$staffInformation.find('input').each((i, input) => $(input).val(employee[$(input).data('attribute')])); // populate input fields
+		$staffInformation.find('.mia-permissions strong').html(staffManager.getPermissions(employee)); // populate permissions field
+
+		// slide in the the caller information
 		$callPanel.find('> .col-xs-12').removeClass('col-xs-12').addClass('col-xs-8');
 		$callPanel.find('> .col-xs-0').removeClass('col-xs-0').addClass('col-xs-4');
 
