@@ -113,6 +113,7 @@ jQuery(() => {
 	let affectedItemsManager = new AffectedItemsManager(devices, programs);
 
 	initTinyMCE();
+	initAccordions();
 
 	$(document).on('click', '.add-hardware-device, .add-application, .add-operating-system', function() {
 		affectedItemsManager.addAffectedItem($(this));
@@ -120,11 +121,6 @@ jQuery(() => {
 
 	$(document).on('click', '.remove-affected-item', function() {
 		affectedItemsManager.removeAffectedItem($(this));
-	});
-
-	$('.accordions').accordion({
-		heightStyle: 'content',
-		handle: '.accordion-handle'
 	});
 
 	// On clicking a problem type, load and display all children of this type
@@ -150,6 +146,13 @@ jQuery(() => {
 		expertiseTypeManager.createExpertiseType(name, parentId);
 	});
 
+	// make the chevron handle go up/down when an accordion is expanded/minimized
+	$(document).on('click', '.accordion-handle', function() {
+		$(this).parent().find('.accordion-handle > i').removeClass().addClass('fa').addClass('fa-chevron-up');
+
+		$(this).find('> i').removeClass('fa-chevron-up').addClass('fa-chevron-down');
+	});
+
 	$('#add-additional-ticket').click(function() {
 		// deinit all TinyMCE's before cloning
 		tinyMCE.EditorManager.editors.forEach((editor) => {
@@ -163,8 +166,10 @@ jQuery(() => {
 
 		$accordions.append($newAccordion);
 
-		// reinitialize all TinyMCE's after appending new accordion
+		// reinitialize after appending new accordion
 		initTinyMCE();
+		$accordions.accordion('refresh');
+		$newAccordion.click(); // expand new accordion
 	});
 
 	// Change the filter/status to the right of the select field
@@ -222,5 +227,13 @@ function initTinyMCE() {
 	tinyMCE.init({
 		selector: 'textarea',
 		branding: false
+	});
+}
+
+function initAccordions() {
+	$('.accordions').accordion({
+		heightStyle: 'content',
+		handle: '.accordion-handle',
+		icons: false
 	});
 }
