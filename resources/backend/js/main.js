@@ -16,22 +16,6 @@ $(() => {
 		setDateDisplay($spans, date);
 	});
 
-	// Change the filter/status to the right of the select field
-	$('.has-button select').change(function() {
-		let $filter    = $(this).closest('.has-button').find('.filter'),
-			selected   = $(this).find('option:selected'),
-			statusSlug = selected.val(),
-			className  = statusSlug.substr(0, statusSlug.indexOf('_')) || statusSlug;
-
-		if ($filter.length === 0) $filter = $(this).closest('.has-button').find('div:last-child').html('hi!');
-
-		$filter.removeClass().addClass('filter').addClass('filter-' + className);
-		$filter.html(`
-			${selected.text()}
-			<i class="fa fa-times"></i>
-		`);
-	});
-
 	// Remove filter/status, clear the select field
 	$(document).on('click', '.filter', function() {
 		$(this).closest('.has-button').find('select').prop('selectedIndex', 0);
@@ -50,9 +34,7 @@ $(() => {
 	});
 
 	// Set current date
-	setTimeout(function() {
-		$('.hasDatepicker').datepicker('setDate', new Date());
-	}, 500);
+	$('.hasDatepicker').datepicker('setDate', new Date());
 });
 
 function setDateDisplay($spans, date) {

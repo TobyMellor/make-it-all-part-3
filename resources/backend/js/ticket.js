@@ -156,6 +156,25 @@ jQuery(() => {
 
 		$accordions.append($newAccordion);
 	});
+
+	// Change the filter/status to the right of the select field
+	$('.has-button select').change(function() {
+		let $filter    = $(this).closest('.has-button').find('.filter'),
+			selected   = $(this).find('option:selected'),
+			statusSlug = selected.val(),
+			className  = statusSlug.substr(0, statusSlug.indexOf('_')) || statusSlug;
+
+		if ($filter.length === 0) {
+			$filter = $('<span>');
+			$(this).closest('.has-button').find('div:last-child').append($filter);
+		}
+
+		$filter.removeClass().addClass('filter').addClass('filter-' + className);
+		$filter.html(`
+			${selected.text()}
+			<i class="fa fa-times"></i>
+		`);
+	});
 });
 
 function cloneAccordion($accordions) {
