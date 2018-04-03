@@ -5,7 +5,7 @@
 		<div class="col-xs-9">
 			<div class="mia-panel call-panel">
 				<div class="row no-padding">
-					<div class="col-xs-8">
+					<div class="col-xs-12">
 						<div class="mia-panel-heading">
 							<h2>Call Information</h2>
 							<p>Enter some information about the call to get started:</p>
@@ -23,6 +23,7 @@
 								</div>
 								<div class="col-xs-9">
 									<select>
+										<option selected default disabled>Select a caller here...</option>
 										<option value="1">Andy Hinnigan</option>
 										<option value="2">Aron Bettison</option>
 										<option value="3">Daniel White</option>
@@ -63,12 +64,11 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-xs-4">
+					<div class="col-xs-0">
 						<div class="mia-panel-heading">
 							<div>
 								<h2>Caller Information</h2>
 								<p class="staff-information">Who called in?</p>
-								<p id="no-caller">Please select a caller.</p>
 							</div>
 
 							<div class="staff-information">
@@ -79,7 +79,7 @@
 										</p>
 									</div>
 									<div class="col-xs-7">
-										<input name="post_title" spellcheck="true" autocomplete="off" type="text" readonly="readonly" value="Toby Mellor">
+										<input name="post_title" spellcheck="true" autocomplete="off" type="text" readonly="readonly" value="">
 									</div>
 								</div>
 								<div class="row mia-field-group">
@@ -89,7 +89,7 @@
 										</p>
 									</div>
 									<div class="col-xs-7">
-										<input name="post_title" spellcheck="true" autocomplete="off" type="text" readonly="readonly" value="B619693">
+										<input name="post_title" spellcheck="true" autocomplete="off" type="text" readonly="readonly" value="">
 									</div>
 								</div>
 								<div class="row mia-field-group">
@@ -99,7 +99,7 @@
 										</p>
 									</div>
 									<div class="col-xs-7">
-										<input name="post_title" spellcheck="true" autocomplete="off" type="text" readonly="readonly" value="Developer">
+										<input name="post_title" spellcheck="true" autocomplete="off" type="text" readonly="readonly" value="">
 									</div>
 								</div>
 								<div class="row mia-field-group">
@@ -109,7 +109,7 @@
 										</p>
 									</div>
 									<div class="col-xs-7">
-										<input name="post_title" spellcheck="true" autocomplete="off" type="text" readonly="readonly" value="Computer Science">
+										<input name="post_title" spellcheck="true" autocomplete="off" type="text" readonly="readonly" value="">
 									</div>
 								</div>
 								<div class="row mia-field-group">
@@ -119,7 +119,7 @@
 										</p>
 									</div>
 									<div class="col-xs-7">
-										<input name="post_title" spellcheck="true" autocomplete="off" type="text" readonly="readonly" value="(686) 917-4585">
+										<input name="post_title" spellcheck="true" autocomplete="off" type="text" readonly="readonly" value="">
 									</div>
 								</div>
 								<div class="row mia-field-group">
@@ -131,6 +131,7 @@
 									<div class="col-xs-7">
 										<div class="mia-permissions">
 											<strong>
+												<!--
 												<span>
 													<i class="fa fa-eye"></i>
 													<span>Read</span>
@@ -143,6 +144,7 @@
 													<i class="fa fa-line-chart"></i>
 													<span>Analyst</span>
 												</span>
+												-->
 											</strong>
 										</div>
 									</div>
@@ -167,7 +169,7 @@
 								New Ticket
 							</div>
 							<div class="accordion-actions">
-								<i class="fa fa-chevron-down"></i>
+								<i class="fa fa-chevron-up"></i>
 							</div>
 						</div>
 						<div class="accordion-body">

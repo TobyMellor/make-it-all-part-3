@@ -114,6 +114,16 @@ jQuery(() => {
 
 	initTinyMCE();
 	initAccordions();
+	clearAccordion($('.mia-panel-body')); // clear all fields
+
+	$('.call-panel select').change(function() {
+		let $callPanel = $('.call-panel > .row');
+
+		$callPanel.find('> .col-xs-12').removeClass('col-xs-12').addClass('col-xs-8');
+		$callPanel.find('> .col-xs-0').removeClass('col-xs-0').addClass('col-xs-4');
+
+		if ($('.accordions .accordion-handle.ui-state-active').length === 0) $('.accordions .accordion-handle').click(); // expand the accordion if not done already
+	});
 
 	$(document).on('click', '.add-hardware-device, .add-application, .add-operating-system', function() {
 		affectedItemsManager.addAffectedItem($(this));
@@ -131,6 +141,7 @@ jQuery(() => {
 		expertiseTypeManager.loadChildrenExpertiseTypes($('.type-columns'), $(this));
 	});
 
+	/*
 	// Creating a new problem type with the name given by the user
 	$(document).on('click', '.create-problem-type', function() {
 		// Get the new name of a problem type
@@ -145,12 +156,12 @@ jQuery(() => {
 		// Create problem type
 		expertiseTypeManager.createExpertiseType(name, parentId);
 	});
+	*/
 
 	// make the chevron handle go up/down when an accordion is expanded/minimized
 	$(document).on('click', '.accordion-handle', function() {
-		$(this).parent().find('.accordion-handle .accordion-actions .fa-chevron-down').removeClass().addClass('fa').addClass('fa-chevron-up');
-
-		$(this).find('.accordion-actions .fa-chevron-up').removeClass('fa-chevron-up').addClass('fa-chevron-down');
+		$('.accordions .accordion-handle .fa:not(.fa-trash-o)').removeClass().addClass('fa fa-chevron-up');
+		$('.accordions .accordion-handle.ui-state-active .fa:not(.fa-trash-o)').removeClass().addClass('fa fa-chevron-down');
 	});
 
 	$(document).on('click', '.accordion-handle .accordion-actions .fa-trash-o', function() {
@@ -197,7 +208,7 @@ jQuery(() => {
 			$(this).closest('.has-button').find('div:last-child').append($filter);
 		}
 
-		$filter.removeClass().addClass('filter').addClass('filter-' + className);
+		$filter.removeClass().addClass('filter filter-' + className);
 		$filter.html(`
 			${selected.text()}
 			<i class="fa fa-times"></i>
@@ -216,26 +227,29 @@ function cloneAccordion($accordions) {
 	return $newAccordion;
 }
 
-function clearAccordion($accordion, affectedItemsManager, expertiseTypeManager) {
-	let $typeColumns = $accordion.find('.type-columns');
-
+function clearAccordion($accordion, affectedItemsManager = null, expertiseTypeManager = null) {
 	// set input/textarea/select fields to default values
 	$accordion.find('select').prop('selectedIndex', 0);
 	$accordion.find('input, textarea').val('');
 
-	// clear any selected .affected-items, repopulate select fields
-	$accordion.find('.affected-items').empty();
-	affectedItemsManager.populateAllSelectFields($accordion);
+	// Refresh accordion, e.g. page has just loaded
+	if (affectedItemsManager !== null && expertiseTypeManager !== null) {
+		let $typeColumns = $accordion.find('.type-columns');
 
-	// reload .type-columns to contain root expertise types
-	$typeColumns.empty();
-	expertiseTypeManager.loadChildrenExpertiseTypes($typeColumns);
+		// clear any selected .affected-items, repopulate select fields
+		$accordion.find('.affected-items').empty();
+		affectedItemsManager.populateAllSelectFields($accordion);
 
-	// set the accordion number and the new ticket text in the accordion handle
-	$accordion.find('.accordion-icon .number-circle').text(
-		Number($('.accordions .accordion-handle:nth-last-child(2) .number-circle').text()) + 1
-	);
-	$accordion.find('.accordion-title').text('New Ticket');
+		// reload .type-columns to contain root expertise types
+		$typeColumns.empty();
+		expertiseTypeManager.loadChildrenExpertiseTypes($typeColumns);
+
+		// set the accordion number and the new ticket text in the accordion handle
+		$accordion.find('.accordion-icon .number-circle').text(
+			Number($('.accordions .accordion-handle:nth-last-child(2) .number-circle').text()) + 1
+		);
+		$accordion.find('.accordion-title').text('New Ticket');
+	}
 }
 
 function initTinyMCE() {
@@ -249,6 +263,8 @@ function initAccordions() {
 	$('.accordions').accordion({
 		heightStyle: 'content',
 		handle: '.accordion-handle',
-		icons: false
+		icons: false,
+        active: false,
+        collapsible: true
 	});
 }

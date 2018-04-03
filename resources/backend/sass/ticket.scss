@@ -1,7 +1,19 @@
 @import "main.scss";
 
-#no-caller {
-	display: none;
+.call-panel {
+	& > .row {
+		& > div {
+			transition: all .2s ease;
+		}
+
+		.col-xs-0 {
+			max-width: 0%;
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+		}
+	}
 }
 
 .staff-information {
@@ -104,10 +116,7 @@
 		& > div:last-child {
 			border-left: 1px solid $silver;
 			overflow: auto;
-			position: absolute;
-			top: 0;
-			bottom: 0;
-			right: 0;
+			height: 249px;
 		}
 
 		.mia-field-group:last-child > div {
