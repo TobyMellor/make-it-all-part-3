@@ -25,9 +25,7 @@ class TicketPage extends MakeItAllPage {
 		$context = $this->get_context('Create Tickets');
 		// global $wpdb;
 
-		$context['description_editor'] = $this->get_wp_editor('Hey there!', 'create_ticket_editor');
-
-		$this->render_pane($context); // render page before initializing WYSIWYG editor
+		$this->render_pane($context);
 
 
 		/*global $wpdb;

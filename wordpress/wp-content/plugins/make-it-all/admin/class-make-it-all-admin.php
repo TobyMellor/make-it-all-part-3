@@ -60,6 +60,7 @@ class MakeItAllAdmin {
 	 */
 	public function enqueue_scripts() {
 		wp_enqueue_script('mit_dependencies', get_template_directory_uri() . '/backend/js/vendor.js', ['jquery'], '1.0.0', false); // A collection of plugins
+		wp_enqueue_script('tiny_mce', includes_url() . '/js/tinymce/tinymce.min.js', [], '4.6.7', false); // A collection of plugins
 		wp_enqueue_script($this->pluginName, get_template_directory_uri() . '/backend/js/main.js', ['jquery', 'mit_dependencies'], $this->version, false);
 	}
 }

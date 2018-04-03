@@ -66,15 +66,4 @@ abstract class MakeItAllPage {
 			$context
 		); // e.g. backend/tickets/create_ticket.twig
 	}
-
-	protected function get_wp_editor($content, $id) {
-		ob_start();
-
-		wp_editor($content, $id);
-		$editor = ob_get_contents();
-
-		ob_end_clean();
-
-		return $editor;
-	}
 }

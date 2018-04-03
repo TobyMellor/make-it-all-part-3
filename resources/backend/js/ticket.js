@@ -112,6 +112,8 @@ jQuery(() => {
 
 	let affectedItemsManager = new AffectedItemsManager(devices, programs);
 
+	initTinyMCE();
+
 	$(document).on('click', '.add-hardware-device, .add-application, .add-operating-system', function() {
 		affectedItemsManager.addAffectedItem($(this));
 	});
@@ -149,12 +151,20 @@ jQuery(() => {
 	});
 
 	$('#add-additional-ticket').click(function() {
+		// deinit all TinyMCE's before cloning
+		tinyMCE.EditorManager.editors.forEach((editor) => {
+			tinyMCE.get(editor.id).remove();
+		});
+
 		let $accordions   = $(this).closest('.mia-panel').find('.accordions'),
 			$newAccordion = cloneAccordion($accordions);
 
 		clearAccordion($newAccordion, affectedItemsManager, expertiseTypeManager);
 
 		$accordions.append($newAccordion);
+
+		// reinitialize all TinyMCE's after appending new accordion
+		initTinyMCE();
 	});
 
 	// Change the filter/status to the right of the select field
@@ -179,7 +189,7 @@ jQuery(() => {
 
 function cloneAccordion($accordions) {
 	let $existingAccordion = $accordions.find('.accordion-handle:first-child, .accordion-body:nth-child(2)').wrapAll('<div>'),
-		$newAccordion      = $existingAccordion.clone().unwrap();
+	    $newAccordion      = $existingAccordion.clone().unwrap();
 
 	$existingAccordion.unwrap();
 
@@ -189,9 +199,9 @@ function cloneAccordion($accordions) {
 function clearAccordion($accordion, affectedItemsManager, expertiseTypeManager) {
 	let $typeColumns = $accordion.find('.type-columns');
 
-	// set input/select fields to default values
+	// set input/textarea/select fields to default values
 	$accordion.find('select').prop('selectedIndex', 0);
-	$accordion.find('input').val('');
+	$accordion.find('input, textarea').val('');
 
 	// clear any selected .affected-items, repopulate select fields
 	$accordion.find('.affected-items').empty();
@@ -200,4 +210,17 @@ function clearAccordion($accordion, affectedItemsManager, expertiseTypeManager) 
 	// reload .type-columns to contain root expertise types
 	$typeColumns.empty();
 	expertiseTypeManager.loadChildrenExpertiseTypes($typeColumns);
+
+	// set the accordion number and the new ticket text in the accordion handle
+	$accordion.find('.accordion-icon .number-circle').text(
+		Number($('.accordions .accordion-handle:nth-last-child(2) .number-circle').text()) + 1
+	);
+	$accordion.find('.accordion-title').text('New Ticket');
+}
+
+function initTinyMCE() {
+	tinyMCE.init({
+		selector: 'textarea',
+		branding: false
+	});
 }
