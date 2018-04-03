@@ -3,16 +3,10 @@ export default class AffectedItemsManager {
 		this.devices  = devices;
 		this.programs = programs;
 
-		// programs contain applications and OS's, lets seperate them
-		let applications     = programs.filter(program => !program.operating_system),
-			operatingSystems = programs.filter(program => program.operating_system);
-
 		$('.add-hardware-device, .add-application, .add-operating-system').prop('selectedIndex', 0);
 
 		// populate data for all select fields currently present
-		this.populateSelectField($('.add-hardware-device'), devices, 'serial_no');
-		this.populateSelectField($('.add-application'), applications);
-		this.populateSelectField($('.add-operating-system'), operatingSystems);
+		this.populateAllSelectFields($('.accordion-body'));
 	}
 
 	/**
@@ -24,6 +18,22 @@ export default class AffectedItemsManager {
 	 */
 	getAffectedItem(affectedItems, affectedItemId) {
 		return affectedItems.find(affectedItem => affectedItem.id === affectedItemId) || null;
+	}
+
+	/**
+	 * Populates all different types of select fields
+	 * in an accordion body
+	 *
+	 * @param {DOM} $accordion containing the select fields to populate
+	 */
+	populateAllSelectFields($accordionBody) {
+		// programs contain applications and OS's, lets seperate them
+		let applications     = this.programs.filter(program => !program.operating_system),
+			operatingSystems = this.programs.filter(program => program.operating_system);
+
+		this.populateSelectField($accordionBody.find('.add-hardware-device'), this.devices, 'serial_no');
+		this.populateSelectField($accordionBody.find('.add-application'), applications);
+		this.populateSelectField($accordionBody.find('.add-operating-system'), operatingSystems);
 	}
 
 	/**

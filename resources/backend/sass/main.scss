@@ -92,13 +92,6 @@ $red-hover: #c0392b;
 	}
 
 	.accordion-body {
-		border-left: 1px solid $silver;
-		border-right: 1px solid $silver;
-
-		&:last-child {
-			border-bottom: 1px solid $silver;
-		}
-
 		.mia-field-group:first-child {
 			border-top: 0;
 		}

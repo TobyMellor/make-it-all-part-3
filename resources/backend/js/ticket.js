@@ -147,13 +147,38 @@ jQuery(() => {
 		// Create problem type
 		expertiseTypeManager.createExpertiseType(name, parentId);
 	});
+
+	$('#add-additional-ticket').click(function() {
+		let $accordions   = $(this).closest('.mia-panel').find('.accordions'),
+			$newAccordion = cloneAccordion($accordions);
+
+		clearAccordion($newAccordion, affectedItemsManager, expertiseTypeManager);
+
+		$accordions.append($newAccordion);
+	});
 });
 
-// <li data-program-id="6" data-type="software">
-// 	<input name="tickets[1].programs[6]" value="6" type="text" hidden="">
-// 	<h4>App Store</h4>
-// 	<p>(Operating System)</p>
-// 	<a class="button button-danger remove-affected-item" href="javascript: void(0);">
-// 		<i class="fa fa-terminal"></i> Remove
-// 	</a>
-// </li>
+function cloneAccordion($accordions) {
+	let $existingAccordion = $accordions.find('.accordion-handle:first-child, .accordion-body:nth-child(2)').wrapAll('<div>'),
+		$newAccordion      = $existingAccordion.clone().unwrap();
+
+	$existingAccordion.unwrap();
+
+	return $newAccordion;
+}
+
+function clearAccordion($accordion, affectedItemsManager, expertiseTypeManager) {
+	let $typeColumns = $accordion.find('.type-columns');
+
+	// set input/select fields to default values
+	$accordion.find('select').prop('selectedIndex', 0);
+	$accordion.find('input').val('');
+
+	// clear any selected .affected-items, repopulate select fields
+	$accordion.find('.affected-items').empty();
+	affectedItemsManager.populateAllSelectFields($accordion);
+
+	// reload .type-columns to contain root expertise types
+	$typeColumns.empty();
+	expertiseTypeManager.loadChildrenExpertiseTypes($typeColumns);
+}
