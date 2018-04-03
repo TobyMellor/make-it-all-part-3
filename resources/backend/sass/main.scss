@@ -190,11 +190,25 @@ $red-hover: #c0392b;
 		border-top: 1px solid $silver;
 	}
 
-	.mia-panel-heading, .mia-panel-body {
+	.mia-panel-heading, .mia-panel-body, .mia-panel-footer {
 		padding: 16px;
 
 		&.negative-margin {
 			margin: -16px;
+		}
+	}
+
+	.mia-panel-footer {
+		.mia-button-group {
+			display: inline;
+
+			p {
+				margin: 0;
+				margin-right: 10px;
+				font-weight: 600;
+				font-size: 14px;
+				display: inline;
+			}
 		}
 	}
 }
