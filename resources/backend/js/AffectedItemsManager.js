@@ -15,10 +15,24 @@ export default class AffectedItemsManager {
 		this.populateSelectField($('.add-operating-system'), operatingSystems);
 	}
 
+	/**
+	 * Get an affected item with a given .id
+	 *
+	 * @param {Array} affectedItems array of affected items
+	 * @param {Integer} affectedItemId ID of affected item
+	 * @return {Object} affected item with given ID, or null if not found
+	 */
 	getAffectedItem(affectedItems, affectedItemId) {
 		return affectedItems.find(affectedItem => affectedItem.id === affectedItemId) || null;
 	}
 
+	/**
+	 * Adds affected items to a given select field
+	 *
+	 * @param {DOM} $selectField the <select> field to populate
+	 * @param {Array} elements Array of Hardware, Software or OS
+	 * @param {String} shownProperty .name for OS/SW, .serial_no for HW
+	 */
 	populateSelectField($selectField, elements, shownProperty = 'name') {
 		elements.forEach((element, i) => {
 			$selectField.append(`
@@ -27,6 +41,13 @@ export default class AffectedItemsManager {
 		});
 	}
 
+	/**
+	 * Adds a .affected-item within the div next to the given
+	 * select field.
+	 * Removes the affected item from the select field
+	 *
+	 * @param {DOM} $selectField that's changed
+	 */
 	addAffectedItem($selectField) {
 		if (!$selectField.val()) return;
 
@@ -50,6 +71,12 @@ export default class AffectedItemsManager {
 		$selectField.find('option[value="' + affectedItem.id + '"]').remove();
 	}
 
+	/**
+	 * Removes the .button and adds the affected item back
+	 * to the select field
+	 *
+	 * @param {DOM} $button clicked button within .affected-item
+	 */
 	removeAffectedItem($button) {
 		let $affectedItem    = $button.parent(), // .affected-item
 			affectedItemType = $affectedItem.data('type'), // devices or programs
@@ -71,6 +98,12 @@ export default class AffectedItemsManager {
 		});
 	}
 
+	/**
+	 * Determines what a given affected item is
+	 *
+	 * @param {Object} affectedItem  
+	 * @return {String} 'Hardware' || 'Software' || 'Operating System'
+	 */
 	getTypeName(affectedItem) {
 		if (!affectedItem.hasOwnProperty('operating_system')) {
 			return 'Hardware';
@@ -81,6 +114,12 @@ export default class AffectedItemsManager {
 		return 'Operating System';
 	}
 
+	/**
+	 * Determines what font awesome icon we should use
+	 *
+	 * @param {String} typeName 'Hardware' || 'Software' || 'Operating System' 
+	 * @return {String} font awesome icon 'laptop' || 'file-code-o' || 'Terminal'
+	 */
 	getIconName(typeName) {
 		if (typeName === 'Hardware') {
 			return 'laptop';
