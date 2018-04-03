@@ -148,9 +148,22 @@ jQuery(() => {
 
 	// make the chevron handle go up/down when an accordion is expanded/minimized
 	$(document).on('click', '.accordion-handle', function() {
-		$(this).parent().find('.accordion-handle > i').removeClass().addClass('fa').addClass('fa-chevron-up');
+		$(this).parent().find('.accordion-handle .accordion-actions .fa-chevron-down').removeClass().addClass('fa').addClass('fa-chevron-up');
 
-		$(this).find('> i').removeClass('fa-chevron-up').addClass('fa-chevron-down');
+		$(this).find('.accordion-actions .fa-chevron-up').removeClass('fa-chevron-up').addClass('fa-chevron-down');
+	});
+
+	$(document).on('click', '.accordion-handle .accordion-actions .fa-trash-o', function() {
+		if (!confirm('Are you sure you want to delete this ticket?')) return;
+
+		let $accordionHandle = $(this).closest('.accordion-handle');
+
+		$accordionHandle.add($accordionHandle.next()).fadeOut(250, function() {
+			$(this).remove();
+
+			// if no accordions are expanded, expand the first
+			if ($('.accordion-handle.ui-state-active').length === 0) $('.accordion-handle').first().click();
+		});
 	});
 
 	$('#add-additional-ticket').click(function() {
@@ -197,6 +210,8 @@ function cloneAccordion($accordions) {
 	    $newAccordion      = $existingAccordion.clone().unwrap();
 
 	$existingAccordion.unwrap();
+
+	$newAccordion.find('.accordion-actions').prepend('<i class="fa fa-trash-o"></i>');
 
 	return $newAccordion;
 }
