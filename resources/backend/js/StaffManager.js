@@ -1,6 +1,9 @@
 export default class StaffManager {
 	constructor(employees) {
 		this.employees = employees;
+
+		// populate the select field in the call panel
+		this.populateSelectField($('.call-panel select'), employees);
 	}
 
 	/**
@@ -47,5 +50,19 @@ export default class StaffManager {
 		}
 
 		return permissions;
+	}
+
+	/**
+	 * Adds staff and their ID's to a select field
+	 *
+	 * @param {DOM} $selectField the <select> field to populate
+	 * @param {Array} employees Array of employees
+	 */
+	populateSelectField($selectField, employees) {
+		employees.forEach(employee => {
+			$selectField.append(`
+				<option value="${employee.id}">#${employee.id} – ${employee.name}</option>
+			`);
+		});
 	}
 }

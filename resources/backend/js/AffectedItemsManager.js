@@ -44,7 +44,7 @@ export default class AffectedItemsManager {
 	 * @param {String} shownProperty .name for OS/SW, .serial_no for HW
 	 */
 	populateSelectField($selectField, elements, shownProperty = 'name') {
-		elements.forEach((element, i) => {
+		elements.forEach(element => {
 			$selectField.append(`
 				<option value="${element.id}">#${element.id} – ${element[shownProperty]}</option>
 			`);

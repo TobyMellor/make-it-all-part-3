@@ -159,7 +159,7 @@ jQuery(() => {
 		if ($('.accordions .accordion-handle.ui-state-active').length === 0) $('.accordions .accordion-handle').click(); // expand the accordion if not done already
 	});
 
-	$(document).on('click', '.add-hardware-device, .add-application, .add-operating-system', function() {
+	$(document).on('change', '.add-hardware-device, .add-application, .add-operating-system', function() {
 		affectedItemsManager.addAffectedItem($(this));
 	});
 
