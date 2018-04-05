@@ -38,12 +38,16 @@ export default class StaffManager {
 	 * @return {String} Series of font awesome icons
 	 */
 	getPermissions(employee) {
-		let permissions = `
-			<span>
-				<i class="fa fa-eye"></i>
-				<span>Read</span>
-			</span>
-		`;
+		let permissions = "";
+
+		if (employee.read) {
+			permissions += `
+				<span>
+					<i class="fa fa-eye"></i>
+					<span>Read</span>
+				</span>
+			`;
+		}
 
 		if (employee.operator) {
 			permissions += `
