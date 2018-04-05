@@ -5,6 +5,9 @@ export default class StaffManager {
 
 		// populate the select field in the call panel
 		this.populateSelectField($('.call-panel select'), employees);
+
+		// populate assign-options select with employees with operator permission
+		this.populateSelectField($('.assign-options select'), this.getEmployeesWithPermission('operator'))
 	}
 
 	/**
@@ -15,6 +18,16 @@ export default class StaffManager {
 	 */
 	getEmployee(employeeId) {
 		return this.employees.find(employee => employee.id === employeeId) || null;
+	}
+
+	/**
+	 * Get the employees with the given permission
+	 *
+	 * @param {String} permission name of the permission
+	 * @return {Object} employees with permission
+	 */
+	getEmployeesWithPermission(permission) {
+		return this.employees.filter(employee => employee[permission]);
 	}
 
 	/**

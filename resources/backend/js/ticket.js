@@ -3,128 +3,6 @@ import AffectedItemsManager from "./AffectedItemsManager";
 import StaffManager from "./StaffManager";
 
 jQuery(() => {
-	$('.call-panel select').change(function() {
-		let $callPanel         = $('.call-panel > .row'),
-			$staffInformation  = $('.call-panel .staff-information'),
-			selectedEmployeeId = Number($(this).val());
-
-		// populate the caller information
-		let employee = staffManager.getEmployee(selectedEmployeeId);
-
-		// show the employees details
-		showEmployee($staffInformation, employee, staffManager);
-
-		// slide in the the caller information
-		$callPanel.find('#caller-information').addClass('expanded');
-
-		if ($('.accordions .accordion-handle.ui-state-active').length === 0) $('.accordions .accordion-handle').click(); // expand the accordion if not done already
-	});
-
-	$(document).on('change', '.add-hardware-device, .add-application, .add-operating-system', function() {
-		affectedItemsManager.addAffectedItem($(this));
-	});
-
-	$(document).on('click', '.remove-affected-item', function() {
-		affectedItemsManager.removeAffectedItem($(this));
-	});
-
-	// on clicking a problem type, load and display all children of this type
-	$(document).on('click', '.type-column li', function() {
-		let id = Number($(this).data('expertiseTypeId'));
-
-		// show the children of the selected type in the main view
-		expertiseTypeManager.loadChildrenExpertiseTypes($('.type-columns'), $(this));
-	});
-
-	/*
-	// Creating a new problem type with the name given by the user
-	$(document).on('click', '.create-problem-type', function() {
-		// Get the new name of a problem type
-		let name = $(this).parent().siblings('input').val();
-
-		// Check if a name has been given, don't create a problem type with no name
-		if (!name) return;
-
-		// Get the parent if it exists for the new problem type to be added to
-		const parentId = $(this).closest('.type-column').prev().find('.active').data("expertiseTypeId");
-
-		// Create problem type
-		expertiseTypeManager.createExpertiseType(name, parentId);
-	});
-	*/
-
-	// make the chevron handle go up/down when an accordion is expanded/minimized
-	$(document).on('click', '.accordion-handle', function() {
-		$('.accordions .accordion-handle .fa:not(.fa-trash-o)').removeClass().addClass('fa fa-chevron-up');
-		$('.accordions .accordion-handle.ui-state-active .fa:not(.fa-trash-o)').removeClass().addClass('fa fa-chevron-down');
-	});
-
-	$(document).on('click', '.accordion-handle .accordion-actions .fa-trash-o', function() {
-		if (!confirm('Are you sure you want to delete this ticket?')) return;
-
-		let $accordionHandle = $(this).closest('.accordion-handle');
-
-		$accordionHandle.add($accordionHandle.next()).fadeOut(250, function() {
-			$(this).remove();
-
-			// if no accordions are expanded, expand the first
-			if ($('.accordion-handle.ui-state-active').length === 0) $('.accordion-handle').first().click();
-		});
-	});
-
-	$('#add-additional-ticket').click(function() {
-		// deinit all TinyMCE's before cloning
-		tinyMCE.EditorManager.editors.forEach((editor) => {
-			tinyMCE.get(editor.id).remove();
-		});
-
-		let $accordions    = $(this).closest('.mia-panel').find('.accordions'),
-			newAccordionId = Number($('.accordions .accordion-handle:nth-last-child(2) .number-circle').text()) + 1,
-			$newAccordion  = cloneAccordion($accordions, newAccordionId);
-
-		clearAccordion($newAccordion, newAccordionId, affectedItemsManager, expertiseTypeManager);
-
-		$accordions.append($newAccordion);
-		$newAccordion.find('input[type=radio]').first().click();
-
-		// reinitialize after appending new accordion
-		initTinyMCE();
-		$accordions.accordion('refresh');
-		$newAccordion.click(); // expand new accordion
-	});
-
-	// change the filter/status to the right of the select field
-	$('.has-button select').change(function() {
-		let $filter    = $(this).closest('.has-button').find('.filter'),
-			selected   = $(this).find('option:selected'),
-			statusSlug = selected.val(),
-			className  = statusSlug.substr(0, statusSlug.indexOf('_')) || statusSlug;
-
-		if ($filter.length === 0) {
-			$filter = $('<span>');
-			$(this).closest('.has-button').find('div:last-child').append($filter);
-		}
-
-		$filter.removeClass().addClass('filter filter-' + className);
-		$filter.html(`
-			${selected.text()}
-			<i class="fa fa-times"></i>
-		`);
-	});
-
-	$(document).on('click', '.assign-options label', function() {
-		let $display = $(this).closest('.assign-options').find('.assigned-to-details'),
-			$input   = $(this).find('input');
-
-		if ($input.val() === 'self') {
-			showEmployee($display, staffManager.currentEmployee, staffManager);
-		} else if ($input.val() === 'operator') {
-			showEmployee($display, staffManager.getEmployee(1), staffManager); // TODO: Update "1" with value from a select field
-		} else {
-			showEmployee($display, staffManager.getEmployee(2), staffManager) // TODO: Update with ID from problem type picker
-		}
-	});
-
 
 	// TODO: Get in this format from WP db
 	let expertiseTypes = [
@@ -260,6 +138,144 @@ jQuery(() => {
 	];
 
 	let staffManager = new StaffManager(employees, 1);
+	$('.call-panel select').change(function() {
+		let $callPanel         = $('.call-panel > .row'),
+			$staffInformation  = $('.call-panel .staff-information'),
+			selectedEmployeeId = Number($(this).val());
+
+		// populate the caller information
+		let employee = staffManager.getEmployee(selectedEmployeeId);
+
+		// show the employees details
+		showEmployee($staffInformation, employee, staffManager);
+
+		// slide in the the caller information
+		$callPanel.find('#caller-information').addClass('expanded');
+
+		if ($('.accordions .accordion-handle.ui-state-active').length === 0) $('.accordions .accordion-handle').click(); // expand the accordion if not done already
+	});
+
+	$(document).on('change', '.add-hardware-device, .add-application, .add-operating-system', function() {
+		affectedItemsManager.addAffectedItem($(this));
+	});
+
+	$(document).on('click', '.remove-affected-item', function() {
+		affectedItemsManager.removeAffectedItem($(this));
+	});
+
+	// on clicking a problem type, load and display all children of this type
+	$(document).on('click', '.type-column li', function() {
+		let id = Number($(this).data('expertiseTypeId'));
+
+		// show the children of the selected type in the main view
+		expertiseTypeManager.loadChildrenExpertiseTypes($('.type-columns'), $(this));
+	});
+
+	/*
+	// Creating a new problem type with the name given by the user
+	$(document).on('click', '.create-problem-type', function() {
+		// Get the new name of a problem type
+		let name = $(this).parent().siblings('input').val();
+
+		// Check if a name has been given, don't create a problem type with no name
+		if (!name) return;
+
+		// Get the parent if it exists for the new problem type to be added to
+		const parentId = $(this).closest('.type-column').prev().find('.active').data("expertiseTypeId");
+
+		// Create problem type
+		expertiseTypeManager.createExpertiseType(name, parentId);
+	});
+	*/
+
+	// make the chevron handle go up/down when an accordion is expanded/minimized
+	$(document).on('click', '.accordion-handle', function() {
+		$('.accordions .accordion-handle .fa:not(.fa-trash-o)').removeClass().addClass('fa fa-chevron-up');
+		$('.accordions .accordion-handle.ui-state-active .fa:not(.fa-trash-o)').removeClass().addClass('fa fa-chevron-down');
+	});
+
+	$(document).on('click', '.accordion-handle .accordion-actions .fa-trash-o', function() {
+		if (!confirm('Are you sure you want to delete this ticket?')) return;
+
+		let $accordionHandle = $(this).closest('.accordion-handle');
+
+		$accordionHandle.add($accordionHandle.next()).fadeOut(250, function() {
+			$(this).remove();
+
+			// if no accordions are expanded, expand the first
+			if ($('.accordion-handle.ui-state-active').length === 0) $('.accordion-handle').first().click();
+		});
+	});
+
+	$('#add-additional-ticket').click(function() {
+		// deinit all TinyMCE's before cloning
+		tinyMCE.EditorManager.editors.forEach((editor) => {
+			tinyMCE.get(editor.id).remove();
+		});
+
+		let $accordions    = $(this).closest('.mia-panel').find('.accordions'),
+			newAccordionId = Number($('.accordions .accordion-handle:nth-last-child(2) .number-circle').text()) + 1,
+			$newAccordion  = cloneAccordion($accordions, newAccordionId);
+
+		clearAccordion($newAccordion, newAccordionId, affectedItemsManager, expertiseTypeManager);
+
+		$accordions.append($newAccordion);
+		$newAccordion.find('input[type=radio]').first().click();
+
+		// reinitialize after appending new accordion
+		initTinyMCE();
+		$accordions.accordion('refresh');
+		$newAccordion.click(); // expand new accordion
+	});
+
+	// change the filter/status to the right of the select field
+	$('.has-button select').change(function() {
+		let $filter    = $(this).closest('.has-button').find('.filter'),
+			selected   = $(this).find('option:selected'),
+			statusSlug = selected.val(),
+			className  = statusSlug.substr(0, statusSlug.indexOf('_')) || statusSlug;
+
+		if ($filter.length === 0) {
+			$filter = $('<span>');
+			$(this).closest('.has-button').find('div:last-child').append($filter);
+		}
+
+		$filter.removeClass().addClass('filter filter-' + className);
+		$filter.html(`
+			${selected.text()}
+			<i class="fa fa-times"></i>
+		`);
+	});
+
+	$(document).on('click', '.assign-options label', function() {
+		let $assignOptions  = $(this).closest('.assign-options'),
+			$display        = $assignOptions.find('.assigned-to-details'),
+			$operatorSelect = $assignOptions.find('select'),
+			$input          = $(this).find('input');
+
+		$operatorSelect.prop('selectedIndex', 0);
+
+		if ($input.val() === 'operator') {
+			$operatorSelect.fadeIn();
+
+			showEmployee($display, {}, staffManager); // empty object because user hasn't selected the operator yet
+		} else {
+			$operatorSelect.fadeOut();
+
+			if ($input.val() === 'self') {
+				showEmployee($display, staffManager.currentEmployee, staffManager);
+			} else {
+				showEmployee($display, staffManager.getEmployee(2), staffManager) // TODO: Update with ID from problem type picker
+			}
+		}
+	});
+
+	$(document).on('change', '.assign-options select', function() {
+		let selectedOperatorId = Number($(this).val()),
+			$display           = $(this).closest('.assign-options').find('.assigned-to-details');
+
+		showEmployee($display, staffManager.getEmployee(selectedOperatorId), staffManager);
+	});
 
 	initTinyMCE();
 	initAccordions();

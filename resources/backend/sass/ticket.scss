@@ -83,13 +83,18 @@
 .assign-options {
 	display: flex;
 	max-height: 170px;
+	margin: -12px;
 
 	& > div {
-		margin: -12px;
 		padding: 12px;
 
 		&:first-child {
-			margin-right: 12px;
+			width: 214px;
+
+			select {
+				margin-top: 6px;
+				display: none;
+			}
 		}
 
 		&:last-child {
