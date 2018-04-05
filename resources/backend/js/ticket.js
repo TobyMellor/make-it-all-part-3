@@ -3,6 +3,33 @@ import AffectedItemsManager from "./AffectedItemsManager";
 import StaffManager from "./StaffManager";
 
 jQuery(() => {
+	let employees = [
+		{
+			id: 1,
+			name: 'Toby Mellor',
+			job_title: 'Developer',
+			department: 'Computer Science',
+			phone_number: '(686) 917-4585',
+			operator: 1,
+			analyst: 1,
+			specialist: 0,
+			staff_expertise_type_ids: [1, 2, 3, 4, 5]
+		},
+		{
+			id: 2,
+			name: 'Dana Gibson',
+			job_title: 'Executive Officer',
+			department: 'Mathematics',
+			phone_number: '(121) 258-8985',
+			operator: 1,
+			analyst: 0,
+			specialist: 1,
+			staff_expertise_type_ids: [6, 7]
+		}
+	];
+
+	let staffManager = new StaffManager(employees, 1);
+
 	// TODO: Get in this format from WP db
 	let expertiseTypes = [
 		{
@@ -49,7 +76,7 @@ jQuery(() => {
 		}
 	];
 
-	let expertiseTypeManager = new ExpertiseTypeManager(expertiseTypes);
+	let expertiseTypeManager = new ExpertiseTypeManager(expertiseTypes, staffManager);
 
 	let devices = [
 		{
@@ -113,30 +140,6 @@ jQuery(() => {
 
 	let affectedItemsManager = new AffectedItemsManager(devices, programs);
 
-	let employees = [
-		{
-			id: 1,
-			name: 'Toby Mellor',
-			job_title: 'Developer',
-			department: 'Computer Science',
-			phone_number: '(686) 917-4585',
-			operator: 1,
-			analyst: 1,
-			specialist: 0
-		},
-		{
-			id: 2,
-			name: 'Dana Gibson',
-			job_title: 'Executive Officer',
-			department: 'Mathematics',
-			phone_number: '(121) 258-8985',
-			operator: 1,
-			analyst: 0,
-			specialist: 1
-		}
-	];
-
-	let staffManager = new StaffManager(employees, 1);
 	$('.call-panel select').change(function() {
 		let $callPanel         = $('.call-panel > .row'),
 			$staffInformation  = $('.call-panel .staff-information'),

@@ -24,10 +24,20 @@ export default class StaffManager {
 	 * Get the employees with the given permission
 	 *
 	 * @param {String} permission name of the permission
-	 * @return {Object} employees with permission
+	 * @return {Array} employees with permission
 	 */
 	getEmployeesWithPermission(permission) {
 		return this.employees.filter(employee => employee[permission]);
+	}
+
+	/**
+	 * Get specialists of certain ExpertiseType
+	 *
+	 * @param {Integer} expertiseTypeId ID of expertise type
+	 * @return {Array} employees with specialism in an Expertise Type
+	 */
+	getSpecialistsOfSpecialism(expertiseTypeId) {
+		return this.employees.filter(employee => employee.staff_expertise_type_ids.indexOf(expertiseTypeId) > -1);
 	}
 
 	/**

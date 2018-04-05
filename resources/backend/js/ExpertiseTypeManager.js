@@ -1,6 +1,7 @@
 export default class ExpertiseTypeManager {
-	constructor(expertiseTypes) {
+	constructor(expertiseTypes, staffManager) {
 		this.expertiseTypes = expertiseTypes;
+		this.staffManager   = staffManager;
 
 		// load root problem types
 		this.loadChildrenExpertiseTypes($('.type-columns'));
@@ -43,7 +44,7 @@ export default class ExpertiseTypeManager {
 	 */
 	loadChildrenExpertiseTypes($typeColumns, $clickedLi = null) {
 		let $typeColumn = $('<div class="type-column"></div>'),
-			clickedExpertiseTypeChildren;
+			clickedExpertiseTypeChildren, specialists;
 
 		if ($clickedLi) {
 			let clickedExpertiseTypeId = Number($clickedLi.data('expertiseTypeId'));
@@ -60,18 +61,18 @@ export default class ExpertiseTypeManager {
 			clickedExpertiseTypeChildren = this.getRootExpertiseTypes();
 		}
 
-		// let specialists = this.staffManager.getSpecialists(children.map(child => child.id));
-
 		clickedExpertiseTypeChildren.forEach((child, i) => {
-			$typeColumn.append(
-				'<li ' + (child.children.length === 0 ? 'class="no-children"' : '') + ' data-expertise-type-id="' + child.id + '">' +
-					child.name +
-					'<div class="specialist-counter">' +
-						/*(specialists[i].length > 0 ? specialists[i].length + ' <i class="fa fa-user"></i>' : '<i class="fa fa-user-times"></i>') +*/'<i class="fa fa-user-times"></i>' +
-					'</div>' +
-					'<i class="fa fa-caret-right"></i>' +
-				'</li>'
-			);
+			specialists = this.staffManager.getSpecialistsOfSpecialism(child.id);
+
+			$typeColumn.append(`
+				<li ${(child.children.length === 0 ? 'class="no-children"' : '')} data-expertise-type-id="${child.id}">
+					${child.name}
+					<div class="specialist-counter">
+						${(specialists.length > 0 ? specialists.length + ' <i class="fa fa-user"></i>' : '<i class="fa fa-user-times"></i>')}
+					</div>
+					<i class="fa fa-caret-right"></i>
+				</li>
+			`);
 		});
 
 		// Append the new .type-column, scroll to the right to view it
@@ -91,7 +92,6 @@ export default class ExpertiseTypeManager {
 
 		// load root Expertise Types
 		this.loadChildrenExpertiseTypes($typeColumns);
-
 
 		let expertiseTypeChain = this.getExpertiseTypeChain(expertiseType);
 
