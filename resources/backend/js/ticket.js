@@ -154,8 +154,7 @@ jQuery(() => {
 		$staffInformation.find('.mia-permissions strong').html(staffManager.getPermissions(employee)); // populate permissions field
 
 		// slide in the the caller information
-		$callPanel.find('> .col-xs-12').removeClass('col-xs-12').addClass('col-xs-8');
-		$callPanel.find('> .col-xs-0').removeClass('col-xs-0').addClass('col-xs-4');
+		$callPanel.find('#caller-information').addClass('expanded');
 
 		if ($('.accordions .accordion-handle.ui-state-active').length === 0) $('.accordions .accordion-handle').click(); // expand the accordion if not done already
 	});

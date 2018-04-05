@@ -3,7 +3,23 @@
 .call-panel {
 	& > .row {
 		& > div {
-			transition: all .2s ease;
+			transition: all .5s ease;
+		}
+
+		#call-information {
+			flex-grow: 1;
+		}
+
+		#caller-information {
+			flex-basis: 0px;
+
+			&.expanded {
+				flex-basis: 30%;
+			}
+
+			.mia-panel-heading {
+				min-width: 210px;
+			}
 		}
 
 		.col-xs-0 {
@@ -13,6 +29,10 @@
 			right: 0;
 			bottom: 0;
 		}
+	}
+
+	.details {
+		max-width: 160px;
 	}
 }
 
