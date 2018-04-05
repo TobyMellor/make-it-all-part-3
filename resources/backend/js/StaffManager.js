@@ -38,7 +38,7 @@ export default class StaffManager {
 	 * @return {String} Series of font awesome icons
 	 */
 	getPermissions(employee) {
-		let permissions = "";
+		let permissions = '';
 
 		if (employee.read) {
 			permissions += `
@@ -67,7 +67,7 @@ export default class StaffManager {
 			`;
 		}
 
-		return permissions;
+		return permissions || 'This user has no permissions...';
 	}
 
 	/**
