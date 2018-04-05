@@ -64,11 +64,12 @@ export default class AffectedItemsManager {
 		let $affectedItems   = $selectField.siblings('.affected-items'), // where we should put the new <li>
 			affectedItemType = $selectField.hasClass('add-hardware-device') ? 'devices' : 'programs', // is the new li a device, or app/OS?
 			affectedItems    = this[affectedItemType], // this.devices or this.programs
-			affectedItem     = this.getAffectedItem(affectedItems, Number($selectField.val())); // contains the info we need, e.g. .name, .id
+			affectedItem     = this.getAffectedItem(affectedItems, Number($selectField.val())), // contains the info we need, e.g. .name, .id
+			accordionId      = $selectField.closest('.accordion-body').data('accordionId');
 
 		$affectedItems.append(`
 			<li data-id="${affectedItem.id}" data-type="${affectedItemType}">
-				<input name="tickets[1].${affectedItemType}[${affectedItem.id}]" value="${affectedItem.id}" type="text" hidden="">
+				<input name="tickets[${accordionId}].${affectedItemType}[${affectedItem.id}]" value="${affectedItem.id}" type="text" hidden="">
 				<h4>${affectedItem.name || affectedItem.type}</h4>
 				<p>(${this.getTypeName(affectedItem)})</p>
 				<a class="button button-danger remove-affected-item" href="javascript: void(0);">

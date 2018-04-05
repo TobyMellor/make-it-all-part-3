@@ -3,7 +3,6 @@ import AffectedItemsManager from "./AffectedItemsManager";
 import StaffManager from "./StaffManager";
 
 jQuery(() => {
-
 	// TODO: Get in this format from WP db
 	let expertiseTypes = [
 		{
@@ -292,7 +291,8 @@ function cloneAccordion($accordions, newAccordionId) {
 	$newAccordion.find('.accordion-actions').prepend('<i class="fa fa-trash-o"></i>');
 
 	// replace name of input fields, e.g. tickets[1].x to tickets[2].x
-	$newAccordion.find('input, textarea, select').each((i, input) => $(input).prop('name', $(input).prop('name').replace(/tickets\[.*?\]\s?/g, 'tickets[' + newAccordionId + ']')));
+	$newAccordion.last().find('input, textarea, select').each((i, input) => $(input).prop('name', $(input).prop('name').replace(/tickets\[.*?\]\s?/g, 'tickets[' + newAccordionId + ']')));
+	$newAccordion.last().attr('data-accordion-id', newAccordionId);
 
 	return $newAccordion;
 }
