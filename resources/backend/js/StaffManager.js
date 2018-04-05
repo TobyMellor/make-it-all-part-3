@@ -41,6 +41,31 @@ export default class StaffManager {
 	}
 
 	/**
+	 * Returns the most available specialist for a given
+	 * expertise type based on how many unresolved tickets they
+	 * have open
+	 *
+	 * @param {Integer} expertiseTypeId ID of expertise type
+	 * @return {Object} most available employee with specialism in
+	 *                  expertise type
+	 */
+	getBestSpecialistForSpecialism(expertiseTypeId) {
+		let specialists = this.getSpecialistsOfSpecialism(expertiseTypeId);
+
+		if (specialists.length === 0) return null;
+
+		let bestSpecialist = null;
+
+		specialists.forEach((specialist, i) => {
+			if (bestSpecialist === null || bestSpecialist.open_tickets.length < specialist.open_tickets.length) {
+				bestSpecialist = specialist;
+			}
+		});
+
+		return bestSpecialist;
+	}
+
+	/**
 	 * Gets a font awesome representation of the permissions
 	 * the given staff member has
 	 *

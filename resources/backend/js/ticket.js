@@ -13,7 +13,8 @@ jQuery(() => {
 			operator: 1,
 			analyst: 1,
 			specialist: 0,
-			staff_expertise_type_ids: [1, 2, 3, 4, 5]
+			staff_expertise_type_ids: [1, 2, 3, 4, 5],
+			open_tickets: [1, 2, 3, 4]
 		},
 		{
 			id: 2,
@@ -24,7 +25,8 @@ jQuery(() => {
 			operator: 1,
 			analyst: 0,
 			specialist: 1,
-			staff_expertise_type_ids: [6, 7]
+			staff_expertise_type_ids: [4, 5, 6, 7],
+			open_tickets: [5, 6]
 		}
 	];
 
@@ -167,10 +169,18 @@ jQuery(() => {
 
 	// on clicking a problem type, load and display all children of this type
 	$(document).on('click', '.type-column li', function() {
-		let id = Number($(this).data('expertiseTypeId'));
+		let id              = Number($(this).data('expertiseTypeId')),
+		    $assignOptions  = $(this).closest('.accordion-body').find('.assign-options'),
+			$assignedToType = $assignOptions.find('input:checked');
 
 		// show the children of the selected type in the main view
 		expertiseTypeManager.loadChildrenExpertiseTypes($('.type-columns'), $(this));
+
+		// since a problem has been selected, allow them to choose this option
+		$assignOptions.find('input[value="specialist"]').parent().fadeIn();
+
+		// trigger a change to update the best specialist for the problem
+		if ($assignedToType.val() === 'specialist') $assignedToType.click();
 	});
 
 	/*
@@ -267,7 +277,9 @@ jQuery(() => {
 			if ($input.val() === 'self') {
 				showEmployee($display, staffManager.currentEmployee, staffManager);
 			} else {
-				showEmployee($display, staffManager.getEmployee(2), staffManager) // TODO: Update with ID from problem type picker
+				let selectedExpertiseTypeId = Number($(this).closest('.accordion-body').find('.problem-type-picker li.last-active').data('expertiseTypeId'));
+
+				showEmployee($display, staffManager.getBestSpecialistForSpecialism(selectedExpertiseTypeId), staffManager) // TODO: Update with ID from problem type picker
 			}
 		}
 	});
@@ -305,6 +317,9 @@ function clearAccordion($accordion, newAccordionId, affectedItemsManager = null,
 	$accordion.find('select').prop('selectedIndex', 0);
 	$accordion.find('input[type=text], textarea').val('');
 	$accordion.find('input[type=radio]').first().click();
+
+	// because problem is initially unselected, hide ability to choose specialist of problem
+	$accordion.find('input[type=radio][value="specialist"]').parent().hide();
 
 	// clear the status tag to the right of the select field, e.g. "New", "Pending"
 	$accordion.find('.has-button div:last-child').empty();
