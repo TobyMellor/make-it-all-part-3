@@ -28,7 +28,7 @@ jQuery(() => {
 		affectedItemsManager.removeAffectedItem($(this));
 	});
 
-	// On clicking a problem type, load and display all children of this type
+	// on clicking a problem type, load and display all children of this type
 	$(document).on('click', '.type-column li', function() {
 		let id = Number($(this).data('expertiseTypeId'));
 
@@ -78,12 +78,14 @@ jQuery(() => {
 			tinyMCE.get(editor.id).remove();
 		});
 
-		let $accordions   = $(this).closest('.mia-panel').find('.accordions'),
-			$newAccordion = cloneAccordion($accordions);
+		let $accordions    = $(this).closest('.mia-panel').find('.accordions'),
+			newAccordionId = Number($('.accordions .accordion-handle:nth-last-child(2) .number-circle').text()) + 1,
+			$newAccordion  = cloneAccordion($accordions, newAccordionId);
 
-		clearAccordion($newAccordion, affectedItemsManager, expertiseTypeManager);
+		clearAccordion($newAccordion, newAccordionId, affectedItemsManager, expertiseTypeManager);
 
 		$accordions.append($newAccordion);
+		$newAccordion.find('input[type=radio]').first().click();
 
 		// reinitialize after appending new accordion
 		initTinyMCE();
@@ -91,7 +93,7 @@ jQuery(() => {
 		$newAccordion.click(); // expand new accordion
 	});
 
-	// Change the filter/status to the right of the select field
+	// change the filter/status to the right of the select field
 	$('.has-button select').change(function() {
 		let $filter    = $(this).closest('.has-button').find('.filter'),
 			selected   = $(this).find('option:selected'),
@@ -123,7 +125,7 @@ jQuery(() => {
 		}
 	});
 
-	
+
 	// TODO: Get in this format from WP db
 	let expertiseTypes = [
 		{
@@ -264,24 +266,28 @@ jQuery(() => {
 	clearAccordion($('.mia-panel-body')); // clear all fields
 });
 
-function cloneAccordion($accordions) {
+function cloneAccordion($accordions, newAccordionId) {
 	let $existingAccordion = $accordions.find('.accordion-handle:first-child, .accordion-body:nth-child(2)').wrapAll('<div>'),
 	    $newAccordion      = $existingAccordion.clone().unwrap();
 
 	$existingAccordion.unwrap();
 
+	// delete accordion button
 	$newAccordion.find('.accordion-actions').prepend('<i class="fa fa-trash-o"></i>');
+
+	// replace name of input fields, e.g. tickets[1].x to tickets[2].x
+	$newAccordion.find('input, textarea, select').each((i, input) => $(input).prop('name', $(input).prop('name').replace(/tickets\[.*?\]\s?/g, 'tickets[' + newAccordionId + ']')));
 
 	return $newAccordion;
 }
 
-function clearAccordion($accordion, affectedItemsManager = null, expertiseTypeManager = null) {
+function clearAccordion($accordion, newAccordionId, affectedItemsManager = null, expertiseTypeManager = null) {
 	// set input/textarea/select fields to default values
 	$accordion.find('select').prop('selectedIndex', 0);
 	$accordion.find('input[type=text], textarea').val('');
 	$accordion.find('input[type=radio]').first().click();
 
-	// Refresh accordion, e.g. page has just loaded
+	// refresh accordion, e.g. page has just loaded
 	if (affectedItemsManager !== null && expertiseTypeManager !== null) {
 		let $typeColumns = $accordion.find('.type-columns');
 
@@ -294,9 +300,7 @@ function clearAccordion($accordion, affectedItemsManager = null, expertiseTypeMa
 		expertiseTypeManager.loadChildrenExpertiseTypes($typeColumns);
 
 		// set the accordion number and the new ticket text in the accordion handle
-		$accordion.find('.accordion-icon .number-circle').text(
-			Number($('.accordions .accordion-handle:nth-last-child(2) .number-circle').text()) + 1
-		);
+		$accordion.find('.accordion-icon .number-circle').text(newAccordionId);
 		$accordion.find('.accordion-title').text('New Ticket');
 	}
 }
