@@ -67,7 +67,7 @@ export default class StaffManager {
 			`;
 		}
 
-		return permissions || 'This user has no permissions...';
+		return permissions;
 	}
 
 	/**

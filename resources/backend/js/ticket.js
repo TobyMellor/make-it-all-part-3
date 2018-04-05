@@ -229,7 +229,7 @@ jQuery(() => {
 	});
 
 	// change the filter/status to the right of the select field
-	$('.has-button select').change(function() {
+	$(document).on('change', '.has-button select', function() {
 		let $filter    = $(this).closest('.has-button').find('.filter'),
 			selected   = $(this).find('option:selected'),
 			statusSlug = selected.val(),
@@ -302,6 +302,9 @@ function clearAccordion($accordion, newAccordionId, affectedItemsManager = null,
 	$accordion.find('select').prop('selectedIndex', 0);
 	$accordion.find('input[type=text], textarea').val('');
 	$accordion.find('input[type=radio]').first().click();
+
+	// clear the status tag to the right of the select field, e.g. "New", "Pending"
+	$accordion.find('.has-button div:last-child').empty();
 
 	// refresh accordion, e.g. page has just loaded
 	if (affectedItemsManager !== null && expertiseTypeManager !== null) {
