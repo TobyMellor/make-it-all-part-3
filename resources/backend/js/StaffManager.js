@@ -1,6 +1,7 @@
 export default class StaffManager {
-	constructor(employees) {
-		this.employees = employees;
+	constructor(employees, currentEmployeeId) {
+		this.employees       = employees;
+		this.currentEmployee = this.getEmployee(currentEmployeeId);
 
 		// populate the select field in the call panel
 		this.populateSelectField($('.call-panel select'), employees);
