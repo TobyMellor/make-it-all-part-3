@@ -174,7 +174,7 @@ jQuery(() => {
 			$assignedToType = $assignOptions.find('input:checked');
 
 		// show the children of the selected type in the main view
-		expertiseTypeManager.loadChildrenExpertiseTypes($('.type-columns'), $(this));
+		expertiseTypeManager.loadChildrenExpertiseTypes($(this).closest('.type-columns'), $(this));
 
 		// since a problem has been selected, allow them to choose this option
 		$assignOptions.find('input[value="specialist"]').parent().fadeIn();
@@ -182,23 +182,6 @@ jQuery(() => {
 		// trigger a change to update the best specialist for the problem
 		if ($assignedToType.val() === 'specialist') $assignedToType.click();
 	});
-
-	/*
-	// Creating a new problem type with the name given by the user
-	$(document).on('click', '.create-problem-type', function() {
-		// Get the new name of a problem type
-		let name = $(this).parent().siblings('input').val();
-
-		// Check if a name has been given, don't create a problem type with no name
-		if (!name) return;
-
-		// Get the parent if it exists for the new problem type to be added to
-		const parentId = $(this).closest('.type-column').prev().find('.active').data("expertiseTypeId");
-
-		// Create problem type
-		expertiseTypeManager.createExpertiseType(name, parentId);
-	});
-	*/
 
 	// make the chevron handle go up/down when an accordion is expanded/minimized
 	$(document).on('click', '.accordion-handle', function() {

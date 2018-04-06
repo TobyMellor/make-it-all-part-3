@@ -100,4 +100,30 @@ export default class ExpertiseTypeManager {
 			problemTypePage.loadChildrenExpertiseTypes($typeColumns, $typeColumns.find('.type-column li[data-expertise-type-id="' + expertiseTypeChain[i + 1].id + '"]'));
 		}
 	}
+
+	/**
+	 * Display the names of an ExpertiseType, and its parents,
+	 * in ordered fashion.
+	 *
+	 * e.g. "Electronics / Printer / Printer Ink / Cyan Ink"
+	 *
+	 * @param {ExpertiseType} 
+	 * @return {String} Breadcrum of ExpertiseType.name's, from the root to a ExpertiseType 
+	 */
+	getExpertiseTypeBreadcrum(expertiseTypeId) {
+		let expertiseTypeParent = this.getExpertiseType(expertiseTypeId),
+			breadcrum           = '';
+
+		while (expertiseTypeParent !== null) {
+			breadcrum = expertiseTypeParent.name + breadcrum;
+
+			expertiseTypeParent = this.getExpertiseType(expertiseTypeParent.parent_id);
+
+			if (expertiseTypeParent !== null) {
+				breadcrum = ' / ' + breadcrum;
+			}
+		}
+
+		return breadcrum;
+	}
 }
