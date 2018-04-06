@@ -9,7 +9,14 @@ abstract class MakeItAllPage {
 		'Update',
 		'Delete'
 	]; // to remove a page, redefine this in the child
-
+	
+	/**
+	 * Initialises the menu and submenu, and
+	 * adds the enqueue scripts action when page is
+	 * active
+	 *
+	 * @return @void
+	 */
 	public function init() {
 		$name = $this->name;
 
@@ -37,7 +44,16 @@ abstract class MakeItAllPage {
 
 		add_action('admin_enqueue_scripts', [$this, 'enqueue_dependencies']); // Style/script only used for this page, e.g. ticket.css NOT main.css
 	}
-
+	/**
+	 * Enqueues the scripts that are required
+	 * each page must have a css and js file,
+	 * named exactly as $this->name
+	 *
+	 * This is called on page load, from the
+	 * action set within init()
+	 *
+	 * @return @void
+	 */
 	public function enqueue_dependencies() {
 		$fileName = strtolower($this->name);
 
@@ -49,7 +65,13 @@ abstract class MakeItAllPage {
 	abstract public function create_pane();
 	abstract public function update_pane();
 	abstract public function delete_pane();
-
+	
+	/**
+	 * Simply gets a blank Timber context and
+	 * sets the page name for it.
+	 *
+	 * @return Timber::context
+	 */
 	protected function get_context($pageName) {
 		$context = Timber::get_context();
 		$context['page_name'] = $pageName; // e.g. Create Ticket
@@ -57,6 +79,14 @@ abstract class MakeItAllPage {
 		return $context;
 	}
 
+	/**
+	 * Renders the page and passes in the context
+	 *
+	 * Page must be found in the following format:
+	 * e.g. backend/tickets/create_ticket.twig
+	 *
+	 * @return @void
+	 */
 	protected function render_pane($context) {
 		Timber::render(
 			'backend/views/' .
