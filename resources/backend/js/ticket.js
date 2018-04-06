@@ -3,33 +3,6 @@ import AffectedItemsManager from "./AffectedItemsManager";
 import StaffManager from "./StaffManager";
 
 jQuery(() => {
-	let employees = [
-		{
-			id: 1,
-			name: 'Toby Mellor',
-			job_title: 'Developer',
-			department: 'Computer Science',
-			phone_number: '(686) 917-4585',
-			operator: 1,
-			analyst: 1,
-			specialist: 0,
-			staff_expertise_type_ids: [1, 2, 3, 4, 5],
-			open_tickets: [1, 2, 3, 4]
-		},
-		{
-			id: 2,
-			name: 'Dana Gibson',
-			job_title: 'Executive Officer',
-			department: 'Mathematics',
-			phone_number: '(121) 258-8985',
-			operator: 1,
-			analyst: 0,
-			specialist: 1,
-			staff_expertise_type_ids: [4, 5, 6, 7],
-			open_tickets: [5, 6]
-		}
-	];
-
 	let staffManager = new StaffManager(employees, 1);
 
 	// TODO: Get in this format from WP db

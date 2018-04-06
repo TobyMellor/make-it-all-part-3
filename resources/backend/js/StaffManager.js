@@ -17,7 +17,7 @@ export default class StaffManager {
 	 * @return {Object} employee with .id, null if not found
 	 */
 	getEmployee(employeeId) {
-		return this.employees.find(employee => employee.id === employeeId) || null;
+		return this.employees.find(employee => employee.id == employeeId) || null;
 	}
 
 	/**
@@ -37,7 +37,7 @@ export default class StaffManager {
 	 * @return {Array} employees with specialism in an Expertise Type
 	 */
 	getSpecialistsOfSpecialism(expertiseTypeId) {
-		return this.employees.filter(employee => employee.staff_expertise_type_ids.indexOf(expertiseTypeId) > -1);
+		return this.employees.filter(employee => employee.staff_expertise_type_ids.indexOf(String(expertiseTypeId)) > -1);
 	}
 
 	/**

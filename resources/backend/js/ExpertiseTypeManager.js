@@ -14,7 +14,7 @@ export default class ExpertiseTypeManager {
 	 * @return {Object} ExpertiseType with given ID, or null if not found
 	 */
 	getExpertiseType(expertiseTypeId) {
-		return this.expertiseTypes.find(expertiseType => expertiseType.id === expertiseTypeId) || null;
+		return this.expertiseTypes.find(expertiseType => expertiseType.id == expertiseTypeId) || null;
 	}
 
 	/**
@@ -24,7 +24,7 @@ export default class ExpertiseTypeManager {
 	 * @return {Array} ExpertiseType with corresponding parent
 	 */
 	getExpertiseTypesWithParent(parentId) {
-		return this.expertiseTypes.filter(expertiseType => expertiseType.parent_id === parentId);
+		return this.expertiseTypes.filter(expertiseType => expertiseType.parent_id == parentId);
 	}
 
 	/**
@@ -114,12 +114,12 @@ export default class ExpertiseTypeManager {
 		let expertiseTypeParent = this.getExpertiseType(expertiseTypeId),
 			breadcrum           = '';
 
-		while (expertiseTypeParent !== null) {
+		while (expertiseTypeParent != null) {
 			breadcrum = expertiseTypeParent.name + breadcrum;
 
 			expertiseTypeParent = this.getExpertiseType(expertiseTypeParent.parent_id);
 
-			if (expertiseTypeParent !== null) {
+			if (expertiseTypeParent != null) {
 				breadcrum = ' / ' + breadcrum;
 			}
 		}

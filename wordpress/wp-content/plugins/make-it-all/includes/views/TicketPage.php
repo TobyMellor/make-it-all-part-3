@@ -22,8 +22,74 @@ class TicketPage extends MakeItAllPage {
 	}
 
 	public function create_pane() {
+		global $wpdb;
+
+		$employees = $wpdb->get_results(
+			"
+				SELECT 
+					staff.id,
+					staff.name,
+					job_title,
+					department.name AS department,
+					staff.phone_number,
+					operator,
+					analyst,
+					specialist
+				FROM wp_v4UxADt_mia_staff AS staff
+					JOIN wp_v4UxADt_mia_department AS department
+						ON staff.department_id = department.id
+					LEFT JOIN wp_v4UxADt_mia_expertise_type_staff AS ets
+						ON staff.id = ets.staff_id
+				GROUP BY staff.id;
+			"
+		);
+
+		// tickets that are unresolved
+		$openTickets = $wpdb->get_results(
+			"
+				SELECT staff_id
+				FROM wp_v4UxADt_mia_ticket_status
+				WHERE id IN (
+					SELECT MAX(id) AS id
+					FROM wp_v4UxADt_mia_ticket_status
+					GROUP BY ticket_id
+				)
+				AND status_id <> 3
+				ORDER BY ticket_id
+			"
+		);
+
+		$expertiseTypeStaffs = $wpdb->get_results(
+			"
+				SELECT id, staff_id
+				FROM wp_v4UxADt_mia_expertise_type_staff
+			"
+		);
+
+		// give each employee a .open_tickets count
+		foreach ($employees as $employee) {
+			$employee->open_tickets             = 0;
+			$employee->staff_expertise_type_ids = [];
+
+			foreach ($openTickets as $key => $openTicket) {
+				if ($openTicket->staff_id === $employee->id) {
+					$employee->open_tickets += 1;
+					unset($openTickets[$key]);
+				}
+			}
+
+			foreach ($expertiseTypeStaffs as $expertiseTypeStaff) {
+				if ($expertiseTypeStaff->staff_id === $employee->id) {
+					$employee->staff_expertise_type_ids[] = $expertiseTypeStaff->id;
+				}
+			}
+		}
+		
+		//var_dump($openTickets);
+
 		$context = $this->get_context('Create Tickets');
-		// global $wpdb;
+
+		$context['employees'] = json_encode($employees);
 
 		$this->render_pane($context);
 
