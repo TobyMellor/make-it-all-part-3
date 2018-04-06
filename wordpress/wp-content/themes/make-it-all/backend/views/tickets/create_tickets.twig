@@ -2,7 +2,7 @@
 
 {% block main %}
 	<div class="row">
-		<div class="col-xs-9">
+		<div class="col-xs-12 col-sm-12 col-md-9">
 			<div class="mia-panel call-panel">
 				<div class="row no-padding">
 					<div id="call-information">
@@ -12,7 +12,7 @@
 						</div>
 						<div class="mia-panel-body negative-margin">
 							<div class="row mia-field-group">
-								<div class="col-xs-3">
+								<div class="col-sm-3 col-xs-12">
 									<p class="label">
 										Caller <span class="required">*</span>
 									</p>
@@ -21,14 +21,14 @@
 										Lorem ipsum dolor sit amet dolar.
 									</p>
 								</div>
-								<div class="col-xs-9">
+								<div class="col-sm-9 col-xs-12">
 									<select>
 										<option selected default disabled>Select a caller here...</option>
 									</select>
 								</div>
 							</div>
 							<div class="row mia-field-group">
-								<div class="col-xs-3">
+								<div class="col-sm-3 col-xs-12">
 									<p class="label">
 										Date of call <span class="required">*</span>
 									</p>
@@ -37,7 +37,7 @@
 										Lorem ipsum dolor sit amet dolar.
 									</p>
 								</div>
-								<div class="col-xs-9 has-button">
+								<div class="col-sm-9 col-xs-12 has-button">
 									<div class="date-time-picker">
 										<span></span>
 										<span>/</span>
@@ -154,7 +154,7 @@
 						</div>
 						<div class="accordion-body" data-accordion-id="1">
 							<div class="row mia-field-group">
-								<div class="col-xs-3">
+								<div class="col-xs-12 col-sm-3">
 									<p class="label">
 										Status <span class="required">*</span>
 									</p>
@@ -163,7 +163,7 @@
 										Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 									</p>
 								</div>
-								<div class="col-xs-9 has-button">
+								<div class="col-sm-9 col-xs-12 has-button">
 									<div>
 										<select name="tickets[1].status">
 											<option disabled selected>Select a status here...</option>
@@ -176,7 +176,7 @@
 								</div>
 							</div>
 							<div class="row mia-field-group">
-								<div class="col-xs-3">
+								<div class="col-sm-3 col-xs-12">
 									<p class="label">
 										Title <span class="required">*</span>
 									</p>
@@ -185,12 +185,12 @@
 										Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 									</p>
 								</div>
-								<div class="col-xs-9">
+								<div class="col-sm-9 col-xs-12">
 									<input name="tickets[1].title" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here">
 								</div>
 							</div>
 							<div class="row mia-field-group">
-								<div class="col-xs-3">
+								<div class="col-sm-3 col-xs-12">
 									<p class="label">
 										Description <span class="required">*</span>
 									</p>
@@ -199,12 +199,12 @@
 										Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 									</p>
 								</div>
-								<div class="col-xs-9">
+								<div class="col-sm-9 col-xs-12">
 									<textarea name="tickets[1].description"></textarea>
 								</div>
 							</div>
 							<div class="row mia-field-group">
-								<div class="col-xs-3">
+								<div class="col-sm-3 col-xs-12">
 									<p class="label">
 										Problem Type <span class="required">*</span>
 									</p>
@@ -213,14 +213,14 @@
 										Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 									</p>
 								</div>
-								<div class="col-xs-9">
+								<div class="col-sm-9 col-xs-12">
 									<div class="problem-type-picker">
 										<div class="type-columns"></div>
 									</div>
 								</div>
 							</div>
 							<div class="row mia-field-group">
-								<div class="col-xs-3">
+								<div class="col-sm-3 col-xs-12">
 									<p class="label">
 										Assigned to <span class="required">*</span>
 									</p>
@@ -229,18 +229,18 @@
 										Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 									</p>
 								</div>
-								<div class="col-xs-9">
+								<div class="col-sm-9 col-xs-12">
 									<div class="assign-options">
 										<div>
 											<label>
 												<input name="tickets[1].assigned_to_type" value="self" type="radio">
 												Myself
-											</label><br />
+											</label>
 										
 											<label>
 												<input name="tickets[1].assigned_to_type" value="operator" type="radio">
 												Another operator
-											</label><br />
+											</label>
 
 											<label>
 												<input name="tickets[1].assigned_to_type" value="specialist" type="radio">
@@ -321,7 +321,7 @@
 								</div>
 							</div>
 							<div class="row mia-field-group">
-								<div class="col-xs-3">
+								<div class="col-sm-3 col-xs-12">
 									<p class="label">
 										Hardware Affected <span class="required">*</span>
 									</p>
@@ -330,7 +330,7 @@
 										Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 									</p>
 								</div>
-								<div class="col-xs-9">
+								<div class="col-sm-9 col-xs-12">
 									<select class="add-hardware-device">
 										<option selected disabled>Select a hardware device here...</option>
 									</select>
@@ -338,7 +338,7 @@
 								</div>
 							</div>
 							<div class="row mia-field-group">
-								<div class="col-xs-3">
+								<div class="col-sm-3 col-xs-12">
 									<p class="label">
 										Programs Affected
 									</p>
@@ -347,7 +347,7 @@
 										Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 									</p>
 								</div>
-								<div class="col-xs-9">
+								<div class="col-sm-9 col-xs-12">
 									<select class="add-application">
 										<option selected disabled>Select a software program here...</option>
 									</select>
@@ -355,7 +355,7 @@
 								</div>
 							</div>
 							<div class="row mia-field-group">
-								<div class="col-xs-3">
+								<div class="col-sm-3 col-xs-12">
 									<p class="label">
 										Operating Systems Affected
 									</p>
@@ -364,7 +364,7 @@
 										Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 									</p>
 								</div>
-								<div class="col-xs-9">
+								<div class="col-sm-9 col-xs-12">
 									<select class="add-operating-system">
 										<option selected disabled>Select an operating system here...</option>
 									</select>
@@ -386,7 +386,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-xs-3">
+		<div class="col-xs-12 col-sm-12 col-md-3">
 			Helpful information about tickets will go here...
 		</div>
 	</div>

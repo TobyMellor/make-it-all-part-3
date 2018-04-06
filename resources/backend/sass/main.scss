@@ -245,6 +245,7 @@ span.filter {
 	color: $white;
 	font-weight: 600;
 	font-size: 16px;
+	white-space: nowrap;
 	
 	&.filter-green, &.filter-resolved {
 		background-color: $green;

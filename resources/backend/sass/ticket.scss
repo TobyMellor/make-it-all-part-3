@@ -108,7 +108,7 @@
 	}
 
 	label {
-		display: inline-block;
+		display: block;
 		margin-bottom: 8px;
 		font-weight: 600;
 
@@ -124,10 +124,12 @@
 		.mia-field-group {
 			p {
 				margin-top: 5px;
+				min-width: 75px;
 			}
 
 			& > div {
 				padding: 8px 12px;
+				overflow-x: auto;
 			}
 
 			&:last-child > div {
@@ -182,12 +184,14 @@
 	}
 }
 
-.mia-picker input {
-	visibility: hidden;
-	width: 0 !important;
-	height: 0 !important;
-	padding: 0 !important;
-	margin: -3px;
+.mia-picker {
+	input {
+		visibility: hidden;
+		width: 0 !important;
+		height: 0 !important;
+		padding: 0 !important;
+		margin: -3px;
+	}
 }
 
 .ui-datepicker {
@@ -444,3 +448,5 @@
 		}
 	}
 }
+
+@import "ticket-media-queries.scss";
