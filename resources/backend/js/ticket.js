@@ -3,55 +3,8 @@ import AffectedItemsManager from "./AffectedItemsManager";
 import StaffManager from "./StaffManager";
 
 jQuery(() => {
-	let staffManager = new StaffManager(employees, 1);
-
-	// TODO: Get in this format from WP db
-	let expertiseTypes = [
-		{
-			id: 1,
-			name: 'Printer',
-			parent_id: null,
-			children: [2, 3]
-		},
-		{
-			id: 2,
-			name: 'Ink',
-			parent_id: 1,
-			children: [4]
-		},
-		{
-			id: 3,
-			name: 'Paper',
-			parent_id: 1,
-			children: []
-		},
-		{
-			id: 4,
-			name: 'Low Ink',
-			parent_id: 2,
-			children: [5]
-		},
-		{
-			id: 5,
-			name: 'Low Magenta',
-			parent_id: 4,
-			children: []
-		},
-		{
-			id: 6,
-			name: 'Spillage',
-			parent_id: 2,
-			children: []
-		},
-		{
-			id: 7,
-			name: 'Vending Machine',
-			parent_id: null,
-			children: []
-		}
-	];
-
-	let expertiseTypeManager = new ExpertiseTypeManager(expertiseTypes, staffManager);
+	let staffManager         = new StaffManager(employees, 1),
+	    expertiseTypeManager = new ExpertiseTypeManager(expertiseTypes, staffManager);
 
 	let devices = [
 		{
