@@ -17,7 +17,7 @@ export default class AffectedItemsManager {
 	 * @return {Object} affected item with given ID, or null if not found
 	 */
 	getAffectedItem(affectedItems, affectedItemId) {
-		return affectedItems.find(affectedItem => affectedItem.id === affectedItemId) || null;
+		return affectedItems.find(affectedItem => affectedItem.id == affectedItemId) || null;
 	}
 
 	/**
@@ -28,8 +28,8 @@ export default class AffectedItemsManager {
 	 */
 	populateAllSelectFields($accordionBody) {
 		// programs contain applications and OS's, lets seperate them
-		let applications     = this.programs.filter(program => !program.operating_system),
-			operatingSystems = this.programs.filter(program => program.operating_system);
+		let applications     = this.programs.filter(program => !Number(program.operating_system)),
+			operatingSystems = this.programs.filter(program => Number(program.operating_system));
 
 		this.populateSelectField($accordionBody.find('.add-hardware-device'), this.devices, 'serial_no');
 		this.populateSelectField($accordionBody.find('.add-application'), applications);
@@ -118,7 +118,7 @@ export default class AffectedItemsManager {
 	getTypeName(affectedItem) {
 		if (!affectedItem.hasOwnProperty('operating_system')) {
 			return 'Hardware';
-		} else if (!affectedItem.operating_system) {
+		} else if (!Number(affectedItem.operating_system)) {
 			return 'Software';
 		}
 

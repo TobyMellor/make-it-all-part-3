@@ -6,7 +6,7 @@ class ExpertiseTypeQuery extends MakeItAllQuery {
 	protected $table = 'expertise_type';
 
 	/**
-	 * Select all staff with the important joins.
+	 * Select all expertise types with the important joins.
 	 *
 	 * @return Array
 	 */

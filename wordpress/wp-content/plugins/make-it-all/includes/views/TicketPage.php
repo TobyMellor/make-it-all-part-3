@@ -2,8 +2,11 @@
 
 require_once(plugin_dir_path(dirname(__FILE__)) . 'views/MakeItAllPage.php');
 require_once(plugin_dir_path(dirname(__FILE__)) . 'views/tables/TicketTable.php');
+
 require_once(plugin_dir_path(dirname(__FILE__)) . 'database/queries/StaffQuery.php');
 require_once(plugin_dir_path(dirname(__FILE__)) . 'database/queries/ExpertiseTypeQuery.php');
+require_once(plugin_dir_path(dirname(__FILE__)) . 'database/queries/DeviceQuery.php');
+require_once(plugin_dir_path(dirname(__FILE__)) . 'database/queries/ProgramQuery.php');
 
 class TicketPage extends MakeItAllPage {
 	protected $name     = 'Ticket';
@@ -28,9 +31,10 @@ class TicketPage extends MakeItAllPage {
 
 		$context['employees']       = json_encode((new StaffQuery)->get());
 		$context['expertise_types'] = json_encode((new ExpertiseTypeQuery)->get());
+		$context['devices']         = json_encode((new DeviceQuery)->get());
+		$context['programs']        = json_encode((new ProgramQuery)->get());
 
 		$this->render_pane($context);
-
 
 		/*global $wpdb;
 

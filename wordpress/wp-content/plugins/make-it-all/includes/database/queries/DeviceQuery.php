@@ -2,18 +2,18 @@
 
 require_once(plugin_dir_path(dirname(__FILE__)) . 'queries/MakeItAllQuery.php');
 
-class ExpertiseTypeStaffQuery extends MakeItAllQuery {
-	protected $table = 'expertise_type_staff';
+class DeviceQuery extends MakeItAllQuery {
+	protected $table = 'device';
 
 	/**
-	 * Select all expertise staff types with the important joins.
+	 * Select all devices.
 	 *
 	 * @return Array
 	 */
 	public function get() {
 		return $this->get_results(
 			"
-				SELECT id, staff_id
+				SELECT id, type, make, serial_no
 				FROM {$this->prefix}{$this->table}
 			"
 		);

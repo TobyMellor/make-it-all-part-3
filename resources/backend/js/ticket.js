@@ -4,69 +4,8 @@ import StaffManager from "./StaffManager";
 
 jQuery(() => {
 	let staffManager         = new StaffManager(employees, 1),
-	    expertiseTypeManager = new ExpertiseTypeManager(expertiseTypes, staffManager);
-
-	let devices = [
-		{
-			id: 1,
-			type: 'Phone',
-			make: 'Apple',
-			serial_no: 'N9TT-9G0A-B7FQ-RANC'
-		},
-		{
-			id: 2,
-			type: 'Phone',
-			make: 'Samsung',
-			serial_no: 'VBHP-3U6Y-HFN5-BVE9'
-		},
-		{
-			id: 3,
-			type: 'Calculator',
-			make: 'Casio',
-			serial_no: 'QK6A-JI6S-7ETR-0A6C'
-		},
-		{
-			id: 4,
-			type: 'Laptop',
-			make: 'Apple',
-			serial_no: 'QK6A-JI6S-7ETR-0A6C'
-		}
-	];
-
-	let programs = [
-		{
-			id: 1,
-			name: 'Word',
-			operating_system: false,
-			expiry_date: '11/10/2017'
-		},
-		{
-			id: 2,
-			name: 'Excel',
-			operating_system: false,
-			expiry_date: '12/10/2017'
-		},
-		{
-			id: 3,
-			name: 'Powerpoint',
-			operating_system: false,
-			expiry_date: '13/10/2017'
-		},
-		{
-			id: 4,
-			name: 'Windows',
-			operating_system: true,
-			expiry_date: '14/10/2017'
-		},
-		{
-			id: 5,
-			name: 'macOS',
-			operating_system: true,
-			expiry_date: '15/10/2017'
-		}
-	];
-
-	let affectedItemsManager = new AffectedItemsManager(devices, programs);
+	    expertiseTypeManager = new ExpertiseTypeManager(expertiseTypes, staffManager),
+	    affectedItemsManager = new AffectedItemsManager(devices, programs);
 
 	$('.call-panel select').change(function() {
 		let $callPanel         = $('.call-panel > .row'),
