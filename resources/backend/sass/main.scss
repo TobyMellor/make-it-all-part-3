@@ -95,6 +95,10 @@ $red-hover: #c0392b;
 			font-weight: 600;
 			line-height: 22px;
 			padding-left: 9px;
+			max-width: 500px;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 
 		.accordion-actions > i {

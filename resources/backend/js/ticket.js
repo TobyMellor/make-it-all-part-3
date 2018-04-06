@@ -291,6 +291,13 @@ jQuery(() => {
 		showEmployee($display, staffManager.getEmployee(selectedOperatorId), staffManager);
 	});
 
+	$(document).on('keyup', '.accordions .accordion-body input[name*="title"]', function() {
+		let $headerText    = $(this).closest('.accordion-body').prev().find('.accordion-title'),
+			newHeaderText  = $(this).val().length <= 2 ? 'New Ticket' : 'New Ticket: ' + $(this).val();
+
+		$headerText.text(newHeaderText);
+	});
+
 	initTinyMCE();
 	initAccordions();
 	clearAccordion($('.mia-panel-body')); // clear all fields
