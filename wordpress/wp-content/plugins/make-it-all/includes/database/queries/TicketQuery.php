@@ -52,7 +52,7 @@ class TicketQuery extends MakeItAllQuery {
 						`updated_at`
 					)
 				VALUES
-					(%s, %s, %d, %d, %d, %d, %s, %s)
+					(%s, %s, %s, %d, %s, %d, %s, %s)
 			",
 			[$title, $description, $solutionId, $authorId, $assignedToOperatorId, $expertiseTypeStaffId]
 		);

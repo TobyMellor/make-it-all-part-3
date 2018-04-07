@@ -4,6 +4,9 @@ require_once(plugin_dir_path(dirname(__FILE__)) . 'views/MakeItAllPage.php');
 require_once(plugin_dir_path(dirname(__FILE__)) . 'views/tables/TicketTable.php');
 
 require_once(plugin_dir_path(dirname(__FILE__)) . 'database/queries/TicketQuery.php');
+require_once(plugin_dir_path(dirname(__FILE__)) . 'database/queries/TicketDeviceQuery.php');
+require_once(plugin_dir_path(dirname(__FILE__)) . 'database/queries/TicketProgramQuery.php');
+require_once(plugin_dir_path(dirname(__FILE__)) . 'database/queries/TicketStatusQuery.php');
 require_once(plugin_dir_path(dirname(__FILE__)) . 'database/queries/StaffQuery.php');
 require_once(plugin_dir_path(dirname(__FILE__)) . 'database/queries/ExpertiseTypeQuery.php');
 require_once(plugin_dir_path(dirname(__FILE__)) . 'database/queries/DeviceQuery.php');
@@ -61,7 +64,13 @@ class TicketPage extends MakeItAllPage {
 	private function create_action() {
 		global $wpdb;
 
-		(new CallQuery)->insert(
+		$callQuery          = new CallQuery();
+		$ticketQuery        = new TicketQuery();
+		$ticketDeviceQuery  = new TicketDeviceQuery();
+		$ticketProgramQuery = new TicketProgramQuery();
+		$ticketStatusQuery  = new TicketStatusQuery();
+
+		$callQuery->insert(
 			date('Y-m-d H:i:s', strtotime($_POST['date_of_call'])),
 			get_current_user_id(),
 			$_POST['caller']['id']
@@ -69,16 +78,24 @@ class TicketPage extends MakeItAllPage {
 
 		$callId = $wpdb->insert_id;
 
-		// foreach ($_POST['tickets'] as $ticket) {
-		// 	(new TicketQuery)->insert(
-		// 		$ticket['title'], 
-		// 		$ticket['description'], 
-		// 		null, // TODO: If status is resolved, then allow solution to be set
-		// 		get_current_user_id(), 
-		// 		$ticket['assigned_to_operator'], 
-		// 		$ticket['expertise_type_staff_id']
-		// 	);
-		// }
+		foreach ($_POST['tickets'] as $ticket) {
+			$ticketQuery->insert(
+				$ticket['title'], 
+				$ticket['description'], 
+				'null', // TODO: If status is resolved, then allow solution to be set
+				get_current_user_id(), 
+				$ticket['assigned_to_operator'] || 'null', 
+				$ticket['expertise_type_staff_id']
+			);
+
+			$ticketId = $wpdb->insert_id;
+
+			$ticketStatusQuery->insert(
+				$ticketId,
+				$ticket['status'],
+				get_current_user()
+			);
+		}
 	}
 
 	public function update_pane() {

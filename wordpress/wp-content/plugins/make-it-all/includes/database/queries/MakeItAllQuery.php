@@ -8,13 +8,6 @@ abstract class MakeItAllQuery {
 	function __construct() {
 		global $wpdb; $this->prefix = $wpdb->prefix . 'mia_';
 	}
-
-	/**
-	 * Select with all of the important join fields
-	 *
-	 * @return void
-	 */
-	abstract public function get();
 	
 	/**
 	 * Shorthand for $wpdb->get_results()

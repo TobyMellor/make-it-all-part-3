@@ -2,24 +2,23 @@
 
 require_once(plugin_dir_path(dirname(__FILE__)) . 'queries/MakeItAllQuery.php');
 
-class CallQuery extends MakeItAllQuery {
-	protected $table = 'call';
+class TicketProgramQuery extends MakeItAllQuery {
+	protected $table = 'ticket_program';
 
-	public function insert($time, $operatorId, $callerId) {
+	public function insert($ticketId, $programId) {
 		return $this->query(
 			"
 				INSERT INTO `{$this->prefix}{$this->table}`
 					(
-						`time`,
-						`operator_id`,
-						`caller_id`,
+						`ticket_id`,
+						`program_id`,
 						`created_at`,
 						`updated_at`
 					)
 				VALUES
-					(%s, %d, %d, %s, %s)
+					(%d, %d, %s, %s)
 			",
-			[$time, $operatorId, $callerId]
+			[$ticketId, $programId]
 		);
 	}
 }

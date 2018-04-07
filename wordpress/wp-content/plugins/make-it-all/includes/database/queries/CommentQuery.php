@@ -5,10 +5,6 @@ require_once(plugin_dir_path(dirname(__FILE__)) . 'queries/MakeItAllQuery.php');
 class CommentQuery extends MakeItAllQuery {
 	protected $table = 'comment';
 
-	public function get() {
-		//
-	}
-
 	public function insert($content, $ticketId, $authorId, $callId) {
 		return $this->query(
 			"
