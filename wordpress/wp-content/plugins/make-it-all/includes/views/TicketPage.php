@@ -44,6 +44,8 @@ class TicketPage extends MakeItAllPage {
 	public function create_pane() {
 		if (!current_user_can('edit_make_it_all')) wp_die(__('You do not have sufficient permissions to access this page.'));
 
+		if ($_SERVER['REQUEST_METHOD'] === 'POST') return $this->create_action();
+
 		$context = $this->get_context('Create Tickets');
 
 		$context['employees']       = json_encode((new StaffQuery)->get());
@@ -54,11 +56,11 @@ class TicketPage extends MakeItAllPage {
 		$this->render_pane($context);
 	}
 
-	public function update_pane() {
-		//
+	private function create_action() {
+		var_dump($_POST);
 	}
 
-	public function delete_pane() {
+	public function update_pane() {
 		//
 	}
 }

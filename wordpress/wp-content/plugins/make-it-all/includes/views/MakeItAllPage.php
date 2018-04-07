@@ -6,8 +6,7 @@ abstract class MakeItAllPage {
 	protected $position = null;
 	protected $pages    = [
 		'Create',
-		'Update',
-		'Delete'
+		'Update'
 	]; // to remove a page, redefine this in the child
 	
 	/**
@@ -64,7 +63,6 @@ abstract class MakeItAllPage {
 	abstract public function read_pane();
 	abstract public function create_pane();
 	abstract public function update_pane();
-	abstract public function delete_pane();
 	
 	/**
 	 * Simply gets a blank Timber context and

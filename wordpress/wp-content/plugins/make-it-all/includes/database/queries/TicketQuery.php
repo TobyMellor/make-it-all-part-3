@@ -29,4 +29,25 @@ class TicketQuery extends MakeItAllQuery {
 			"
 		);
 	}
+
+	public function insert() {
+		return $this->query(
+			"
+				INSERT INTO `{$this->prefix}ticket`
+					(
+						`title`,
+						`description`,
+						`solution_id`,
+						`author_id`,
+						`assigned_to_operator_id`,
+						`expertise_type_staff_id`,
+						`created_at`,
+						`updated_at`
+					)
+				VALUES
+					(%s, %s, %d, %d, %d, %d, %s, %s)
+			",
+			$title, $description, $solutionId, $authorId, $assignedToOperatorId, $expertiseTypeStaffId
+		);
+	}
 }
