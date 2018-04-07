@@ -34,7 +34,7 @@ $(() => {
 	});
 
 	// Set current date
-	$('.hasDatepicker').datepicker('setDate', new Date());
+	$('.mia-picker input').datepicker('setDate', new Date());
 });
 
 function setDateDisplay($spans, date) {

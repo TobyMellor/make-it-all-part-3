@@ -3,10 +3,12 @@
 require_once(plugin_dir_path(dirname(__FILE__)) . 'views/MakeItAllPage.php');
 require_once(plugin_dir_path(dirname(__FILE__)) . 'views/tables/TicketTable.php');
 
+require_once(plugin_dir_path(dirname(__FILE__)) . 'database/queries/TicketQuery.php');
 require_once(plugin_dir_path(dirname(__FILE__)) . 'database/queries/StaffQuery.php');
 require_once(plugin_dir_path(dirname(__FILE__)) . 'database/queries/ExpertiseTypeQuery.php');
 require_once(plugin_dir_path(dirname(__FILE__)) . 'database/queries/DeviceQuery.php');
 require_once(plugin_dir_path(dirname(__FILE__)) . 'database/queries/ProgramQuery.php');
+require_once(plugin_dir_path(dirname(__FILE__)) . 'database/queries/CallQuery.php');
 
 class TicketPage extends MakeItAllPage {
 	protected $name     = 'Ticket';
@@ -57,7 +59,26 @@ class TicketPage extends MakeItAllPage {
 	}
 
 	private function create_action() {
-		var_dump($_POST);
+		global $wpdb;
+
+		(new CallQuery)->insert(
+			date('Y-m-d H:i:s', strtotime($_POST['date_of_call'])),
+			get_current_user_id(),
+			$_POST['caller']['id']
+		);
+
+		$callId = $wpdb->insert_id;
+
+		// foreach ($_POST['tickets'] as $ticket) {
+		// 	(new TicketQuery)->insert(
+		// 		$ticket['title'], 
+		// 		$ticket['description'], 
+		// 		null, // TODO: If status is resolved, then allow solution to be set
+		// 		get_current_user_id(), 
+		// 		$ticket['assigned_to_operator'], 
+		// 		$ticket['expertise_type_staff_id']
+		// 	);
+		// }
 	}
 
 	public function update_pane() {

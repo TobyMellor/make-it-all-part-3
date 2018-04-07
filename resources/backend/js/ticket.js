@@ -46,6 +46,9 @@ jQuery(() => {
 
 		// trigger a change to update the best specialist for the problem
 		if ($assignedToType.val() === 'specialist') $assignedToType.click();
+
+		// set the Expertise Type Staff ID under .problem-type-picker
+		$(this).closest('.problem-type-picker').find('input').val(staffManager.getBestSpecialistForSpecialism(id).id);
 	});
 
 	// make the chevron handle go up/down when an accordion is expanded/minimized
@@ -170,7 +173,7 @@ function cloneAccordion($accordions, newAccordionId) {
 function clearAccordion($accordion, newAccordionId, affectedItemsManager = null, expertiseTypeManager = null) {
 	// set input/textarea/select fields to default values
 	$accordion.find('select').prop('selectedIndex', 0);
-	$accordion.find('input[type=text], textarea').val('');
+	$accordion.find('input[type=text]:not(.hasDatepicker), textarea').val('');
 	$accordion.find('input[type=radio]').first().click();
 
 	// because problem is initially unselected, hide ability to choose specialist of problem

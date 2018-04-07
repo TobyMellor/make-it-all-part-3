@@ -30,10 +30,17 @@ class TicketQuery extends MakeItAllQuery {
 		);
 	}
 
-	public function insert() {
+	public function insert(
+		$title,
+		$description,
+		$solutionId,
+		$authorId,
+		$assignedToOperatorId,
+		$expertiseTypeStaffId
+	) {
 		return $this->query(
 			"
-				INSERT INTO `{$this->prefix}ticket`
+				INSERT INTO `{$this->prefix}{$this->table}`
 					(
 						`title`,
 						`description`,
@@ -47,7 +54,7 @@ class TicketQuery extends MakeItAllQuery {
 				VALUES
 					(%s, %s, %d, %d, %d, %d, %s, %s)
 			",
-			$title, $description, $solutionId, $authorId, $assignedToOperatorId, $expertiseTypeStaffId
+			[$title, $description, $solutionId, $authorId, $assignedToOperatorId, $expertiseTypeStaffId]
 		);
 	}
 }
