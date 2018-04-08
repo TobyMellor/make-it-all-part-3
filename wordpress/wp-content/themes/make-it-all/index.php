@@ -1,6 +1,7 @@
 <?php
 
-$page = 'tickets';
+$urlPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$page = explode('/', $urlPath)[1] ?: 'tickets';
 
 $context = Timber::get_context();
 
@@ -35,5 +36,9 @@ $context['pages'] = [
 		"name" => "Staff"
 	]
 ];
+
+if (!array_search($page, array_keys($context['pages']))) {
+	wp_redirect('/tickets');
+}
 
 Timber::render('frontend/views/' . $page . '.twig', $context);
