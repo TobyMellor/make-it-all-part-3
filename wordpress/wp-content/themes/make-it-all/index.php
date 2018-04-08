@@ -1,11 +1,7 @@
 <?php
 
-$urlPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$page = explode('/', $urlPath)[1] ?: 'tickets';
-
 $context = Timber::get_context();
 
-$context['activePage'] = $page;
 $context['pages'] = [
 	"login" => [
 		"name" => "Login",
@@ -37,9 +33,21 @@ $context['pages'] = [
 	]
 ];
 
-// if the page doesn't exist, redirect it to the default
-if (!array_search($page, array_keys($context['pages']))) {
-	wp_redirect('/tickets');
+$urlPath = explode('/',
+	trim(
+		parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH),
+		'/'
+	)
+);
+
+// check if the page exists and render the page if it does
+foreach ($urlPath as $folder) {
+	if (array_search($folder, array_keys($context['pages']))) {
+		$context['activePage'] = $folder;
+
+		return Timber::render('frontend/views/' . $folder . '.twig', $context);
+	}
 }
 
-Timber::render('frontend/views/' . $page . '.twig', $context);
+// redirect to default if page is unknown
+wp_redirect(get_home_url() . '/tickets');
