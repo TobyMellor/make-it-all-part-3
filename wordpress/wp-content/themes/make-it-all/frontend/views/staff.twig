@@ -7,10 +7,10 @@ assigned tickets and other linked-to content elsewhere on the
 help desk.
 #}
 
-{% extends "frontend/layouts/content.twig" %}
+{% extends "frontend/views/layouts/content.twig" %}
 
 {% block subnav %}
-	{% include "partials/subnav.twig" with
+	{% include "frontend/views/partials/subnav.twig" with
 		{
 			"icon": "user-circle-o",
 			"subtext": "Roles",
@@ -47,12 +47,12 @@ help desk.
 {% endblock %}
 
 {% block top_nav %}
-	{% include "sections/top_nav.twig" with {"name": "Staff", "icon": "user-circle-o", "search": true} %}
+	{% include "frontend/views/sections/top_nav.twig" with {"name": "Staff", "icon": "user-circle-o", "search": true} %}
 {% endblock %}
 
 
 {% block list_view %}
-	{% include "sections/splash_screen.twig" with
+	{% include "frontend/views/sections/splash_screen.twig" with
 		{
 			"title": "No results",
 			"subtitle": "Get started, create a new staff member.",
@@ -60,7 +60,7 @@ help desk.
 		}
 	%}
 
-	{% include "sections/table_section.twig" with
+	{% include "frontend/views/sections/table_section.twig" with
 		{
 			"columns": {
 				"name": "Name",
@@ -94,7 +94,7 @@ help desk.
 
 {% block single_view %}
 	<section id="single-view">
-		{% include "sections/top_nav.twig" with {"name": "Loading…", "closeable": true} %}
+		{% include "frontend/views/sections/top_nav.twig" with {"name": "Loading…", "closeable": true} %}
 
 		<div class="container">
 			<div class="row m-0">

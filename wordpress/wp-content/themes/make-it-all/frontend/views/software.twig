@@ -1,17 +1,17 @@
-{#
-Software page with table listing all programs. Each program can clicked to show more 
-information about the program, such as what tickets it's assigned to and what hardware
-it is commonly associated with. 
-#}
+{##
+ # Software page with table listing all programs. Each program can clicked to show more 
+ # information about the program, such as what tickets it's assigned to and what hardware
+ # it is commonly associated with. 
+ #}
 
-{% extends "frontend/layouts/content.twig" %}
+{% extends "frontend/views/layouts/content.twig" %}
 
 {% block top_nav %}
-	{% include "sections/top_nav.twig" with {"name": "Software", "icon": "file-code-o"} %}
+	{% include "frontend/views/sections/top_nav.twig" with {"name": "Software", "icon": "file-code-o"} %}
 {% endblock %}
 
 {% block list_view %}
-	{% include "sections/table_section.twig" with
+	{% include "frontend/views/sections/table_section.twig" with
 		{
 			"columns": {
 				"name": "Software",
@@ -25,7 +25,7 @@ it is commonly associated with.
 
 {% block single_view %}
 	<section id="single-view">
-		{% include "sections/top_nav.twig" with {"name": "", "closeable": true} %}
+		{% include "frontend/views/sections/top_nav.twig" with {"name": "", "closeable": true} %}
 		<div class="main-content">
 			<div class="card mb-3">
 				<h6 class="card-header main-content-title">

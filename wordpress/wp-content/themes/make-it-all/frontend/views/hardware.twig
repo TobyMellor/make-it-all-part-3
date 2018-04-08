@@ -4,10 +4,10 @@ clicked to show more information about the device, such as what tickets it's ass
 what software it is commonly associated with. 
 #}
 
-{% extends "frontend/layouts/content.twig" %}
+{% extends "frontend/views/layouts/content.twig" %}
 
 {% block top_nav %}
-	{% include "sections/top_nav.twig" with {"name": "Hardware", "icon": "laptop"} %}
+	{% include "frontend/views/sections/top_nav.twig" with {"name": "Hardware", "icon": "laptop"} %}
 {% endblock %}
 
 {% block list_view %}
@@ -38,7 +38,7 @@ what software it is commonly associated with.
 				</tbody>
 			</table>
 		</div>
-		{% include "sections/table_section.twig" with
+		{% include "frontend/views/sections/table_section.twig" with
 			{
 				"columns": {
 					"serial_no": "Serial No",
@@ -53,7 +53,7 @@ what software it is commonly associated with.
 
 {% block single_view %}
 	<section id="single-view">
-		{% include "sections/top_nav.twig" with {"name": ""} %}
+		{% include "frontend/views/sections/top_nav.twig" with {"name": ""} %}
 
 		<div class="main-content">
 			<div class="card mb-3">

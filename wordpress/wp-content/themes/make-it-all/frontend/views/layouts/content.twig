@@ -7,12 +7,12 @@ This layout just provides an outline, yielding to individual pages
 to display their own content.
 #}
 
-{% extends "layouts/page.twig" %}
+{% extends "frontend/views/layouts/page.twig" %}
 
 {% block main %}
 
 	{# Main navigation across pages #}
-	{% include "partials/nav.twig" %}
+	{% include "frontend/views/partials/nav.twig" %}
 
 	{# Subnavigation within the individual page #}
 	{% block subnav %}{% endblock %}

@@ -17,13 +17,13 @@ Contains head code with site-wide resources e.g. vendor code
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	{# All vendor CSS and JS is loaded once across all pages #}
-	<link rel="stylesheet" href="{{ site.theme.link }}/css/vendor.css">
-	<link rel="stylesheet" href="{{ site.theme.link }}/fonts/font-awesome/css/font-awesome.min.css">
-	<script src="{{ site.theme.link }}/js/vendor.js"></script>
+	<link rel="stylesheet" href="{{ site.theme.link }}/frontend/css/vendor.css">
+	<link rel="stylesheet" href="{{ site.theme.link }}/frontend/fonts/font-awesome/css/font-awesome.min.css">
+	<script src="{{ site.theme.link }}/frontend/js/vendor.js"></script>
 </head>
 
 {# Insert name of page into body data tag for JS JIT verification where necessary #}
 <body data-path="tickets">
 
 	{# Page-specific stylesheet loaded into page #}
-	<link rel="stylesheet" href="{{ site.theme.link }}/css/pages/{{ activePage }}.css">
+	<link rel="stylesheet" href="{{ site.theme.link }}/frontend/css/pages/{{ activePage }}.css">

@@ -36,4 +36,4 @@ $context['pages'] = [
 	]
 ];
 
-Timber::render('views/' . $page . '.twig', $context);
+Timber::render('frontend/views/' . $page . '.twig', $context);

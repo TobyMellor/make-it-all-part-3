@@ -1,7 +1,7 @@
-{% extends "frontend/layouts/content.twig" %}
+{% extends "frontend/views/layouts/content.twig" %}
 
 {% block subnav %}
-	{% include "partials/subnav.twig" with
+	{% include "frontend/views/partials/subnav.twig" with
 		{
 			"icon": "ticket",
 			"subtext": "Categories",
@@ -45,11 +45,11 @@
 {% endblock %}
 
 {% block top_nav %}
-	{% include "sections/top_nav.twig" with {"name": "Tickets", "icon": "ticket", "search": true} %}
+	{% include "frontend/views/sections/top_nav.twig" with {"name": "Tickets", "icon": "ticket", "search": true} %}
 {% endblock %}
 
 {% block list_view %}
-	{% include "sections/splash_screen.twig" with
+	{% include "frontend/views/sections/splash_screen.twig" with
 		{
 			"title": "No results",
 			"subtitle": "Get started, create a ticket.",
@@ -57,7 +57,7 @@
 		}
 	%}
 
-	{% include "sections/table_section.twig" with
+	{% include "frontend/views/sections/table_section.twig" with
 		{
 			"columns": {
 				"title": "Ticket Title",
@@ -71,7 +71,7 @@
 
 {% block single_view %}
 	<section id="single-view">
-		{% include "sections/top_nav.twig" with {"name": "Loading…", "closeable": true} %}
+		{% include "frontend/views/sections/top_nav.twig" with {"name": "Loading…", "closeable": true} %}
 
 		<div id="ticket-view">
 			<div class="row">
@@ -130,5 +130,5 @@
 {% endblock %}
 
 {% block modals %}
-	{% include "modals/view_call_history.twig" %}
+	{% include "frontend/views/modals/view_call_history.twig" %}
 {% endblock %}

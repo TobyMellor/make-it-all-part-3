@@ -4,8 +4,8 @@ content such as HTML tags for header and closing the page,
 as well as loading necessary resources for each page: vendor
 CSS and JS, then page-specific CSS and JS to be run on the page.
 #}
-{% include "partials/header.twig" %}
+{% include "frontend/views/partials/header.twig" %}
 
 {% block main %}{% endblock %}
 
-{% include "partials/footer.twig" %}
+{% include "frontend/views/partials/footer.twig" %}
