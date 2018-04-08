@@ -9,6 +9,7 @@
 
 let mix = require("laravel-mix");
 
+mix.setPublicPath('./');
 mix.options({
 	processCssUrls: false
 });
