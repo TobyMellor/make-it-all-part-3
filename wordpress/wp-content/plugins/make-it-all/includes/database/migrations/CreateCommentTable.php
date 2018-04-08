@@ -20,7 +20,7 @@ class CreateCommentTable extends Migration {
 				updated_at timestamp NULL DEFAULT NULL,
 				PRIMARY KEY (id),
 				FOREIGN KEY (author_id) REFERENCES {$this->prefix}staff (id) ON DELETE CASCADE,
-				FOREIGN KEY (call_id) REFERENCES {$this->prefix}call (id) ON DELETE CASCADE
+				FOREIGN KEY (call_id) REFERENCES {$this->prefix}call (id) ON DELETE SET NULL
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 		";
 	}

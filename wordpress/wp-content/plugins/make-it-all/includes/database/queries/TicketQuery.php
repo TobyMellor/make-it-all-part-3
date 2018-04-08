@@ -49,4 +49,8 @@ class TicketQuery extends MakeItAllQuery {
 			]
 		);
 	}
+
+	public function delete($ticketId) {
+		return $this->mia_delete($ticketId);
+	}
 }

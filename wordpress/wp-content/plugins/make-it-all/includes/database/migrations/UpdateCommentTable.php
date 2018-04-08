@@ -10,6 +10,6 @@ class UpdateCommentTable extends Migration {
 	 * @return void
 	 */
 	public function up() {
-		$this->sqlStatement = "ALTER TABLE {$this->prefix}{$this->table} ADD FOREIGN KEY (ticket_id) REFERENCES {$this->prefix}ticket (id)";
+		$this->sqlStatement = "ALTER TABLE {$this->prefix}{$this->table} ADD FOREIGN KEY (ticket_id) REFERENCES {$this->prefix}ticket (id) ON DELETE CASCADE";
 	}
 }

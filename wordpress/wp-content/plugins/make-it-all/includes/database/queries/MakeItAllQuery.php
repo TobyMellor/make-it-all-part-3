@@ -34,4 +34,15 @@ abstract class MakeItAllQuery {
 
 		return $wpdb->insert($this->prefix . $this->table, $columns);
 	}
+
+	/**
+	 * Deletes a record by ID from the db
+	 *
+	 * @return Boolean
+	 */
+	protected function mia_delete($id) {
+		global $wpdb;
+
+		return $wpdb->delete($this->prefix . $this->table, ['id' => $id]);
+	}
 }

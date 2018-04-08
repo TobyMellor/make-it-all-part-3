@@ -26,6 +26,10 @@ class TicketPage extends MakeItAllPage {
 	public function read_pane() {
 		if (!current_user_can('read_make_it_all')) wp_die(__('You do not have sufficient permissions to access this page.'));
 
+		if (isset($_GET['action']) && isset($_GET['ticket_id']) && $_GET['action'] === 'delete') {
+			(new TicketQuery)->delete($_GET['ticket_id']);
+		}
+
 		$context = $this->get_context('View Tickets');
 
 		$this->render_pane($context); // render page before inserting table

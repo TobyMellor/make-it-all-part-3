@@ -10,6 +10,6 @@ class UpdateTicketTable extends Migration {
 	 * @return void
 	 */
 	public function up() {
-		$this->sqlStatement = "ALTER TABLE {$this->prefix}{$this->table} ADD FOREIGN KEY (solution_id) REFERENCES {$this->prefix}comment (id)";
+		$this->sqlStatement = "ALTER TABLE {$this->prefix}{$this->table} ADD FOREIGN KEY (solution_id) REFERENCES {$this->prefix}comment (id) ON DELETE SET NULL";
 	}
 }

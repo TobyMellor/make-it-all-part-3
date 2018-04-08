@@ -12,7 +12,7 @@ class CreateStaffTable extends Migration {
 		$this->sqlStatement = "
 			CREATE TABLE IF NOT EXISTS {$this->prefix}{$this->table} (
 				id int(10) unsigned NOT NULL AUTO_INCREMENT,
-				department_id int(10) unsigned NOT NULL,
+				department_id int(10) unsigned NULL DEFAULT NULL,
 				email varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
 				name varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
 				operator tinyint(1) NOT NULL,
@@ -26,7 +26,7 @@ class CreateStaffTable extends Migration {
 				updated_at timestamp NULL DEFAULT NULL,
 				PRIMARY KEY (id),
 				UNIQUE (email),
-				FOREIGN KEY (department_id) REFERENCES {$this->prefix}department (id)
+				FOREIGN KEY (department_id) REFERENCES {$this->prefix}department (id) ON DELETE SET NULL
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 		";
 	}

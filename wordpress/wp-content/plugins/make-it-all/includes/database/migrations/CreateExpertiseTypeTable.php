@@ -17,7 +17,7 @@ class CreateExpertiseTypeTable extends Migration {
 				created_at timestamp NULL DEFAULT NULL,
 				updated_at timestamp NULL DEFAULT NULL,
 				PRIMARY KEY (id),
-				FOREIGN KEY (parent_id) REFERENCES {$this->prefix}expertise_type (id)
+				FOREIGN KEY (parent_id) REFERENCES {$this->prefix}expertise_type (id) ON DELETE CASCADE
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 		";
 	}
