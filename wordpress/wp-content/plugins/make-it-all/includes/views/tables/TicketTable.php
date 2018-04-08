@@ -57,34 +57,34 @@ class TicketTable extends MakeItAllTable {
 				caller.name AS last_caller,
 				ticket.created_at AS created_at,
 				ticket.updated_at AS updated_at
-			FROM wp_v4UxADt_mia_ticket AS ticket
+			FROM {$this->prefix}{$this->table} AS ticket
 			JOIN (
 				SELECT
 					ticket_id, status_id
-				FROM wp_v4UxADt_mia_ticket_status
+				FROM {$this->prefix}ticket_status
 				WHERE id IN (
 					SELECT MAX(id) AS id
-					FROM wp_v4UxADt_mia_ticket_status
+					FROM {$this->prefix}ticket_status
 					GROUP BY ticket_id
 				)
 			) AS ticket_status
 				ON ticket_status.ticket_id = ticket.id
-			JOIN wp_v4UxADt_mia_status AS status
+			JOIN {$this->prefix}status AS status
 				ON status.id = ticket_status.status_id
 			JOIN (
 				SELECT
 					ticket_id, call_id
-				FROM wp_v4UxADt_mia_call_ticket
+				FROM {$this->prefix}call_ticket
 				WHERE id IN (
 					SELECT MIN(id) AS id
-					FROM wp_v4UxADt_mia_call_ticket
+					FROM {$this->prefix}call_ticket
 					GROUP BY ticket_id
 				)
 			) AS call_ticket
 				ON call_ticket.ticket_id = ticket.id
-			JOIN wp_v4UxADt_mia_call AS _call
+			JOIN {$this->prefix}call AS _call
 				ON _call.id = call_ticket.call_id
-			JOIN wp_v4UxADt_mia_staff AS caller
+			JOIN {$this->prefix}staff AS caller
 				ON caller.id = _call.caller_id
 		");
 	}
