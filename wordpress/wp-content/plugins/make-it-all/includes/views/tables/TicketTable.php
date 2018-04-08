@@ -117,7 +117,7 @@ class TicketTable extends MakeItAllTable {
 	 */
 	protected function column_title($item) {
 		$actions = [
-			'view' => '<a href="/tickets#' . $item->id . '" target="_blank">View</a>',
+			'view' => '<a href="' . get_home_url() . '/tickets#' . $item->id . '" target="_blank">View</a>',
 		];
 
 		if (current_user_can('edit_make_it_all')) {
