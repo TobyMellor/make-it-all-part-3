@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{#
+Header partial to be inserted at the top of all pages
+Contains head code with site-wide resources e.g. vendor code
+#}
+
+<head>
+	<meta charset="utf-8">
+	<title>Make-It-All</title>
+
+	{# IE quirks #}
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	{# All pages are responsive so ensure page is displayed appropriately #}
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	{# All vendor CSS and JS is loaded once across all pages #}
+	<link rel="stylesheet" href="{{ site.theme.link }}/frontend/css/vendor.css">
+	<link rel="stylesheet" href="{{ site.theme.link }}/frontend/fonts/font-awesome/css/font-awesome.min.css">
+	<script src="{{ site.theme.link }}/frontend/js/vendor.js"></script>
+</head>
+
+{# Insert name of page into body data tag for JS JIT verification where necessary #}
+<body data-path="tickets">
+
+	{# Page-specific stylesheet loaded into page #}
+	<link rel="stylesheet" href="{{ site.theme.link }}/frontend/css/pages/{{ activePage }}.css">

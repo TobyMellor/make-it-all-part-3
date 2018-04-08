@@ -1,0 +1,405 @@
+{% extends "backend/views/layouts/page.twig" %}
+
+{% block main %}
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-9">
+			<form action="admin.php?page=ticket_create" method="POST">
+				<div class="mia-panel call-panel">
+					<div class="row no-padding">
+						<div id="call-information">
+							<div class="mia-panel-heading">
+								<h2>Call Information</h2>
+								<p>Enter some information about the call to get started:</p>
+							</div>
+							<div class="mia-panel-body negative-margin">
+								<div class="row mia-field-group">
+									<div class="col-sm-3 col-xs-12">
+										<p class="label">
+											Caller <span class="required">*</span>
+										</p>
+
+										<p class="details">
+											Lorem ipsum dolor sit amet dolar.
+										</p>
+									</div>
+									<div class="col-sm-9 col-xs-12">
+										<select>
+											<option selected default disabled>Select a caller here…</option>
+										</select>
+									</div>
+								</div>
+								<div class="row mia-field-group">
+									<div class="col-sm-3 col-xs-12">
+										<p class="label">
+											Date of call <span class="required">*</span>
+										</p>
+
+										<p class="details">
+											Lorem ipsum dolor sit amet dolar.
+										</p>
+									</div>
+									<div class="col-sm-9 col-xs-12 has-button">
+										<div class="date-time-picker">
+											<span></span>
+											<span>/</span>
+											<span></span>
+											<span>/</span>
+											<span></span>
+											<span></span>
+											<span></span>
+											<span>:</span>
+											<span></span>
+											<span>:</span>
+											<span></span>
+										</div>
+										<a class="button button-primary pull-right mia-picker" href="javascript:void(0);">
+											Choose a time
+											<input type="text" name="date_of_call">
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div id="caller-information">
+							<div class="mia-panel-heading">
+								<div>
+									<h2>Caller Information</h2>
+									<p class="staff-information">Who called in?</p>
+								</div>
+
+								<div class="staff-information">
+									<div class="row mia-field-group">
+										<div class="col-xs-5">
+											<p class="label">
+												Name
+											</p>
+										</div>
+										<div class="col-xs-7">
+											<input name="caller[name]" type="text" readonly="readonly" data-attribute="name">
+										</div>
+									</div>
+									<div class="row mia-field-group">
+										<div class="col-xs-5">
+											<p class="label">
+												ID Number
+											</p>
+										</div>
+										<div class="col-xs-7">
+											<input name="caller[id]" type="text" readonly="readonly" data-attribute="id">
+										</div>
+									</div>
+									<div class="row mia-field-group">
+										<div class="col-xs-5">
+											<p class="label">
+												Job
+											</p>
+										</div>
+										<div class="col-xs-7">
+											<input name="caller[job_title]" type="text" readonly="readonly" data-attribute="job_title">
+										</div>
+									</div>
+									<div class="row mia-field-group">
+										<div class="col-xs-5">
+											<p class="label">
+												Department
+											</p>
+										</div>
+										<div class="col-xs-7">
+											<input name="caller[department]" type="text" readonly="readonly" data-attribute="department">
+										</div>
+									</div>
+									<div class="row mia-field-group">
+										<div class="col-xs-5">
+											<p class="label">
+												Phone
+											</p>
+										</div>
+										<div class="col-xs-7">
+											<input name="caller[phone_number]" type="text" readonly="readonly" data-attribute="phone_number">
+										</div>
+									</div>
+									<div class="row mia-field-group">
+										<div class="col-xs-5">
+											<p class="label">
+												Permissions
+											</p>
+										</div>
+										<div class="col-xs-7">
+											<div class="mia-permissions">
+												<strong></strong>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="mia-panel ticket-panel">
+					<div class="mia-panel-heading">
+						<h2>Ticket Information</h2>
+						<p>Enter information about one or more tickets:</p>
+					</div>
+					<div class="mia-panel-body negative-margin">
+						<div class="accordions">
+							<div class="accordion-handle row">
+								<div class="accordion-icon col-xs-3">
+									<div class="number-circle">1</div>
+								</div>
+								<div class="accordion-title col-xs-9">
+									New Ticket
+								</div>
+								<div class="accordion-actions">
+									<i class="fa fa-chevron-up"></i>
+								</div>
+							</div>
+							<div class="accordion-body" data-accordion-id="1">
+								<div class="row mia-field-group">
+									<div class="col-xs-12 col-sm-3">
+										<p class="label">
+											Status <span class="required">*</span>
+										</p>
+
+										<p class="details">
+											Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+										</p>
+									</div>
+									<div class="col-sm-9 col-xs-12 has-button">
+										<div>
+											<select name="tickets[1][status]">
+												<option disabled selected>Select a status here…</option>
+												<option value="1">New</option>
+												<option value="2">Pending - In Progress</option>
+												<option value="3">Resolved</option>
+											</select>
+										</div>
+										<div></div>
+									</div>
+								</div>
+								<div class="row mia-field-group">
+									<div class="col-sm-3 col-xs-12">
+										<p class="label">
+											Title <span class="required">*</span>
+										</p>
+
+										<p class="details">
+											Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+										</p>
+									</div>
+									<div class="col-sm-9 col-xs-12">
+										<input name="tickets[1][title]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here">
+									</div>
+								</div>
+								<div class="row mia-field-group">
+									<div class="col-sm-3 col-xs-12">
+										<p class="label">
+											Description <span class="required">*</span>
+										</p>
+
+										<p class="details">
+											Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+										</p>
+									</div>
+									<div class="col-sm-9 col-xs-12">
+										<textarea name="tickets[1][description]"></textarea>
+									</div>
+								</div>
+								<div class="row mia-field-group">
+									<div class="col-sm-3 col-xs-12">
+										<p class="label">
+											Problem Type <span class="required">*</span>
+										</p>
+
+										<p class="details">
+											Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+										</p>
+									</div>
+									<div class="col-sm-9 col-xs-12">
+										<div class="problem-type-picker">
+											<input type="text" name="tickets[1][expertise_type_staff_id]" hidden>
+											<div class="type-columns"></div>
+										</div>
+									</div>
+								</div>
+								<div class="row mia-field-group">
+									<div class="col-sm-3 col-xs-12">
+										<p class="label">
+											Assigned to <span class="required">*</span>
+										</p>
+
+										<p class="details">
+											Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+										</p>
+									</div>
+									<div class="col-sm-9 col-xs-12">
+										<div class="assign-options">
+											<div>
+												<label>
+													<input name="tickets[1][assigned_to_type]" value="self" type="radio">
+													Myself
+												</label>
+											
+												<label>
+													<input name="tickets[1][assigned_to_type]" value="operator" type="radio">
+													Another operator
+												</label>
+
+												<label>
+													<input name="tickets[1][assigned_to_type]" value="specialist" type="radio">
+													Best specialist for problem
+												</label>
+
+												<select name="tickets[1][assigned_to_operator]">
+													<option disabled selected value="">Select an operator here…</option>
+												</select>
+											</div>
+											<div>
+												<div class="assigned-to-details">
+													<div class="row mia-field-group">
+														<div class="col-xs-3">
+															<p class="label">
+																Name
+															</p>
+														</div>
+														<div class="col-xs-9">
+															<input name="tickets[1][assigned_to][name]" type="text" placeholder="Enter ticket title here" readonly="readonly" data-attribute="name">
+														</div>
+													</div>
+													<div class="row mia-field-group">
+														<div class="col-xs-3">
+															<p class="label">
+																ID Number
+															</p>
+														</div>
+														<div class="col-xs-9">
+															<input name="tickets[1][assigned_to][id]" type="text" placeholder="Enter ticket title here" readonly="readonly" data-attribute="id">
+														</div>
+													</div>
+													<div class="row mia-field-group">
+														<div class="col-xs-3">
+															<p class="label">
+																Job
+															</p>
+														</div>
+														<div class="col-xs-9">
+															<input name="tickets[1][assigned_to][job_title]" type="text" placeholder="Enter ticket title here" readonly="readonly" data-attribute="job_title">
+														</div>
+													</div>
+													<div class="row mia-field-group">
+														<div class="col-xs-3">
+															<p class="label">
+																Department
+															</p>
+														</div>
+														<div class="col-xs-9">
+															<input name="tickets[1][assigned_to][department]" type="text" placeholder="Enter ticket title here" readonly="readonly" data-attribute="department">
+														</div>
+													</div>
+													<div class="row mia-field-group">
+														<div class="col-xs-3">
+															<p class="label">
+																Phone
+															</p>
+														</div>
+														<div class="col-xs-9">
+															<input name="tickets[1][assigned_to][phone_number]" type="text" placeholder="Enter ticket title here" readonly="readonly" data-attribute="phone_number">
+														</div>
+													</div>
+													<div class="row mia-field-group">
+														<div class="col-xs-3">
+															<p class="label">
+																Permissions
+															</p>
+														</div>
+														<div class="col-xs-9">
+															<div class="mia-permissions">
+																<strong></strong>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row mia-field-group">
+									<div class="col-sm-3 col-xs-12">
+										<p class="label">
+											Hardware Affected <span class="required">*</span>
+										</p>
+
+										<p class="details">
+											Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+										</p>
+									</div>
+									<div class="col-sm-9 col-xs-12">
+										<select class="add-hardware-device">
+											<option selected disabled>Select a hardware device here…</option>
+										</select>
+										<ul class="affected-items"></ul>
+									</div>
+								</div>
+								<div class="row mia-field-group">
+									<div class="col-sm-3 col-xs-12">
+										<p class="label">
+											Programs Affected
+										</p>
+
+										<p class="details">
+											Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+										</p>
+									</div>
+									<div class="col-sm-9 col-xs-12">
+										<select class="add-application">
+											<option selected disabled>Select a software program here…</option>
+										</select>
+										<ul class="affected-items"></ul>
+									</div>
+								</div>
+								<div class="row mia-field-group">
+									<div class="col-sm-3 col-xs-12">
+										<p class="label">
+											Operating Systems Affected
+										</p>
+
+										<p class="details">
+											Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+										</p>
+									</div>
+									<div class="col-sm-9 col-xs-12">
+										<select class="add-operating-system">
+											<option selected disabled>Select an operating system here…</option>
+										</select>
+										<ul class="affected-items"></ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="mia-panel-footer">
+						<div class="mia-button-group">
+							<p>More issues?</p>
+							<a href="javascript:void(0);" class="button button-primary" id="add-additional-ticket">Add additional ticket</a>
+						</div>
+						<div class="mia-button-group pull-right">
+							<p>All done?</p>
+							<button class="button button-primary" type="submit">Submit ticket(s)</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-3">
+			Helpful information about tickets will go here…
+		</div>
+	</div>
+{% endblock %}
+
+{% block scripts %}
+	<script>
+		var employees      = {{ employees }},
+			expertiseTypes = {{ expertise_types }},
+			devices        = {{ devices }},
+			programs       = {{ programs }};
+	</script>
+{% endblock %}

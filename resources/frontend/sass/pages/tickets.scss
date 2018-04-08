@@ -1,0 +1,311 @@
+@import "../main";
+
+.staff-information, .call-information {
+	color: $black;
+
+	p {
+		margin-bottom: 0;
+		font-size: $standard;
+		color: $black;
+
+		strong {
+			float: right;
+
+			i {
+				margin-left: 8px;
+				margin-right: 4px;
+			}
+		}
+	}
+}
+
+span.filter {
+	&.filter-green, &.filter-resolved {
+		background-color: $green;
+	}
+	&.filter-pending {
+		background-color: $orange;
+	}
+}
+
+#ticket-view {
+	padding: $comfortable;
+
+	h2, h4 {
+		color: $black;
+	}
+
+	h4 {
+		margin-top: $cosy;
+	}
+
+	.ticket-details {
+		margin-bottom: 5px;
+		text-justify: right;
+		position: relative;
+		color: $black;
+
+		#ticket-serial-numbers {
+			margin: 0;
+		}
+	}
+
+	span.subtle {
+		color: $grey;
+		font-size: 14px;
+		position: absolute;
+		right: 0;
+
+		&#show-new-call-modal {
+			cursor: pointer;
+			text-decoration: underline;
+		}
+	}
+	
+	#ticket-description {
+		border: 1px solid $silver;
+		border-bottom: 2px solid $silver;
+		padding: 15px;
+		max-height: 250px;
+		overflow-y: scroll;
+		margin-bottom: $comfortable;
+
+		p {
+			margin-bottom: 0;
+			white-space: pre-wrap;
+		}
+	}
+
+	span.filter {
+		margin-bottom: 5px;
+		margin-left: 5px;
+		color: $white;
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	#ticket-comments {
+		margin-top: $comfortable;
+		color: $black;
+
+		.media {
+			margin-top: $comfortable;
+
+			&:first-child {
+				margin-top: 0;
+			}
+			
+			.media-side {
+				img {
+					border-radius: 50%;
+					width: 64px;
+					height: 64px;
+				}
+
+				i {
+					font-size: 40px;
+					color: rgba(44, 62, 80, 0.1);
+					display: block;
+					text-align: center;
+					margin-top: 10px;
+				}
+			}
+
+			.media-body {
+				white-space: pre-wrap;
+				margin-left: 10px;
+
+				.ticket-comment-date {
+					float: right;
+					font-size: 16px;
+					font-weight: 100;
+					margin-top: 4px;
+				}
+				
+				h5 {
+					position: relative;
+
+					span.note-about-call {
+						position: absolute;
+						cursor: pointer;
+					}
+				}
+
+				a {
+					color: $black;
+
+					&:hover {
+						color: $black-hover;
+						text-decoration: none;
+					}
+				}
+			}
+
+			&.solution {
+				background-color: $highlight;
+				padding: 14px $comfortable;
+				margin-left: -$comfortable;
+				margin-right: -$comfortable;
+
+				&:hover {
+					background-color: $highlight-hover;
+				}
+
+				.media-side {
+					i {
+						color: $green;
+					}
+				}
+
+				.media-body {
+					.breaker {
+						border-bottom: 1px solid $silver;
+					}
+				}
+			}
+		}
+
+		.ticket-event {
+			width: 100%;
+			border-top: 1px solid $silver;
+			border-bottom: 1px solid $silver;
+			background-color: $cloudy-white;
+			padding: $thin $cosy;
+			color: $black;
+			font-weight: 600;
+			margin-top: 24px;
+
+			.ticket-event-details {
+				font-weight: 400;
+			}
+
+			.ticket-event-date {
+				font-weight: 100;
+				float: right;
+			}
+		}
+	}
+
+	.table {
+		tbody {
+			tr:last-child {
+				border-bottom: 2px solid $silver;
+			}
+		}
+	}
+}
+
+#single-view {
+	.top-nav {
+		.main-content-title {
+			.filter {
+				margin-left: $cosy;
+				margin-right: $cosy;
+			}
+		}
+	}
+}
+
+.affected-items {
+	list-style: none;
+	padding: 0;
+	margin: $cosy 0;
+
+	li {
+		width: 152px;
+		height: 152px;
+		border: 1px solid $silver;
+		border-bottom: 2px solid $silver;
+		border-radius: 0;
+		padding: $cosy;
+		text-align: center;
+		display: inline-block;
+		position: relative;
+		overflow: hidden;
+		background-color: $cloudy-white;
+
+		h4 {
+			color: $black;
+			margin-bottom: 0;
+			line-height: 25px;
+			display: block;
+			text-overflow: ellipsis;
+			word-wrap: break-word;
+			overflow: hidden;
+			max-height: 50px;
+		}
+
+		p {
+			color: $grey;
+			font-size: 14px;
+			max-width: 135px;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		a {
+			position: absolute;
+			bottom: $cosy;
+			left: calc(50% - 65px);
+			width: 130px;
+		}
+	}
+}
+
+#accordion {
+	.card.existing .affected-items {
+		margin: 0;
+
+		li {
+			height: 90px;
+			
+			.remove-affected-item {
+				display: none;
+			}
+		}
+	}
+}
+
+.form-group {
+	.assigned-to-options > *:not(:first-child) {
+		display: none;
+	}
+}
+
+.form-check {
+	margin-top: -5px;
+	
+	.form-check-label {
+		display: block;
+		
+		&:not(:first-child) {
+			margin-top: $compact;
+		}
+	}
+}
+
+.problem-type-picker {
+	.type-columns {
+		.type-column {
+			li {
+				&.no-children {
+					cursor: pointer !important;
+
+					&:hover {
+						background-color: #2980b9 !important;
+						color: #fff !important;
+					}
+				}
+			}
+		}
+	}
+}
+
+#view-call-history-modal {
+	#no-call-notes {
+		display: none;
+	}
+}
+
+@include colhide(2);

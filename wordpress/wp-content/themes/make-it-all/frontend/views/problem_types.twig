@@ -1,0 +1,99 @@
+{% extends "frontend/views/layouts/content.twig" %}
+
+{% block top_nav %}
+	{% include "frontend/views/sections/top_nav.twig" with {"name": "Problem Types", "icon": "question", "search": true} %}
+{% endblock %}
+
+{% block list_view %}
+	{% include "frontend/views/sections/splash_screen.twig" with {"title": "No problem types matched", "hidden": true} %}
+
+	<div class="problem-type-picker">
+		<div class="type-columns"></div>
+	</div>
+
+	{% include "frontend/views/sections/table_section.twig" with
+		{
+			"columns": {
+				"name": "Name",
+				"parent": "Parent"
+			}
+		}
+	%}
+{% endblock %}
+
+{% block single_view %}
+	<section id="single-view">
+		{% include "frontend/views/sections/top_nav.twig" with {"name": ""} %}
+		{% include "frontend/views/sections/splash_screen.twig" with {"title": "No Selection", "subtitle": "Get started, select a problem type to view its details."} %}
+
+		<div id="problem-type-view" class="block-hidden">
+			<p class="problem-type-details">
+				<strong>Problem Types:</strong>
+			</p>
+			<div class="table-container">
+				<table class="table" id="problem-types-table">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>NAME</th>
+							<th>PARENT</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>
+
+			<p class="problem-type-details">
+				<strong>Specialists with this speciality:</strong>
+			</p>
+			<p id="no-specialists-data">There's no specialists that specialise in this problem!</p>
+			<div class="table-container">
+				<table class="table" id="specialists-table">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>NAME</th>
+							<th>JOB</th>
+							<th>PHONE #</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>0</td>
+							<td>Toby Mellor</td>
+							<td>Developer</td>
+							<td>1234567890</td>
+							<td>
+								<i class="fa fa-eye"></i>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<p class="problem-type-details">
+				<strong>Related Tickets:</strong>
+			</p>
+			<p id="no-tickets-data">There's no tickets related to this problem!</p>
+			<div class="table-container">
+				<table class="table" id="tickets-table">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>TICKET TITLE</th>
+							<th>STATUS</th>
+							<th>CREATED</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>
+			<div class="row mt-5">
+				<button type="button" class="btn btn-danger m-auto"><i class="fa fa-trash-o"></i> Delete</button>
+			</div>
+		</div>
+	</section>
+{% endblock %}

@@ -1,0 +1,160 @@
+{#
+Staff page with table showing all staff, which can be filtered
+by type (e.g. analysts only) and searched. Each table row can be
+clicked to show more information about an employee, with their
+personal information available, as well as a link to see all their
+assigned tickets and other linked-to content elsewhere on the
+help desk.
+#}
+
+{% extends "frontend/views/layouts/content.twig" %}
+
+{% block subnav %}
+	{% include "frontend/views/partials/subnav.twig" with
+		{
+			"icon": "user-circle-o",
+			"subtext": "Roles",
+			"links": [
+				{
+					"name": "All Staff",
+					"slug": "all",
+					"icon": "users",
+					"active": true
+				},
+				{
+					"name": "Read",
+					"slug": "access.read",
+					"icon": "eye"
+				},
+				{
+					"name": "Operators",
+					"slug": "access.operator",
+					"icon": "user-secret"
+				},
+				{
+					"name": "Analysts",
+					"slug": "access.analyst",
+					"icon": "line-chart"
+				},
+				{
+					"name": "Administrators",
+					"slug": "access.admin",
+					"icon": "shield"
+				}
+			]
+		}
+	%}
+{% endblock %}
+
+{% block top_nav %}
+	{% include "frontend/views/sections/top_nav.twig" with {"name": "Staff", "icon": "user-circle-o", "search": true} %}
+{% endblock %}
+
+
+{% block list_view %}
+	{% include "frontend/views/sections/splash_screen.twig" with
+		{
+			"title": "No results",
+			"subtitle": "Get started, create a new staff member.",
+			"hidden": true
+		}
+	%}
+
+	{% include "frontend/views/sections/table_section.twig" with
+		{
+			"columns": {
+				"name": "Name",
+				"job": "Job",
+				"department": "Department",
+				"phone": "Phone #",
+				"tickets.assigned": {
+					"name": "Assigned",
+					"title": "Number of tickets assigned"
+				},
+				"access.read": {
+					"title": "Read",
+					"icon": "eye"
+				},
+				"access.operator": {
+					"title": "Operator",
+					"icon": "user-secret"
+				},
+				"access.analyst": {
+					"title": "Analyst",
+					"icon": "line-chart"
+				},
+				"access.admin": {
+					"title": "Administrator",
+					"icon": "shield"
+				}
+			}
+		}
+	%}
+{% endblock %}
+
+{% block single_view %}
+	<section id="single-view">
+		{% include "frontend/views/sections/top_nav.twig" with {"name": "Loading…", "closeable": true} %}
+
+		<div class="container">
+			<div class="row m-0">
+				<div class="col-lg-6">
+					<div class="card text-center">
+						<img class="card-img-top" alt="User profile photo" data-customslug="avatar">
+						<div class="card-body">
+							<h4 class="card-title" data-slug="name"></h4>
+							<p class="card-text" data-slug="job"></p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 staff-info">
+					<span class="subtle">#<span data-slug="id"></span></span>
+					<div class="row">
+						<label>Email</label>
+						<div class="col-sm-12">
+							<span data-slug="email"></span>
+						</div>
+					</div>
+					<div class="row">
+						<label>Job</label>
+						<div class="col-sm-12">
+							<span data-slug="job"></span>
+						</div>
+					</div>
+					<div class="row">
+						<label>Department</label>
+						<div class="col-sm-12">
+							<span data-slug="department"></span>
+						</div>
+					</div>
+					<div class="row">
+						<label>Phone No</label>
+						<div class="col-sm-12">
+							<span data-slug="phone"></span>
+						</div>
+					</div>
+					<div class="row">
+						<label>Access Permissions</label>
+						<div class="col-sm-12">
+							<span data-customslug="access"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<p class="col-md-9 text-right">
+					<strong class="table-compact-heading">Find <span data-slug="name"></span>'s</strong>
+					<a class="btn btn-primary"><i class="fa fa-ticket"></i> Tickets (<span data-customslug="tickets.assigned"></span>)</a>
+				</p>
+			</div>
+			<div class="row thin">
+				<div class="col-md-12">
+					<strong class="table-compact-heading"><span data-slug="name"></span>'s Specialisms</strong>
+					<div class="problem-type-picker problem-type-checkboxes readonly">
+						<div class="type-columns"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}
