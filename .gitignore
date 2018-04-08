@@ -2,7 +2,6 @@ wordpress/wp-content/themes/make-it-all/*/css/*
 wordpress/wp-content/themes/make-it-all/*/js/*
 
 node_modules
-package-lock.json
 mix-manifest.json
 
 .DS_Store
