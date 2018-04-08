@@ -6,19 +6,11 @@ class TicketProgramQuery extends MakeItAllQuery {
 	protected $table = 'ticket_program';
 
 	public function insert($ticketId, $programId) {
-		return $this->query(
-			"
-				INSERT INTO `{$this->prefix}{$this->table}`
-					(
-						`ticket_id`,
-						`program_id`,
-						`created_at`,
-						`updated_at`
-					)
-				VALUES
-					(%d, %d, %s, %s)
-			",
-			[$ticketId, $programId]
+		return $this->mia_insert(
+			[
+				'ticket_id' => $ticketId,
+				'program_id' => $programId
+			]
 		);
 	}
 }

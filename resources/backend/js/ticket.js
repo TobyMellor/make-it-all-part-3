@@ -95,8 +95,8 @@ jQuery(() => {
 	$(document).on('change', '.has-button select', function() {
 		let $filter    = $(this).closest('.has-button').find('.filter'),
 			selected   = $(this).find('option:selected'),
-			statusSlug = selected.val(),
-			className  = statusSlug.substr(0, statusSlug.indexOf('_')) || statusSlug;
+			status     = selected.text().toLowerCase(),
+			className  = status.substr(0, status.indexOf(' ')) || status;
 
 		if ($filter.length === 0) {
 			$filter = $('<span>');

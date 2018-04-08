@@ -6,21 +6,13 @@ class CommentQuery extends MakeItAllQuery {
 	protected $table = 'comment';
 
 	public function insert($content, $ticketId, $authorId, $callId) {
-		return $this->query(
-			"
-				INSERT INTO `{$this->prefix}{$this->table}`
-					(
-						`content`,
-						`ticket_id`,
-						`author_id`,
-						`call_id`
-						`created_at`,
-						`updated_at`
-					)
-				VALUES
-					(%s, %d, %d, %d, %s, %s)
-			",
-			[$content, $ticketId, $authorId, $callId]
+		return $this->mia_insert(
+			[
+				'content'   => $content,
+				'ticket_id' => $ticketId,
+				'author_id' => $authorId,
+				'call_id'   => $callId
+			]
 		);
 	}
 }

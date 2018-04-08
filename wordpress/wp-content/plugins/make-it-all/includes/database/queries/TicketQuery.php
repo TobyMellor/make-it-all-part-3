@@ -38,23 +38,15 @@ class TicketQuery extends MakeItAllQuery {
 		$assignedToOperatorId,
 		$expertiseTypeStaffId
 	) {
-		return $this->query(
-			"
-				INSERT INTO `{$this->prefix}{$this->table}`
-					(
-						`title`,
-						`description`,
-						`solution_id`,
-						`author_id`,
-						`assigned_to_operator_id`,
-						`expertise_type_staff_id`,
-						`created_at`,
-						`updated_at`
-					)
-				VALUES
-					(%s, %s, %s, %d, %s, %d, %s, %s)
-			",
-			[$title, $description, $solutionId, $authorId, $assignedToOperatorId, $expertiseTypeStaffId]
+		return $this->mia_insert(
+			[
+				'title'                   => $title,
+				'description'             => $description,
+				'solution_id'             => $solutionId,
+				'author_id'               => $authorId,
+				'assigned_to_operator_id' => $assignedToOperatorId,
+				'expertise_type_staff_id' => $expertiseTypeStaffId
+			]
 		);
 	}
 }

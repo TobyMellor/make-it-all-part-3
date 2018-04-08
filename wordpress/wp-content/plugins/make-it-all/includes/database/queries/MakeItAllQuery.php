@@ -19,21 +19,19 @@ abstract class MakeItAllQuery {
 	}
 
 	/**
-	 * Prepares the SQL statement
+	 * Inserts data into the database
 	 *
 	 * DO NOT include updated_at or created_at in
-	 * $data
+	 * $columns
 	 *
 	 * @return (int|false) Number of rows affected/selected or false on error
 	 */
-	protected function query($statement, $data) {
-		$data[] = date('Y-m-d H:i:s'); // current time for created_at
-		$data[] = date('Y-m-d H:i:s'); // current time for updated_at
+	protected function mia_insert($columns) {
+		$columns['created_at'] = date('Y-m-d H:i:s');
+		$columns['updated_at'] = date('Y-m-d H:i:s');
 
 		global $wpdb;
 
-		return $wpdb->query(
-			$wpdb->prepare($statement, $data)
-		);
+		return $wpdb->insert($this->prefix . $this->table, $columns);
 	}
 }

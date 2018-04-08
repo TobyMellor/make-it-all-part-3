@@ -70,6 +70,7 @@ class TicketPage extends MakeItAllPage {
 		$ticketProgramQuery = new TicketProgramQuery();
 		$ticketStatusQuery  = new TicketStatusQuery();
 
+		// create the call containing the tickets
 		$callQuery->insert(
 			date('Y-m-d H:i:s', strtotime($_POST['date_of_call'])),
 			get_current_user_id(),
@@ -78,24 +79,49 @@ class TicketPage extends MakeItAllPage {
 
 		$callId = $wpdb->insert_id;
 
+		// create the tickets, each containing a status and potentially multiple devices/programs
 		foreach ($_POST['tickets'] as $ticket) {
 			$ticketQuery->insert(
 				$ticket['title'], 
 				$ticket['description'], 
-				'null', // TODO: If status is resolved, then allow solution to be set
+				null, // TODO: If status is resolved, then allow solution to be set
 				get_current_user_id(), 
-				$ticket['assigned_to_operator'] || 'null', 
+				isset($ticket['assigned_to_operator']) ? $ticket['assigned_to_operator'] : null, 
 				$ticket['expertise_type_staff_id']
 			);
 
 			$ticketId = $wpdb->insert_id;
 
+			// create devices
+			foreach ($ticket['devices'] as $deviceId) {
+				$ticketDeviceQuery->insert(
+					$ticketId,
+					$deviceId
+				);
+			}
+
+			// software/OS's are not required...
+			if (isset($ticket['programs'])) {
+
+				// create the programs
+				foreach ($ticket['programs'] as $programId) {
+					$ticketProgramQuery->insert(
+						$ticketId,
+						$programId
+					);
+				}
+			}
+
+			// set the ticket's status
 			$ticketStatusQuery->insert(
 				$ticketId,
 				$ticket['status'],
-				get_current_user()
+				get_current_user_id()
 			);
 		}
+
+		// TODO: redirect to a single view page, or the update page
+		return $this->read_pane();
 	}
 
 	public function update_pane() {

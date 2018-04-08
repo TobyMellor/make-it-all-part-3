@@ -6,20 +6,12 @@ class CallQuery extends MakeItAllQuery {
 	protected $table = 'call';
 
 	public function insert($time, $operatorId, $callerId) {
-		return $this->query(
-			"
-				INSERT INTO `{$this->prefix}{$this->table}`
-					(
-						`time`,
-						`operator_id`,
-						`caller_id`,
-						`created_at`,
-						`updated_at`
-					)
-				VALUES
-					(%s, %d, %d, %s, %s)
-			",
-			[$time, $operatorId, $callerId]
+		return $this->mia_insert(
+			[
+				'time'        => $time,
+				'operator_id' => $operatorId,
+				'caller_id'   => $callerId
+			]
 		);
 	}
 }
