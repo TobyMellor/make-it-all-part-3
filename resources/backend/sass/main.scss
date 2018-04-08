@@ -44,6 +44,19 @@ $red-hover: #c0392b;
 	}
 }
 
+.wp-list-table, .tablenav {
+	margin-left: 8px;
+	margin-right: 8px;
+	width: initial;
+	table-layout: initial;
+}
+
+table {
+	.row-actions {
+		white-space: nowrap;
+	}
+}
+
 //
 // Common Make-It-All styles for Admin pages
 //

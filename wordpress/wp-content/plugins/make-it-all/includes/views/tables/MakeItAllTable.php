@@ -5,6 +5,15 @@ if (!class_exists('WP_List_Table')) {
 }
 
 abstract class MakeItAllTable extends WP_List_Table {
+	protected $table;
+	protected $prefix;
+
+	public function __construct() {
+		parent::__construct();
+
+		global $wpdb; $this->prefix = $wpdb->prefix . 'mia_';
+	}
+
 	/**
 	 * Prepare the items for the table to process
 	 *
