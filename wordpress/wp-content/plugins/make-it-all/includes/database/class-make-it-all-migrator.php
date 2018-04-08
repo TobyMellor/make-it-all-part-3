@@ -32,7 +32,7 @@ class MakeItAllMigrator {
 		'CreateTicketDeviceTable'
 	];
 
-	function __construct() {
+	public function __construct() {
 		require_once(plugin_dir_path(dirname(__FILE__)) . 'database/migrations/Migration.php'); // Required by all Migration files
 	}
 

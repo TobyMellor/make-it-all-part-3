@@ -30,7 +30,7 @@ class MakeItAllSeeder {
 		'SeedCommentTable',
 	];
 
-	function __construct() {
+	public function __construct() {
 		require_once(plugin_dir_path(dirname(__FILE__)) . 'database/seeds/Seeder.php'); // Required by all Seed files
 
 		global $wpdb; $wpdb->query('SET FOREIGN_KEY_CHECKS = 0'); // Some tables, e.g. Comment and Ticket, are dual locked
@@ -62,7 +62,7 @@ class MakeItAllSeeder {
 		die('Class ' . $className . ' not found!');
 	}
 
-	function __destruct() {
+	public function __destruct() {
 		global $wpdb; $wpdb->query('SET FOREIGN_KEY_CHECKS = 1');
 	}
 }

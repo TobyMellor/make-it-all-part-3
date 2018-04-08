@@ -89,16 +89,32 @@ class TicketTable extends MakeItAllTable {
 		");
 	}
 
+	/**
+	 * Adds 'Delete' to the bulk actions dropdown above the table
+	 *
+	 * @return Array
+	 */
 	protected function get_bulk_actions() {
 		return [
 			'delete' => 'Delete'
 		];
 	}
 
+	/**
+	 * Prepends a checkbox to each row for bulk actions
+	 *
+	 * @return String
+	 */
 	protected function column_cb($item) {
 		return '<input type="checkbox" name="ticket[]" value="' . $item->id . '">';
 	}
 
+	/**
+	 * Adds actions below each row, but depends on the users
+	 * capabilities
+	 *
+	 * @return String
+	 */
 	protected function column_title($item) {
 		$actions = [
 			'view' => '<a href="/tickets#' . $item->id . '" target="_blank">View</a>',
@@ -112,18 +128,19 @@ class TicketTable extends MakeItAllTable {
 			]);
 		}
 
-		return $item->title . $this->row_actions($actions, true);
+		return $item->title . $this->row_actions($actions, true); // true means always show the actions
 	}
 
+	/**
+	 * Wraps the status in a filter span for styling
+	 *
+	 * @return String
+	 */
 	protected function column_status($item) {
 		return '
 			<span class="filter filter-' . strtolower(strtok($item->status, ' ')) . '">
 				' . $item->status . '
 			</span>
 		';
-	}
-
-	protected function column_assigned_to_operator($item) {
-		return 'htrwq';
 	}
 }

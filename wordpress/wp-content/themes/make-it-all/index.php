@@ -37,6 +37,7 @@ $context['pages'] = [
 	]
 ];
 
+// if the page doesn't exist, redirect it to the default
 if (!array_search($page, array_keys($context['pages']))) {
 	wp_redirect('/tickets');
 }

@@ -5,10 +5,6 @@ require_once(plugin_dir_path(dirname(__FILE__)) . 'queries/MakeItAllQuery.php');
 class TicketQuery extends MakeItAllQuery {
 	protected $table = 'ticket';
 
-	public function get() {
-		//
-	}
-
 	/**
 	 * Get the tickets that are unresolved
 	 *
@@ -30,6 +26,11 @@ class TicketQuery extends MakeItAllQuery {
 		);
 	}
 
+	/**
+	 * Inserts a new record into the DB.
+	 *
+	 * @return Boolean
+	 */
 	public function insert(
 		$title,
 		$description,
@@ -50,6 +51,11 @@ class TicketQuery extends MakeItAllQuery {
 		);
 	}
 
+	/**
+	 * Deletes a record from the DB.
+	 *
+	 * @return Boolean
+	 */
 	public function delete($ticketId) {
 		return $this->mia_delete($ticketId);
 	}
