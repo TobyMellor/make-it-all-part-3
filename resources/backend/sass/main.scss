@@ -47,8 +47,12 @@ $red-hover: #c0392b;
 .wp-list-table, .tablenav {
 	margin-left: 8px;
 	margin-right: 8px;
-	width: initial;
-	table-layout: initial;
+	width: 100%;
+	table-layout: initial !important;
+
+	.filter {
+		margin: initial !important;
+	}
 }
 
 table {

@@ -15,12 +15,10 @@ class TicketTable extends MakeItAllTable {
 	public function get_columns() {
 		return [
 			'cb'                      => '<input type="checkbox">',
+			'id'                      => 'ID',
 			'title'                   => 'Title',
-			'description'             => 'Description',
-			'solution_id'             => 'Solution',
-			'author_id'               => 'Author ID',
-			'assigned_to_operator_id' => 'Assigned To',
-			'expertise_type_staff_id' => 'Expertise Type Staff ID',
+			'status'                  => 'Status',
+			'last_caller'             => 'Last Caller',
 			'created_at'              => 'Created At',
 			'updated_at'              => 'Updated At'
 		];
@@ -33,6 +31,9 @@ class TicketTable extends MakeItAllTable {
 	 */
 	public function get_sortable_columns() {
 		return [
+			'id' => [
+				'id', false
+			],
 			'title' => [
 				'title', false
 			]
@@ -47,7 +48,45 @@ class TicketTable extends MakeItAllTable {
 	protected function table_data() {
 		global $wpdb;
 
-		return $wpdb->get_results("SELECT * FROM {$this->prefix}{$this->table}");
+		return $wpdb->get_results("
+			SELECT
+				ticket.id AS id,
+				title,
+				assigned_to_operator_id,
+				status.name AS status,
+				caller.name AS last_caller,
+				ticket.created_at AS created_at,
+				ticket.updated_at AS updated_at
+			FROM wp_v4UxADt_mia_ticket AS ticket
+			JOIN (
+				SELECT
+					ticket_id, status_id
+				FROM wp_v4UxADt_mia_ticket_status
+				WHERE id IN (
+					SELECT MAX(id) AS id
+					FROM wp_v4UxADt_mia_ticket_status
+					GROUP BY ticket_id
+				)
+			) AS ticket_status
+				ON ticket_status.ticket_id = ticket.id
+			JOIN wp_v4UxADt_mia_status AS status
+				ON status.id = ticket_status.status_id
+			JOIN (
+				SELECT
+					ticket_id, call_id
+				FROM wp_v4UxADt_mia_call_ticket
+				WHERE id IN (
+					SELECT MIN(id) AS id
+					FROM wp_v4UxADt_mia_call_ticket
+					GROUP BY ticket_id
+				)
+			) AS call_ticket
+				ON call_ticket.ticket_id = ticket.id
+			JOIN wp_v4UxADt_mia_call AS _call
+				ON _call.id = call_ticket.call_id
+			JOIN wp_v4UxADt_mia_staff AS caller
+				ON caller.id = _call.caller_id
+		");
 	}
 
 	protected function get_bulk_actions() {
@@ -74,5 +113,17 @@ class TicketTable extends MakeItAllTable {
 		}
 
 		return $item->title . $this->row_actions($actions, true);
+	}
+
+	protected function column_status($item) {
+		return '
+			<span class="filter filter-' . strtolower(strtok($item->status, ' ')) . '">
+				' . $item->status . '
+			</span>
+		';
+	}
+
+	protected function column_assigned_to_operator($item) {
+		return 'htrwq';
 	}
 }
