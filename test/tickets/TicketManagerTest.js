@@ -1,4 +1,4 @@
-const TicketManager = require('../../resources/assets/js/pages/tickets/TicketManager').default,
+const TicketManager = require('../../resources/frontend/js/pages/tickets/TicketManager').default,
 	  ticketManager = new TicketManager();
 
 describe('TicketManager', function() {

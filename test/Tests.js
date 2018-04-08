@@ -5,7 +5,7 @@ global.assert = require('chai').assert;
 global.window = {};
 
 // Make the API class available
-const API = require('../resources/assets/js/pages/API').default;
+const API = require('../resources/frontend/js/pages/API').default;
 
 // Load in some data to test with (only load in what the Manager needs)
 global.api = new API({
