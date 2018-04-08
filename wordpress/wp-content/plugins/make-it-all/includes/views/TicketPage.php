@@ -26,8 +26,19 @@ class TicketPage extends MakeItAllPage {
 	public function read_pane() {
 		if (!current_user_can('read_make_it_all')) wp_die(__('You do not have sufficient permissions to access this page.'));
 
-		if (isset($_GET['action']) && isset($_GET['ticket_id']) && $_GET['action'] === 'delete') {
-			(new TicketQuery)->delete($_GET['ticket_id']);
+		// handle single delete and bulk delete before rendering page
+		if (isset($_GET['action']) && $_GET['action'] === 'delete') {
+			if (current_user_can('edit_make_it_all')) {
+				$ticketQuery = new TicketQuery();
+
+				if (isset($_GET['ticket_id'])) {
+					$ticketQuery->delete($_GET['ticket_id']);
+				} else if (isset($_GET['ticket'])) {
+					foreach ($_GET['ticket'] as $ticketId) {
+						$ticketQuery->delete($ticketId);
+					}
+				}
+			}
 		}
 
 		$context = $this->get_context('View Tickets');

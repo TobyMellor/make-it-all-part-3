@@ -62,11 +62,16 @@ class TicketTable extends MakeItAllTable {
 
 	protected function column_title($item) {
 		$actions = [
-			'view'      => '<a href="/tickets#' . $item->id . '" target="_blank">View</a>',
-			'edit'      => '<a href="admin.php?page=update_ticket&ticket_id=' . $item->id . '">Edit</a>',
-			'follow_up' => '<a href="admin.php?page=update_ticket&action=follow_up&ticket_id=' . $item->id . '">Register follow-up call</a>',
-			'delete'    => '<a href="admin.php?page=ticket&action=delete&ticket_id=' . $item->id . '">Delete</a>'
+			'view' => '<a href="/tickets#' . $item->id . '" target="_blank">View</a>',
 		];
+
+		if (current_user_can('edit_make_it_all')) {
+			$actions = array_merge($actions, [
+				'edit'      => '<a href="admin.php?page=update_ticket&ticket_id=' . $item->id . '">Edit</a>',
+				'follow_up' => '<a href="admin.php?page=update_ticket&action=follow_up&ticket_id=' . $item->id . '">Register follow-up call</a>',
+				'delete'    => '<a href="admin.php?page=ticket&action=delete&ticket_id=' . $item->id . '">Delete</a>'
+			]);
+		}
 
 		return $item->title . $this->row_actions($actions, true);
 	}
