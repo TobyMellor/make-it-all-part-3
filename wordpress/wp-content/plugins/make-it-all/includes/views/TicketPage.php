@@ -12,6 +12,7 @@ require_once(plugin_dir_path(dirname(__FILE__)) . 'database/queries/ExpertiseTyp
 require_once(plugin_dir_path(dirname(__FILE__)) . 'database/queries/DeviceQuery.php');
 require_once(plugin_dir_path(dirname(__FILE__)) . 'database/queries/ProgramQuery.php');
 require_once(plugin_dir_path(dirname(__FILE__)) . 'database/queries/CallQuery.php');
+require_once(plugin_dir_path(dirname(__FILE__)) . 'database/queries/CallTicketQuery.php');
 
 class TicketPage extends MakeItAllPage {
 	protected $name     = 'Ticket';
@@ -84,6 +85,7 @@ class TicketPage extends MakeItAllPage {
 		$ticketDeviceQuery  = new TicketDeviceQuery();
 		$ticketProgramQuery = new TicketProgramQuery();
 		$ticketStatusQuery  = new TicketStatusQuery();
+		$callTicketQuery    = new CallTicketQuery();
 
 		// create the call containing the tickets
 		$callQuery->insert(
@@ -132,6 +134,12 @@ class TicketPage extends MakeItAllPage {
 				$ticketId,
 				$ticket['status'],
 				get_current_user_id()
+			);
+
+			// link the first call to the ticket
+			$callTicketQuery->insert(
+				$callId,
+				$ticketId
 			);
 		}
 

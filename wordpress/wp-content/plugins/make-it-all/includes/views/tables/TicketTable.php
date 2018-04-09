@@ -71,7 +71,7 @@ class TicketTable extends MakeItAllTable {
 				ON ticket_status.ticket_id = ticket.id
 			JOIN {$this->prefix}status AS status
 				ON status.id = ticket_status.status_id
-			JOIN (
+			LEFT JOIN (
 				SELECT
 					ticket_id, call_id
 				FROM {$this->prefix}call_ticket
