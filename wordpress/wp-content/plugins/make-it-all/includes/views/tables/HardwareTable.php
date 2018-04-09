@@ -16,7 +16,7 @@ class HardwareTable extends MakeItAllTable {
 		return [
 			'cb'                      => '<input type="checkbox">',
 			'id'                      => 'ID',
-			'type'                    => 'Type',
+			'title'                    => 'Type',
 			'make'                    => 'Make',
 			'serial_no'               => 'Serial Number',
 			'created_at'              => 'Created At',
@@ -51,7 +51,7 @@ class HardwareTable extends MakeItAllTable {
 		return $wpdb->get_results("
 			SELECT
 				id,
-				type,
+				type AS title,
 				make,
 				serial_no,
 				created_at,
@@ -98,7 +98,7 @@ class HardwareTable extends MakeItAllTable {
 			]);
 		}
 
-		return $item->type . $this->row_actions($actions, true); // true means always show the actions
+		return $item->title . $this->row_actions($actions, true); // true means always show the actions
 	}
 
 }
