@@ -20,8 +20,8 @@ abstract class MakeItAllPage {
 		$name = $this->name;
 
 		$parentSlug = str_replace(' ', '_', strtolower($name));
-
-		add_menu_page('View ' . $name, $name . 's', 'read_make_it_all', $parentSlug, [$this, 'read_pane'], $this->icon, $this->position);
+        // Don't want Hardwares/Softwares
+		add_menu_page('View ' . $name, ($name == "Hardware") ? $name : $name . 's', 'read_make_it_all', $parentSlug, [$this, 'read_pane'], $this->icon, $this->position);
 
 		// Create submenu for each page in Pages, e.g. Create [Ticket], Update [Ticket]
 		foreach ($this->pages as $pageName) {

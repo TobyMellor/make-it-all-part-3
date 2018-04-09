@@ -1,0 +1,16 @@
+{% extends "backend/views/layouts/page.twig" %}
+
+{% block main %}
+	<div class="row">
+		
+			<form action="/wp-admin/admin.php?page=hardware_create" method="POST">
+                
+			</form>
+		</div>
+{% endblock %}
+
+{% block scripts %}
+	<script>
+		var devices        = {{ devices }};		
+	</script>
+{% endblock %}

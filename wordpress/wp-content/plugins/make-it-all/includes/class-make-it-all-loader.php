@@ -96,7 +96,8 @@ class MakeItAllLoader {
 		 * Register all of the pages
 		 */
 		$pages = [
-			'TicketPage'
+			'TicketPage',
+            'HardwarePage'
 		];
 
 		foreach ($pages as $pageName) {
