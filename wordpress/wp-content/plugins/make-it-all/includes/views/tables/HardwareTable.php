@@ -34,8 +34,8 @@ class HardwareTable extends MakeItAllTable {
 			'id' => [
 				'id', false
 			],
-			'type' => [
-				'type', false
+			'title' => [
+				'title', false
 			]
 		];
 	}

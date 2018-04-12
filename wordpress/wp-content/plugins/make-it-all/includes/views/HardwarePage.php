@@ -43,7 +43,7 @@ class HardwarePage extends MakeItAllPage {
     
     /* 
         Creation of Hardware
-        For hardware we just need the devices table.
+        For hardware page we just need the devices table.
     */
     public function create_pane(){
         if (!current_user_can('edit_make_it_all')) wp_die(__('You do not have sufficient permissions to access this page.'));

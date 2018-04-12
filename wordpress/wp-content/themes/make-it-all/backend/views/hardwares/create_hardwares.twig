@@ -1,16 +1,51 @@
-{% extends "backend/views/layouts/page.twig" %}
+{% extends "backend/views/layouts/page.twig" %} {% block main %}
 
-{% block main %}
-	<div class="row">
-		
-			<form action="/wp-admin/admin.php?page=hardware_create" method="POST">
-                
-			</form>
-		</div>
-{% endblock %}
+    <div class="form-wrapper">
+    <form action="/wp-admin/admin.php?page=hardware_create" method="POST">
+        <div class="accordions">
+            <div class="accordion-handle row">
+                <div class="accordion-icon col-xs-3">
+                    <div class="number-circle">1</div>
+                </div>
+                <div class="accordion-title col-xs-9">
+                    New Hardware Item
+                </div>
+                <div class="accordion-actions">
+                    <i class="fa fa-chevron-up"></i>
+                </div>
+            </div>
+            <div class="accordion-body" data-accordion-id="1">
 
-{% block scripts %}
-	<script>
-		var devices        = {{ devices }};		
-	</script>
+                <div class="row mia-field-group">
+                    <div class="col-xs-12 col-sm-3">
+                        <p class="label">
+                            Type <span class="required">*</span>
+                        </p>
+
+                        <p class="details">
+                            The type of hardware e.g. Phone, Laptop, Printer etc.
+                        </p>
+                    </div>
+                    <div class="col-sm-9 col-xs-12 has-button">
+                        <div>
+                            <select class="hardware-type-select" name="hardware[1][status]">
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+        </div>
+
+{% endblock %} {% block scripts %}
+<script>
+    var devices = {
+            devices
+    };
+
+</script>
 {% endblock %}
