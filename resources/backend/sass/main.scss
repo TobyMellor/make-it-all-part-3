@@ -79,10 +79,13 @@ table {
 		padding: 8px;
 		background-color: $blue;
 		color: $white;
-		cursor: pointer;
 		margin-top: 12px;
 		position: relative;
 		border-bottom: 2px solid $blue-hover;
+
+		&.ui-accordion-header {
+			cursor: pointer;
+		}
 
 		&:first-child {
 			margin: 0;
@@ -132,6 +135,8 @@ table {
 	}
 
 	.accordion-body {
+		line-height: 1.3;
+
 		.mia-field-group:first-child {
 			border-top: 0;
 		}
@@ -232,6 +237,7 @@ table {
 
 	.mia-panel-heading, .mia-panel-body, .mia-panel-footer {
 		padding: 16px;
+		min-height: 28px;
 
 		&.negative-margin {
 			margin: -16px;

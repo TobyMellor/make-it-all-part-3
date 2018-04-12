@@ -25,7 +25,7 @@ class TicketPage extends MakeItAllPage {
 	 * @return @void
 	 */
 	public function read_pane() {
-		if (!current_user_can('read_make_it_all')) wp_die(__('You do not have sufficient permissions to access this page.'));
+		parent::read_pane();
 
 		// handle single delete and bulk delete before rendering page
 		if (isset($_GET['action']) && $_GET['action'] === 'delete') {
@@ -63,16 +63,9 @@ class TicketPage extends MakeItAllPage {
 	 * @return @void
 	 */
 	public function create_pane() {
-		if (!current_user_can('edit_make_it_all')) wp_die(__('You do not have sufficient permissions to access this page.'));
+		parent::create_pane();
 
-		if ($_SERVER['REQUEST_METHOD'] === 'POST') return $this->create_action();
-
-		$context = $this->get_context('Create Tickets');
-
-		$context['employees']       = json_encode((new StaffQuery)->get());
-		$context['expertise_types'] = json_encode((new ExpertiseTypeQuery)->get());
-		$context['devices']         = json_encode((new DeviceQuery)->get());
-		$context['programs']        = json_encode((new ProgramQuery)->get());
+		$context = $this->getRequiredData('Create Tickets');
 
 		$this->render_pane($context);
 	}
@@ -148,6 +141,28 @@ class TicketPage extends MakeItAllPage {
 	}
 
 	public function update_pane() {
-		//
+		parent::update_pane();
+
+		$context = $this->getRequiredData('Update Ticket');
+
+		// ticket's current data
+		$context['ticket']           = (new TicketQuery)->get_ticket(1)[0];
+		$context['ticket']->devices  = (new TicketDeviceQuery)->get_device_ids_by_ticket_id(1);
+		$context['ticket']->programs = (new TicketProgramQuery)->get_program_ids_by_ticket_id(1);
+
+		$context['ticket'] = json_encode($context['ticket']);
+
+		$this->render_pane($context);
+	}
+
+	private function getRequiredData($pageName) {
+		$context = $this->get_context($pageName);
+
+		$context['employees']       = json_encode((new StaffQuery)->get());
+		$context['expertise_types'] = json_encode((new ExpertiseTypeQuery)->get());
+		$context['devices']         = json_encode((new DeviceQuery)->get());
+		$context['programs']        = json_encode((new ProgramQuery)->get());
+
+		return $context;
 	}
 }

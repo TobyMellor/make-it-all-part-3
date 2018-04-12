@@ -19,7 +19,7 @@ abstract class MakeItAllPage {
 	public function init() {
 		$name = $this->name;
 
-		$parentSlug = str_replace(' ', '_', strtolower($name));
+		$parentSlug = $this->getNameAsSlug();
 
 		add_menu_page('View ' . $name, $name . 's', 'read_make_it_all', $parentSlug, [$this, 'read_pane'], $this->icon, $this->position);
 
@@ -54,15 +54,51 @@ abstract class MakeItAllPage {
 	 * @return @void
 	 */
 	public function enqueue_dependencies() {
-		$fileName = strtolower($this->name);
+		$fileName = $this->getNameAsSlug();
 
-		wp_enqueue_style('mit_' . $fileName, get_template_directory_uri() . '/backend/css/' . $fileName . '.css', [], '1.0.0', 'all');
-		wp_enqueue_script('mit_' . $fileName, get_template_directory_uri() . '/backend/js/' . $fileName . '.js', ['jquery', 'jquery-ui-accordion'], '1.0.0', false);
+		wp_enqueue_style('mia_' . $fileName, get_template_directory_uri() . '/backend/css/' . $fileName . '/' . $fileName . '.css', [], '1.0.0', 'all');
+		wp_enqueue_script('mia_' . $fileName, get_template_directory_uri() . '/backend/js/' . $fileName . '/' . $fileName . '.js', ['jquery', 'jquery-ui-accordion'], '1.0.0', false);
 	}
 
-	abstract public function read_pane();
-	abstract public function create_pane();
-	abstract public function update_pane();
+	public function read_pane() {
+		if (!current_user_can('read_make_it_all')) wp_die(__('You do not have sufficient permissions to access this page.'));
+
+		wp_enqueue_script(
+			'mia_read_' . $this->getNameAsSlug(), // name of script, e.g. mia_read_tickets
+			get_template_directory_uri() . '/backend/js/' . $this->getNameAsSlug() . '/read_' . $this->getNameAsSlug() . '.js', // location of script
+			['jquery', 'jquery-ui-accordion'],
+			'1.0.0',
+			false
+		);
+	}
+
+	public function create_pane() {
+		if (!current_user_can('edit_make_it_all')) wp_die(__('You do not have sufficient permissions to access this page.'));
+
+		wp_enqueue_script(
+			'mia_create_' . $this->getNameAsSlug(), // name of script, e.g. mia_create_tickets
+			get_template_directory_uri() . '/backend/js/' . $this->getNameAsSlug() . '/create_' . $this->getNameAsSlug() . '.js', // location of script
+			['jquery', 'jquery-ui-accordion'],
+			'1.0.0',
+			false
+		);
+
+		if ($_SERVER['REQUEST_METHOD'] === 'POST') return $this->create_action();
+	}
+
+	public function update_pane() {
+		if (!current_user_can('edit_make_it_all')) wp_die(__('You do not have sufficient permissions to access this page.'));
+
+		wp_enqueue_script(
+			'mia_update_' . $this->getNameAsSlug(), // name of script, e.g. mia_update_tickets
+			get_template_directory_uri() . '/backend/js/' . $this->getNameAsSlug() . '/update_' . $this->getNameAsSlug() . '.js', // location of script
+			['jquery', 'jquery-ui-accordion'],
+			'1.0.0',
+			false
+		);
+
+		if ($_SERVER['REQUEST_METHOD'] === 'POST') return $this->update_action();
+	}
 	
 	/**
 	 * Simply gets a blank Timber context and
@@ -93,5 +129,9 @@ abstract class MakeItAllPage {
 			'.twig',
 			$context
 		); // e.g. backend/tickets/create_ticket.twig
+	}
+
+	private function getNameAsSlug() {
+		return str_replace(' ', '_', strtolower($this->name));
 	}
 }

@@ -27,6 +27,32 @@ class TicketQuery extends MakeItAllQuery {
 	}
 
 	/**
+	 * Get ticket by ID
+	 *
+	 * @return Array
+	 */
+	public function get_ticket($ticketId) {
+		return $this->get_results(
+			"
+				SELECT
+					ticket.title,
+					ticket_status.status_id,
+					ticket.description,
+					ticket.expertise_type_staff_id,
+					ticket.assigned_to_operator_id
+				FROM {$this->prefix}ticket AS ticket
+				JOIN {$this->prefix}ticket_status AS ticket_status
+					ON ticket_status.ticket_id = ticket.id
+				WHERE ticket_status.id IN (
+					SELECT MAX(id) AS id
+					FROM {$this->prefix}ticket_status
+					GROUP BY ticket_id
+				) AND ticket.id = {$ticketId};
+			"
+		);
+	}
+
+	/**
 	 * Inserts a new record into the DB.
 	 *
 	 * @return Boolean

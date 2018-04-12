@@ -93,12 +93,33 @@ export default class ExpertiseTypeManager {
 		// load root Expertise Types
 		this.loadChildrenExpertiseTypes($typeColumns);
 
-		let expertiseTypeChain = this.getExpertiseTypeChain(expertiseType);
+		let expertiseTypeChain = this.getExpertiseTypeChain(expertiseTypeId);
 
 		// load ExpertiseType from the parent down to the clicked one
 		for (let i = expertiseTypeChain.length - 2; i >= -1; i--) {
-			problemTypePage.loadChildrenExpertiseTypes($typeColumns, $typeColumns.find('.type-column li[data-expertise-type-id="' + expertiseTypeChain[i + 1].id + '"]'));
+			this.loadChildrenExpertiseTypes($typeColumns, $typeColumns.find('.type-column li[data-expertise-type-id="' + expertiseTypeChain[i + 1].id + '"]'));
 		}
+	}
+
+	/**
+	 * Get ordered array of parents of an ExpertiseType
+	 *
+	 * @param {Integer} expertiseTypeId starting ExpertiseType id to find parents from
+	 * @return {Array} Array of ExpertiseType parents, and the starting ExpertiseType
+	 */
+	getExpertiseTypeChain(expertiseTypeId) {
+		let expertiseTypeParent = this.getExpertiseType(expertiseTypeId),
+			expertiseTypes      = [expertiseTypeParent];
+
+		while (expertiseTypeParent != null) {
+			expertiseTypeParent = this.getExpertiseType(expertiseTypeParent.parent_id);
+
+			if (expertiseTypeParent != null) {
+				expertiseTypes.push(expertiseTypeParent);
+			}
+		}
+
+		return expertiseTypes;
 	}
 
 	/**
