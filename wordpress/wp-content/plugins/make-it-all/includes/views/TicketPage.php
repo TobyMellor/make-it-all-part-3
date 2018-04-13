@@ -70,7 +70,7 @@ class TicketPage extends MakeItAllPage {
 		$this->render_pane($context);
 	}
 
-	private function create_action() {
+	protected function create_action() {
 		global $wpdb;
 
 		$callQuery          = new CallQuery();
@@ -145,14 +145,77 @@ class TicketPage extends MakeItAllPage {
 
 		$context = $this->getRequiredData('Update Ticket');
 
-		// ticket's current data
-		$context['ticket']           = (new TicketQuery)->get_ticket(1)[0];
-		$context['ticket']->devices  = (new TicketDeviceQuery)->get_device_ids_by_ticket_id(1);
-		$context['ticket']->programs = (new TicketProgramQuery)->get_program_ids_by_ticket_id(1);
+		if (isset($_GET['id'])) {
+			$ticketId = $_GET['id'];
 
-		$context['ticket'] = json_encode($context['ticket']);
+			// ticket's current data
+			$context['ticket']           = (new TicketQuery)->get_ticket($ticketId)[0];
+			$context['ticket']->devices  = (new TicketDeviceQuery)->get_device_ids_by_ticket_id($ticketId);
+			$context['ticket']->programs = (new TicketProgramQuery)->get_program_ids_by_ticket_id($ticketId);
+
+			$context['ticket'] = json_encode($context['ticket']);
+		}
 
 		$this->render_pane($context);
+	}
+
+	protected function update_action() {
+		global $wpdb;
+
+		$ticketQuery        = new TicketQuery();
+		$ticketDeviceQuery  = new TicketDeviceQuery();
+		$ticketProgramQuery = new TicketProgramQuery();
+		$ticketStatusQuery  = new TicketStatusQuery();
+
+		$ticket   = $_POST['ticket'];
+		$ticketId = $ticket['id'];
+
+		$ticketQuery->update(
+			$ticketId,
+			[
+				'title'                   => $ticket['title'], 
+				'description'             => $ticket['description'], 
+				'solution_id'             => null, // TODO: If status is resolved, then allow solution to be set
+				'author_id'               => get_current_user_id(), 
+				'assigned_to_operator_id' => isset($ticket['assigned_to_operator']) ? $ticket['assigned_to_operator'] : null, 
+				'expertise_type_staff_id' => $ticket['expertise_type_staff_id']
+			]
+		);
+
+		$ticketDeviceQuery->delete_by_ticket_id($ticketId);
+		$ticketProgramQuery->delete_by_ticket_id($ticketId);
+
+		// create devices
+		foreach ($ticket['devices'] as $deviceId) {
+			$ticketDeviceQuery->insert(
+				$ticketId,
+				$deviceId
+			);
+		}
+
+		// software/OS's are not required...
+		if (isset($ticket['programs'])) {
+
+			// create the programs
+			foreach ($ticket['programs'] as $programId) {
+				$ticketProgramQuery->insert(
+					$ticketId,
+					$programId
+				);
+			}
+		}
+
+		// don't bother updating the status if it hasn't changed
+		if ($ticketQuery->get_ticket($ticketId)[0]->status_id != $ticket['status']) {
+			$ticketStatusQuery->insert(
+				$ticketId,
+				$ticket['status'],
+				get_current_user_id()
+			);
+		}
+
+		// TODO: redirect to a single view page, or the update page
+		return $this->read_pane();
 	}
 
 	private function getRequiredData($pageName) {

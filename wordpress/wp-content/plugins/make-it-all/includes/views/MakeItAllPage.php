@@ -7,7 +7,7 @@ abstract class MakeItAllPage {
 	protected $pages    = [
 		'Create',
 		'Update'
-	]; // to remove a page, redefine this in the child
+	]; // to add/remove a page, redefine this in the child
 	
 	/**
 	 * Initialises the menu and submenu, and
@@ -60,41 +60,32 @@ abstract class MakeItAllPage {
 		wp_enqueue_script('mia_' . $fileName, get_template_directory_uri() . '/backend/js/' . $fileName . '/' . $fileName . '.js', ['jquery', 'jquery-ui-accordion'], '1.0.0', false);
 	}
 
-	public function read_pane() {
-		if (!current_user_can('read_make_it_all')) wp_die(__('You do not have sufficient permissions to access this page.'));
+	public function enqueue_dependency($name, $location) {
+		if (!is_file(get_template_directory() . $location)) return;
 
-		wp_enqueue_script(
+		wp_enqueue_script($name, get_template_directory_uri() . $location, ['jquery', 'jquery-ui-accordion'], '1.0.0', false);
+	}
+
+	public function read_pane() {
+		$this->enqueue_dependency(
 			'mia_read_' . $this->getNameAsSlug(), // name of script, e.g. mia_read_tickets
-			get_template_directory_uri() . '/backend/js/' . $this->getNameAsSlug() . '/read_' . $this->getNameAsSlug() . '.js', // location of script
-			['jquery', 'jquery-ui-accordion'],
-			'1.0.0',
-			false
+			'/backend/js/' . $this->getNameAsSlug() . '/read_' . $this->getNameAsSlug() . '.js' // location of script
 		);
 	}
 
 	public function create_pane() {
-		if (!current_user_can('edit_make_it_all')) wp_die(__('You do not have sufficient permissions to access this page.'));
-
-		wp_enqueue_script(
-			'mia_create_' . $this->getNameAsSlug(), // name of script, e.g. mia_create_tickets
-			get_template_directory_uri() . '/backend/js/' . $this->getNameAsSlug() . '/create_' . $this->getNameAsSlug() . '.js', // location of script
-			['jquery', 'jquery-ui-accordion'],
-			'1.0.0',
-			false
+		$this->enqueue_dependency(
+			'mia_create_' . $this->getNameAsSlug(),
+			'/backend/js/' . $this->getNameAsSlug() . '/create_' . $this->getNameAsSlug() . '.js'
 		);
 
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') return $this->create_action();
 	}
 
 	public function update_pane() {
-		if (!current_user_can('edit_make_it_all')) wp_die(__('You do not have sufficient permissions to access this page.'));
-
-		wp_enqueue_script(
-			'mia_update_' . $this->getNameAsSlug(), // name of script, e.g. mia_update_tickets
-			get_template_directory_uri() . '/backend/js/' . $this->getNameAsSlug() . '/update_' . $this->getNameAsSlug() . '.js', // location of script
-			['jquery', 'jquery-ui-accordion'],
-			'1.0.0',
-			false
+		$this->enqueue_dependency(
+			'mia_update_' . $this->getNameAsSlug(),
+			'/backend/js/' . $this->getNameAsSlug() . '/update_' . $this->getNameAsSlug() . '.js'
 		);
 
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') return $this->update_action();

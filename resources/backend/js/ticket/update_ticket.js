@@ -1,4 +1,29 @@
 $(() => {
+	$('#change-ticket option[value="' + (!ticket ? "" : ticket.id) + '"]').prop('selected', true);
+	
+	$('#change-ticket').change(function() {
+		let ticketId = $(this).val();
+
+		window.location.href = window.location.pathname + '?page=ticket_update&id=' + ticketId;
+	});
+
+	if (!ticket) {
+		sessionStorage.setItem('shouldShowArrow', true);
+		return;
+	}
+
+	// arrow functionality, don't show the arrow if they accessed the page directly
+	if (sessionStorage.getItem('shouldShowArrow')) {
+		sessionStorage.removeItem('shouldShowArrow');
+
+		$('.mia-panel-heading img').css('opacity', 0.1);
+		setTimeout(() => $('.mia-panel-heading img').fadeOut(), 2500);
+	} else {
+		$('.mia-panel-heading img').hide();
+	}
+
+	$('input[name="ticket[id]"]').val(ticket.id);
+
 	$('.number-circle').text(ticket.id);
 	$('.accordion-title').text('Ticket: ' + ticket.title);
 

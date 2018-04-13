@@ -216,7 +216,7 @@ table {
 	box-shadow: 0 1px 1px rgba(0,0,0,.04);
 	background: #fff;
 	font-size: 13px;
-	line-height: 2.1em;
+	line-height: 1px;
 	margin-bottom: 16px;
 
 	h2 {
@@ -244,6 +244,29 @@ table {
 		}
 	}
 
+	.mia-panel-heading {
+		.col-xs-9 {
+			display: flex;
+			align-items: center;
+
+			img {
+				height: 81px;
+				margin-top: -16px;
+				margin-bottom: -16px;
+				margin-left: -3px;
+				margin-right: 20px;
+				opacity: 0.1;
+				width: 81px;
+			}
+
+			select {
+				flex-grow: 1;
+				margin-right: 20px;
+				margin-left: 20px;
+			}
+		}
+	}
+
 	.mia-panel-footer {
 		.mia-button-group {
 			display: inline;
@@ -254,6 +277,7 @@ table {
 				font-weight: 600;
 				font-size: 14px;
 				display: inline;
+				line-height: 2.1em;
 			}
 		}
 	}

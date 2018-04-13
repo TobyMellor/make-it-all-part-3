@@ -8,6 +8,9 @@ let showEmployee = window.showEmployee = (function($element, employee, staffMana
 });
 
 $(() => {
+	// if we're on the read page, don't register these events
+	if (!window.employees || !window.expertiseTypes || !window.devices || !window.programs) return;
+
 	let staffManager         = window.staffManager         = new StaffManager(employees, 1);
 	let expertiseTypeManager = window.expertiseTypeManager = new ExpertiseTypeManager(expertiseTypes, staffManager);
 	let affectedItemsManager = window.affectedItemsManager = new AffectedItemsManager(devices, programs);

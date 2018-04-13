@@ -35,6 +35,7 @@ class TicketQuery extends MakeItAllQuery {
 		return $this->get_results(
 			"
 				SELECT
+					ticket.id,
 					ticket.title,
 					ticket_status.status_id,
 					ticket.description,
@@ -75,6 +76,15 @@ class TicketQuery extends MakeItAllQuery {
 				'expertise_type_staff_id' => $expertiseTypeStaffId
 			]
 		);
+	}
+
+	/**
+	 * Updates a record in the DB.
+	 *
+	 * @return Boolean
+	 */
+	public function update($ticketId, $columns) {
+		return $this->mia_update($ticketId, $columns);
 	}
 
 	/**

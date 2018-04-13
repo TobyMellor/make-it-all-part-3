@@ -38,4 +38,13 @@ class TicketProgramQuery extends MakeItAllQuery {
 			]
 		);
 	}
+
+	/**
+	 * Deletes a record from the DB.
+	 *
+	 * @return Boolean
+	 */
+	public function delete_by_ticket_id($ticketId) {
+		return $this->mia_delete($ticketId, 'ticket_id');
+	}
 }
