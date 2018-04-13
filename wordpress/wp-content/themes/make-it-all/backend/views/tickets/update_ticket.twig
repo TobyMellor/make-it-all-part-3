@@ -24,7 +24,6 @@
 								{% endif %}
 								<select id="change-ticket">
 									<option disabled selected>Select a ticket here…</option>
-									<option value="1">#1 – Printer not working</option>
 								</select>
 							</div>
 						</div>
@@ -288,7 +287,8 @@
 
 {% block scripts %}
 	<script>
-		var ticket         = {{ ticket|default('null') }},
+		var tickets        = {{ tickets }},
+			ticket         = {{ ticket|default('null') }},
 			employees      = {{ employees }},
 			expertiseTypes = {{ expertise_types }},
 			devices        = {{ devices }},

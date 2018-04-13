@@ -1,4 +1,14 @@
 $(() => {
+	let $heading = $('.mia-panel-heading'),
+		$select  = $heading.find('select'),
+		$img     = $heading.find('img');
+		
+	tickets.forEach((ticket) => {
+		$select.append(`
+			<option value="${ticket.id}">#${ticket.id} – ${ticket.title}</option>
+		`);
+	});
+
 	$('#change-ticket option[value="' + (!ticket ? "" : ticket.id) + '"]').prop('selected', true);
 	
 	$('#change-ticket').change(function() {
@@ -16,10 +26,10 @@ $(() => {
 	if (sessionStorage.getItem('shouldShowArrow')) {
 		sessionStorage.removeItem('shouldShowArrow');
 
-		$('.mia-panel-heading img').css('opacity', 0.1);
-		setTimeout(() => $('.mia-panel-heading img').fadeOut(), 2500);
+		$img.css('opacity', 0.1);
+		setTimeout(() => $img.fadeOut(), 2500);
 	} else {
-		$('.mia-panel-heading img').hide();
+		$img.hide();
 	}
 
 	$('input[name="ticket[id]"]').val(ticket.id);

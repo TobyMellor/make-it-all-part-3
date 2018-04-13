@@ -4,6 +4,20 @@ require_once(plugin_dir_path(dirname(__FILE__)) . 'queries/MakeItAllQuery.php');
 
 class TicketQuery extends MakeItAllQuery {
 	protected $table = 'ticket';
+	
+	/**
+	 * Get a list of tickets
+	 *
+	 * @return Array
+	 */
+	public function get() {
+		return $this->get_results(
+			"
+				SELECT id, title
+				FROM {$this->prefix}{$this->table}
+			"
+		);
+	}
 
 	/**
 	 * Get the tickets that are unresolved

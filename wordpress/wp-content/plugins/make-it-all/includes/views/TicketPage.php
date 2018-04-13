@@ -144,6 +144,8 @@ class TicketPage extends MakeItAllPage {
 		parent::update_pane();
 
 		$context = $this->getRequiredData('Update Ticket');
+		
+		$context['tickets'] = json_encode((new TicketQuery)->get());
 
 		if (isset($_GET['id'])) {
 			$ticketId = $_GET['id'];
