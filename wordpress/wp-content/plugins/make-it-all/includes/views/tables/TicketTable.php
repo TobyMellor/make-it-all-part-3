@@ -122,8 +122,8 @@ class TicketTable extends MakeItAllTable {
 
 		if (current_user_can('edit_make_it_all')) {
 			$actions = array_merge($actions, [
-				'edit'      => '<a href="admin.php?page=update_ticket&ticket_id=' . $item->id . '">Edit</a>',
-				'follow_up' => '<a href="admin.php?page=update_ticket&action=follow_up&ticket_id=' . $item->id . '">Register follow-up call</a>',
+				'edit'      => '<a href="admin.php?page=ticket_update&id=' . $item->id . '">Update</a>',
+				'follow_up' => '<a href="admin.php?page=ticket_update&action=follow_up&id=' . $item->id . '">Register follow-up call</a>',
 				'delete'    => '<a href="admin.php?page=ticket&action=delete&ticket_id=' . $item->id . '">Delete</a>'
 			]);
 		}
