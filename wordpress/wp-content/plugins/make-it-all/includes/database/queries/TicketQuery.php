@@ -52,6 +52,7 @@ class TicketQuery extends MakeItAllQuery {
 					ticket.id,
 					ticket.title,
 					status.name AS status,
+					status.id AS status_id,
 					ticket.description,
 					ticket.expertise_type_staff_id,
 					ticket.assigned_to_operator_id,

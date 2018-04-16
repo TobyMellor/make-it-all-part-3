@@ -142,8 +142,7 @@ class TicketPage extends MakeItAllPage {
 			);
 		}
 
-		// TODO: redirect to a single view page, or the update page
-		return $this->read_pane();
+		$this->mia_redirect('admin.php?page=ticket&id=' . $ticketId); exit;
 	}
 
 	public function update_pane() {
@@ -218,8 +217,7 @@ class TicketPage extends MakeItAllPage {
 			);
 		}
 
-		// TODO: redirect to a single view page, or the update page
-		return $this->read_pane();
+		$this->mia_redirect('admin.php?page=ticket&id=' . $ticketId); exit;
 	}
 
 	private function getRequiredData($pageName) {

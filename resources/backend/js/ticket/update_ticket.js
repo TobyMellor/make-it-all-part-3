@@ -46,6 +46,7 @@ $(() => {
 	});
 
 	expertiseTypeManager.loadExpertiseType($('.type-columns'), ticket.expertise_type_staff_id);
+	$('input[name="ticket[expertise_type_staff_id]"]').val(ticket.expertise_type_staff_id);
 
 	if (ticket.assigned_to_operator_id === null) {
 		$('input[name="ticket[assigned_to_type]"][value="specialist"]').click();

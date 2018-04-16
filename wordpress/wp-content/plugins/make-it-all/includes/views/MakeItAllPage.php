@@ -100,7 +100,7 @@ abstract class MakeItAllPage {
 	protected function get_context($pageName) {
 		$context = Timber::get_context();
 		$context['page_name'] = $pageName; // e.g. Create Ticket
-		
+
 		return $context;
 	}
 
@@ -122,7 +122,29 @@ abstract class MakeItAllPage {
 		); // e.g. backend/tickets/create_ticket.twig
 	}
 
+	/**
+	 * Turns string into a lowercase slug, e.g.
+	 * My Tickets > my_tickets
+	 *
+	 * @return String
+	 */
 	private function getNameAsSlug() {
 		return str_replace(' ', '_', strtolower($this->name));
+	}
+
+	/**
+	 * wp_redirect() doesn't work since the headers have
+	 * already been sent at this point.
+	 *
+	 * This is a fairly hacky way of redirecting, but it works.
+	 *
+	 * @return String
+	 */
+	protected function mia_redirect($url) {
+		echo '
+			<script type="text/javascript">
+				window.location="' . $url . '";
+			</script>
+		';
 	}
 }
