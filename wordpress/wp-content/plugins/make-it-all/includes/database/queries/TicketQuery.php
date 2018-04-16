@@ -51,18 +51,27 @@ class TicketQuery extends MakeItAllQuery {
 				SELECT
 					ticket.id,
 					ticket.title,
-					ticket_status.status_id,
+					status.name AS status,
 					ticket.description,
 					ticket.expertise_type_staff_id,
-					ticket.assigned_to_operator_id
+					ticket.assigned_to_operator_id,
+					ticket.created_at,
+					ticket.updated_at
 				FROM {$this->prefix}ticket AS ticket
-				JOIN {$this->prefix}ticket_status AS ticket_status
-					ON ticket_status.ticket_id = ticket.id
-				WHERE ticket_status.id IN (
-					SELECT MAX(id) AS id
+				JOIN (
+					SELECT
+						ticket_id, status_id
 					FROM {$this->prefix}ticket_status
-					GROUP BY ticket_id
-				) AND ticket.id = {$ticketId};
+					WHERE id IN (
+						SELECT MAX(id) AS id
+						FROM {$this->prefix}ticket_status
+						GROUP BY ticket_id
+					)
+				) AS ticket_status
+					ON ticket_status.ticket_id = ticket.id
+				JOIN {$this->prefix}status AS status
+					ON status.id = ticket_status.status_id
+				WHERE ticket.id = {$ticketId};
 			"
 		);
 	}

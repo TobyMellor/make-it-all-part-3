@@ -1,0 +1,240 @@
+{% extends "backend/views/layouts/page.twig" %}
+
+{% block main %}
+	
+	<div class="row">
+		<div class="col-xs-9">
+			<table class="wp-list-table widefat fixed striped toplevel_page_ticket">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Title</th>
+						<th>Status</th>
+						<th>Created At</th>
+						<th>Updated At</th>
+					</tr>
+				</thead>
+				<tbody id="the-list">
+					<tr class="highlight">
+						<td>{{ ticket_obj.id }}</td>
+						<td>
+							<strong>{{ ticket_obj.title }}</strong>
+							<div class="row-actions visible">
+								<span class="edit">
+									<a href="admin.php?page=ticket_update&id={{ ticket_obj.id }}">Update</a> |
+								</span>
+								<span class="follow_up">
+									<a href="admin.php?page=ticket_update&action=follow_up&id={{ ticket_obj.id }}">Register follow-up call</a> |
+								</span>
+								<span class="delete">
+									<a href="admin.php?page=ticket&action=delete&ticket_id={{ ticket_obj.id }}">Delete</a>
+								</span>
+							</div>
+						</td>
+						<td>
+							<span class="filter filter-{{ ticket_obj.status|lower }}">
+								{{ ticket_obj.status }}
+							</span>
+						</td>
+						<td>{{ ticket_obj.created_at }}</td>
+						<td>{{ ticket_obj.updated_at }}</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div class="accordions view-accordion">
+				<div class="accordion-body">
+					<div class="row mia-field-group">
+						<div class="col-sm-3 col-xs-12">
+							<p class="label">
+								Description
+							</p>
+							<p class="details">
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+							</p>
+						</div>
+						<div class="col-sm-9 col-xs-12 description">
+							{{ ticket_obj.description }}
+						</div>
+					</div>
+					<div class="row mia-field-group">
+						<div class="col-sm-3 col-xs-12">
+							<p class="label">
+								Problem Type
+							</p>
+							<p class="details">
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+							</p>
+						</div>
+						<div class="col-sm-9 col-xs-12">
+							<ul class="breadcrumb"></ul>
+						</div>
+					</div>
+					<div class="row mia-field-group">
+						<div class="col-sm-3 col-xs-12">
+							<p class="label">
+								Assigned to
+							</p>
+							<p class="details">
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+							</p>
+						</div>
+						<div class="col-sm-9 col-xs-12">
+							<div class="assign-options">
+								<div>
+									<label>
+										<input name="ticket[assigned_to_type]" value="self" data-com.agilebits.onepassword.user-edited="yes" type="radio">
+										Myself
+									</label>
+									<label>
+										<input name="ticket[assigned_to_type]" value="operator" type="radio">
+										Another operator
+									</label>
+									<label>
+										<input name="ticket[assigned_to_type]" value="specialist" type="radio">
+										Best specialist for problem
+									</label>
+								</div>
+								<div>
+									<div class="assigned-to-details">
+										<div class="row mia-field-group">
+											<div class="col-xs-3">
+												<p class="label">
+													Name
+												</p>
+											</div>
+											<div class="col-xs-9">
+												<input name="ticket[assigned_to][name]" placeholder="Enter ticket title here" readonly="readonly" data-attribute="name" type="text">
+											</div>
+										</div>
+										<div class="row mia-field-group">
+											<div class="col-xs-3">
+												<p class="label">
+													ID Number
+												</p>
+											</div>
+											<div class="col-xs-9">
+												<input name="ticket[assigned_to][id]" placeholder="Enter ticket title here" readonly="readonly" data-attribute="id" type="text">
+											</div>
+										</div>
+										<div class="row mia-field-group">
+											<div class="col-xs-3">
+												<p class="label">
+													Job
+												</p>
+											</div>
+											<div class="col-xs-9">
+												<input name="ticket[assigned_to][job_title]" placeholder="Enter ticket title here" readonly="readonly" data-attribute="job_title" type="text">
+											</div>
+										</div>
+										<div class="row mia-field-group">
+											<div class="col-xs-3">
+												<p class="label">
+													Department
+												</p>
+											</div>
+											<div class="col-xs-9">
+												<input name="ticket[assigned_to][department]" placeholder="Enter ticket title here" readonly="readonly" data-attribute="department" type="text">
+											</div>
+										</div>
+										<div class="row mia-field-group">
+											<div class="col-xs-3">
+												<p class="label">
+													Phone
+												</p>
+											</div>
+											<div class="col-xs-9">
+												<input name="ticket[assigned_to][phone_number]" placeholder="Enter ticket title here" readonly="readonly" data-attribute="phone_number" type="text">
+											</div>
+										</div>
+										<div class="row mia-field-group">
+											<div class="col-xs-3">
+												<p class="label">
+													Permissions
+												</p>
+											</div>
+											<div class="col-xs-9">
+												<div class="mia-permissions">
+													<strong>
+													<span>
+													<i class="fa fa-user-secret"></i>
+													<span>Operator</span>
+													</span>
+													<span>
+													<i class="fa fa-line-chart"></i>
+													<span>Analyst</span>
+													</span>
+													</strong>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row mia-field-group">
+						<div class="col-sm-3 col-xs-12">
+							<p class="label">
+								Hardware Affected
+							</p>
+							<p class="details">
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+							</p>
+						</div>
+						<div class="col-sm-9 col-xs-12">
+							<select class="add-hardware-device"></select>
+							<ul class="affected-items"></ul>
+						</div>
+					</div>
+					<div class="row mia-field-group">
+						<div class="col-sm-3 col-xs-12">
+							<p class="label">
+								Programs Affected
+							</p>
+							<p class="details">
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+							</p>
+						</div>
+						<div class="col-sm-9 col-xs-12">
+							<p class="no-affected-items">No Programs are affected</p>
+							<select class="add-application"></select>
+							<ul class="affected-items"></ul>
+						</div>
+					</div>
+					<div class="row mia-field-group">
+						<div class="col-sm-3 col-xs-12">
+							<p class="label">
+								Operating Systems Affected
+							</p>
+							<p class="details">
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+							</p>
+						</div>
+						<div class="col-sm-9 col-xs-12">
+							<p class="no-affected-items">No Operating Systems are affected</p>
+							<select class="add-operating-system"></select>
+							<ul class="affected-items"></ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+		<div class="col-xs-3">
+			Useful information goes here...
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block scripts %}
+	<script>
+		var ticket         = {{ ticket|default('null') }},
+			employees      = {{ employees }},
+			expertiseTypes = {{ expertise_types }},
+			devices        = {{ devices }},
+			programs       = {{ programs }};
+	</script>
+{% endblock %}

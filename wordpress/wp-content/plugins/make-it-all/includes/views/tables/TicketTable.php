@@ -14,13 +14,13 @@ class TicketTable extends MakeItAllTable {
 	 */
 	public function get_columns() {
 		return [
-			'cb'                      => '<input type="checkbox">',
-			'id'                      => 'ID',
-			'title'                   => 'Title',
-			'status'                  => 'Status',
-			'last_caller'             => 'Last Caller',
-			'created_at'              => 'Created At',
-			'updated_at'              => 'Updated At'
+			'cb'          => '<input type="checkbox">',
+			'id'          => 'ID',
+			'title'       => 'Title',
+			'status'      => 'Status',
+			'last_caller' => 'Last Caller',
+			'created_at'  => 'Created At',
+			'updated_at'  => 'Updated At'
 		];
 	}
 
@@ -117,7 +117,7 @@ class TicketTable extends MakeItAllTable {
 	 */
 	protected function column_title($item) {
 		$actions = [
-			'view' => '<a href="' . get_home_url() . '/tickets#' . $item->id . '" target="_blank">View</a>',
+			'view' => '<a href="admin.php?page=ticket&id=' . $item->id . '">View</a>',
 		];
 
 		if (current_user_can('edit_make_it_all')) {

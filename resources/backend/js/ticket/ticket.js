@@ -60,7 +60,7 @@ $(() => {
 			if ($input.val() === 'self') {
 				showEmployee($display, staffManager.currentEmployee, staffManager);
 			} else {
-				let selectedExpertiseTypeId = Number($(this).closest('.accordion-body').find('.problem-type-picker li.last-active').data('expertiseTypeId'));
+				let selectedExpertiseTypeId = Number($(this).closest('.accordion-body').find('.problem-type-picker li.last-active').data('expertiseTypeId') || ticket.expertise_type_staff_id);
 
 				showEmployee($display, staffManager.getBestSpecialistForSpecialism(selectedExpertiseTypeId), staffManager) // TODO: Update with ID from problem type picker
 			}

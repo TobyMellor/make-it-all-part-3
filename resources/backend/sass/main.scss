@@ -1,6 +1,7 @@
 // Colours
 $white: #ffffff;
 $black: #000000;
+$black-hover: #333333;
 $cloudy-white: #f9f9f9;
 $blue: #0085ba;
 $blue-hover: #006799;
@@ -45,8 +46,6 @@ $red-hover: #c0392b;
 }
 
 .wp-list-table, .tablenav {
-	margin-left: 8px;
-	margin-right: 8px;
 	width: 100%;
 	table-layout: initial !important;
 
@@ -58,6 +57,14 @@ $red-hover: #c0392b;
 table {
 	.row-actions {
 		white-space: nowrap;
+	}
+
+	tr.highlight {
+		background-color: $highlight !important;
+
+		&:hover {
+			background-color: $highlight-hover !important;
+		}
 	}
 }
 
@@ -140,6 +147,11 @@ table {
 		.mia-field-group:first-child {
 			border-top: 0;
 		}
+	}
+
+	&.view-accordion {
+		border: 1px solid $silver;
+		border-top: 0;
 	}
 }
 

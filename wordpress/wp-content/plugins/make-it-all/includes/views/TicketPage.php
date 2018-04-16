@@ -42,14 +42,20 @@ class TicketPage extends MakeItAllPage {
 			}
 		}
 
-		$context = $this->get_context('View Tickets');
+		if (isset($_GET['id'])) {
+			$context = $this->getRequiredData('Viewing Ticket');
+			$context = $this->getTicket($context, $_GET['id']);
 
-		$this->render_pane($context); // render page before inserting table
+			$this->render_pane($context); // render page before inserting table
+		} else {
+			$context = $this->get_context('View Tickets');
 
-		$ticketTable = new TicketTable();
-		$ticketTable->prepare_items();
-		
-		$ticketTable->display();
+			$this->render_pane($context); // render page before inserting table
+
+			$ticketTable = new TicketTable();
+			$ticketTable->prepare_items();
+			$ticketTable->display();
+		}
 	}
 
 	/**
@@ -151,11 +157,7 @@ class TicketPage extends MakeItAllPage {
 			$ticketId = $_GET['id'];
 
 			// ticket's current data
-			$context['ticket']           = (new TicketQuery)->get_ticket($ticketId)[0];
-			$context['ticket']->devices  = (new TicketDeviceQuery)->get_device_ids_by_ticket_id($ticketId);
-			$context['ticket']->programs = (new TicketProgramQuery)->get_program_ids_by_ticket_id($ticketId);
-
-			$context['ticket'] = json_encode($context['ticket']);
+			$this->getTicket($context, $ticketId);
 		}
 
 		$this->render_pane($context);
@@ -227,6 +229,16 @@ class TicketPage extends MakeItAllPage {
 		$context['expertise_types'] = json_encode((new ExpertiseTypeQuery)->get());
 		$context['devices']         = json_encode((new DeviceQuery)->get());
 		$context['programs']        = json_encode((new ProgramQuery)->get());
+
+		return $context;
+	}
+
+	private function getTicket($context, $id) {
+		$context['ticket_obj']           = (new TicketQuery)->get_ticket($id)[0];
+		$context['ticket_obj']->devices  = (new TicketDeviceQuery)->get_device_ids_by_ticket_id($id);
+		$context['ticket_obj']->programs = (new TicketProgramQuery)->get_program_ids_by_ticket_id($id);
+
+		$context['ticket'] = json_encode($context['ticket_obj']);
 
 		return $context;
 	}

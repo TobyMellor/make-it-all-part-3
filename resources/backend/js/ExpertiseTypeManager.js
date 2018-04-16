@@ -129,22 +129,23 @@ export default class ExpertiseTypeManager {
 	 * e.g. "Electronics / Printer / Printer Ink / Cyan Ink"
 	 *
 	 * @param {ExpertiseType} 
-	 * @return {String} Breadcrum of ExpertiseType.name's, from the root to a ExpertiseType 
+	 * @return {String} Breadcrumb of ExpertiseType.name's, from the root to a ExpertiseType 
 	 */
-	getExpertiseTypeBreadcrum(expertiseTypeId) {
+	getExpertiseTypeBreadcrumb(expertiseTypeId) {
 		let expertiseTypeParent = this.getExpertiseType(expertiseTypeId),
-			breadcrum           = '';
+			breadcrumb           = '';
 
 		while (expertiseTypeParent != null) {
-			breadcrum = expertiseTypeParent.name + breadcrum;
+			breadcrumb = `
+				<li>
+					<a>${expertiseTypeParent.name}</a>
+					<i class="fa fa-caret-right"></i>
+				</li>
+			` + breadcrumb;
 
 			expertiseTypeParent = this.getExpertiseType(expertiseTypeParent.parent_id);
-
-			if (expertiseTypeParent != null) {
-				breadcrum = ' / ' + breadcrum;
-			}
 		}
 
-		return breadcrum;
+		return breadcrumb;
 	}
 }

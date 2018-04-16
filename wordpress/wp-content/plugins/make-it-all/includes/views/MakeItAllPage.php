@@ -100,7 +100,7 @@ abstract class MakeItAllPage {
 	protected function get_context($pageName) {
 		$context = Timber::get_context();
 		$context['page_name'] = $pageName; // e.g. Create Ticket
-
+		
 		return $context;
 	}
 
