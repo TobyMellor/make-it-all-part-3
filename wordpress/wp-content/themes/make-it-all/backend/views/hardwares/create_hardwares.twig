@@ -2,6 +2,7 @@
 
     <div class="form-wrapper">
     <form action="/wp-admin/admin.php?page=hardware_create" method="POST">
+        <div class="mia-hardware-panel">
         <div class="accordions">
             <div class="accordion-handle row">
                 <div class="accordion-icon col-xs-3">
@@ -40,12 +41,12 @@
 
     </form>
         </div>
+        </div>
 
 {% endblock %} {% block scripts %}
 <script>
-    var devices = {
-            devices
-    };
+    var devices = {{devices}},
+        types = {{types}};
 
 </script>
 {% endblock %}
