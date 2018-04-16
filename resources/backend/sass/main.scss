@@ -295,6 +295,51 @@ table {
 			}
 		}
 	}
+
+	&.mia-panel-short {
+		line-height: initial;
+
+		.mia-panel-heading {
+			min-height: initial;
+			padding: 9px 14px 8px 14px;
+			font-size: 14px;
+			font-weight: 600;
+			background-color: $blue;
+			border-bottom: 2px solid $blue-hover;
+			color: $white;
+
+			i {
+				position: absolute;
+				font-size: 14px;
+				top: 10px;
+				right: 14px;
+			}
+		}
+
+		.mia-panel-body {
+			padding: 0;
+			min-height: initial;
+
+			table {
+				border: 0;
+				
+				.contains-filter {
+					vertical-align: middle;
+
+					.filter {
+						float: right;
+					}
+				}
+			}
+
+			p {
+				margin: 10px;
+				text-align: center;
+				color: $silver;
+				font-size: 14px;
+			}
+		}
+	}
 }
 
 span.filter {

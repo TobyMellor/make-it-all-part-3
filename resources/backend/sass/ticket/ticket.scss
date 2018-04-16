@@ -213,6 +213,14 @@
 			margin-top: 19px;
 			color: $silver;
 		}
+
+		.assign-options {
+			max-height: initial;
+
+			> div:last-child {
+				height: initial;
+			}
+		}
 	}
 }
 

@@ -4,7 +4,7 @@
 	
 	<div class="row">
 		<div class="col-xs-9">
-			<table class="wp-list-table widefat fixed striped toplevel_page_ticket">
+			<table class="wp-list-table widefat fixed striped">
 				<thead>
 					<tr>
 						<th>ID</th>
@@ -14,7 +14,7 @@
 						<th>Updated At</th>
 					</tr>
 				</thead>
-				<tbody id="the-list">
+				<tbody>
 					<tr class="highlight">
 						<td>{{ ticket_obj.id }}</td>
 						<td>
@@ -219,11 +219,190 @@
 					</div>
 				</div>
 			</div>
-
-
 		</div>
 		<div class="col-xs-3">
-			Useful information goes here...
+			<div class="mia-panel mia-panel-short">
+				<div class="mia-panel-heading">
+					Call History
+					<i class="fa fa-chevron-up"></i>
+				</div>
+				<div class="mia-panel-body">
+					<table class="wp-list-table widefat fixed striped">
+						<thead>
+							<tr>
+								<th>Caller</th>
+								<th>Date</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<strong>Toby Mellor</strong>
+									<div class="row-actions visible">
+										<span class="edit">
+											<a href="admin.php?page=ticket_update&amp;id=2">View</a>
+										</span>
+									</div>
+								</td>
+								<td>2 weeks ago</td>
+								<td class="contains-filter">
+									<span class="filter">
+										Initial
+									</span>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>John Smith</strong>
+									<div class="row-actions visible">
+										<span class="edit">
+											<a href="admin.php?page=ticket_update&amp;id=2">View</a>
+										</span>
+									</div>
+								</td>
+								<td>1 week ago</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Toby Mellor</strong>
+									<div class="row-actions visible">
+										<span class="edit">
+											<a href="admin.php?page=ticket_update&amp;id=2">View</a>
+										</span>
+									</div>
+								</td>
+								<td>Just now</td>
+								<td class="contains-filter">
+									<span class="filter">
+										Recent
+									</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="mia-panel mia-panel-short">
+				<div class="mia-panel-heading">
+					Status History
+					<i class="fa fa-chevron-up"></i>
+				</div>
+				<div class="mia-panel-body">
+					<table class="wp-list-table widefat fixed striped">
+						<thead>
+							<tr>
+								<th>Changed by</th>
+								<th>Date</th>
+								<th style="text-align: right">Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<strong>Toby Mellor</strong>
+								</td>
+								<td>2 weeks ago</td>
+								<td class="contains-filter">
+									<span class="filter">
+										New
+									</span>
+								</td>
+							</tr>
+							<tr class="highlight">
+								<td>
+									<strong>John Smith</strong>
+								</td>
+								<td>1 week ago</td>
+								<td class="contains-filter">
+									<span class="filter filter-resolved">
+										Resolved
+									</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="mia-panel mia-panel-short">
+				<div class="mia-panel-heading">
+					Tickets with same Problem Type
+					<i class="fa fa-chevron-up"></i>
+				</div>
+				<div class="mia-panel-body">
+					<table class="wp-list-table widefat fixed striped">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Title</th>
+								<th style="text-align: right">Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>2</td>
+								<td>
+									<strong>Cannot turn on computer</strong>
+									<div class="row-actions visible">
+										<span class="edit">
+											<a href="admin.php?page=ticket_update&amp;id=2">View</a>
+										</span>
+									</div>
+								</td>
+								<td class="contains-filter">
+									<span class="filter filter-resolved">
+										Resolved
+									</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="mia-panel mia-panel-short">
+				<div class="mia-panel-heading">
+					Tickets raised by Toby Mellor
+					<i class="fa fa-chevron-up"></i>
+				</div>
+				<div class="mia-panel-body">
+					<p>No other tickets raised</p>
+				</div>
+			</div>
+			<div class="mia-panel mia-panel-short">
+				<div class="mia-panel-heading">
+					Esther Gregory's open Tickets
+					<i class="fa fa-chevron-up"></i>
+				</div>
+				<div class="mia-panel-body">
+					<table class="wp-list-table widefat fixed striped">
+						<thead>
+							<tr>
+								<th>Title</th>
+								<th>Updated At</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="highlight">
+								<td>
+									<strong>Cannot turn on computer</strong>
+								</td>
+								<td>Just now</td>
+							</tr>
+							<tr>
+								<td>
+									<strong>Printer is broken!</strong>
+									<div class="row-actions visible">
+										<span class="edit">
+											<a href="admin.php?page=ticket_update&amp;id=2">View</a>
+										</span>
+									</div>
+								</td>
+								<td>2 days ago</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
 	</div>
 
