@@ -1,7 +1,6 @@
 {% extends "backend/views/layouts/page.twig" %}
 
 {% block main %}
-	
 	<div class="row">
 		<div class="col-xs-9">
 			<table class="wp-list-table widefat fixed striped">
@@ -236,49 +235,27 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>
-									<strong>Toby Mellor</strong>
-									<div class="row-actions visible">
-										<span class="edit">
-											<a href="admin.php?page=ticket_update&amp;id=2">View</a>
-										</span>
-									</div>
-								</td>
-								<td>2 weeks ago</td>
-								<td class="contains-filter">
-									<span class="filter">
-										Initial
-									</span>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<strong>John Smith</strong>
-									<div class="row-actions visible">
-										<span class="edit">
-											<a href="admin.php?page=ticket_update&amp;id=2">View</a>
-										</span>
-									</div>
-								</td>
-								<td>1 week ago</td>
-							</tr>
-							<tr>
-								<td>
-									<strong>Toby Mellor</strong>
-									<div class="row-actions visible">
-										<span class="edit">
-											<a href="admin.php?page=ticket_update&amp;id=2">View</a>
-										</span>
-									</div>
-								</td>
-								<td>Just now</td>
-								<td class="contains-filter">
-									<span class="filter">
-										Recent
-									</span>
-								</td>
-							</tr>
+							{% for call in ticket_obj.call_history %}
+								<tr>
+									<td>
+										<strong>{{ call.caller }}</strong>
+									</td>
+									<td>{{ call.time }}</td>
+									{% if loop.first %}
+										<td class="contains-filter">
+											<span class="filter">
+												Initial
+											</span>
+										</td>
+									{% elseif loop.last %}
+										<td class="contains-filter">
+											<span class="filter">
+												Latest
+											</span>
+										</td>
+									{% endif %}
+								</tr>
+							{% endfor %}
 						</tbody>
 					</table>
 				</div>
@@ -298,28 +275,20 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>
-									<strong>Toby Mellor</strong>
-								</td>
-								<td>2 weeks ago</td>
-								<td class="contains-filter">
-									<span class="filter">
-										New
-									</span>
-								</td>
-							</tr>
-							<tr class="highlight">
-								<td>
-									<strong>John Smith</strong>
-								</td>
-								<td>1 week ago</td>
-								<td class="contains-filter">
-									<span class="filter filter-resolved">
-										Resolved
-									</span>
-								</td>
-							</tr>
+							{% for status in ticket_obj.status_history %}
+								<tr {{ loop.last ? 'class="highlight"' }}>
+									<td>
+										<strong>{{ status.staff_name }}</strong>
+									</td>
+									<td>{{ status.created_at }}</td>
+									<td class="contains-filter">
+										<span class="filter filter-{{ status.name|lower }}">
+											{{ status.name|slice(0, 8) }}
+										</span>
+									</td>
+								</tr>
+							{% endfor %}
+							
 						</tbody>
 					</table>
 				</div>
@@ -330,82 +299,80 @@
 					<i class="fa fa-chevron-up"></i>
 				</div>
 				<div class="mia-panel-body">
-					<table class="wp-list-table widefat fixed striped">
-						<thead>
-							<tr>
-								<th>ID</th>
-								<th>Title</th>
-								<th style="text-align: right">Status</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>2</td>
-								<td>
-									<strong>Cannot turn on computer</strong>
-									<div class="row-actions visible">
-										<span class="edit">
-											<a href="admin.php?page=ticket_update&amp;id=2">View</a>
-										</span>
-									</div>
-								</td>
-								<td class="contains-filter">
-									<span class="filter filter-resolved">
-										Resolved
-									</span>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+					{% if ticket_obj.similar_tickets|length > 0 %}
+						<table class="wp-list-table widefat fixed striped">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Title</th>
+									<th style="text-align: right">Status</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for similar_ticket in ticket_obj.similar_tickets %}
+									<tr>
+										<td>{{ similar_ticket.id }}</td>
+										<td>
+											<strong>{{ similar_ticket.title }}</strong>
+											<div class="row-actions visible">
+												<span class="edit">
+													<a href="admin.php?page=ticket&id={{ similar_ticket.id }}">View</a>
+												</span>
+											</div>
+										</td>
+										<td class="contains-filter">
+											<span class="filter filter-{{ similar_ticket.status|lower }}">
+												{{ similar_ticket.status }}
+											</span>
+										</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					{% else %}
+						<p>No other similar tickets</p>
+					{% endif %}
 				</div>
 			</div>
 			<div class="mia-panel mia-panel-short">
 				<div class="mia-panel-heading">
-					Tickets raised by Toby Mellor
+					Tickets raised by first caller
 					<i class="fa fa-chevron-up"></i>
 				</div>
 				<div class="mia-panel-body">
-					<p>No other tickets raised</p>
-				</div>
-			</div>
-			<div class="mia-panel mia-panel-short">
-				<div class="mia-panel-heading">
-					Esther Gregory's open Tickets
-					<i class="fa fa-chevron-up"></i>
-				</div>
-				<div class="mia-panel-body">
-					<table class="wp-list-table widefat fixed striped">
-						<thead>
-							<tr>
-								<th>Title</th>
-								<th>Updated At</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr class="highlight">
-								<td>
-									<strong>Cannot turn on computer</strong>
-								</td>
-								<td>Just now</td>
-							</tr>
-							<tr>
-								<td>
-									<strong>Printer is broken!</strong>
-									<div class="row-actions visible">
-										<span class="edit">
-											<a href="admin.php?page=ticket_update&amp;id=2">View</a>
-										</span>
-									</div>
-								</td>
-								<td>2 days ago</td>
-							</tr>
-						</tbody>
-					</table>
+					{% if ticket_obj.tickets_by_caller|length > 0 %}
+						<table class="wp-list-table widefat fixed striped">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Title</th>
+									<th>Updated At</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for ticket_by_caller in ticket_obj.tickets_by_caller %}
+									<tr>
+										<td>{{ ticket_by_caller.id }}</td>
+										<td>
+											<strong>{{ ticket_by_caller.title }}</strong>
+											<div class="row-actions visible">
+												<span class="edit">
+													<a href="admin.php?page=ticket&id={{ ticket_by_caller.id }}">View</a>
+												</span>
+											</div>
+										</td>
+										<td>{{ ticket_by_caller.updated_at }}</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					{% else %}
+						<p>No other tickets with the same problem</p>
+					{% endif %}
 				</div>
 			</div>
 		</div>
 	</div>
-
 {% endblock %}
 
 {% block scripts %}

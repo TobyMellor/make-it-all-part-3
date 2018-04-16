@@ -18,8 +18,7 @@ $(() => {
 	});
 
 	if (!ticket) {
-		sessionStorage.setItem('shouldShowArrow', true);
-		return;
+		sessionStorage.setItem('shouldShowArrow', true); return;
 	}
 
 	// arrow functionality, don't show the arrow if they accessed the page directly

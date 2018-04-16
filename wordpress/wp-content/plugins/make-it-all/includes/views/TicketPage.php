@@ -157,7 +157,7 @@ class TicketPage extends MakeItAllPage {
 			$ticketId = $_GET['id'];
 
 			// ticket's current data
-			$this->getTicket($context, $ticketId);
+			$context = $this->getTicket($context, $ticketId);
 		}
 
 		$this->render_pane($context);
@@ -234,9 +234,20 @@ class TicketPage extends MakeItAllPage {
 	}
 
 	private function getTicket($context, $id) {
-		$context['ticket_obj']           = (new TicketQuery)->get_ticket($id)[0];
-		$context['ticket_obj']->devices  = (new TicketDeviceQuery)->get_device_ids_by_ticket_id($id);
-		$context['ticket_obj']->programs = (new TicketProgramQuery)->get_program_ids_by_ticket_id($id);
+		$ticketQuery        = new TicketQuery();
+		$ticketDeviceQuery  = new TicketDeviceQuery();
+		$ticketProgramQuery = new TicketProgramQuery();
+
+		// required ticket information
+		$context['ticket_obj']           = $ticketQuery->get_ticket($id)[0];
+		$context['ticket_obj']->devices  = $ticketDeviceQuery->get_device_ids_by_ticket_id($id);
+		$context['ticket_obj']->programs = $ticketProgramQuery->get_program_ids_by_ticket_id($id);
+
+		// extra helpful info for the side panels
+		$context['ticket_obj']->call_history                = $ticketQuery->get_call_history($id);
+		$context['ticket_obj']->status_history              = $ticketQuery->get_status_history($id);
+		$context['ticket_obj']->similar_tickets             = $ticketQuery->get_similar_tickets($id);
+		$context['ticket_obj']->tickets_by_caller           = $ticketQuery->get_tickets_by_caller($id);
 
 		$context['ticket'] = json_encode($context['ticket_obj']);
 
