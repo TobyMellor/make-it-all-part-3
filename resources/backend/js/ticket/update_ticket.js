@@ -27,7 +27,7 @@ $(() => {
 		sessionStorage.removeItem('shouldShowArrow');
 
 		$img.css('opacity', 0.1);
-		setTimeout(() => $img.fadeOut(), 2500);
+		setTimeout(() => $img.css('width', 0), 2500);
 	} else {
 		$img.hide();
 	}

@@ -257,12 +257,14 @@ table {
 				margin-right: 20px;
 				opacity: 0.1;
 				width: 81px;
+				transition: width .5s;
 			}
 
 			select {
 				flex-grow: 1;
 				margin-right: 20px;
 				margin-left: 20px;
+				transition: width .5s;
 			}
 		}
 	}
