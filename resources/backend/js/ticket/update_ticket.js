@@ -37,7 +37,7 @@ $(() => {
 	$('.number-circle').text(ticket.id);
 	$('.accordion-title').text('Ticket: ' + ticket.title);
 
-	$('select[name="ticket[status]"] option[value="' + ticket.status_id + '"]').prop('selected', true);
+	$('select[name="ticket[status]"] option[value="' + ticket.status_id + '"]').prop('selected', true).trigger('change');
 	$('input[name="ticket[title]"]').val(ticket.title);
 	$('textarea[name="ticket[description]"]').val(ticket.description);
 
