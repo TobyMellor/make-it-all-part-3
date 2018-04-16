@@ -223,10 +223,11 @@ class TicketPage extends MakeItAllPage {
 	private function getRequiredData($pageName) {
 		$context = $this->get_context($pageName);
 
-		$context['employees']       = json_encode((new StaffQuery)->get());
-		$context['expertise_types'] = json_encode((new ExpertiseTypeQuery)->get());
-		$context['devices']         = json_encode((new DeviceQuery)->get());
-		$context['programs']        = json_encode((new ProgramQuery)->get());
+		$context['employees']            = json_encode((new StaffQuery)->get());
+		$context['expertise_types']      = json_encode((new ExpertiseTypeQuery)->get());
+		$context['expertise_type_staff'] = json_encode((new ExpertiseTypeStaffQuery)->get());
+		$context['devices']              = json_encode((new DeviceQuery)->get());
+		$context['programs']             = json_encode((new ProgramQuery)->get());
 
 		return $context;
 	}

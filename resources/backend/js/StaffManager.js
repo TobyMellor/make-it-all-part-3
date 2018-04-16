@@ -1,7 +1,8 @@
 export default class StaffManager {
-	constructor(employees, currentEmployeeId) {
-		this.employees       = employees;
-		this.currentEmployee = this.getEmployee(currentEmployeeId);
+	constructor(employees, currentEmployeeId, expertiseTypeStaff) {
+		this.employees          = employees;
+		this.currentEmployee    = this.getEmployee(currentEmployeeId);
+		this.expertiseTypeStaff = expertiseTypeStaff;
 
 		// populate the select field in the call panel
 		this.populateSelectField($('.call-panel select'), employees);
@@ -31,13 +32,28 @@ export default class StaffManager {
 	}
 
 	/**
+	 * Get an Expertise Type Staff
+	 *
+	 * @param {Integer} staffId ID of staff
+	 * @param {Integer} expertiseTypeId ID of ExpertiseType
+	 * @return {Object} ExpertiseTypeStaff
+	 */
+	getExpertiseTypeStaff(staffId, expertiseTypeId) {
+		return this.expertiseTypeStaff.find(ets => ets.staff_id == staffId && ets.expertise_type_id == expertiseTypeId) || null;
+	}
+
+	/**
 	 * Get specialists of certain ExpertiseType
 	 *
 	 * @param {Integer} expertiseTypeId ID of expertise type
 	 * @return {Array} employees with specialism in an Expertise Type
 	 */
 	getSpecialistsOfSpecialism(expertiseTypeId) {
-		return this.employees.filter(employee => employee.staff_expertise_type_ids.indexOf(String(expertiseTypeId)) > -1);
+		return this.employees.filter(employee => {
+			return this.expertiseTypeStaff.filter(ets => ets.expertise_type_id == expertiseTypeId)
+				.map(ets => ets.staff_id)
+				.indexOf(String(employee.id)) > -1
+		});
 	}
 
 	/**
@@ -62,7 +78,7 @@ export default class StaffManager {
 			}
 		});
 
-		return bestSpecialist;
+		return this.getExpertiseTypeStaff(bestSpecialist.id, expertiseTypeId);
 	}
 
 	/**

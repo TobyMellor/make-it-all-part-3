@@ -9,10 +9,10 @@ let showEmployee = window.showEmployee = (function($element, employee, staffMana
 
 $(() => {
 	// if we're on the read page, don't register these events
-	if (!window.employees || !window.expertiseTypes || !window.devices || !window.programs) return;
+	if (!window.employees || !window.expertiseTypes || !window.expertiseTypeStaff || !window.devices || !window.programs) return;
 
-	let staffManager         = window.staffManager         = new StaffManager(employees, 1);
-	let expertiseTypeManager = window.expertiseTypeManager = new ExpertiseTypeManager(expertiseTypes, staffManager);
+	let staffManager         = window.staffManager         = new StaffManager(employees, 1, expertiseTypeStaff);
+	let expertiseTypeManager = window.expertiseTypeManager = new ExpertiseTypeManager(expertiseTypes, expertiseTypeStaff, staffManager);
 	let affectedItemsManager = window.affectedItemsManager = new AffectedItemsManager(devices, programs);
 
 	$(document).on('change', '.add-hardware-device, .add-application, .add-operating-system', function() {
@@ -60,9 +60,14 @@ $(() => {
 			if ($input.val() === 'self') {
 				showEmployee($display, staffManager.currentEmployee, staffManager);
 			} else {
-				let selectedExpertiseTypeId = Number($(this).closest('.accordion-body').find('.problem-type-picker li.last-active').data('expertiseTypeId') || ticket.expertise_type_staff_id);
+				let selectedExpertiseTypeId = Number(
+					$(this).closest('.accordion-body').find('.problem-type-picker li.last-active').data('expertiseTypeId')
+					|| ticket.expertise_type_staff_id
+				);
 
-				showEmployee($display, staffManager.getBestSpecialistForSpecialism(selectedExpertiseTypeId), staffManager) // TODO: Update with ID from problem type picker
+				showEmployee($display, staffManager.getEmployee(
+					staffManager.getBestSpecialistForSpecialism(selectedExpertiseTypeId).staff_id
+				), staffManager) // TODO: Update with ID from problem type picker
 			}
 		}
 	});

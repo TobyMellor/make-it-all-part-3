@@ -1,7 +1,8 @@
 export default class ExpertiseTypeManager {
-	constructor(expertiseTypes, staffManager) {
-		this.expertiseTypes = expertiseTypes;
-		this.staffManager   = staffManager;
+	constructor(expertiseTypes, expertiseTypeStaff, staffManager) {
+		this.expertiseTypes     = expertiseTypes;
+		this.expertiseTypeStaff = expertiseTypeStaff;
+		this.staffManager       = staffManager;
 
 		// load root problem types
 		this.loadChildrenExpertiseTypes($('.type-columns'));
@@ -28,6 +29,17 @@ export default class ExpertiseTypeManager {
 	}
 
 	/**
+	 * Get an Expertise Type Staff
+	 *
+	 * @param {Integer} staffId ID of staff
+	 * @param {Integer} expertiseTypeId ID of ExpertiseType
+	 * @return {Object} ExpertiseTypeStaff
+	 */
+	getExpertiseTypeStaff(staffId, expertiseTypeId) {
+		return this.expertiseTypeStaff.find(ets => ets.staff_id == staffId && ets.expertise_type_id == expertiseTypeId) || null;
+	}
+
+	/**
 	 * Get all ExpertiseTypes with no parent
 	 *
 	 * @return {Array} ExpertiseTypes with no parent
@@ -50,6 +62,7 @@ export default class ExpertiseTypeManager {
 			let clickedExpertiseTypeId = Number($clickedLi.data('expertiseTypeId'));
 
 			clickedExpertiseTypeChildren = this.getExpertiseTypesWithParent(clickedExpertiseTypeId);
+			$typeColumns.parent().find('input').val(clickedExpertiseTypeId);
 
 			// $clickedLi.closest('.form-group').find('span.subtle').text(this.getExpertiseTypeBreadcrum(expertiseType));
 
@@ -63,7 +76,7 @@ export default class ExpertiseTypeManager {
 
 		clickedExpertiseTypeChildren.forEach((child, i) => {
 			specialists = this.staffManager.getSpecialistsOfSpecialism(child.id);
-
+			
 			$typeColumn.append(`
 				<li ${(child.children.length === 0 ? 'class="no-children"' : '')} data-expertise-type-id="${child.id}">
 					${child.name}

@@ -13,7 +13,7 @@ class ExpertiseTypeStaffQuery extends MakeItAllQuery {
 	public function get() {
 		return $this->get_results(
 			"
-				SELECT id, staff_id
+				SELECT id, staff_id, expertise_type_id
 				FROM {$this->prefix}{$this->table}
 			"
 		);
