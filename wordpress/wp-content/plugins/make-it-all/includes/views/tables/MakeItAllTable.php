@@ -7,6 +7,7 @@ if (!class_exists('WP_List_Table')) {
 abstract class MakeItAllTable extends WP_List_Table {
 	protected $table;
 	protected $prefix;
+	protected $primary = 'id';
 
 	public function __construct() {
 		parent::__construct();
@@ -39,7 +40,7 @@ abstract class MakeItAllTable extends WP_List_Table {
 
 		$data = array_slice($data, (($currentPage - 1) * $perPage), $perPage);
 
-		$this->_column_headers = array($columns, [], $sortable);
+		$this->_column_headers = array($columns, [], $sortable, $this->primary);
 		$this->items = $data;
 	}
 

@@ -26,31 +26,20 @@ class StaffQuery extends MakeItAllQuery {
 					specialist
 				FROM {$this->prefix}{$this->table} AS {$this->table}
 					JOIN {$this->prefix}department AS department
-						ON staff.department_id = department.id
-					LEFT JOIN {$this->prefix}expertise_type_staff AS ets
-						ON staff.id = ets.staff_id
-				GROUP BY staff.id;
+						ON staff.department_id = department.id;
 			"
 		);
 
 		$openTickets = (new TicketQuery)->get_open_tickets();
-		$expertiseTypeStaffs = (new ExpertiseTypeStaffQuery)->get();
 
-		// give each employee a .open_tickets count and .staff_expertise_type_ids
+		// give each employee a .open_tickets count
 		foreach ($employees as $employee) {
-			$employee->open_tickets             = 0;
-			$employee->staff_expertise_type_ids = [];
+			$employee->open_tickets = 0;
 
 			foreach ($openTickets as $key => $openTicket) {
 				if ($openTicket->staff_id === $employee->id) {
 					$employee->open_tickets += 1;
 					unset($openTickets[$key]);
-				}
-			}
-
-			foreach ($expertiseTypeStaffs as $expertiseTypeStaff) {
-				if ($expertiseTypeStaff->staff_id === $employee->id) {
-					$employee->staff_expertise_type_ids[] = $expertiseTypeStaff->id;
 				}
 			}
 		}

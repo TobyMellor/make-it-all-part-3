@@ -216,7 +216,8 @@
 									</div>
 									<div class="col-sm-9 col-xs-12">
 										<div class="problem-type-picker">
-											<input type="text" name="tickets[1][expertise_type_staff_id]" hidden>
+											<input type="text" name="tickets[1][expertise_type_id]" hidden>
+											<input type="text" name="tickets[1][assigned_to_specialist]" hidden>
 											<div class="type-columns"></div>
 										</div>
 									</div>
@@ -262,7 +263,7 @@
 															</p>
 														</div>
 														<div class="col-xs-9">
-															<input name="tickets[1][assigned_to][name]" type="text" placeholder="Enter ticket title here" readonly="readonly" data-attribute="name">
+															<input name="tickets[1][assigned_to][name]" type="text" readonly="readonly" data-attribute="name">
 														</div>
 													</div>
 													<div class="row mia-field-group">
@@ -272,7 +273,7 @@
 															</p>
 														</div>
 														<div class="col-xs-9">
-															<input name="tickets[1][assigned_to][id]" type="text" placeholder="Enter ticket title here" readonly="readonly" data-attribute="id">
+															<input name="tickets[1][assigned_to][id]" type="text" readonly="readonly" data-attribute="id">
 														</div>
 													</div>
 													<div class="row mia-field-group">
@@ -282,7 +283,7 @@
 															</p>
 														</div>
 														<div class="col-xs-9">
-															<input name="tickets[1][assigned_to][job_title]" type="text" placeholder="Enter ticket title here" readonly="readonly" data-attribute="job_title">
+															<input name="tickets[1][assigned_to][job_title]" type="text" readonly="readonly" data-attribute="job_title">
 														</div>
 													</div>
 													<div class="row mia-field-group">
@@ -292,7 +293,7 @@
 															</p>
 														</div>
 														<div class="col-xs-9">
-															<input name="tickets[1][assigned_to][department]" type="text" placeholder="Enter ticket title here" readonly="readonly" data-attribute="department">
+															<input name="tickets[1][assigned_to][department]" type="text" readonly="readonly" data-attribute="department">
 														</div>
 													</div>
 													<div class="row mia-field-group">
@@ -302,7 +303,7 @@
 															</p>
 														</div>
 														<div class="col-xs-9">
-															<input name="tickets[1][assigned_to][phone_number]" type="text" placeholder="Enter ticket title here" readonly="readonly" data-attribute="phone_number">
+															<input name="tickets[1][assigned_to][phone_number]" type="text" readonly="readonly" data-attribute="phone_number">
 														</div>
 													</div>
 													<div class="row mia-field-group">
@@ -397,9 +398,10 @@
 
 {% block scripts %}
 	<script>
-		var employees      = {{ employees }},
-			expertiseTypes = {{ expertise_types }},
-			devices        = {{ devices }},
-			programs       = {{ programs }};
+		var employees          = {{ employees }},
+			expertiseTypes     = {{ expertise_types }},
+			expertiseTypeStaff = {{ expertise_type_staff }},
+			devices            = {{ devices }},
+			programs           = {{ programs }};
 	</script>
 {% endblock %}

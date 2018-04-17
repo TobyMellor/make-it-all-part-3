@@ -69,7 +69,7 @@ export default class AffectedItemsManager {
 
 		$affectedItems.append(`
 			<li data-id="${affectedItem.id}" data-type="${affectedItemType}">
-				<input name="tickets[${accordionId}][${affectedItemType}][${affectedItem.id}]" value="${affectedItem.id}" type="text" hidden="">
+				<input name="${accordionId ? `tickets[${accordionId}]` : `ticket`}[${affectedItemType}][${affectedItem.id}]" value="${affectedItem.id}" type="text" hidden="">
 				<h4>${affectedItem.name || affectedItem.type}</h4>
 				<p>(${this.getTypeName(affectedItem)})</p>
 				<a class="button button-danger remove-affected-item" href="javascript: void(0);">

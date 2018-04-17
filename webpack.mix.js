@@ -7,7 +7,8 @@
  * for a single request across all pages.
  */
 
-let mix = require("laravel-mix");
+let mix = require("laravel-mix"),
+    fs  = require("fs");
 
 mix.setPublicPath('./');
 mix.options({
@@ -53,11 +54,22 @@ function compileBackend() {
 	mix.js(backendResources("main.js"), backendOutput("main.js"));
 	mix.sass(backendResources("main.scss"), backendOutput("main.css"))
 
-	let pages = ["ticket"];
+	let pages   = ["ticket"],
+		actions = ["read", "create", "update"];
 
 	for (let page of pages) {
-		mix.js(backendResources(page + ".js"), backendOutput(page + ".js"));
-		mix.sass(backendResources(page + ".scss"), backendOutput(page + ".css"));
+		// common styles/scripts across actions, e.g. tickets/tickets.js
+		mix.js(backendResources(page + "/" + page + ".js"), backendOutput(page + "/" + page + ".js"));
+		mix.sass(backendResources(page + "/" + page + ".scss"), backendOutput(page + "/" + page + ".css"));
+
+		for (let action of actions) {
+			let actionPath = page + "/" + action + "_" + page + ".js";
+
+		    // scripts for an individual action, e.g. tickets/c.js
+		    if (fs.existsSync(backendResources(actionPath))) {
+				mix.js(backendResources(actionPath), backendOutput(actionPath));
+			}
+		}
 	}
 
 	compileVendors(backendResources, backendOutput);
