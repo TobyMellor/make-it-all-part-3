@@ -217,15 +217,6 @@ class TicketQuery extends Query {
 	}
 
 	/**
-	 * Updates a record in the DB.
-	 *
-	 * @return Boolean
-	 */
-	public function update($ticketId, $columns) {
-		return $this->mia_update($ticketId, $columns);
-	}
-
-	/**
 	 * Deletes a record from the DB.
 	 *
 	 * @return Boolean

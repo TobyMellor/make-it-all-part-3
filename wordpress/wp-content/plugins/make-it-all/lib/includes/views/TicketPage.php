@@ -175,7 +175,7 @@ class TicketPage extends Page {
 		$ticket   = $_POST['ticket'];
 		$ticketId = $ticket['id'];
 
-		$ticketQuery->update(
+		$ticketQuery->mia_update(
 			$ticketId,
 			[
 				'title'                     => $ticket['title'], 
