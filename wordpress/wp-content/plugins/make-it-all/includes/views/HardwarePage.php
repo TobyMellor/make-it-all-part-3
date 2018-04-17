@@ -4,6 +4,7 @@ require_once(plugin_dir_path(dirname(__FILE__)) . 'views/MakeItAllPage.php');
 require_once(plugin_dir_path(dirname(__FILE__)) . 'views/tables/HardwareTable.php');
 require_once(plugin_dir_path(dirname(__FILE__)) . 'database/queries/DeviceQuery.php');
 require_once(plugin_dir_path(dirname(__FILE__)) . 'database/queries/TypeQuery.php');
+require_once(plugin_dir_path(dirname(__FILE__)) . 'database/queries/MakeQuery.php');
 
 class HardwarePage extends MakeItAllPage {
     protected $name     = 'Hardware';
@@ -54,7 +55,8 @@ class HardwarePage extends MakeItAllPage {
 
         $context = $this->get_context('Create Hardwares');
         $context['devices'] = json_encode((new DeviceQuery)->get());
-        $context['types'] = json_encode((new TypeQuery)->get());
+        $context['types']   = json_encode((new TypeQuery)->get());
+        $context['makes']   = json_encode((new MakeQuery)->get());
 
         $this->render_pane($context);
 

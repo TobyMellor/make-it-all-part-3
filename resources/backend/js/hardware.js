@@ -1,9 +1,12 @@
 import HardwareManager from "./HardwareManager";
 
 jQuery(() => {
-    let hardwaremanager         = new HardwareManager(devices, types);
+    let hardwaremanager         = new HardwareManager(devices, types, makes);
     $(document).ready(function(){
-        console.log(types);
+        console.log(makes);
+
+        addButtonListeners(this);
+
     });
 
 
@@ -31,7 +34,11 @@ jQuery(() => {
         });
     });
 
-    $('#add-additional-ticket').click(function() {
+;
+
+
+
+    $('#add-additional-hardware').click(function() {
         // deinit all TinyMCE's before cloning
         tinyMCE.EditorManager.editors.forEach((editor) => {
             tinyMCE.get(editor.id).remove();
@@ -40,8 +47,9 @@ jQuery(() => {
         let $accordions    = $(this).closest('.mia-panel').find('.accordions'),
             newAccordionId = Number($('.accordions .accordion-handle:nth-last-child(2) .number-circle').text()) + 1,
             $newAccordion  = cloneAccordion($accordions, newAccordionId);
+        console.log("acc" + $accordions);
 
-        clearAccordion($newAccordion, newAccordionId, affectedItemsManager, expertiseTypeManager);
+        clearAccordion($newAccordion, newAccordionId);
 
         $accordions.append($newAccordion);
         $newAccordion.find('input[type=radio]').first().click();
@@ -60,6 +68,45 @@ jQuery(() => {
     initAccordions();
     clearAccordion($('.mia-panel-body')); // clear all fields
 });
+function addButtonListeners($accordian){
+    let types = $($accordian).find('.add-type');
+    let makes = $($accordian).find('.add-make');
+
+    //Expand type section on button press.
+    types.on('click', function(){
+        let typePanel = $(this).closest('.accordion-body').find('#type-information');
+        console.log("type clicked");
+        if(typePanel.hasClass('expanded')){
+            typePanel.removeClass('expanded');
+        } else {
+            typePanel.addClass('expanded');
+            $(this).closest('.accordion-body').find('.hardware-type-select').val('new');
+
+
+        }
+
+
+    });
+
+
+    //Expand make section on button press.
+        makes.on('click', function(){
+        let makePanel = $(this).closest('.accordion-body').find('#make-information');
+        if(makePanel.hasClass('expanded')){
+            makePanel.removeClass('expanded');
+        } else {
+            makePanel.addClass('expanded');
+            $(this).closest('.accordion-body').find('.hardware-make-select').val('new');
+
+
+        }
+
+
+    })
+
+
+
+}
 
 function cloneAccordion($accordions, newAccordionId) {
     let $existingAccordion = $accordions.find('.accordion-handle:first-child, .accordion-body:nth-child(2)').wrapAll('<div>'),
@@ -71,7 +118,7 @@ function cloneAccordion($accordions, newAccordionId) {
     $newAccordion.find('.accordion-actions').prepend('<i class="fa fa-trash-o"></i>');
 
     // replace name of input fields, e.g. tickets[1].x to tickets[2].x
-    $newAccordion.last().find('input, textarea, select').each((i, input) => $(input).prop('name', $(input).prop('name').replace(/tickets\[.*?\]\s?/g, 'tickets[' + newAccordionId + ']')));
+    $newAccordion.last().find('input, textarea, select').each((i, input) => $(input).prop('name', $(input).prop('name').replace(/hardware\[.*?\]\s?/g, 'hardware[' + newAccordionId + ']')));
     $newAccordion.last().attr('data-accordion-id', newAccordionId);
 
     return $newAccordion;
@@ -80,31 +127,21 @@ function cloneAccordion($accordions, newAccordionId) {
 function clearAccordion($accordion, newAccordionId, affectedItemsManager = null, expertiseTypeManager = null) {
     // set input/textarea/select fields to default values
     $accordion.find('select').prop('selectedIndex', 0);
-    $accordion.find('input[type=text]:not(.hasDatepicker), textarea').val('');
-    $accordion.find('input[type=radio]').first().click();
+    $accordion.find('input[type=text], textarea').val('');
 
-    // because problem is initially unselected, hide ability to choose specialist of problem
-    $accordion.find('input[type=radio][value="specialist"]').parent().hide();
 
-    // clear the status tag to the right of the select field, e.g. "New", "Pending"
-    $accordion.find('.has-button div:last-child').empty();
 
-    // refresh accordion, e.g. page has just loaded
-    if (affectedItemsManager !== null && expertiseTypeManager !== null) {
-        let $typeColumns = $accordion.find('.type-columns');
 
-        // clear any selected .affected-items, repopulate select fields
-        $accordion.find('.affected-items').empty();
-        affectedItemsManager.populateAllSelectFields($accordion);
 
-        // reload .type-columns to contain root expertise types
-        $typeColumns.empty();
-        expertiseTypeManager.loadChildrenExpertiseTypes($typeColumns);
 
+        //Refresh accoridan stuff
+        $accordion.find('#type-information').removeClass('expanded');
+        $accordion.find('#make-information').removeClass('expanded');
+        addButtonListeners($accordion);
         // set the accordion number and the new ticket text in the accordion handle
         $accordion.find('.accordion-icon .number-circle').text(newAccordionId);
-        $accordion.find('.accordion-title').text('New Ticket');
-    }
+        $accordion.find('.accordion-title').text('New Hardware Item');
+
 }
 
 function initTinyMCE() {

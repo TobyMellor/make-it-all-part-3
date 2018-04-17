@@ -1,10 +1,12 @@
 export default class HardwareManager {
-        constructor(deivces, types) {
+        constructor(deivces, types, makes) {
         this.devices       = deivces;
         this.types         = types;
+        this.makes         = makes;
 
         // populate the select field in the call panel
         this.populateSelectField($('.hardware-type-select'), types);
+        this.populateSelectField($('.hardware-make-select'), makes);
 
 
     }
@@ -18,15 +20,14 @@ export default class HardwareManager {
     populateSelectField($selectField, types) {
 
         types.forEach(type => {
-            console.log("hellssso");
             $selectField.append(`
                 <option value="${type.type}">${type.type}</option>
             `);
         });
-        //Add a new selection to input a new type
-         $selectField.append(`
+                    $selectField.append(`
                 <option value="new">New</option>
             `);
+
 
 
     }
