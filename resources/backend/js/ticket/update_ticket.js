@@ -42,7 +42,12 @@ $(() => {
 
 	tinyMCE.init({
 		selector: 'textarea',
-		branding: false
+		branding: false,
+		setup: function (editor) {
+			editor.on('change', function () {
+				editor.save(); // keep hidden textarea up to date
+			});
+		}
 	});
 
 	expertiseTypeManager.loadExpertiseType($('.type-columns'), ticket.expertise_type_id);

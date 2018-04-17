@@ -104,6 +104,16 @@ table {
 			margin: 0;
 		}
 
+		&.green-highlight {
+			background-color: $green;
+			border-bottom: 2px solid $green-hover;
+		}
+
+		&.red-highlight {
+			background-color: $red;
+			border-bottom: 2px solid $red-hover;
+		}
+
 		.accordion-icon {
 			padding: 0;
 			padding-left: 5px;
@@ -366,6 +376,37 @@ span.filter {
 
 	&.filter-pending {
 		background-color: $orange;
+	}
+}
+
+input, select, textarea {
+	&.is-valid {
+		border: 1px solid $green;
+
+		&:focus {
+			border: 1px solid $green-hover;
+		}
+	}
+
+	&.is-invalid {
+		border: 1px solid $red;
+
+		&:focus {
+			border: 1px solid $red-hover;
+		}
+	}
+}
+
+.invalid-feedback {
+	margin-top: 4px;
+	color: $red;
+
+	&::before {
+		content: "\f071";
+		font-family: FontAwesome;
+		color: $red;
+		margin-right: 4px;
+		margin-left: 2px;
 	}
 }
 
