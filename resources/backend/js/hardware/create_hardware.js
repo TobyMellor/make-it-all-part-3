@@ -1,9 +1,9 @@
-import HardwareManager from "./HardwareManager";
+import HardwareManager from "../HardwareManager";
 
 jQuery(() => {
-    let hardwaremanager         = new HardwareManager(devices, types, makes);
+    let hardwaremanager = new HardwareManager(devices, types, makes);
     $(document).ready(function(){
-        console.log(makes);
+
 
         addButtonListeners(this);
 

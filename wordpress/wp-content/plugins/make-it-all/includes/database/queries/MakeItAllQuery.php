@@ -36,13 +36,26 @@ abstract class MakeItAllQuery {
 	}
 
 	/**
+	 * Updates a record by ID in the db
+	 *
+	 * @return Boolean
+	 */
+	protected function mia_update($id, $columns, $whereColumn = 'id') {
+		$columns['updated_at'] = date('Y-m-d H:i:s');
+		
+		global $wpdb;
+
+		return $wpdb->update($this->prefix . $this->table, $columns, [$whereColumn => $id]);
+	}
+
+	/**
 	 * Deletes a record by ID from the db
 	 *
 	 * @return Boolean
 	 */
-	protected function mia_delete($id) {
+	protected function mia_delete($id, $whereColumn = 'id') {
 		global $wpdb;
 
-		return $wpdb->delete($this->prefix . $this->table, ['id' => $id]);
+		return $wpdb->delete($this->prefix . $this->table, [$whereColumn => $id]);
 	}
 }

@@ -1,6 +1,7 @@
 // Colours
 $white: #ffffff;
 $black: #000000;
+$black-hover: #333333;
 $cloudy-white: #f9f9f9;
 $blue: #0085ba;
 $blue-hover: #006799;
@@ -45,19 +46,31 @@ $red-hover: #c0392b;
 }
 
 .wp-list-table, .tablenav {
-	margin-left: 8px;
-	margin-right: 8px;
 	width: 100%;
 	table-layout: initial !important;
 
 	.filter {
 		margin: initial !important;
 	}
+
+	tr {
+		td {
+			min-width: 30px;
+		}
+	}
 }
 
 table {
 	.row-actions {
 		white-space: nowrap;
+	}
+
+	tr.highlight {
+		background-color: $highlight !important;
+
+		&:hover {
+			background-color: $highlight-hover !important;
+		}
 	}
 }
 
@@ -79,13 +92,26 @@ table {
 		padding: 8px;
 		background-color: $blue;
 		color: $white;
-		cursor: pointer;
 		margin-top: 12px;
 		position: relative;
 		border-bottom: 2px solid $blue-hover;
 
+		&.ui-accordion-header {
+			cursor: pointer;
+		}
+
 		&:first-child {
 			margin: 0;
+		}
+
+		&.green-highlight {
+			background-color: $green;
+			border-bottom: 2px solid $green-hover;
+		}
+
+		&.red-highlight {
+			background-color: $red;
+			border-bottom: 2px solid $red-hover;
 		}
 
 		.accordion-icon {
@@ -132,9 +158,16 @@ table {
 	}
 
 	.accordion-body {
+		line-height: 1.3;
+
 		.mia-field-group:first-child {
 			border-top: 0;
 		}
+	}
+
+	&.view-accordion {
+		border: 1px solid $silver;
+		border-top: 0;
 	}
 }
 
@@ -211,7 +244,7 @@ table {
 	box-shadow: 0 1px 1px rgba(0,0,0,.04);
 	background: #fff;
 	font-size: 13px;
-	line-height: 2.1em;
+	line-height: 1px;
 	margin-bottom: 16px;
 
 	h2 {
@@ -232,9 +265,35 @@ table {
 
 	.mia-panel-heading, .mia-panel-body, .mia-panel-footer {
 		padding: 16px;
+		min-height: 28px;
 
 		&.negative-margin {
 			margin: -16px;
+		}
+	}
+
+	.mia-panel-heading {
+		.col-sm-9 {
+			display: flex;
+			align-items: center;
+
+			img {
+				height: 81px;
+				margin-top: -16px;
+				margin-bottom: -16px;
+				margin-left: -3px;
+				margin-right: 20px;
+				opacity: 0.1;
+				width: 81px;
+				transition: width .5s;
+			}
+
+			select {
+				flex-grow: 1;
+				margin-right: 20px;
+				margin-left: 20px;
+				transition: width .5s;
+			}
 		}
 	}
 
@@ -248,6 +307,53 @@ table {
 				font-weight: 600;
 				font-size: 14px;
 				display: inline;
+				line-height: 2.1em;
+			}
+		}
+	}
+
+	&.mia-panel-short {
+		line-height: initial;
+
+		.mia-panel-heading {
+			min-height: initial;
+			padding: 9px 14px 8px 14px;
+			font-size: 14px;
+			font-weight: 600;
+			background-color: $blue;
+			border-bottom: 2px solid $blue-hover;
+			color: $white;
+
+			i {
+				position: absolute;
+				font-size: 14px;
+				top: 10px;
+				right: 14px;
+			}
+		}
+
+		.mia-panel-body {
+			padding: 0;
+			min-height: initial;
+			overflow-x: scroll;
+
+			table {
+				border: 0;
+				
+				.contains-filter {
+					vertical-align: middle;
+
+					.filter {
+						float: right;
+					}
+				}
+			}
+
+			p {
+				margin: 10px;
+				text-align: center;
+				color: $silver;
+				font-size: 14px;
 			}
 		}
 	}
@@ -272,3 +378,36 @@ span.filter {
 		background-color: $orange;
 	}
 }
+
+input, select, textarea {
+	&.is-valid {
+		border: 1px solid $green;
+
+		&:focus {
+			border: 1px solid $green-hover;
+		}
+	}
+
+	&.is-invalid {
+		border: 1px solid $red;
+
+		&:focus {
+			border: 1px solid $red-hover;
+		}
+	}
+}
+
+.invalid-feedback {
+	margin-top: 4px;
+	color: $red;
+
+	&::before {
+		content: "\f071";
+		font-family: FontAwesome;
+		color: $red;
+		margin-right: 4px;
+		margin-left: 2px;
+	}
+}
+
+@import "main-media-queries.scss";

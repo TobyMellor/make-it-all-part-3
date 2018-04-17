@@ -23,7 +23,7 @@
 										</p>
 									</div>
 									<div class="col-sm-9 col-xs-12">
-										<select>
+										<select name="caller_showcase" validation="required|integer">
 											<option selected default disabled>Select a caller here…</option>
 										</select>
 									</div>
@@ -54,7 +54,7 @@
 										</div>
 										<a class="button button-primary pull-right mia-picker" href="javascript:void(0);">
 											Choose a time
-											<input type="text" name="date_of_call">
+											<input type="text" name="date_of_call" validation="required">
 										</a>
 									</div>
 								</div>
@@ -166,7 +166,7 @@
 									</div>
 									<div class="col-sm-9 col-xs-12 has-button">
 										<div>
-											<select name="tickets[1][status]">
+											<select name="tickets[1][status]" validation="required|integer|in:1,2,3">
 												<option disabled selected>Select a status here…</option>
 												<option value="1">New</option>
 												<option value="2">Pending - In Progress</option>
@@ -187,7 +187,7 @@
 										</p>
 									</div>
 									<div class="col-sm-9 col-xs-12">
-										<input name="tickets[1][title]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here">
+										<input name="tickets[1][title]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here" validation="required|min:3|max:255">
 									</div>
 								</div>
 								<div class="row mia-field-group">
@@ -201,7 +201,7 @@
 										</p>
 									</div>
 									<div class="col-sm-9 col-xs-12">
-										<textarea name="tickets[1][description]"></textarea>
+										<textarea name="tickets[1][description]" validation="required|min:3|max:65535"></textarea>
 									</div>
 								</div>
 								<div class="row mia-field-group">
@@ -216,7 +216,8 @@
 									</div>
 									<div class="col-sm-9 col-xs-12">
 										<div class="problem-type-picker">
-											<input type="text" name="tickets[1][expertise_type_staff_id]" hidden>
+											<input type="text" name="tickets[1][expertise_type_id]" hidden validation="required|integer">
+											<input type="text" name="tickets[1][assigned_to_specialist]" hidden validation="nullable|integer">
 											<div class="type-columns"></div>
 										</div>
 									</div>
@@ -262,7 +263,7 @@
 															</p>
 														</div>
 														<div class="col-xs-9">
-															<input name="tickets[1][assigned_to][name]" type="text" placeholder="Enter ticket title here" readonly="readonly" data-attribute="name">
+															<input name="tickets[1][assigned_to][name]" type="text" readonly="readonly" data-attribute="name" validation="required">
 														</div>
 													</div>
 													<div class="row mia-field-group">
@@ -272,7 +273,7 @@
 															</p>
 														</div>
 														<div class="col-xs-9">
-															<input name="tickets[1][assigned_to][id]" type="text" placeholder="Enter ticket title here" readonly="readonly" data-attribute="id">
+															<input name="tickets[1][assigned_to][id]" type="text" readonly="readonly" data-attribute="id" validation="required|integer">
 														</div>
 													</div>
 													<div class="row mia-field-group">
@@ -282,7 +283,7 @@
 															</p>
 														</div>
 														<div class="col-xs-9">
-															<input name="tickets[1][assigned_to][job_title]" type="text" placeholder="Enter ticket title here" readonly="readonly" data-attribute="job_title">
+															<input name="tickets[1][assigned_to][job_title]" type="text" readonly="readonly" data-attribute="job_title" validation="required">
 														</div>
 													</div>
 													<div class="row mia-field-group">
@@ -292,7 +293,7 @@
 															</p>
 														</div>
 														<div class="col-xs-9">
-															<input name="tickets[1][assigned_to][department]" type="text" placeholder="Enter ticket title here" readonly="readonly" data-attribute="department">
+															<input name="tickets[1][assigned_to][department]" type="text" readonly="readonly" data-attribute="department" validation="required">
 														</div>
 													</div>
 													<div class="row mia-field-group">
@@ -302,7 +303,7 @@
 															</p>
 														</div>
 														<div class="col-xs-9">
-															<input name="tickets[1][assigned_to][phone_number]" type="text" placeholder="Enter ticket title here" readonly="readonly" data-attribute="phone_number">
+															<input name="tickets[1][assigned_to][phone_number]" type="text" readonly="readonly" data-attribute="phone_number" validation="required">
 														</div>
 													</div>
 													<div class="row mia-field-group">
@@ -333,7 +334,7 @@
 										</p>
 									</div>
 									<div class="col-sm-9 col-xs-12">
-										<select class="add-hardware-device">
+										<select name="tickets[1][hardware_showcase]" class="add-hardware-device" validation="nullable">
 											<option selected disabled>Select a hardware device here…</option>
 										</select>
 										<ul class="affected-items"></ul>
@@ -350,7 +351,7 @@
 										</p>
 									</div>
 									<div class="col-sm-9 col-xs-12">
-										<select class="add-application">
+										<select name="tickets[1][application_showcase]"  class="add-application" validation="nullable">
 											<option selected disabled>Select a software program here…</option>
 										</select>
 										<ul class="affected-items"></ul>
@@ -367,7 +368,7 @@
 										</p>
 									</div>
 									<div class="col-sm-9 col-xs-12">
-										<select class="add-operating-system">
+										<select name="tickets[1][operating_system_showcase]" class="add-operating-system" validation="nullable">
 											<option selected disabled>Select an operating system here…</option>
 										</select>
 										<ul class="affected-items"></ul>
@@ -397,9 +398,10 @@
 
 {% block scripts %}
 	<script>
-		var employees      = {{ employees }},
-			expertiseTypes = {{ expertise_types }},
-			devices        = {{ devices }},
-			programs       = {{ programs }};
+		var employees          = {{ employees }},
+			expertiseTypes     = {{ expertise_types }},
+			expertiseTypeStaff = {{ expertise_type_staff }},
+			devices            = {{ devices }},
+			programs           = {{ programs }};
 	</script>
 {% endblock %}

@@ -1,0 +1,451 @@
+{% extends "backend/views/layouts/page.twig" %}
+
+{% block main %}
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 {{ ticket is defined ? 'col-md-9' : 'col-md-12' }}">
+			<form action="admin.php?page=ticket_update" method="POST">
+				<input name="ticket[id]" type="text" hidden>
+				<div class="mia-panel ticket-panel">
+					<div class="mia-panel-heading">
+						<div class="row">
+							<div class="col-sm-3 col-xs-12">
+								<h2>Ticket Information</h2>
+								{% if ticket is not defined %}
+									<p>Choose a ticket to get started:</p>
+								{% else %}
+									<p>Enter the updated info below:</p>
+								{% endif %}
+							</div>
+							<div class="col-sm-9 col-xs-12 {% if ticket is defined %} defined {% endif %}">
+								{% if ticket is not defined %}
+									<img src="/wp-content/uploads/2018/03/arrow-right-other.png">
+								{% else %}
+									<img src="/wp-content/uploads/2018/03/arrow-down.png" style="opacity: 0;">
+								{% endif %}
+								<select id="change-ticket">
+									<option disabled selected>Select a ticket here…</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="mia-panel-body negative-margin">
+						<div class="accordions">
+							{% if ticket is not defined %}
+								<div class="accordion-handle row">
+									<div class="accordion-icon col-xs-3">
+										<div class="number-circle">?</div>
+									</div>
+									<div class="accordion-title col-xs-9">No ticket has been selected…</div>
+								</div>
+							{% else %}
+								<div class="accordion-handle row">
+									<div class="accordion-icon col-xs-3">
+										<div class="number-circle">10</div>
+									</div>
+									<div class="accordion-title col-xs-9"></div>
+								</div>
+								<div class="accordion-body">
+									<div class="row mia-field-group">
+										<div class="col-xs-12 col-sm-3">
+											<p class="label">
+												Status <span class="required">*</span>
+											</p>
+
+											<p class="details">
+												Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+											</p>
+										</div>
+										<div class="col-sm-9 col-xs-12 has-button">
+											<div>
+												<select name="ticket[status]" validation="required|integer|in:1,2,3">
+													<option disabled selected>Select a status here…</option>
+													<option value="1">New</option>
+													<option value="2">Pending - In Progress</option>
+													<option value="3">Resolved</option>
+												</select>
+											</div>
+											<div></div>
+										</div>
+									</div>
+									<div class="row mia-field-group">
+										<div class="col-sm-3 col-xs-12">
+											<p class="label">
+												Title <span class="required">*</span>
+											</p>
+
+											<p class="details">
+												Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+											</p>
+										</div>
+										<div class="col-sm-9 col-xs-12">
+											<input name="ticket[title]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here" validation="required|min:3|max:255">
+										</div>
+									</div>
+									<div class="row mia-field-group">
+										<div class="col-sm-3 col-xs-12">
+											<p class="label">
+												Description <span class="required">*</span>
+											</p>
+
+											<p class="details">
+												Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+											</p>
+										</div>
+										<div class="col-sm-9 col-xs-12">
+											<textarea name="ticket[description]" validation="required|min:3|max:65535"></textarea>
+										</div>
+									</div>
+									<div class="row mia-field-group">
+										<div class="col-sm-3 col-xs-12">
+											<p class="label">
+												Problem Type <span class="required">*</span>
+											</p>
+
+											<p class="details">
+												Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+											</p>
+										</div>
+										<div class="col-sm-9 col-xs-12">
+											<div class="problem-type-picker">
+												<input type="text" name="ticket[expertise_type_id]" hidden validation="required|integer">
+												<input type="text" name="ticket[assigned_to_specialist]" hidden validation="nullable|integer">
+												<div class="type-columns"></div>
+											</div>
+										</div>
+									</div>
+									<div class="row mia-field-group">
+										<div class="col-sm-3 col-xs-12">
+											<p class="label">
+												Assigned to <span class="required">*</span>
+											</p>
+
+											<p class="details">
+												Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+											</p>
+										</div>
+										<div class="col-sm-9 col-xs-12">
+											<div class="assign-options">
+												<div>
+													<label>
+														<input name="ticket[assigned_to_type]" value="self" type="radio">
+														Myself
+													</label>
+												
+													<label>
+														<input name="ticket[assigned_to_type]" value="operator" type="radio">
+														Another operator
+													</label>
+
+													<label>
+														<input name="ticket[assigned_to_type]" value="specialist" type="radio">
+														Best specialist for problem
+													</label>
+
+													<select name="ticket[assigned_to_operator]">
+														<option disabled selected value="">Select an operator here…</option>
+													</select>
+												</div>
+												<div>
+													<div class="assigned-to-details">
+														<div class="row mia-field-group">
+															<div class="col-xs-3">
+																<p class="label">
+																	Name
+																</p>
+															</div>
+															<div class="col-xs-9">
+																<input name="ticket[assigned_to][name]" type="text" readonly="readonly" data-attribute="name" validation="required">
+															</div>
+														</div>
+														<div class="row mia-field-group">
+															<div class="col-xs-3">
+																<p class="label">
+																	ID Number
+																</p>
+															</div>
+															<div class="col-xs-9">
+																<input name="ticket[assigned_to][id]" type="text" readonly="readonly" data-attribute="id" validation="required|integer">
+															</div>
+														</div>
+														<div class="row mia-field-group">
+															<div class="col-xs-3">
+																<p class="label">
+																	Job
+																</p>
+															</div>
+															<div class="col-xs-9">
+																<input name="ticket[assigned_to][job_title]" type="text" readonly="readonly" data-attribute="job_title" validation="required">
+															</div>
+														</div>
+														<div class="row mia-field-group">
+															<div class="col-xs-3">
+																<p class="label">
+																	Department
+																</p>
+															</div>
+															<div class="col-xs-9">
+																<input name="ticket[assigned_to][department]" type="text" readonly="readonly" data-attribute="department" validation="required">
+															</div>
+														</div>
+														<div class="row mia-field-group">
+															<div class="col-xs-3">
+																<p class="label">
+																	Phone
+																</p>
+															</div>
+															<div class="col-xs-9">
+																<input name="ticket[assigned_to][phone_number]" type="text" readonly="readonly" data-attribute="phone_number" validation="required">
+															</div>
+														</div>
+														<div class="row mia-field-group">
+															<div class="col-xs-3">
+																<p class="label">
+																	Permissions
+																</p>
+															</div>
+															<div class="col-xs-9">
+																<div class="mia-permissions">
+																	<strong></strong>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row mia-field-group">
+										<div class="col-sm-3 col-xs-12">
+											<p class="label">
+												Hardware Affected <span class="required">*</span>
+											</p>
+
+											<p class="details">
+												Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+											</p>
+										</div>
+										<div class="col-sm-9 col-xs-12">
+											<select name="ticket[hardware_showcase]" class="add-hardware-device" validation="nullable">
+												<option selected disabled>Select a hardware device here…</option>
+											</select>
+											<ul class="affected-items"></ul>
+										</div>
+									</div>
+									<div class="row mia-field-group">
+										<div class="col-sm-3 col-xs-12">
+											<p class="label">
+												Programs Affected
+											</p>
+
+											<p class="details">
+												Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+											</p>
+										</div>
+										<div class="col-sm-9 col-xs-12">
+											<select name="ticket[application_showcase]" class="add-application" validation="nullable">
+												<option selected disabled>Select a software program here…</option>
+											</select>
+											<ul class="affected-items"></ul>
+										</div>
+									</div>
+									<div class="row mia-field-group">
+										<div class="col-sm-3 col-xs-12">
+											<p class="label">
+												Operating Systems Affected
+											</p>
+
+											<p class="details">
+												Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+											</p>
+										</div>
+										<div class="col-sm-9 col-xs-12">
+											<select name="ticket[operating_system_showcase]" class="add-operating-system" validation="nullable">
+												<option selected disabled>Select an operating system here…</option>
+											</select>
+											<ul class="affected-items"></ul>
+										</div>
+									</div>
+								</div>
+							{% endif %}
+						</div>
+					</div>
+					{% if ticket is defined %}
+						<div class="mia-panel-footer">
+							<div class="mia-button-group pull-right">
+								<p>All done?</p>
+								<button class="button button-primary" type="submit">Update Ticket</button>
+							</div>
+						</div>
+					{% endif %}
+				</div>
+			</form>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-3">
+			{% if ticket is defined %}
+				<div class="mia-panel mia-panel-short">
+					<div class="mia-panel-heading">
+						Call History
+						<i class="fa fa-chevron-up"></i>
+					</div>
+					<div class="mia-panel-body">
+						<table class="wp-list-table widefat fixed striped">
+							<thead>
+								<tr>
+									<th>Caller</th>
+									<th>Date</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for call in ticket_obj.call_history %}
+									<tr>
+										<td>
+											<strong>{{ call.caller }}</strong>
+										</td>
+										<td>{{ call.time }}</td>
+										{% if loop.first %}
+											<td class="contains-filter">
+												<span class="filter">
+													Initial
+												</span>
+											</td>
+										{% elseif loop.last %}
+											<td class="contains-filter">
+												<span class="filter">
+													Latest
+												</span>
+											</td>
+										{% endif %}
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="mia-panel mia-panel-short">
+					<div class="mia-panel-heading">
+						Status History
+						<i class="fa fa-chevron-up"></i>
+					</div>
+					<div class="mia-panel-body">
+						<table class="wp-list-table widefat fixed striped">
+							<thead>
+								<tr>
+									<th>Changed by</th>
+									<th>Date</th>
+									<th style="text-align: right">Status</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for status in ticket_obj.status_history %}
+									<tr {{ loop.last ? 'class="highlight"' }}>
+										<td>
+											<strong>{{ status.staff_name }}</strong>
+										</td>
+										<td>{{ status.created_at }}</td>
+										<td class="contains-filter">
+											<span class="filter filter-{{ status.name|lower }}">
+												{{ status.name|slice(0, 8) }}
+											</span>
+										</td>
+									</tr>
+								{% endfor %}
+								
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="mia-panel mia-panel-short">
+					<div class="mia-panel-heading">
+						Tickets with same Problem Type
+						<i class="fa fa-chevron-up"></i>
+					</div>
+					<div class="mia-panel-body">
+						{% if ticket_obj.similar_tickets|length > 0 %}
+							<table class="wp-list-table widefat fixed striped">
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>Title</th>
+										<th style="text-align: right">Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for similar_ticket in ticket_obj.similar_tickets %}
+										<tr>
+											<td>{{ similar_ticket.id }}</td>
+											<td>
+												<strong>{{ similar_ticket.title }}</strong>
+												<div class="row-actions visible">
+													<span class="edit">
+														<a href="admin.php?page=ticket&id={{ similar_ticket.id }}">View</a>
+													</span>
+												</div>
+											</td>
+											<td class="contains-filter">
+												<span class="filter filter-{{ similar_ticket.status|lower }}">
+													{{ similar_ticket.status }}
+												</span>
+											</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						{% else %}
+							<p>No other similar tickets</p>
+						{% endif %}
+					</div>
+				</div>
+				<div class="mia-panel mia-panel-short">
+					<div class="mia-panel-heading">
+						Tickets raised by first caller
+						<i class="fa fa-chevron-up"></i>
+					</div>
+					<div class="mia-panel-body">
+						{% if ticket_obj.tickets_by_caller|length > 0 %}
+							<table class="wp-list-table widefat fixed striped">
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>Title</th>
+										<th>Updated At</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for ticket_by_caller in ticket_obj.tickets_by_caller %}
+										<tr>
+											<td>{{ ticket_by_caller.id }}</td>
+											<td>
+												<strong>{{ ticket_by_caller.title }}</strong>
+												<div class="row-actions visible">
+													<span class="edit">
+														<a href="admin.php?page=ticket&id={{ ticket_by_caller.id }}">View</a>
+													</span>
+												</div>
+											</td>
+											<td>{{ ticket_by_caller.updated_at }}</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						{% else %}
+							<p>No other tickets with the same problem</p>
+						{% endif %}
+					</div>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}
+
+{% block scripts %}
+	<script>
+		var tickets            = {{ tickets }},
+			ticket             = {{ ticket|default('null') }},
+			employees          = {{ employees }},
+			expertiseTypes     = {{ expertise_types }},
+			expertiseTypeStaff = {{ expertise_type_staff }},
+			devices            = {{ devices }},
+			programs           = {{ programs }};
+	</script>
+{% endblock %}

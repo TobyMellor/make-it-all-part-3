@@ -2,7 +2,7 @@
 
 require_once(plugin_dir_path(dirname(__FILE__)) . 'queries/MakeItAllQuery.php');
 
-class DeviceQuery extends MakeItAllQuery {
+class MakeQuery extends MakeItAllQuery {
     protected $table = 'device';
 
     /**
@@ -13,17 +13,9 @@ class DeviceQuery extends MakeItAllQuery {
     public function get() {
         return $this->get_results(
             "
-                SELECT id, type, make, serial_no
+                SELECT make as type
                 FROM {$this->prefix}{$this->table}
-            "
-        );
-    }
-        public function get_device($id) {
-        return $this->get_results(
-            "
-                SELECT *
-                FROM {$this->prefix}{$this->table}
-                WHERE id = $id
+                GROUP BY make
             "
         );
     }

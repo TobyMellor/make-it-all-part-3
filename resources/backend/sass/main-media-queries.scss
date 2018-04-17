@@ -1,0 +1,20 @@
+//
+// Column Breakpoints
+//
+
+$breakpoint-xs: 767px;
+$wordpress-mobile: 782px;
+
+@media(max-width: $wordpress-mobile) {
+	.wrap {
+		> form {
+			overflow-x: scroll;
+
+			.wp-list-table {
+				td.column-id, th.column-id {
+					display: none !important;
+				}
+			}
+		}
+	}
+}

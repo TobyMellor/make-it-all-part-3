@@ -1,7 +1,8 @@
 export default class ExpertiseTypeManager {
-	constructor(expertiseTypes, staffManager) {
-		this.expertiseTypes = expertiseTypes;
-		this.staffManager   = staffManager;
+	constructor(expertiseTypes, expertiseTypeStaff, staffManager) {
+		this.expertiseTypes     = expertiseTypes;
+		this.expertiseTypeStaff = expertiseTypeStaff;
+		this.staffManager       = staffManager;
 
 		// load root problem types
 		this.loadChildrenExpertiseTypes($('.type-columns'));
@@ -25,6 +26,17 @@ export default class ExpertiseTypeManager {
 	 */
 	getExpertiseTypesWithParent(parentId) {
 		return this.expertiseTypes.filter(expertiseType => expertiseType.parent_id == parentId);
+	}
+
+	/**
+	 * Get an Expertise Type Staff
+	 *
+	 * @param {Integer} staffId ID of staff
+	 * @param {Integer} expertiseTypeId ID of ExpertiseType
+	 * @return {Object} ExpertiseTypeStaff
+	 */
+	getExpertiseTypeStaff(staffId, expertiseTypeId) {
+		return this.expertiseTypeStaff.find(ets => ets.staff_id == staffId && ets.expertise_type_id == expertiseTypeId) || null;
 	}
 
 	/**
@@ -63,7 +75,7 @@ export default class ExpertiseTypeManager {
 
 		clickedExpertiseTypeChildren.forEach((child, i) => {
 			specialists = this.staffManager.getSpecialistsOfSpecialism(child.id);
-
+			
 			$typeColumn.append(`
 				<li ${(child.children.length === 0 ? 'class="no-children"' : '')} data-expertise-type-id="${child.id}">
 					${child.name}
@@ -93,12 +105,33 @@ export default class ExpertiseTypeManager {
 		// load root Expertise Types
 		this.loadChildrenExpertiseTypes($typeColumns);
 
-		let expertiseTypeChain = this.getExpertiseTypeChain(expertiseType);
+		let expertiseTypeChain = this.getExpertiseTypeChain(expertiseTypeId);
 
 		// load ExpertiseType from the parent down to the clicked one
 		for (let i = expertiseTypeChain.length - 2; i >= -1; i--) {
-			problemTypePage.loadChildrenExpertiseTypes($typeColumns, $typeColumns.find('.type-column li[data-expertise-type-id="' + expertiseTypeChain[i + 1].id + '"]'));
+			this.loadChildrenExpertiseTypes($typeColumns, $typeColumns.find('.type-column li[data-expertise-type-id="' + expertiseTypeChain[i + 1].id + '"]'));
 		}
+	}
+
+	/**
+	 * Get ordered array of parents of an ExpertiseType
+	 *
+	 * @param {Integer} expertiseTypeId starting ExpertiseType id to find parents from
+	 * @return {Array} Array of ExpertiseType parents, and the starting ExpertiseType
+	 */
+	getExpertiseTypeChain(expertiseTypeId) {
+		let expertiseTypeParent = this.getExpertiseType(expertiseTypeId),
+			expertiseTypes      = [expertiseTypeParent];
+
+		while (expertiseTypeParent != null) {
+			expertiseTypeParent = this.getExpertiseType(expertiseTypeParent.parent_id);
+
+			if (expertiseTypeParent != null) {
+				expertiseTypes.push(expertiseTypeParent);
+			}
+		}
+
+		return expertiseTypes;
 	}
 
 	/**
@@ -108,22 +141,23 @@ export default class ExpertiseTypeManager {
 	 * e.g. "Electronics / Printer / Printer Ink / Cyan Ink"
 	 *
 	 * @param {ExpertiseType} 
-	 * @return {String} Breadcrum of ExpertiseType.name's, from the root to a ExpertiseType 
+	 * @return {String} Breadcrumb of ExpertiseType.name's, from the root to a ExpertiseType 
 	 */
-	getExpertiseTypeBreadcrum(expertiseTypeId) {
+	getExpertiseTypeBreadcrumb(expertiseTypeId) {
 		let expertiseTypeParent = this.getExpertiseType(expertiseTypeId),
-			breadcrum           = '';
+			breadcrumb           = '';
 
 		while (expertiseTypeParent != null) {
-			breadcrum = expertiseTypeParent.name + breadcrum;
+			breadcrumb = `
+				<li>
+					<a>${expertiseTypeParent.name}</a>
+					<i class="fa fa-caret-right"></i>
+				</li>
+			` + breadcrumb;
 
 			expertiseTypeParent = this.getExpertiseType(expertiseTypeParent.parent_id);
-
-			if (expertiseTypeParent != null) {
-				breadcrum = ' / ' + breadcrum;
-			}
 		}
 
-		return breadcrum;
+		return breadcrumb;
 	}
 }

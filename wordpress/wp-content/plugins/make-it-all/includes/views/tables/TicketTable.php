@@ -6,6 +6,7 @@ if (!class_exists('MakeItAllTable')) {
 
 class TicketTable extends MakeItAllTable {
 	protected $table = 'ticket';
+	protected $primary = 'title';
 
 	/**
 	 * Override the parent columns method. Defines the columns to use in your listing table
@@ -14,13 +15,13 @@ class TicketTable extends MakeItAllTable {
 	 */
 	public function get_columns() {
 		return [
-			'cb'                      => '<input type="checkbox">',
-			'id'                      => 'ID',
-			'title'                   => 'Title',
-			'status'                  => 'Status',
-			'last_caller'             => 'Last Caller',
-			'created_at'              => 'Created At',
-			'updated_at'              => 'Updated At'
+			'cb'          => '<input type="checkbox">',
+			'id'          => 'ID',
+			'title'       => 'Title',
+			'status'      => 'Status',
+			'last_caller' => 'Last Caller',
+			'created_at'  => 'Created At',
+			'updated_at'  => 'Updated At'
 		];
 	}
 
@@ -117,13 +118,13 @@ class TicketTable extends MakeItAllTable {
 	 */
 	protected function column_title($item) {
 		$actions = [
-			'view' => '<a href="' . get_home_url() . '/tickets#' . $item->id . '" target="_blank">View</a>',
+			'view' => '<a href="admin.php?page=ticket&id=' . $item->id . '">View</a>',
 		];
 
 		if (current_user_can('edit_make_it_all')) {
 			$actions = array_merge($actions, [
-				'edit'      => '<a href="admin.php?page=update_ticket&ticket_id=' . $item->id . '">Edit</a>',
-				'follow_up' => '<a href="admin.php?page=update_ticket&action=follow_up&ticket_id=' . $item->id . '">Register follow-up call</a>',
+				'edit'      => '<a href="admin.php?page=ticket_update&id=' . $item->id . '">Update</a>',
+				'follow_up' => '<a href="admin.php?page=ticket_update&action=follow_up&id=' . $item->id . '">Register follow-up call</a>',
 				'delete'    => '<a href="admin.php?page=ticket&action=delete&ticket_id=' . $item->id . '">Delete</a>'
 			]);
 		}

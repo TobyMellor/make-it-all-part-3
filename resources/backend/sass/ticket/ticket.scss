@@ -1,4 +1,4 @@
-@import "main.scss";
+@import "../main.scss";
 
 .call-panel {
 	& > .row {
@@ -33,6 +33,10 @@
 
 	.details {
 		max-width: 160px;
+	}
+
+	.invalid-feedback {
+		margin-top: 12px;
 	}
 }
 
@@ -149,6 +153,84 @@
 
 		.mia-field-group:last-child > div {
 			border-bottom: 0;
+		}
+	}
+}
+
+.accordions {
+	&.view-accordion {
+		.description {
+			font-size: 15px;
+			padding: 0 24px;
+			border-left: 3px solid $blue-hover;
+
+			p {
+				font-size: 15px;
+			}
+
+			* {
+				font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+			}
+		}
+
+		.breadcrumb { 
+			text-align: center;
+			margin-top: 15px;
+
+			li {
+				display: inline;
+
+				&:last-child {
+					a {
+						font-weight: 600;
+						text-decoration: underline;
+					}
+
+					i {
+						display: none;
+					}
+				}
+
+				a {
+					color: $black;
+					font-size: 20px;
+					text-decoration: none;
+					font-weight: 500;
+
+					&:hover {
+						text-decoration: underline;
+						color: $black-hover;
+					}
+				}
+
+				i {
+					color: $blue-hover;
+					margin: 0 10px;
+					font-size: 18px;
+				}
+			}
+		}
+
+		select {
+			display: none;
+		}
+
+		.affected-items {
+			margin: 0;
+		}
+
+		.no-affected-items {
+			text-align: center;
+			margin-top: 19px;
+			color: $silver;
+		}
+
+		.assign-options {
+			max-height: initial;
+
+			> div:last-child {
+				height: initial;
+			}
 		}
 	}
 }
@@ -440,7 +522,7 @@
 			margin: 0 auto;
 		}
 
-		.remove-affected-item {
+		a {
 			position: absolute;
 			bottom: 8px;
 			left: calc(50% - 65px);

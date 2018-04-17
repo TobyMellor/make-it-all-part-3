@@ -1,7 +1,7 @@
 {% extends "backend/views/layouts/page.twig" %} {% block main %}
 
 <div class="form-wrapper">
-    <form action="/wp-admin/admin.php?page=hardware_create" method="POST">
+    <form action="admin.php?page=hardware_create" method="POST">
 
 
 
@@ -140,10 +140,6 @@
                         </div>
                     </div>
                 </div>
-
-
-    </form>
-    </div>
     <div class="mia-panel-footer">
         <div class="mia-button-group">
             <p>More Hardware Items?</p>
@@ -154,6 +150,10 @@
             <button class="button button-primary" type="submit">Submit new hardware</button>
         </div>
     </div>
+ </div>
+    </form>
+
+
     </div>
 </div>
 
