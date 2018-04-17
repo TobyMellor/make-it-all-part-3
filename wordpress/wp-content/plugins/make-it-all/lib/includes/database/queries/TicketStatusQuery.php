@@ -3,22 +3,32 @@
 namespace MakeItAll\Includes\Database\Queries;
 
 use MakeItAll\Includes\Database\Queries\Query;
+use Respect\Validation\Validator as v;
 
 class TicketStatusQuery extends Query {
 	protected $table = 'ticket_status';
 	
 	/**
-	 * Inserts a new record into the DB.
+	 * Validation for Ticket Status
+	 *    - Ticket ID: Integer
+	 *    - Status ID: Integer
+	 *    - Staff ID: Integer
 	 *
-	 * @return Boolean
+	 * @param $columns key/value of columns
+	 *
+	 * @return Boolean true if pass, dies (and returns false) on fail
 	 */
-	public function insert($ticketId, $statusId, $staffId) {
-		return $this->mia_insert(
-			[
-				'ticket_id' => $ticketId,
-				'status_id' => $statusId,
-				'staff_id'  => $staffId
-			]
-		);
+	protected function validate($columns) {
+		$validator = v::key('ticket_id', v::intVal())
+			->key('status_id', v::intVal())
+			->key('staff_id', v::intVal());
+
+		try {
+			$validator->assert($columns);
+		} catch (\Respect\Validation\Exceptions\NestedValidationException $e) {
+			wp_die('Server Validation Failed:<br>' . $e->getFullMessage()); return false;
+		}
+
+		return true;
 	}
 }

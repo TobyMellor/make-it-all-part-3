@@ -4,6 +4,7 @@ namespace MakeItAll\Includes\Database\Queries;
 
 use MakeItAll\Includes\Database\Queries\Query;
 use MakeItAll\Includes\Database\Queries\TicketQuery;
+use Respect\Validation\Validator as v;
 
 class StaffQuery extends Query {
 	protected $table = 'staff';
@@ -46,5 +47,9 @@ class StaffQuery extends Query {
 		}
 
 		return $employees;
+	}
+
+	protected function validate($columns) {
+		return true;
 	}
 }

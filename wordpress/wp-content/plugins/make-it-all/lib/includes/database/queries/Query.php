@@ -28,13 +28,19 @@ abstract class Query {
 	 *
 	 * @return (int|false) Number of rows affected/selected or false on error
 	 */
-	protected function mia_insert($columns) {
+	public function mia_insert($columns) {
+		if (!$this->validate($columns)) return;
+
 		$columns['created_at'] = date('Y-m-d H:i:s');
 		$columns['updated_at'] = date('Y-m-d H:i:s');
 
 		global $wpdb;
+		
+		if (!$wpdb->insert($this->prefix . $this->table, $columns)) {
+			wp_die('Sorry! We failed to insert that record. Please try again.');
+		}
 
-		return $wpdb->insert($this->prefix . $this->table, $columns);
+		return $wpdb->insert_id;
 	}
 
 	/**
@@ -43,11 +49,17 @@ abstract class Query {
 	 * @return Boolean
 	 */
 	protected function mia_update($id, $columns, $whereColumn = 'id') {
+		if (!$this->validate($columns)) wp_die('Server-side validation has failed');
+
 		$columns['updated_at'] = date('Y-m-d H:i:s');
 		
 		global $wpdb;
 
-		return $wpdb->update($this->prefix . $this->table, $columns, [$whereColumn => $id]);
+		if (!$wpdb->update($this->prefix . $this->table, $columns, [$whereColumn => $id])) {
+			wp_die('Sorry! We failed to update that record. Please try again.');
+		}
+
+		return $wpdb->insert_id;
 	}
 
 	/**
@@ -60,4 +72,6 @@ abstract class Query {
 
 		return $wpdb->delete($this->prefix . $this->table, [$whereColumn => $id]);
 	}
+
+	abstract protected function validate($columns);
 }

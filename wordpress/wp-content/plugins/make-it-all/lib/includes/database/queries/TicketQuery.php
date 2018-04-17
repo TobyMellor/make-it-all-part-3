@@ -3,6 +3,7 @@
 namespace MakeItAll\Includes\Database\Queries;
 
 use MakeItAll\Includes\Database\Queries\Query;
+use Respect\Validation\Validator as v;
 
 class TicketQuery extends Query {
 	protected $table = 'ticket';
@@ -216,33 +217,6 @@ class TicketQuery extends Query {
 	}
 
 	/**
-	 * Inserts a new record into the DB.
-	 *
-	 * @return Boolean
-	 */
-	public function insert(
-		$title,
-		$description,
-		$solutionId,
-		$authorId,
-		$assignedToOperatorId,
-		$expertiseTypeId,
-		$assignedToSpecialistId
-	) {
-		return $this->mia_insert(
-			[
-				'title'                     => $title,
-				'description'               => $description,
-				'solution_id'               => $solutionId,
-				'author_id'                 => $authorId,
-				'assigned_to_operator_id'   => $assignedToOperatorId,
-				'expertise_type_id'         => $expertiseTypeId,
-				'assigned_to_specialist_id' => $assignedToSpecialistId
-			]
-		);
-	}
-
-	/**
 	 * Updates a record in the DB.
 	 *
 	 * @return Boolean
@@ -258,5 +232,37 @@ class TicketQuery extends Query {
 	 */
 	public function delete($ticketId) {
 		return $this->mia_delete($ticketId);
+	}
+	
+	/**
+	 * Validation for Ticket
+	 *    - Title: String, Length between 2 and 256
+	 *    - Description: String, Length between 2 and 65535
+	 *    - Solution ID (Optional): Integer
+	 *    - Author ID: Integer
+	 *    - Assigned To Operator ID (Optional): Integer
+	 *    - Expertise Type ID: Integer
+	 *    - Assigned To Specialist ID (Optional): Integer
+	 *
+	 * @param $columns key/value of columns
+	 *
+	 * @return Boolean true if pass, dies (and returns false) on fail
+	 */
+	protected function validate($columns) {
+		$validator = v::key('title', v::stringType()->length(2, 256))
+			->key('description',               v::stringType()->length(2, 65535))
+			->key('solution_id',               v::optional(v::intVal()))
+			->key('author_id',                 v::intVal())
+			->key('assigned_to_operator_id',   v::optional(v::intVal()))
+			->key('expertise_type_id',         v::intVal())
+			->key('assigned_to_specialist_id', v::optional(v::intVal()));
+
+		try {
+			$validator->assert($columns);
+		} catch (\Respect\Validation\Exceptions\NestedValidationException $e) {
+			wp_die('Server Validation Failed:<br>' . $e->getFullMessage()); return false;
+		}
+
+		return true;
 	}
 }

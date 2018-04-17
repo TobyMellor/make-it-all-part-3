@@ -92,34 +92,30 @@ class TicketPage extends Page {
 		$callTicketQuery    = new CallTicketQuery();
 
 		// create the call containing the tickets
-		$callQuery->insert(
-			date('Y-m-d H:i:s', strtotime($_POST['date_of_call'])),
-			get_current_user_id(),
-			$_POST['caller']['id']
-		);
-
-		$callId = $wpdb->insert_id;
+		$callId = $callQuery->mia_insert([
+			'time'        => date('Y-m-d H:i:s', strtotime($_POST['date_of_call'])),
+			'operator_id' => get_current_user_id(),
+			'caller_id'   => $_POST['caller']['id']
+		]);
 
 		// create the tickets, each containing a status and potentially multiple devices/programs
 		foreach ($_POST['tickets'] as $ticket) {
-			$ticketQuery->insert(
-				$ticket['title'], 
-				$ticket['description'], 
-				null, // TODO: If status is resolved, then allow solution to be set
-				get_current_user_id(), 
-				isset($ticket['assigned_to_operator']) ? $ticket['assigned_to_operator'] : null,
-				$ticket['expertise_type_id'],
-				isset($ticket['assigned_to_specialist']) ? $ticket['assigned_to_specialist'] : null
-			);
-
-			$ticketId = $wpdb->insert_id;
+			$ticketId = $ticketQuery->mia_insert([
+				'title'                     => $ticket['title'], 
+				'description'               => $ticket['description'], 
+				'solution_id'               => null, // TODO: If status is resolved, then allow solution to be set
+				'author_id'                 => get_current_user_id(), 
+				'assigned_to_operator_id'   => isset($ticket['assigned_to_operator']) ? $ticket['assigned_to_operator'] : null,
+				'expertise_type_id'         => $ticket['expertise_type_id'],
+				'assigned_to_specialist_id' => isset($ticket['assigned_to_specialist']) ? $ticket['assigned_to_specialist'] : null
+			]);
 
 			// create devices
 			foreach ($ticket['devices'] as $deviceId) {
-				$ticketDeviceQuery->insert(
-					$ticketId,
-					$deviceId
-				);
+				$ticketDeviceQuery->mia_insert([
+					'ticket_id' => $ticketId,
+					'device_id' => $deviceId
+				]);
 			}
 
 			// software/OS's are not required...
@@ -127,25 +123,25 @@ class TicketPage extends Page {
 
 				// create the programs
 				foreach ($ticket['programs'] as $programId) {
-					$ticketProgramQuery->insert(
-						$ticketId,
-						$programId
-					);
+					$ticketProgramQuery->mia_insert([
+						'ticket_id'  => $ticketId,
+						'program_id' => $programId
+					]);
 				}
 			}
 
 			// set the ticket's status
-			$ticketStatusQuery->insert(
-				$ticketId,
-				$ticket['status'],
-				get_current_user_id()
-			);
+			$ticketStatusQuery->mia_insert([
+				'ticket_id' => $ticketId,
+				'status_id' => $ticket['status'],
+				'staff_id'  => get_current_user_id()
+			]);
 
 			// link the first call to the ticket
-			$callTicketQuery->insert(
-				$callId,
-				$ticketId
-			);
+			$callTicketQuery->mia_insert([
+				'call_id'   => $callId,
+				'ticket_id' => $ticketId
+			]);
 		}
 
 		$this->mia_redirect('admin.php?page=ticket&id=' . $ticketId); exit;
@@ -197,10 +193,10 @@ class TicketPage extends Page {
 
 		// create devices
 		foreach ($ticket['devices'] as $deviceId) {
-			$ticketDeviceQuery->insert(
-				$ticketId,
-				$deviceId
-			);
+			$ticketDeviceQuery->mia_insert([
+				'ticket_id' => $ticketId,
+				'device_id' => $deviceId
+			]);
 		}
 
 		// software/OS's are not required...
@@ -208,20 +204,20 @@ class TicketPage extends Page {
 
 			// create the programs
 			foreach ($ticket['programs'] as $programId) {
-				$ticketProgramQuery->insert(
-					$ticketId,
-					$programId
-				);
+				$ticketProgramQuery->mia_insert([
+					'ticket_id'  => $ticketId,
+					'program_id' => $programId
+				]);
 			}
 		}
 
 		// don't bother updating the status if it hasn't changed
 		if ($ticketQuery->get_ticket($ticketId)[0]->status_id != $ticket['status']) {
-			$ticketStatusQuery->insert(
-				$ticketId,
-				$ticket['status'],
-				get_current_user_id()
-			);
+			$ticketStatusQuery->mia_insert([
+				'ticket_id' => $ticketId,
+				'status_id' => $ticket['status'],
+				'staff_id'  => get_current_user_id()
+			]);
 		}
 
 		$this->mia_redirect('admin.php?page=ticket&id=' . $ticketId); exit;

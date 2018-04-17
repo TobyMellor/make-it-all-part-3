@@ -3,6 +3,7 @@
 namespace MakeItAll\Includes\Database\Queries;
 
 use MakeItAll\Includes\Database\Queries\Query;
+use Respect\Validation\Validator as v;
 
 class TicketProgramQuery extends Query {
 	protected $table = 'ticket_program';
@@ -28,25 +29,33 @@ class TicketProgramQuery extends Query {
 	}
 
 	/**
-	 * Inserts a new record into the DB.
-	 *
-	 * @return Boolean
-	 */
-	public function insert($ticketId, $programId) {
-		return $this->mia_insert(
-			[
-				'ticket_id' => $ticketId,
-				'program_id' => $programId
-			]
-		);
-	}
-
-	/**
 	 * Deletes a record from the DB.
 	 *
 	 * @return Boolean
 	 */
 	public function delete_by_ticket_id($ticketId) {
 		return $this->mia_delete($ticketId, 'ticket_id');
+	}
+
+	/**
+	 * Validation for Ticket Program
+	 *    - Ticket ID: Integer
+	 *    - Program ID: Integer
+	 *
+	 * @param $columns key/value of columns
+	 *
+	 * @return Boolean true if pass, dies (and returns false) on fail
+	 */
+	protected function validate($columns) {
+		$validator = v::key('ticket_id', v::intVal())
+			->key('program_id', v::intVal());
+
+		try {
+			$validator->assert($columns);
+		} catch (\Respect\Validation\Exceptions\NestedValidationException $e) {
+			wp_die('Server Validation Failed:<br>' . $e->getFullMessage()); return false;
+		}
+
+		return true;
 	}
 }

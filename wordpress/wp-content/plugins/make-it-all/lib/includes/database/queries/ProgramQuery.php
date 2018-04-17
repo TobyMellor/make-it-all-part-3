@@ -3,6 +3,7 @@
 namespace MakeItAll\Includes\Database\Queries;
 
 use MakeItAll\Includes\Database\Queries\Query;
+use Respect\Validation\Validator as v;
 
 class ProgramQuery extends Query {
 	protected $table = 'program';
@@ -19,5 +20,9 @@ class ProgramQuery extends Query {
 				FROM {$this->prefix}{$this->table}
 			"
 		);
+	}
+
+	protected function validate($columns) {
+		return true;
 	}
 }

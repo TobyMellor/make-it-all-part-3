@@ -3,21 +3,30 @@
 namespace MakeItAll\Includes\Database\Queries;
 
 use MakeItAll\Includes\Database\Queries\Query;
+use Respect\Validation\Validator as v;
 
 class CallTicketQuery extends Query {
 	protected $table = 'call_ticket';
-	
+
 	/**
-	 * Inserts a new record into the DB.
+	 * Validation for Call
+	 *    - Call ID: Integer
+	 *    - Ticket ID: Integer
 	 *
-	 * @return Boolean
+	 * @param $columns key/value of columns
+	 *
+	 * @return Boolean true if pass, dies (and returns false) on fail
 	 */
-	public function insert($callId, $ticketId) {
-		return $this->mia_insert(
-			[
-				'call_id'   => $callId,
-				'ticket_id' => $ticketId
-			]
-		);
+	protected function validate($columns) {
+		$validator = v::key('call_id', v::intVal())
+			->key('ticket_id', v::intVal());
+
+		try {
+			$validator->assert($columns);
+		} catch (\Respect\Validation\Exceptions\NestedValidationException $e) {
+			wp_die('Server Validation Failed:<br>' . $e->getFullMessage()); return false;
+		}
+
+		return true;
 	}
 }
