@@ -52,6 +52,12 @@ $red-hover: #c0392b;
 	.filter {
 		margin: initial !important;
 	}
+
+	tr {
+		td {
+			min-width: 30px;
+		}
+	}
 }
 
 table {
@@ -319,6 +325,7 @@ table {
 		.mia-panel-body {
 			padding: 0;
 			min-height: initial;
+			overflow-x: scroll;
 
 			table {
 				border: 0;
