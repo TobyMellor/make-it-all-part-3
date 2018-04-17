@@ -8,7 +8,7 @@
 				<div class="mia-panel ticket-panel">
 					<div class="mia-panel-heading">
 						<div class="row">
-							<div class="col-xs-3">
+							<div class="col-sm-3 col-xs-12">
 								<h2>Ticket Information</h2>
 								{% if ticket is not defined %}
 									<p>Choose a ticket to get started:</p>
@@ -16,7 +16,7 @@
 									<p>Enter the updated info below:</p>
 								{% endif %}
 							</div>
-							<div class="col-xs-9 {% if ticket is defined %} defined {% endif %}">
+							<div class="col-sm-9 col-xs-12 {% if ticket is defined %} defined {% endif %}">
 								{% if ticket is not defined %}
 									<img src="/wp-content/uploads/2018/03/arrow-right-other.png">
 								{% else %}
