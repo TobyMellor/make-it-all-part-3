@@ -17,13 +17,15 @@ class CreateTicketTable extends Migration {
 				solution_id int(10) unsigned DEFAULT NULL,
 				author_id int(10) unsigned DEFAULT NULL,
 				assigned_to_operator_id int(10) unsigned DEFAULT NULL,
-				expertise_type_staff_id int(10) unsigned NOT NULL,
+				expertise_type_id int(10) unsigned NOT NULL,
+				assigned_to_specialist_id int(10) unsigned DEFAULT NULL,
 				created_at timestamp NULL DEFAULT NULL,
 				updated_at timestamp NULL DEFAULT NULL,
 				PRIMARY KEY (id),
 				FOREIGN KEY (assigned_to_operator_id) REFERENCES {$this->prefix}staff (id) ON DELETE SET NULL,
 				FOREIGN KEY (author_id) REFERENCES {$this->prefix}staff (id) ON DELETE SET NULL,
-				FOREIGN KEY (expertise_type_staff_id) REFERENCES {$this->prefix}expertise_type_staff (id)
+				FOREIGN KEY (expertise_type_id) REFERENCES {$this->prefix}expertise_type (id),
+				FOREIGN KEY (assigned_to_specialist_id) REFERENCES {$this->prefix}staff (id) ON DELETE SET NULL
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 		";
 	}

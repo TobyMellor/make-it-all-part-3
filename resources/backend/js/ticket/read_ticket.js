@@ -1,7 +1,7 @@
 $(() => {
 	if (!ticket) return;
 
-	$('.breadcrumb').html(expertiseTypeManager.getExpertiseTypeBreadcrumb(ticket.expertise_type_staff_id));
+	$('.breadcrumb').html(expertiseTypeManager.getExpertiseTypeBreadcrumb(ticket.expertise_type_id));
 
 	if (ticket.assigned_to_operator_id === null) {
 		$('input[name="ticket[assigned_to_type]"][value="specialist"]').click();

@@ -19,17 +19,19 @@ class SeedTicketTable extends Seeder {
 					1,
 					NULL,
 					13,
+					1,
 					'2018-02-20 23:01:25',
 					'2018-02-20 23:01:25'
 				),
 				(
 					2,
 					'Cannot turn on computer',
-					'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec quis nunc nec elit pretium efficitur. Vestibulum risus felis, aliquet mollis leo sit amet, efficitur consectetur tellus. Aliquam a mi rhoncus libero lobortis dictum quis ac urna. Phasellus sed lacus et massa varius pulvinar sed vitae eros. Quisque accumsan ullamcorper nulla, sit amet efficitur erat consequat scelerisque. Etiam malesuada dapibus metus sed pretium. Donec ut nibh in ligula aliquet fermentum id ut purus. Donec quam felis, imperdiet vitae porta ac, egestas eu augue. Phasellus vitae faucibus nunc. Ut eu lectus vitae massa ultricies mollis. Pellentesque a aliquet sapien.</p>',
+					'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec quis nunc nec elit pretium efficitur. Vestibulum risus felis, aliquet mollis leo sit amet, efficitur consectetur tellus. Aliquam a mi <strong>rhoncus</strong> libero lobortis dictum quis ac urna. Phasellus sed lacus et massa varius pulvinar sed vitae eros. Quisque accumsan ullamcorper nulla, sit amet efficitur erat consequat scelerisque.</p><p>Etiam malesuada dapibus metus sed pretium. Donec ut nibh in ligula aliquet fermentum id ut purus. Donec quam felis, imperdiet vitae porta ac, egestas eu augue. Phasellus vitae faucibus nunc. Ut eu lectus vitae massa ultricies mollis. Pellentesque a aliquet sapien.</p>',
 					NULL,
 					1,
 					NULL,
 					1,
+					2,
 					'2018-02-20 23:01:25',
 					'2018-02-20 23:01:25'
 				),
@@ -40,6 +42,7 @@ class SeedTicketTable extends Seeder {
 					NULL,
 					1,
 					1,
+					3,
 					3,
 					'2018-02-20 23:01:25',
 					'2018-02-20 23:01:25'
@@ -52,6 +55,7 @@ class SeedTicketTable extends Seeder {
 					3,
 					NULL,
 					18,
+					4,
 					'2018-02-20 23:01:26',
 					'2018-02-20 23:11:19'
 				),
@@ -63,6 +67,7 @@ class SeedTicketTable extends Seeder {
 					4,
 					3,
 					15,
+					5,
 					'2018-02-20 23:01:26',
 					'2018-02-20 23:01:26'
 				),
@@ -73,6 +78,7 @@ class SeedTicketTable extends Seeder {
 					NULL,
 					5,
 					NULL,
+					6,
 					6,
 					'2018-02-20 23:01:26',
 					'2018-02-20 23:01:26'
@@ -85,6 +91,7 @@ class SeedTicketTable extends Seeder {
 					1,
 					NULL,
 					10,
+					7,
 					'2018-02-20 23:01:26',
 					'2018-02-20 23:01:26'
 				),
@@ -96,6 +103,7 @@ class SeedTicketTable extends Seeder {
 					2,
 					NULL,
 					14,
+					8,
 					'2018-02-20 23:01:26',
 					'2018-02-20 23:01:26'
 				),
@@ -107,6 +115,7 @@ class SeedTicketTable extends Seeder {
 					6,
 					19,
 					3,
+					9,
 					'2018-02-20 23:01:26',
 					'2018-02-20 23:01:26'
 				);

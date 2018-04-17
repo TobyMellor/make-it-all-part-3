@@ -1,8 +1,9 @@
 export default class StaffManager {
-	constructor(employees, currentEmployeeId, expertiseTypeStaff) {
-		this.employees          = employees;
-		this.currentEmployee    = this.getEmployee(currentEmployeeId);
-		this.expertiseTypeStaff = expertiseTypeStaff;
+	constructor(employees, currentEmployeeId, expertiseTypes, expertiseTypeStaff) {
+		this.employees             = employees;
+		this.currentEmployee       = this.getEmployee(currentEmployeeId);
+		this.expertiseTypes        = expertiseTypes;
+		this.expertiseTypeStaff    = expertiseTypeStaff;
 
 		// populate the select field in the call panel
 		this.populateSelectField($('.call-panel select'), employees);
@@ -43,6 +44,16 @@ export default class StaffManager {
 	}
 
 	/**
+	 * Get a ExpertiseType with a given .id
+	 *
+	 * @param {Integer} expertiseTypeId ID of ExpertiseType
+	 * @return {Object} ExpertiseType with given ID, or null if not found
+	 */
+	getExpertiseType(expertiseTypeId) {
+		return this.expertiseTypes.find(expertiseType => expertiseType.id == expertiseTypeId) || null;
+	}
+
+	/**
 	 * Get specialists of certain ExpertiseType
 	 *
 	 * @param {Integer} expertiseTypeId ID of expertise type
@@ -61,14 +72,22 @@ export default class StaffManager {
 	 * expertise type based on how many unresolved tickets they
 	 * have open
 	 *
-	 * @param {Integer} expertiseTypeId ID of expertise type
+	 * @param {Object} expertiseTypeId ID of expertise type
 	 * @return {Object} most available employee with specialism in
 	 *                  expertise type
 	 */
 	getBestSpecialistForSpecialism(expertiseTypeId) {
 		let specialists = this.getSpecialistsOfSpecialism(expertiseTypeId);
 
-		if (specialists.length === 0) return null;
+		// no specialists found for this problem type
+		if (specialists.length === 0) {
+
+			// if no parent exists for this PT, give up
+			if (expertiseTypeId == null) return null;
+
+			// try the parent
+			return this.getBestSpecialistForSpecialism(this.getExpertiseType(expertiseTypeId).parent_id)
+		}
 
 		let bestSpecialist = null;
 
@@ -78,7 +97,7 @@ export default class StaffManager {
 			}
 		});
 
-		return this.getExpertiseTypeStaff(bestSpecialist.id, expertiseTypeId);
+		return bestSpecialist.id;
 	}
 
 	/**

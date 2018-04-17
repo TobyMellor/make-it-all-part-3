@@ -54,7 +54,8 @@ class TicketQuery extends MakeItAllQuery {
 					status.name AS status,
 					status.id AS status_id,
 					ticket.description,
-					ticket.expertise_type_staff_id,
+					ticket.expertise_type_id,
+					ticket.assigned_to_specialist_id,
 					ticket.assigned_to_operator_id,
 					ticket.created_at,
 					ticket.updated_at
@@ -223,16 +224,18 @@ class TicketQuery extends MakeItAllQuery {
 		$solutionId,
 		$authorId,
 		$assignedToOperatorId,
-		$expertiseTypeStaffId
+		$expertiseTypeId,
+		$assignedToSpecialistId
 	) {
 		return $this->mia_insert(
 			[
-				'title'                   => $title,
-				'description'             => $description,
-				'solution_id'             => $solutionId,
-				'author_id'               => $authorId,
-				'assigned_to_operator_id' => $assignedToOperatorId,
-				'expertise_type_staff_id' => $expertiseTypeStaffId
+				'title'                     => $title,
+				'description'               => $description,
+				'solution_id'               => $solutionId,
+				'author_id'                 => $authorId,
+				'assigned_to_operator_id'   => $assignedToOperatorId,
+				'expertise_type_id'         => $expertiseTypeId,
+				'assigned_to_specialist_id' => $assignedToSpecialistId
 			]
 		);
 	}

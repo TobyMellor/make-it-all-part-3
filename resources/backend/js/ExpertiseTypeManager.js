@@ -62,7 +62,6 @@ export default class ExpertiseTypeManager {
 			let clickedExpertiseTypeId = Number($clickedLi.data('expertiseTypeId'));
 
 			clickedExpertiseTypeChildren = this.getExpertiseTypesWithParent(clickedExpertiseTypeId);
-			$typeColumns.parent().find('input').val(clickedExpertiseTypeId);
 
 			// $clickedLi.closest('.form-group').find('span.subtle').text(this.getExpertiseTypeBreadcrum(expertiseType));
 

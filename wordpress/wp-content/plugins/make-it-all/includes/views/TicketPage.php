@@ -102,8 +102,9 @@ class TicketPage extends MakeItAllPage {
 				$ticket['description'], 
 				null, // TODO: If status is resolved, then allow solution to be set
 				get_current_user_id(), 
-				isset($ticket['assigned_to_operator']) ? $ticket['assigned_to_operator'] : null, 
-				$ticket['expertise_type_staff_id']
+				isset($ticket['assigned_to_operator']) ? $ticket['assigned_to_operator'] : null,
+				$ticket['expertise_type_id'],
+				isset($ticket['assigned_to_specialist']) ? $ticket['assigned_to_specialist'] : null
 			);
 
 			$ticketId = $wpdb->insert_id;
@@ -176,12 +177,13 @@ class TicketPage extends MakeItAllPage {
 		$ticketQuery->update(
 			$ticketId,
 			[
-				'title'                   => $ticket['title'], 
-				'description'             => $ticket['description'], 
-				'solution_id'             => null, // TODO: If status is resolved, then allow solution to be set
-				'author_id'               => get_current_user_id(), 
-				'assigned_to_operator_id' => isset($ticket['assigned_to_operator']) ? $ticket['assigned_to_operator'] : null, 
-				'expertise_type_staff_id' => $ticket['expertise_type_staff_id']
+				'title'                     => $ticket['title'], 
+				'description'               => $ticket['description'], 
+				'solution_id'               => null, // TODO: If status is resolved, then allow solution to be set
+				'author_id'                 => get_current_user_id(), 
+				'assigned_to_operator_id'   => isset($ticket['assigned_to_operator']) ? $ticket['assigned_to_operator'] : null,
+				'expertise_type_id'         => $ticket['expertise_type_id'],
+				'assigned_to_specialist_id' => isset($ticket['assigned_to_specialist']) ? $ticket['assigned_to_specialist'] : null
 			]
 		);
 

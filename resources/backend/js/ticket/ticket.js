@@ -11,7 +11,7 @@ $(() => {
 	// if we're on the read page, don't register these events
 	if (!window.employees || !window.expertiseTypes || !window.expertiseTypeStaff || !window.devices || !window.programs) return;
 
-	let staffManager         = window.staffManager         = new StaffManager(employees, 1, expertiseTypeStaff);
+	let staffManager         = window.staffManager         = new StaffManager(employees, 1, expertiseTypes, expertiseTypeStaff);
 	let expertiseTypeManager = window.expertiseTypeManager = new ExpertiseTypeManager(expertiseTypes, expertiseTypeStaff, staffManager);
 	let affectedItemsManager = window.affectedItemsManager = new AffectedItemsManager(devices, programs);
 
@@ -38,8 +38,9 @@ $(() => {
 		// trigger a change to update the best specialist for the problem
 		if ($assignedToType.val() === 'specialist') $assignedToType.click();
 
-		// set the Expertise Type Staff ID under .problem-type-picker
-		$(this).closest('.problem-type-picker').find('input').val(staffManager.getBestSpecialistForSpecialism(id).id);
+		// set the Expertise Type ID under .problem-type-picker and the best specialist
+		$(this).closest('.problem-type-picker').find('input[name*="expertise_type_id"]').val(Number($(this).data('expertiseTypeId')));
+		$(this).closest('.problem-type-picker').find('input[name*="assigned_to_specialist"]').val(staffManager.getBestSpecialistForSpecialism(id));
 	});
 
 	$(document).on('click', '.assign-options label', function() {
@@ -60,13 +61,10 @@ $(() => {
 			if ($input.val() === 'self') {
 				showEmployee($display, staffManager.currentEmployee, staffManager);
 			} else {
-				let selectedExpertiseTypeId = Number(
-					$(this).closest('.accordion-body').find('.problem-type-picker li.last-active').data('expertiseTypeId')
-					|| ticket.expertise_type_staff_id
-				);
+				let selectedExpertiseTypeId = Number($(this).closest('.accordion-body').find('.problem-type-picker li.last-active').data('expertiseTypeId'));
 
 				showEmployee($display, staffManager.getEmployee(
-					staffManager.getBestSpecialistForSpecialism(selectedExpertiseTypeId).staff_id
+					selectedExpertiseTypeId ? staffManager.getBestSpecialistForSpecialism(selectedExpertiseTypeId) : ticket.assigned_to_specialist_id
 				), staffManager) // TODO: Update with ID from problem type picker
 			}
 		}
