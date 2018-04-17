@@ -1,5 +1,5 @@
 $(() => {
-	if (!ticket) return;
+	if (!window.ticket) return;
 
 	$('.breadcrumb').html(expertiseTypeManager.getExpertiseTypeBreadcrumb(ticket.expertise_type_id));
 
