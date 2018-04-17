@@ -3,7 +3,7 @@ import AffectedItemsManager from "../AffectedItemsManager";
 import StaffManager from "../StaffManager";
 
 let showEmployee = window.showEmployee = (function($element, employee, staffManager) {
-	$element.find('input').each((i, input) => $(input).val(employee[$(input).data('attribute')])); // populate input fields
+	$element.find('input').each((i, input) => $(input).val(employee[$(input).data('attribute')] || 'N/A')); // populate input fields
 	$element.find('.mia-permissions strong').html(staffManager.getPermissions(employee)); // populate permissions field
 });
 
