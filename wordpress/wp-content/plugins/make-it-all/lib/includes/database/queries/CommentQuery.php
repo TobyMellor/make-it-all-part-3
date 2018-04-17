@@ -41,12 +41,6 @@ class CommentQuery extends Query {
 			->key('author_id', v::intVal())
 			->key('call_id',   v::optional(v::intVal()));
 
-		try {
-			$validator->assert($columns);
-		} catch (\Respect\Validation\Exceptions\NestedValidationException $e) {
-			wp_die('Server Validation Failed:<br>' . $e->getFullMessage()); return false;
-		}
-
-		return true;
+		return $this->assert_validation($validator, $columns);
 	}
 }

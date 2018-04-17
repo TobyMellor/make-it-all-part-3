@@ -23,12 +23,6 @@ class TicketStatusQuery extends Query {
 			->key('status_id', v::intVal())
 			->key('staff_id', v::intVal());
 
-		try {
-			$validator->assert($columns);
-		} catch (\Respect\Validation\Exceptions\NestedValidationException $e) {
-			wp_die('Server Validation Failed:<br>' . $e->getFullMessage()); return false;
-		}
-
-		return true;
+		return $this->assert_validation($validator, $columns);
 	}
 }

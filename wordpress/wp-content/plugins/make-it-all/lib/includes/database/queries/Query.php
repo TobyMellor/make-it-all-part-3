@@ -74,4 +74,20 @@ abstract class Query {
 	}
 
 	abstract protected function validate($columns);
+
+	/**
+	 * Runs the validator on data provided and decides
+	 * what to do in the event of an error
+	 *
+	 * @return Boolean
+	 */
+	protected function assert_validation($validator, $columns) {
+		try {
+			$validator->assert($columns);
+		} catch (\Respect\Validation\Exceptions\NestedValidationException $e) {
+			wp_die('Server Validation Failed:<br>' . $e->getFullMessage()); return false;
+		}
+
+		return true;
+	}
 }

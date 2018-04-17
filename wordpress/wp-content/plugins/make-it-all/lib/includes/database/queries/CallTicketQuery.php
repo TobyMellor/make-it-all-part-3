@@ -21,12 +21,6 @@ class CallTicketQuery extends Query {
 		$validator = v::key('call_id', v::intVal())
 			->key('ticket_id', v::intVal());
 
-		try {
-			$validator->assert($columns);
-		} catch (\Respect\Validation\Exceptions\NestedValidationException $e) {
-			wp_die('Server Validation Failed:<br>' . $e->getFullMessage()); return false;
-		}
-
-		return true;
+		return $this->assert_validation($validator, $columns);
 	}
 }
