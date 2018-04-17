@@ -2,6 +2,9 @@
 
 namespace MakeItAll\Includes;
 
+use MakeItAll\Includes\Database\{Migrator, Populator};
+use \WP_Roles;
+
 /**
  * Fired during plugin activation.
  *
@@ -31,9 +34,7 @@ class Activator {
 	 * Responsible for migrating all of the database tables.
 	 */
 	private function migrate_database() {
-		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/database/class-make-it-all-migrator.php';
-
-		$migrator = new MakeItAllMigrator;
+		$migrator = new Migrator;
 		$migrator->up();
 	}
 
@@ -41,9 +42,7 @@ class Activator {
 	 * Responsible for populating the database tables.
 	 */
 	private function seed_database() {
-		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/database/class-make-it-all-seeder.php';
-
-		$seeder = new MakeItAllSeeder;
+		$seeder = new Populator;
 		$seeder->seed();
 	}
 

@@ -10,7 +10,7 @@ namespace MakeItAll\Includes\Database;
  * @subpackage make-it-all/includes/database
  * @author     Toby Mellor <me@tobymellor.co.uk>
  */
-class MakeItAllSeeder {
+class Populator {
 	/**
 	 * List of seed classes in order of execution
 	 * (Order may be important)
@@ -41,7 +41,7 @@ class MakeItAllSeeder {
 	 */
 	public function seed() {
 		foreach ($this->seeds as $seed) {
-			$this->factory($seed)->seed();
+			$this->factory($this->getClassNamespace($seed))->seed();
 		}
 	}
 
@@ -50,12 +50,16 @@ class MakeItAllSeeder {
 	 */
 	public function truncate() {
 		foreach (array_reverse($this->seeds) as $seed) {
-			$this->factory(__NAMESPACE__ . '\Seeds\\' . $seed)->truncate();
+			$this->factory($this->getClassNamespace($seed))->truncate();
 		}
 	}
 
+	private function getClassNamespace($className) {
+		return __NAMESPACE__ . '\Seeds\\' . $className;
+	}
+
 	private function factory($className) {
-		if (class_exists($className)) return new Seeds\$className;
+		if (class_exists($className)) return new $className;
 
 		die('Class ' . $className . ' not found!');
 	}

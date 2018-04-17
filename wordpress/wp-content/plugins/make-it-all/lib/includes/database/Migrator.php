@@ -39,7 +39,7 @@ class Migrator {
 	 */
 	public function up() {
 		foreach ($this->migrations as $migration) {
-			$this->factory($migration)->up();
+			$this->factory($this->getClassNamespace($migration))->up();
 		}
 	}
 
@@ -52,10 +52,14 @@ class Migrator {
 		$wpdb->query('SET FOREIGN_KEY_CHECKS = 0'); // Some tables, e.g. Comment and Ticket, are dual locked
 
 		foreach (array_reverse($this->migrations) as $migration) {
-			$this->factory(__NAMESPACE__ . '\Migrations\\' . $migration)->down();
+			$this->factory($this->getClassNamespace($migration))->down();
 		}
 
 		$wpdb->query('SET FOREIGN_KEY_CHECKS = 1');
+	}
+
+	private function getClassNamespace($className) {
+		return __NAMESPACE__ . '\Migrations\\' . $className;
 	}
 
 	private function factory($className) {

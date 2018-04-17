@@ -21,4 +21,7 @@
 
 require_once(__DIR__ . '/vendor/autoload.php');
 
+register_activation_hook(__FILE__, ['\MakeItAll\Bootstrap', 'activate_make_it_all']);
+register_deactivation_hook(__FILE__, ['\MakeItAll\Bootstrap', 'deactivate_make_it_all']);
+
 new \MakeItAll\Bootstrap;

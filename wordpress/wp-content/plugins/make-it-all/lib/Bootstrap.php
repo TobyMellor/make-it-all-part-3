@@ -36,25 +36,6 @@ class Bootstrap {
 		define('PLUGIN_NAME_VERSION', '1.0.0');
 
 		/**
-		 * The code that runs during plugin activation.
-		 * This action is documented in includes/class-plugin-name-activator.php
-		 */
-		function activate_make_it_all() {
-			new Activator();
-		}
-
-		/**
-		 * The code that runs during plugin deactivation.
-		 * This action is documented in includes/class-plugin-name-deactivator.php
-		 */
-		function deactivate_make_it_all() {
-			new Deactivator();
-		}
-
-		register_activation_hook(__FILE__, 'activate_make_it_all');
-		register_deactivation_hook(__FILE__, 'deactivate_make_it_all');
-
-		/**
 		 * Begins execution of the plugin.
 		 *
 		 * Since everything within the plugin is registered via hooks,
@@ -63,11 +44,23 @@ class Bootstrap {
 		 *
 		 * @since    1.0.0
 		 */
-		function run_make_it_all() {
-			$makeItAll = new MakeItAll();
-			$makeItAll->run();
-		}
+		$makeItAll = new MakeItAll();
+		$makeItAll->run();
+	}
 
-		run_make_it_all();
+	/**
+	 * The code that runs during plugin activation.
+	 * This action is documented in includes/class-plugin-name-activator.php
+	 */
+	public function activate_make_it_all() {
+		new \MakeItAll\Includes\Activator();
+	}
+
+	/**
+	 * The code that runs during plugin deactivation.
+	 * This action is documented in includes/class-plugin-name-deactivator.php
+	 */
+	public function deactivate_make_it_all() {
+		new \MakeItAll\Includes\Deactivator();
 	}
 }
