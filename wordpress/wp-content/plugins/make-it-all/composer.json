@@ -1,0 +1,14 @@
+{
+    "name": "tobymellor/make-it-all",
+    "description": "Plugin for Make-It-All helpdesk system",
+    "authors": [
+        {
+            "name": "TobyMellor",
+            "email": "tobymulberry@hotmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+    	"psr-4": {"MakeItAll\\": "lib/"}
+    }
+}
