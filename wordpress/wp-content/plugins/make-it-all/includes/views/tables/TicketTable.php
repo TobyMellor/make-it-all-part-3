@@ -6,6 +6,7 @@ if (!class_exists('MakeItAllTable')) {
 
 class TicketTable extends MakeItAllTable {
 	protected $table = 'ticket';
+	protected $primary = 'title';
 
 	/**
 	 * Override the parent columns method. Defines the columns to use in your listing table
