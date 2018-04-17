@@ -57,7 +57,7 @@
 										</div>
 										<div class="col-sm-9 col-xs-12 has-button">
 											<div>
-												<select name="ticket[status]">
+												<select name="ticket[status]" validation="required|integer|in:1,2,3">
 													<option disabled selected>Select a status here…</option>
 													<option value="1">New</option>
 													<option value="2">Pending - In Progress</option>
@@ -78,7 +78,7 @@
 											</p>
 										</div>
 										<div class="col-sm-9 col-xs-12">
-											<input name="ticket[title]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here">
+											<input name="ticket[title]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here" validation="required|min:3|max:255">
 										</div>
 									</div>
 									<div class="row mia-field-group">
@@ -92,7 +92,7 @@
 											</p>
 										</div>
 										<div class="col-sm-9 col-xs-12">
-											<textarea name="ticket[description]"></textarea>
+											<textarea name="ticket[description]" validation="required|min:3|max:65535"></textarea>
 										</div>
 									</div>
 									<div class="row mia-field-group">
@@ -107,8 +107,8 @@
 										</div>
 										<div class="col-sm-9 col-xs-12">
 											<div class="problem-type-picker">
-												<input type="text" name="ticket[expertise_type_id]" hidden>
-												<input type="text" name="ticket[assigned_to_specialist]" hidden>
+												<input type="text" name="ticket[expertise_type_id]" hidden validation="required|integer">
+												<input type="text" name="ticket[assigned_to_specialist]" hidden validation="nullable|integer">
 												<div class="type-columns"></div>
 											</div>
 										</div>
@@ -154,7 +154,7 @@
 																</p>
 															</div>
 															<div class="col-xs-9">
-																<input name="ticket[assigned_to][name]" type="text" readonly="readonly" data-attribute="name">
+																<input name="ticket[assigned_to][name]" type="text" readonly="readonly" data-attribute="name" validation="required">
 															</div>
 														</div>
 														<div class="row mia-field-group">
@@ -164,7 +164,7 @@
 																</p>
 															</div>
 															<div class="col-xs-9">
-																<input name="ticket[assigned_to][id]" type="text" readonly="readonly" data-attribute="id">
+																<input name="ticket[assigned_to][id]" type="text" readonly="readonly" data-attribute="id" validation="required|integer">
 															</div>
 														</div>
 														<div class="row mia-field-group">
@@ -174,7 +174,7 @@
 																</p>
 															</div>
 															<div class="col-xs-9">
-																<input name="ticket[assigned_to][job_title]" type="text" readonly="readonly" data-attribute="job_title">
+																<input name="ticket[assigned_to][job_title]" type="text" readonly="readonly" data-attribute="job_title" validation="required">
 															</div>
 														</div>
 														<div class="row mia-field-group">
@@ -184,7 +184,7 @@
 																</p>
 															</div>
 															<div class="col-xs-9">
-																<input name="ticket[assigned_to][department]" type="text" readonly="readonly" data-attribute="department">
+																<input name="ticket[assigned_to][department]" type="text" readonly="readonly" data-attribute="department" validation="required">
 															</div>
 														</div>
 														<div class="row mia-field-group">
@@ -194,7 +194,7 @@
 																</p>
 															</div>
 															<div class="col-xs-9">
-																<input name="ticket[assigned_to][phone_number]" type="text" readonly="readonly" data-attribute="phone_number">
+																<input name="ticket[assigned_to][phone_number]" type="text" readonly="readonly" data-attribute="phone_number" validation="required">
 															</div>
 														</div>
 														<div class="row mia-field-group">
@@ -225,7 +225,7 @@
 											</p>
 										</div>
 										<div class="col-sm-9 col-xs-12">
-											<select class="add-hardware-device">
+											<select name="ticket[hardware_showcase]" class="add-hardware-device" validation="nullable">
 												<option selected disabled>Select a hardware device here…</option>
 											</select>
 											<ul class="affected-items"></ul>
@@ -242,7 +242,7 @@
 											</p>
 										</div>
 										<div class="col-sm-9 col-xs-12">
-											<select class="add-application">
+											<select name="ticket[application_showcase]" class="add-application" validation="nullable">
 												<option selected disabled>Select a software program here…</option>
 											</select>
 											<ul class="affected-items"></ul>
@@ -259,7 +259,7 @@
 											</p>
 										</div>
 										<div class="col-sm-9 col-xs-12">
-											<select class="add-operating-system">
+											<select name="ticket[operating_system_showcase]" class="add-operating-system" validation="nullable">
 												<option selected disabled>Select an operating system here…</option>
 											</select>
 											<ul class="affected-items"></ul>

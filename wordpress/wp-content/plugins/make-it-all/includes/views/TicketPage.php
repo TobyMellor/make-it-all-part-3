@@ -165,7 +165,7 @@ class TicketPage extends MakeItAllPage {
 
 	protected function update_action() {
 		global $wpdb;
-
+		
 		$ticketQuery        = new TicketQuery();
 		$ticketDeviceQuery  = new TicketDeviceQuery();
 		$ticketProgramQuery = new TicketProgramQuery();

@@ -117,7 +117,12 @@ function clearAccordion($accordion, newAccordionId, affectedItemsManager = null,
 function initTinyMCE() {
 	tinyMCE.init({
 		selector: 'textarea',
-		branding: false
+		branding: false,
+		setup: function (editor) {
+			editor.on('change', function () {
+				editor.save(); // keep hidden textarea up to date
+			});
+		}
 	});
 }
 
