@@ -179,34 +179,42 @@ export default class ExpertiseTypeManager {
 	handleCreateExpertiseTypeField($input) {
 		let $button = $input.next();
 
-		$button.prop('disabled', $input.val().length <= 2);
+		$button.prop('disabled', $input.val().length <= 2 || $input.val().length >= 255);
 	}
 
 	createExpertiseType($button) {
 		$button.prop('disabled', true);
 
-		let name = $button.prev().val();
+		let $input = $button.prev(),
+			name   = $input.val();
 
-		// ajax request, if successful:
-		$button.prev().remove();
+		$.ajax({
+			url: '/wp-json/make-it-all/v1/problem-type',
+			type: 'POST',
+			data: {
+				name: name
+			}
+		}).done((response) => {
+			$input.remove();
 
-		let expertiseTypeId = Math.round(Math.random(1000, 9999) * 1000); // get ID from Database
+			let expertiseTypeId = Math.round(Math.random(1000, 9999) * 1000); // get ID from Database
 
-		let $newProblemType = $(`
-			<li class="no-children" data-expertise-type-id="${expertiseTypeId}">
-				${name}
-				<div class="specialist-counter">
-					<i class="fa fa-user-times"></i>
-				</div>
-			</li>
-		`);
+			let $newProblemType = $(`
+				<li class="no-children" data-expertise-type-id="${expertiseTypeId}">
+					${name}
+					<div class="specialist-counter">
+						<i class="fa fa-user-times"></i>
+					</div>
+				</li>
+			`);
 
-		$button
-			.prop('disabled', false)
-			.removeClass()
-			.addClass('button button-primary')
-			.text('Create problem type');
-			
-		$newProblemType.insertBefore($button);
+			$button
+				.prop('disabled', false)
+				.removeClass()
+				.addClass('button button-primary')
+				.text('Create problem type');
+				
+			$newProblemType.insertBefore($button);
+		});
 	}
 }

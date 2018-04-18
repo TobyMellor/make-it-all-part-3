@@ -105,8 +105,12 @@ class Loader {
 
 		foreach ($pages as $pageName) {
 			$pageName = __NAMESPACE__ . '\Views\\' . $pageName;
+			$page     = new $pageName;
 
 			$this->add_action('admin_menu', new $pageName, 'init');
+			if (method_exists($page, 'add_api_endpoints')) {
+				$this->add_action('rest_api_init', $page, 'add_api_endpoints');
+			}
 		}
 
 		foreach ($this->filters as $hook) {

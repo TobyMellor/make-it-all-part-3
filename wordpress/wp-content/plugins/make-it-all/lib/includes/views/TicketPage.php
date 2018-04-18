@@ -48,7 +48,7 @@ class TicketPage extends Page {
 		}
 
 		if (isset($_GET['id'])) {
-			$context = $this->getRequiredData('Viewing Ticket');
+			$context = $this->get_required_data('Viewing Ticket');
 			$context = $this->getTicket($context, $_GET['id']);
 
 			$this->render_pane($context); // render page before inserting table
@@ -76,7 +76,7 @@ class TicketPage extends Page {
 	public function create_pane() {
 		parent::create_pane();
 
-		$context = $this->getRequiredData('Create Tickets');
+		$context = $this->get_required_data('Create Tickets');
 
 		$this->render_pane($context);
 	}
@@ -150,7 +150,7 @@ class TicketPage extends Page {
 	public function update_pane() {
 		parent::update_pane();
 
-		$context = $this->getRequiredData('Update Ticket');
+		$context = $this->get_required_data('Update Ticket');
 		
 		$context['tickets'] = json_encode((new TicketQuery)->get());
 
@@ -223,7 +223,7 @@ class TicketPage extends Page {
 		$this->mia_redirect('admin.php?page=ticket&id=' . $ticketId); exit;
 	}
 
-	private function getRequiredData($pageName) {
+	private function get_required_data($pageName) {
 		$context = $this->get_context($pageName);
 
 		$context['employees']            = json_encode((new StaffQuery)->get());

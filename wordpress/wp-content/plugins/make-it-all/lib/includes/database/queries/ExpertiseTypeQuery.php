@@ -31,8 +31,18 @@ class ExpertiseTypeQuery extends Query {
 
 		return $expertiseTypes;
 	}
-
+	
+	/**
+	 * Validation for Expertise Type
+	 *    - Name: String, Alphanumeric, Length between 2 and 256
+	 *
+	 * @param $columns key/value of columns
+	 *
+	 * @return Boolean true if pass, dies (and returns false) on fail
+	 */
 	protected function validate($columns) {
-		return true;
+		$validator = v::key('name', v::alnum()->length(2, 256));
+
+		return $this->assert_validation($validator, $columns);
 	}
 }

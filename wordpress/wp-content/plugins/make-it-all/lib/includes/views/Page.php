@@ -12,6 +12,7 @@ abstract class Page {
 		'Create',
 		'Update'
 	]; // to add/remove a page, redefine this in the child
+	protected $apiNamespace = 'make-it-all/v1';
 	
 	/**
 	 * Initialises the menu and submenu, and
@@ -23,7 +24,7 @@ abstract class Page {
 	public function init() {
 		$name = $this->name;
 
-		$parentSlug = $this->getStringAsSlug($this->name);
+		$parentSlug = $this->get_string_as_slug($this->name);
 
 		add_menu_page('View ' . $name, ($name == "Hardware" ? $name : $name . 's'), 'read_make_it_all', $parentSlug, [$this, 'read_pane'], $this->icon, $this->position);
 
@@ -58,7 +59,7 @@ abstract class Page {
 	 * @return @void
 	 */
 	public function enqueue_dependencies() {
-		$fileName = $this->getStringAsSlug($this->name);
+		$fileName = $this->get_string_as_slug($this->name);
 
 		wp_enqueue_style('mia_' . $fileName, get_template_directory_uri() . '/backend/css/' . $fileName . '/' . $fileName . '.css', [], '1.0.0', 'all');
 		wp_enqueue_script('mia_' . $fileName, get_template_directory_uri() . '/backend/js/' . $fileName . '/' . $fileName . '.js', ['jquery', 'jquery-ui-accordion'], '1.0.0', false);
@@ -72,15 +73,15 @@ abstract class Page {
 
 	public function read_pane() {
 		$this->enqueue_dependency(
-			'mia_read_' . $this->getStringAsSlug($this->name), // name of script, e.g. mia_read_tickets
-			'/backend/js/' . $this->getStringAsSlug($this->name) . '/read_' . $this->getStringAsSlug($this->name) . '.js' // location of script
+			'mia_read_' . $this->get_string_as_slug($this->name), // name of script, e.g. mia_read_tickets
+			'/backend/js/' . $this->get_string_as_slug($this->name) . '/read_' . $this->get_string_as_slug($this->name) . '.js' // location of script
 		);
 	}
 
 	public function create_pane() {
 		$this->enqueue_dependency(
-			'mia_create_' . $this->getStringAsSlug($this->name),
-			'/backend/js/' . $this->getStringAsSlug($this->name) . '/create_' . $this->getStringAsSlug($this->name) . '.js'
+			'mia_create_' . $this->get_string_as_slug($this->name),
+			'/backend/js/' . $this->get_string_as_slug($this->name) . '/create_' . $this->get_string_as_slug($this->name) . '.js'
 		);
 
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') return $this->create_action();
@@ -88,8 +89,8 @@ abstract class Page {
 
 	public function update_pane() {
 		$this->enqueue_dependency(
-			'mia_update_' . $this->getStringAsSlug($this->name),
-			'/backend/js/' . $this->getStringAsSlug($this->name) . '/update_' . $this->getStringAsSlug($this->name) . '.js'
+			'mia_update_' . $this->get_string_as_slug($this->name),
+			'/backend/js/' . $this->get_string_as_slug($this->name) . '/update_' . $this->get_string_as_slug($this->name) . '.js'
 		);
 
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') return $this->update_action();
@@ -119,8 +120,8 @@ abstract class Page {
 	protected function render_pane($context) {
 		Timber::render(
 			'backend/views/' .
-			$this->getStringAsSlug($this->name) . 's/' .
-			$this->getStringAsSlug($context['page_name']) .
+			$this->get_string_as_slug($this->name) . 's/' .
+			$this->get_string_as_slug($context['page_name']) .
 			'.twig',
 			$context
 		); // e.g. backend/tickets/create_ticket.twig
@@ -132,7 +133,7 @@ abstract class Page {
 	 *
 	 * @return String
 	 */
-	private function getStringAsSlug($string) {
+	private function get_string_as_slug($string) {
 		return str_replace(' ', '_', strtolower($string));
 	}
 

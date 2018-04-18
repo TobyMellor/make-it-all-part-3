@@ -22,12 +22,12 @@ class ProblemTypePage extends Page {
 	public function read_pane() {
 		// parent::read_pane();
 
-		$context = $this->getRequiredData('View Problem Types');
+		$context = $this->get_required_data('View Problem Types');
 		
 		$this->render_pane($context);
 	}
 
-	private function getRequiredData($pageName) {
+	private function get_required_data($pageName) {
 		$context = $this->get_context($pageName);
 
 		$context['employees']            = json_encode((new StaffQuery)->get());
@@ -35,5 +35,21 @@ class ProblemTypePage extends Page {
 		$context['expertise_type_staff'] = json_encode((new ExpertiseTypeStaffQuery)->get());
 
 		return $context;
+	}
+
+	public function add_api_endpoints() {
+		register_rest_route($this->apiNamespace, '/problem-type', [
+			'methods'  => 'GET',
+			'callback' => function() {
+				return (new ExpertiseTypeQuery)->get();
+			},
+		]);
+
+		register_rest_route($this->apiNamespace, '/problem-type', [
+			'methods'  => 'POST',
+			'callback' => function($request) {
+				return (new ExpertiseTypeQuery)->mia_insert($request->get_params());
+			},
+		]);
 	}
 }
