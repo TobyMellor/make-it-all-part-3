@@ -212,8 +212,11 @@ export default class ExpertiseTypeManager {
 			this.expertiseTypes.push({
 				id: expertiseTypeId,
 				name: name,
-				parent_id: parentId
+				parent_id: parentId,
+				children: []
 			});
+
+			if (parentId !== null) this.getExpertiseType(parentId).children.push(expertiseTypeId);
 
 			$input.remove();
 
