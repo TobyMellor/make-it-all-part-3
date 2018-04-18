@@ -139,4 +139,10 @@ $(() => {
 
 		expertiseTypeManager.renameExpertiseType(id, name);
 	});
+
+	$(document).on('click', '#delete-problem-type', function() {
+		let id     = $('.type-columns li.last-active').data('expertiseTypeId');
+
+		expertiseTypeManager.deleteExpertiseType(id);
+	});
 });

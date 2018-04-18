@@ -73,11 +73,17 @@ class ProblemTypePage extends Page {
 			},
 		]);
 
-
 		register_rest_route($this->apiNamespace, '/problem-type/(?P<id>\d+)', [
 			'methods'  => 'PUT',
 			'callback' => function($request) {
 				return (new ExpertiseTypeQuery)->mia_update($request['id'], ['name' => $request['name']]);
+			},
+		]);
+
+		register_rest_route($this->apiNamespace, '/problem-type/(?P<id>\d+)', [
+			'methods'  => 'DELETE',
+			'callback' => function($request) {
+				return (new ExpertiseTypeQuery)->mia_delete($request['id']);
 			},
 		]);
 	}

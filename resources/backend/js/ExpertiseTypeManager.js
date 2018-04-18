@@ -326,4 +326,54 @@ export default class ExpertiseTypeManager {
 			this.loadExpertiseType($('.type-columns'), id);
 		});
 	}
+
+	deleteExpertiseType(id) {
+		let $deleteProblemType = $('#delete-problem-type');
+
+		$deleteProblemType.prop('disabled', true);
+
+		$.ajax({
+			url: '/wp-json/make-it-all/v1/problem-type/' + id,
+			type: 'DELETE'
+		})
+		.done(() => {
+			let parentId = this.getExpertiseType(id).parent_id;
+
+			if (parentId !== null) {
+				let children = this.getExpertiseType(parentId).children;
+
+				children.some((expertiseType, i) => {
+					if (expertiseType.id == id) {
+						children.splice(i, 1); return;
+					}
+				});
+			}
+
+			this.expertiseTypes.some((expertiseType, i) => {
+				if (expertiseType.id == id) {
+					this.expertiseTypes.splice(i, 1); return;
+				}
+			});
+
+			let $removedLi = $('li.last-active'),
+				$nextLi    = $removedLi.siblings('li').first();
+
+			if ($nextLi.length === 0) {
+				$nextLi = $removedLi.parent().prev().find('.active');
+			}
+
+			$removedLi.remove();
+
+			if ($nextLi.length === 0) {
+				let $typeColumns = $('.type-columns');
+
+				$typeColumns.empty();
+				this.loadChildrenExpertiseTypes($typeColumns);
+			} else {
+				$nextLi.click();
+			}
+
+			$deleteProblemType.prop('disabled', false);
+		});
+	}
 }

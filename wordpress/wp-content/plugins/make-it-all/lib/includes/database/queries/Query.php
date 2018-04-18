@@ -76,7 +76,11 @@ abstract class Query {
 	public function mia_delete($id, $whereColumn = 'id') {
 		global $wpdb;
 
-		return $wpdb->delete($this->prefix . $this->table, [$whereColumn => $id]);
+		if (!$wpdb->delete($this->prefix . $this->table, [$whereColumn => $id])) {
+			return WP_Error(400, 'Sorry! We failed to delete that record. Please try again.');
+		}
+
+		return false;
 	}
 
 	abstract protected function validate($columns);
