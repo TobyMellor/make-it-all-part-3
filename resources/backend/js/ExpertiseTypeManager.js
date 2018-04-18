@@ -181,6 +181,7 @@ export default class ExpertiseTypeManager {
 		// change the text/color of the button to indicate to the user
 		// that this is how to submit the problem type
 		$button
+			.add('#create-problem-type')
 			.prop('disabled', true)
 			.removeClass()
 			.addClass('button button-success')
@@ -194,7 +195,7 @@ export default class ExpertiseTypeManager {
 	 * @param {DOM} $input the input field the user is typing in
 	 */
 	handleCreateExpertiseTypeField($input) {
-		let $button = $input.siblings('button');
+		let $button = $input.siblings('button').add('#create-problem-type');
 
 		// the name of the new ExpertiseType must be between 2 and 256
 		$button.prop('disabled', $input.val().length <= 2 || $input.val().length >= 256);
@@ -218,7 +219,7 @@ export default class ExpertiseTypeManager {
 	 * @param {DOM} $button the button the user clicked
 	 */
 	createExpertiseType($button) {
-		$button.prop('disabled', true);
+		$button.add('#create-problem-type').prop('disabled', true);
 
 		let $input           = $button.siblings('input'),
 			$invalidFeedback = $button.siblings('.invalid-feedback'),
@@ -243,7 +244,7 @@ export default class ExpertiseTypeManager {
 				.insertAfter($input);
 
 			$input.focus();
-			$button.prop('disabled', false);
+			$button.add('#create-problem-type').prop('disabled', false);
 		})
 		.done((expertiseTypeId) => {
 
@@ -269,10 +270,13 @@ export default class ExpertiseTypeManager {
 			`);
 
 			$button
+				.add('#create-problem-type')
 				.prop('disabled', false)
 				.removeClass()
-				.addClass('button button-primary')
-				.text('Create problem type');
+				.addClass('button');
+
+			$button.text('Create problem type');
+			$('#create-problem-type').text('Create within');
 				
 			$newProblemType.insertBefore($button);
 			

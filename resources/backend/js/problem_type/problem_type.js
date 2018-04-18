@@ -48,7 +48,7 @@ ExpertiseTypeManager.prototype.loadChildrenExpertiseTypes = (function($typeColum
 
 	$typeColumns.find('button').remove();
 	$typeColumn.add($clickedTypeColumn).append(`
-		<button class="button button-primary">Create problem type</button>
+		<button class="button">Create problem type</button>
 	`);
 
 	// Append the new .type-column, scroll to the right to view it
@@ -98,7 +98,7 @@ $(() => {
 		expertiseTypeManager.loadChildrenExpertiseTypes($(this).closest('.type-columns'), $(this));
 	});
 
-	$(document).on('click', '.type-column button.button-primary', function() {
+	$(document).on('click', '.type-column button:not(.button-success)', function() {
 		expertiseTypeManager.showCreateExpertiseTypeField($(this));
 	});
 
@@ -109,4 +109,6 @@ $(() => {
 	$(document).on('click', '.type-column button.button-success', function() {
 		expertiseTypeManager.createExpertiseType($(this));
 	});
+
+	$('#create-problem-type').click(() => $('.type-columns .last-active').parent().next().find('button').click());
 });

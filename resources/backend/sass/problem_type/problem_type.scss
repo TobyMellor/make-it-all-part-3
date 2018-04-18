@@ -101,3 +101,16 @@
 		}
 	}
 }
+
+.mia-panel.mia-panel-short {
+	.problem-type-actions {
+		padding: 12px;
+		padding-top: 0;
+
+		button {
+			display: block;
+			width: 100%;
+			margin-top: 12px;
+		}
+	}
+}
