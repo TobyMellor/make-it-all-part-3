@@ -35,6 +35,12 @@ $(() => {
 
 	// Set current date
 	$('.mia-picker input').datepicker('setDate', new Date());
+
+	$(document).on('click', '.invalid-feedback', function() {
+		$(this).fadeOut(250, function() {
+			$(this).remove();
+		})
+	});
 });
 
 function setDateDisplay($spans, date) {

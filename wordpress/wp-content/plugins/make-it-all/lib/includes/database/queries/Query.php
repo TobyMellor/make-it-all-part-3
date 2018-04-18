@@ -2,6 +2,8 @@
 
 namespace MakeItAll\Includes\Database\Queries;
 
+use \WP_Error;
+
 abstract class Query {
 	protected $sqlStatement = null;
 	protected $table;
@@ -29,7 +31,9 @@ abstract class Query {
 	 * @return (int|false) Number of rows affected/selected or false on error
 	 */
 	public function mia_insert($columns) {
-		if (!$this->validate($columns)) return;
+		$validationResponse = $this->validate($columns);
+
+		if (is_wp_error($validationResponse)) return $validationResponse;
 
 		$columns['created_at'] = date('Y-m-d H:i:s');
 		$columns['updated_at'] = date('Y-m-d H:i:s');
@@ -49,7 +53,9 @@ abstract class Query {
 	 * @return Boolean
 	 */
 	public function mia_update($id, $columns, $whereColumn = 'id') {
-		if (!$this->validate($columns)) wp_die('Server-side validation has failed');
+		$validationResponse = $this->validate($columns);
+
+		if (is_wp_error($validationResponse)) return $validationResponse;
 
 		$columns['updated_at'] = date('Y-m-d H:i:s');
 
@@ -85,7 +91,7 @@ abstract class Query {
 		try {
 			$validator->assert($columns);
 		} catch (\Respect\Validation\Exceptions\NestedValidationException $e) {
-			wp_die('Server Validation Failed:<br>' . $e->getFullMessage()); return false;
+			return new WP_Error(400, $e->getMessages());
 		}
 
 		return true;

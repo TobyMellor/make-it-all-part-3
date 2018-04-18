@@ -177,7 +177,7 @@ export default class ExpertiseTypeManager {
 	}
 
 	handleCreateExpertiseTypeField($input) {
-		let $button = $input.next();
+		let $button          = $input.siblings('button');
 
 		$button.prop('disabled', $input.val().length <= 2 || $input.val().length >= 255);
 	}
@@ -185,8 +185,11 @@ export default class ExpertiseTypeManager {
 	createExpertiseType($button) {
 		$button.prop('disabled', true);
 
-		let $input = $button.prev(),
-			name   = $input.val();
+		let $input           = $button.siblings('input'),
+			$invalidFeedback = $button.siblings('.invalid-feedback'),
+			name             = $input.val();
+
+		$invalidFeedback.remove();
 
 		$.ajax({
 			url: '/wp-json/make-it-all/v1/problem-type',
@@ -194,10 +197,17 @@ export default class ExpertiseTypeManager {
 			data: {
 				name: name
 			}
-		}).done((response) => {
-			$input.remove();
+		})
+		.fail((xhr) => {
+			$('<div class="invalid-feedback">')
+				.text(xhr.responseJSON.message[0])
+				.insertAfter($input);
 
-			let expertiseTypeId = Math.round(Math.random(1000, 9999) * 1000); // get ID from Database
+			$input.focus();
+			$button.prop('disabled', false);
+		})
+		.done((expertiseTypeId) => {
+			$input.remove();
 
 			let $newProblemType = $(`
 				<li class="no-children" data-expertise-type-id="${expertiseTypeId}">
