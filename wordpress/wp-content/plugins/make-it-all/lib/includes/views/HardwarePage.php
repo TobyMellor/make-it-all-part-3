@@ -137,18 +137,9 @@ class HardwarePage extends Page {
 
     private function getHardware($context, $id) {
         $deviceQuery = new DeviceQuery();
-        
-        $device = $deviceQuery->get_device($id);
 
         $context['device_object'] = $deviceQuery->get_device($id)[0];
-        $context['device_object']->id = $id;
-        $context['device_object']->type = $device[0]->{'type'};
-        $context['device_object']->make = $device[0]->{'make'};
-        $context['device_object']->serial_no = $device[0]->{'serial_no'};
-        $context['device_object']->create = (String) $device[0]->{'created_at'};
-        $context['device_object']->update = $device[0]->{'updated_at'};
-
-        $context['device'] = json_encode($context['device_object']);
+        $context['device'] = json_encode($deviceQuery->get_device($id)[0]);
 
         return $context;
     }
