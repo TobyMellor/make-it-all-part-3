@@ -3,7 +3,9 @@ import HardwareManager from "../HardwareManager";
 $(() => {
 	let hardwaremanager = new HardwareManager(devices, types, makes);
 
-	addButtonListeners(this, (device ? device.type : ""), (device ? device.make : ""));
+	$(document).ready(function() {
+		addButtonListeners(this, (device ? device.type : ""), (device ? device.make : ""));
+	});
 
 	let $heading = $('.mia-panel-heading'),
 		$select  = $heading.find('select'),
