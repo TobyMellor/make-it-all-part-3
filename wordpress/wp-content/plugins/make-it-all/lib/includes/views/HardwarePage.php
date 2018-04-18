@@ -7,7 +7,6 @@ use MakeItAll\Includes\Views\Tables\HardwareTable;
 
 use MakeItAll\Includes\Database\Queries\{
 	DeviceQuery,
-	DeviceInsertQuery,
 	TypeQuery,
 	MakeQuery
 };
@@ -108,7 +107,6 @@ class HardwarePage extends Page {
 		}
 
 		$this->render_pane($context);
-
 	}
 	
 	protected function update_action() {
@@ -139,7 +137,7 @@ class HardwarePage extends Page {
 		$deviceQuery = new DeviceQuery();
 
 		$context['device_object'] = $deviceQuery->get_device($id)[0];
-		$context['device'] = json_encode($deviceQuery->get_device($id)[0]);
+		$context['device'] = json_encode($context['device_object']);
 
 		return $context;
 	}
