@@ -1,5 +1,6 @@
 wordpress/wp-content/themes/make-it-all/*/css/*
 wordpress/wp-content/themes/make-it-all/*/js/*
+wordpress/wp-content/plugins/make-it-all/vendor/*
 
 node_modules
 mix-manifest.json

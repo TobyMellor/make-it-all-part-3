@@ -54,6 +54,7 @@ function compileBackend() {
     mix.js(backendResources("main.js"), backendOutput("main.js"));
     mix.sass(backendResources("main.scss"), backendOutput("main.css"))
 
+
     let pages   = ["ticket", "hardware"],
         actions = ["read", "create", "update"];
 
@@ -61,6 +62,17 @@ function compileBackend() {
         // common styles/scripts across actions, e.g. tickets/tickets.js
         mix.js(backendResources(page + "/" + page + ".js"), backendOutput(page + "/" + page + ".js"));
         mix.sass(backendResources(page + "/" + page + ".scss"), backendOutput(page + "/" + page + ".css"));
+
+        for (let action of actions) {
+            let actionPath = page + "/" + action + "_" + page + ".js";
+
+            // scripts for an individual action, e.g. tickets/c.js
+            if (fs.existsSync(backendResources(actionPath))) {
+                mix.js(backendResources(actionPath), backendOutput(actionPath));
+            }
+        }
+    }
+
 
         for (let action of actions) {
             let actionPath = page + "/" + action + "_" + page + ".js";
