@@ -160,4 +160,53 @@ export default class ExpertiseTypeManager {
 
 		return breadcrumb;
 	}
+
+	showCreateExpertiseTypeField($button) {
+		let $typeColumn = $button.parent(),
+			$input      = $('<input type="text" name="name" value="New Problem Type" placeholder="New Problem Type…" autocomplete="off">');
+
+		$typeColumn.find('input').remove();
+		$input.insertBefore($button);
+		$input.select();
+
+		$button
+			.prop('disabled', true)
+			.removeClass()
+			.addClass('button button-success')
+			.text('Submit new problem type');
+	}
+
+	handleCreateExpertiseTypeField($input) {
+		let $button = $input.next();
+
+		$button.prop('disabled', $input.val().length <= 2);
+	}
+
+	createExpertiseType($button) {
+		$button.prop('disabled', true);
+
+		let name = $button.prev().val();
+
+		// ajax request, if successful:
+		$button.prev().remove();
+
+		let expertiseTypeId = Math.round(Math.random(1000, 9999) * 1000); // get ID from Database
+
+		let $newProblemType = $(`
+			<li class="no-children" data-expertise-type-id="${expertiseTypeId}">
+				${name}
+				<div class="specialist-counter">
+					<i class="fa fa-user-times"></i>
+				</div>
+			</li>
+		`);
+
+		$button
+			.prop('disabled', false)
+			.removeClass()
+			.addClass('button button-primary')
+			.text('Create problem type');
+			
+		$newProblemType.insertBefore($button);
+	}
 }

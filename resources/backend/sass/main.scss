@@ -44,6 +44,24 @@ $red-hover: #c0392b;
 			box-shadow: 0 1px 0 $black;
 		}
 	}
+
+	&.button-success {
+		&, &:focus {
+			background: $green;
+			border-color: $green-hover;
+			box-shadow: 0 1px 0 $green-hover;
+			color: $white;
+			text-decoration: none;
+			text-shadow: 0 -1px 1px $green-hover, 1px 0 1px $green-hover, 0 1px 1px $green-hover, -1px 0 1px $green-hover;
+		}
+
+		&:hover {
+			background: $green-hover;
+			color: $white;
+			border-color: $green-hover;
+			box-shadow: 0 1px 0 $black;
+		}
+	}
 }
 
 .wp-list-table, .tablenav {

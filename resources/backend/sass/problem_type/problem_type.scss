@@ -74,6 +74,20 @@
 			.type-column {
 				box-shadow: none;
 
+				input {
+					width: 100%;
+					margin: 0;
+					border: 0;
+					box-shadow: none;
+					font-size: 13px;
+					padding: 6px 8px;
+					
+
+					&:first-line {
+						background-color: gold;
+					}
+				}
+
 				button {
 					margin: 16px auto;
 					display: block;

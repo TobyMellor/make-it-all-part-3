@@ -97,4 +97,16 @@ $(() => {
 		// show the children of the selected type in the main view
 		expertiseTypeManager.loadChildrenExpertiseTypes($(this).closest('.type-columns'), $(this));
 	});
+
+	$(document).on('click', '.type-column button.button-primary', function() {
+		expertiseTypeManager.showCreateExpertiseTypeField($(this));
+	});
+
+	$(document).on('keyup', '.type-column input', function() {
+		expertiseTypeManager.handleCreateExpertiseTypeField($(this));
+	});
+
+	$(document).on('click', '.type-column button.button-success', function() {
+		expertiseTypeManager.createExpertiseType($(this));
+	});
 });
