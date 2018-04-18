@@ -225,6 +225,7 @@ export default class ExpertiseTypeManager {
 				.text('Create problem type');
 				
 			$newProblemType.insertBefore($button);
+			$newProblemType.click(); // show new problem type
 		});
 	}
 }
