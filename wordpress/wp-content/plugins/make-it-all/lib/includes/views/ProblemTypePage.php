@@ -27,6 +27,12 @@ class ProblemTypePage extends Page {
 		$this->render_pane($context);
 	}
 
+	/**
+	 * Returns a new Timber Context and appends data required
+	 * for all pages
+	 *
+	 * @return Timber\Context
+	 */
 	private function get_required_data($pageName) {
 		$context = $this->get_context($pageName);
 
@@ -37,6 +43,21 @@ class ProblemTypePage extends Page {
 		return $context;
 	}
 
+	/**
+	 * Register the API endpoints. This function must be named
+	 * "add_api_endpoints" in any of the classes which extend
+	 * Page to be loaded successfully.
+	 *
+	 * You may also need to change the Permalink Settings:
+	 *     1. /wp-admin
+	 *     2. Settings > Permalinks
+	 *     3. Custom Permalink
+	 *     4. Enter /%postname%/ and save
+	 *
+	 * These urls should be registered at /wp-json/make-it-all/v1/*
+	 *
+	 * @return @void
+	 */
 	public function add_api_endpoints() {
 		register_rest_route($this->apiNamespace, '/problem-type', [
 			'methods'  => 'GET',

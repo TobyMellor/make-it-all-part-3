@@ -161,14 +161,25 @@ export default class ExpertiseTypeManager {
 		return breadcrumb;
 	}
 
+	/**
+	 * Handles the "Create Problem Type" button click
+	 *     - Creates an input field
+	 *     - Changes the button color/text
+	 *
+	 * @param {DOM} $button the clicked button 
+	 */
 	showCreateExpertiseTypeField($button) {
 		let $typeColumn = $button.parent(),
 			$input      = $('<input type="text" name="name" value="New Problem Type" placeholder="New Problem Type…" autocomplete="off">');
 
+		// if for some reason an input field is already there, remove it
+		// add the new $input field and select the text
 		$typeColumn.find('input').remove();
 		$input.insertBefore($button);
 		$input.select();
 
+		// change the text/color of the button to indicate to the user
+		// that this is how to submit the problem type
 		$button
 			.prop('disabled', true)
 			.removeClass()
@@ -176,12 +187,36 @@ export default class ExpertiseTypeManager {
 			.text('Submit new problem type');
 	}
 
+	/**
+	 * Handles the keyup event on the input field
+	 *     - Disables the button of the length of the text is invalid
+	 *
+	 * @param {DOM} $input the input field the user is typing in
+	 */
 	handleCreateExpertiseTypeField($input) {
-		let $button          = $input.siblings('button');
+		let $button = $input.siblings('button');
 
-		$button.prop('disabled', $input.val().length <= 2 || $input.val().length >= 255);
+		// the name of the new ExpertiseType must be between 2 and 256
+		$button.prop('disabled', $input.val().length <= 2 || $input.val().length >= 256);
 	}
 
+	/**
+	 * Handles the "Submit new Problem Type" button click
+	 *     - Disables the button
+	 *     - Removes any invalid feedback from validation issues
+	 *     - Sends an AJAX request to store the Problem
+	 *     - On Fail:
+	 *           - Show the validation error
+	 *           - Enables the button again
+	 *     - On Success:
+	 *           - Saves the expertiseType locally
+	 *           - Removes the input field
+	 *           - Adds the new problem type li element
+	 *           - Returns the button to normal
+	 *           - Loads the new problem type
+	 *
+	 * @param {DOM} $button the button the user clicked
+	 */
 	createExpertiseType($button) {
 		$button.prop('disabled', true);
 
@@ -190,6 +225,7 @@ export default class ExpertiseTypeManager {
 			name             = $input.val(),
 			parentId         = $input.parent().prev().find('.active').data('expertiseTypeId') || null;
 
+		// remove any previous validation errors
 		$invalidFeedback.remove();
 
 		$.ajax({
@@ -201,6 +237,7 @@ export default class ExpertiseTypeManager {
 			}
 		})
 		.fail((xhr) => {
+			// insert only the first validation error (should only be one anyway)
 			$('<div class="invalid-feedback">')
 				.text(xhr.responseJSON.message[0])
 				.insertAfter($input);
@@ -209,6 +246,8 @@ export default class ExpertiseTypeManager {
 			$button.prop('disabled', false);
 		})
 		.done((expertiseTypeId) => {
+
+			// keep this manager up to date
 			this.expertiseTypes.push({
 				id: expertiseTypeId,
 				name: name,
@@ -236,7 +275,9 @@ export default class ExpertiseTypeManager {
 				.text('Create problem type');
 				
 			$newProblemType.insertBefore($button);
-			$newProblemType.click(); // show new problem type
+			
+			// show new problem type
+			$newProblemType.click();
 		});
 	}
 }
