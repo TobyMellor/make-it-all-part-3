@@ -35,13 +35,15 @@ class ExpertiseTypeQuery extends Query {
 	/**
 	 * Validation for Expertise Type
 	 *    - Name: String, Alphanumeric, Length between 2 and 256
+	 *    - Parent ID (optional): Integer
 	 *
 	 * @param $columns key/value of columns
 	 *
 	 * @return Boolean true if pass, dies (and returns false) on fail
 	 */
 	protected function validate($columns) {
-		$validator = v::key('name', v::alnum()->length(2, 256));
+		$validator = v::key('name', v::alnum()->length(2, 256))
+			->key('parent_id', v::optional(v::intVal()));
 
 		return $this->assert_validation($validator, $columns);
 	}

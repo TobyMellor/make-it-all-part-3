@@ -187,7 +187,8 @@ export default class ExpertiseTypeManager {
 
 		let $input           = $button.siblings('input'),
 			$invalidFeedback = $button.siblings('.invalid-feedback'),
-			name             = $input.val();
+			name             = $input.val(),
+			parentId         = $input.parent().prev().find('.active').data('expertiseTypeId') || null;
 
 		$invalidFeedback.remove();
 
@@ -195,7 +196,8 @@ export default class ExpertiseTypeManager {
 			url: '/wp-json/make-it-all/v1/problem-type',
 			type: 'POST',
 			data: {
-				name: name
+				name: name,
+				parent_id: parentId
 			}
 		})
 		.fail((xhr) => {
@@ -207,6 +209,12 @@ export default class ExpertiseTypeManager {
 			$button.prop('disabled', false);
 		})
 		.done((expertiseTypeId) => {
+			this.expertiseTypes.push({
+				id: expertiseTypeId,
+				name: name,
+				parent_id: parentId
+			});
+
 			$input.remove();
 
 			let $newProblemType = $(`
