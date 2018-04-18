@@ -5,6 +5,8 @@ jQuery(() => {
     $(document).ready(function () {
         //Add button listeners for new type/make.
         addButtonListeners(this);
+        addTypeSelectActions($('.hardware-type-select'));
+        addMakeSelectActions($('.hardware-make-select'));
     });
 
 
@@ -57,6 +59,43 @@ jQuery(() => {
     initAccordions();
     clearAccordion($('.mia-panel-body')); // clear all fields
 });
+
+function addTypeSelectActions($select) {
+    $($select).on('change', function () {
+        if (this.value !== "new") {
+            hideTypeForm(this);
+        }
+
+    });
+}
+function addMakeSelectActions($select) {
+    $($select).on('change', function () {
+        if (this.value !== "new") {
+            hideMakeForm(this);
+        }
+
+    });
+
+}
+
+
+function hideTypeForm(select) {
+    //Get closest type form
+    let typePanel = $(select).closest('.accordion-body').find('#type-information');
+    if (typePanel.hasClass('expanded')) {
+        typePanel.removeClass('expanded');
+    }
+
+}
+
+function hideMakeForm(select) {
+    //Hides closes select form
+    let makePanel = $(select).closest('.accordion-body').find('#make-information');
+    if (makePanel.hasClass('expanded')) {
+        makePanel.removeClass('expanded');
+    }
+
+}
 
 
 
@@ -141,6 +180,9 @@ function clearAccordion($accordion, newAccordionId, affectedItemsManager = null,
     $accordion.find('#type-information').removeClass('expanded');
     $accordion.find('#make-information').removeClass('expanded');
     addButtonListeners($accordion);
+
+    addTypeSelectActions( $accordion.find('.hardware-type-select') );
+    addMakeSelectActions( $accordion.find('.hardware-make-select') );
     // set the accordion number and the new ticket text in the accordion handle
     $accordion.find('.accordion-icon .number-circle').text(newAccordionId);
     $accordion.find('.accordion-title').text('New Hardware Item');
