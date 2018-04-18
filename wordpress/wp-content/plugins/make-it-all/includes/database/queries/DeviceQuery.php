@@ -27,4 +27,12 @@ class DeviceQuery extends MakeItAllQuery {
             "
         );
     }
+        /**
+     * Updates a record in the DB.
+     *
+     * @return Boolean
+     */
+    public function update($deviceId, $columns) {
+        return $this->mia_update($deviceId, $columns);
+    }
 }

@@ -80,20 +80,20 @@ class HardwarePage extends MakeItAllPage {
 
 
 
-        $hardwareID = $wpdb->insert_id;
+        $hardwareID;
         // create the tickets, each containing a status and potentially multiple devices/programs
 
         foreach ($_POST['hardware'] as $hardware) {
             //Deal with user entering a new make/type.
             $type = "";
             $make = "";
-            if($harware['type'] === "new"){
+            if(strcmp($harware['type'], "new")){
                 $type = $hardware['newType'];
 
             } else {
                 $type = $hardware['type'];
             }
-            if($harware['make'] === "new"){
+            if(strcmp($harware['make'], "new")){
                 $make = $hardware['newMake'];
 
             } else {
@@ -123,6 +123,8 @@ class HardwarePage extends MakeItAllPage {
 
         $context = $this->get_context('Update Hardware');
         $context['devices'] = json_encode((new DeviceQuery)->get());
+        $context['types']   = json_encode((new TypeQuery)->get());
+        $context['makes']   = json_encode((new MakeQuery)->get());
         if (isset($_GET['id'])) {
             $hardwareID = $_GET['id'];
 
@@ -134,6 +136,48 @@ class HardwarePage extends MakeItAllPage {
 
         $this->render_pane($context);
 
+    }
+        protected function update_action() {
+        global $wpdb;
+        $deviceQuery = new DeviceQuery();
+
+        $hardware = $_POST['hardware'];
+
+        $hardwareId = $hardware['id'];
+
+        //Deal with new type/make
+        $type = "";
+        $make = "";
+        if(strcmp($harware['type'], "new")){
+            $type = $hardware['newType'];
+
+        } else {
+            $type = $hardware['type'];
+        }
+        if(strcmp($harware['make'], "new")){
+            $make = $hardware['newMake'];
+        } else {
+            $make = $hardware['make'];
+        }
+
+
+
+        $deviceQuery->update(
+            $hardwareId,
+            [
+                'type'          => $type,
+                'make'          => $make,
+                'serial_no'     => $hardware['serial_no']
+
+            ]
+        );
+
+
+
+
+
+
+        $this->mia_redirect('admin.php?page=hardware&id=' . $hardwareId); exit;
     }
     private function getHardware($context, $id) {
 

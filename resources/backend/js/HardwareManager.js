@@ -1,8 +1,8 @@
 export default class HardwareManager {
-        constructor(deivces, types, makes) {
-        this.devices       = deivces;
-        this.types         = types;
-        this.makes         = makes;
+    constructor(deivces, types, makes) {
+        this.devices = deivces;
+        this.types = types;
+        this.makes = makes;
 
         // populate the select field in the call panel
         this.populateSelectField($('.hardware-type-select'), types);
@@ -11,7 +11,7 @@ export default class HardwareManager {
 
     }
 
-        /**
+    /**
      * Adds types to select field
      *
      * @param {DOM} $selectField the <select> field to populate
@@ -24,9 +24,11 @@ export default class HardwareManager {
                 <option value="${type.type}">${type.type}</option>
             `);
         });
-                    $selectField.append(`
-                <option value="new">New</option>
+        $selectField.append(`
+                <option disabled value="New">New</option>
             `);
+
+
 
 
 
