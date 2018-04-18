@@ -24,20 +24,20 @@ class HardwarePage extends Page {
     public function read_pane(){
         parent::read_pane();
         // handle single delete and bulk delete before rendering page
-        /*if (isset($_GET['action']) && $_GET['action'] === 'delete') {
+        if (isset($_GET['action']) && $_GET['action'] === 'delete') {
             if (current_user_can('edit_make_it_all')) {
-                $ticketQuery = new TicketQuery();
+                $deviceQuery = new DeviceQuery();
 
-                if (isset($_GET['ticket_id'])) {
-                    $ticketQuery->delete($_GET['ticket_id']);
-                } else if (isset($_GET['ticket'])) {
-                    foreach ($_GET['ticket'] as $ticketId) {
-                        $ticketQuery->delete($ticketId);
+                if (isset($_GET['hardware_id'])) {
+                    $deviceQuery->delete($_GET['hardware_id']);
+                } else if (isset($_GET['hardware'])) {
+                    foreach ($_GET['hardware'] as $hardwareId) {
+                        $deviceQuery->delete($hardwareId);
                     }
                 }
             }
         }
-*/
+
 
                 if (isset($_GET['id'])) {
             $context = $this->get_context('Viewing Hardware');

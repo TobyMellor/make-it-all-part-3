@@ -30,6 +30,14 @@ class DeviceQuery extends Query {
             "
         );
     }
+        /**
+     * Deletes a record from the DB.
+     *
+     * @return Boolean
+     */
+    public function delete($ticketId) {
+        return $this->mia_delete($ticketId);
+    }
     protected function validate($columns) {
         return true;
     }

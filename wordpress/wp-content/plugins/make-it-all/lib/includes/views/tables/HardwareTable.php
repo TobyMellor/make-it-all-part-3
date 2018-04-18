@@ -93,7 +93,7 @@ class HardwareTable extends Table {
         if (current_user_can('edit_make_it_all')) {
             $actions = array_merge($actions, [
                 'edit'      => '<a href="admin.php?page=hardware_update&id=' . $item->id . '">Edit</a>',
-                'delete'    => '<a href="admin.php?page=ticket&action=delete&hardware_id=' . $item->id . '">Delete</a>'
+                'delete'    => '<a href="admin.php?page=hardware&action=delete&hardware_id=' . $item->id . '">Delete</a>'
             ]);
         }
 
