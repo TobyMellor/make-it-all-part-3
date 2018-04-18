@@ -1,6 +1,7 @@
 <?php
 
 namespace MakeItAll\Includes\Database\Queries;
+
 use MakeItAll\Includes\Database\Queries\Query;
 use Respect\Validation\Validator as v;
 
@@ -16,6 +17,7 @@ class DeviceInsertQuery extends Query {
             ]
         );
     }
+
     protected function validate($columns) {
         return true;
     }
