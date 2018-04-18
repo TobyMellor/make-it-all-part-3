@@ -7,7 +7,7 @@
 				<div class="row problem-type-picker-header">
 					<p>
 						<i class="fa fa-warning"></i>
-						Printer / Ink / Low Ink
+						Loading…
 					</p>
 				</div>
 				<div class="row">
@@ -44,98 +44,7 @@
 						</ul>
 					</div>
 					<div class="problem-type-picker">
-						<div class="type-columns">
-							<div class="type-column">
-								<li class="last-active" data-expertise-type-id="1">
-									Printer
-									<div class="specialist-counter">
-										3 <i class="fa fa-user"></i>
-									</div>
-									<i class="fa fa-caret-right"></i>
-								</li>
-							
-								<li data-expertise-type-id="2">
-									Monitor
-									<div class="specialist-counter">
-										4 <i class="fa fa-user"></i>
-									</div>
-									<i class="fa fa-caret-right"></i>
-								</li>
-							
-								<li data-expertise-type-id="3">
-									Keyboard
-									<div class="specialist-counter">
-										3 <i class="fa fa-user"></i>
-									</div>
-									<i class="fa fa-caret-right"></i>
-								</li>
-							
-								<li class="no-children" data-expertise-type-id="4">
-									Speaker
-									<div class="specialist-counter">
-										1 <i class="fa fa-user"></i>
-									</div>
-									<i class="fa fa-caret-right"></i>
-								</li>
-							
-								<li data-expertise-type-id="5">
-									Mouse
-									<div class="specialist-counter">
-										2 <i class="fa fa-user"></i>
-									</div>
-									<i class="fa fa-caret-right"></i>
-								</li>
-							
-								<li data-expertise-type-id="31">
-									Software
-									<div class="specialist-counter">
-										3 <i class="fa fa-user"></i>
-									</div>
-									<i class="fa fa-caret-right"></i>
-								</li>
-							
-								<li data-expertise-type-id="36">
-									Security
-									<div class="specialist-counter">
-										3 <i class="fa fa-user"></i>
-									</div>
-									<i class="fa fa-caret-right"></i>
-								</li>
-							
-								<li class="no-children" data-expertise-type-id="44">
-									User Knowledge
-									<div class="specialist-counter">
-										4 <i class="fa fa-user"></i>
-									</div>
-									<i class="fa fa-caret-right"></i>
-								</li>
-							</div>
-							<div class="type-column">
-								<li data-expertise-type-id="2">
-									Ink
-									<div class="specialist-counter">
-										4 <i class="fa fa-user"></i>
-									</div>
-									<i class="fa fa-caret-right"></i>
-								</li>
-
-								<li data-expertise-type-id="1">
-									Cable Broken
-									<div class="specialist-counter">
-										3 <i class="fa fa-user"></i>
-									</div>
-									<i class="fa fa-caret-right"></i>
-								</li>
-							
-								<li data-expertise-type-id="3">
-									Power
-									<div class="specialist-counter">
-										3 <i class="fa fa-user"></i>
-									</div>
-									<i class="fa fa-caret-right"></i>
-								</li>
-							</div>
-						</div>
+						<div class="type-columns"></div>
 					</div>
 				</div>
 			</div>
@@ -144,4 +53,12 @@
 			
 		</div>
 	</div>
+{% endblock %}
+
+{% block scripts %}
+	<script>
+		var employees          = {{ employees }},
+			expertiseTypes     = {{ expertise_types }},
+			expertiseTypeStaff = {{ expertise_type_staff }};
+	</script>
 {% endblock %}

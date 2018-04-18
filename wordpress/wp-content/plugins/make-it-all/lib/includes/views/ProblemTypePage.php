@@ -4,6 +4,10 @@ namespace MakeItAll\Includes\Views;
 
 use MakeItAll\Includes\Views\Page;
 
+use MakeItAll\Includes\Database\Queries\StaffQuery;
+use MakeItAll\Includes\Database\Queries\ExpertiseTypeQuery;
+use MakeItAll\Includes\Database\Queries\ExpertiseTypeStaffQuery;
+
 class ProblemTypePage extends Page {
 	protected $name     = 'Problem Type';
 	protected $icon     = 'dashicons-info';
@@ -26,7 +30,9 @@ class ProblemTypePage extends Page {
 	private function getRequiredData($pageName) {
 		$context = $this->get_context($pageName);
 
-		// add to context
+		$context['employees']            = json_encode((new StaffQuery)->get());
+		$context['expertise_types']      = json_encode((new ExpertiseTypeQuery)->get());
+		$context['expertise_type_staff'] = json_encode((new ExpertiseTypeStaffQuery)->get());
 
 		return $context;
 	}
