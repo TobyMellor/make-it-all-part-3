@@ -3,8 +3,6 @@ import HardwareManager from "../HardwareManager";
 jQuery(() => {
     let hardwaremanager = new HardwareManager(devices, types, makes);
     $(document).ready(function(){
-
-
         addButtonListeners(this);
 
     });

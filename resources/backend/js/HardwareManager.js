@@ -25,7 +25,7 @@ export default class HardwareManager {
             `);
         });
         $selectField.append(`
-                <option disabled value="New">New</option>
+                <option disabled value="new">New</option>
             `);
 
 
