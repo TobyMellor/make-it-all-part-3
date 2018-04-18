@@ -1,7 +1,13 @@
 @import "../main.scss";
+
 .col-xs-9 {
+
     max-width: 100%;
     flex-basis: 100%;
+}
+
+#add-additional-type, #add-additional-make{
+    margin: 10px 10px;
 }
 
 
@@ -17,4 +23,7 @@
     .mia-panel-heading {
         min-width: 210px;
     }
+}
+.has-button{
+    align-items: center;
 }

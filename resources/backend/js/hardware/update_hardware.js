@@ -1,8 +1,7 @@
 import HardwareManager from "../HardwareManager";
 $(() => {
-        let hardwaremanager = new HardwareManager(devices, types, makes);
+    let hardwaremanager = new HardwareManager(devices, types, makes);
     $(document).ready(function(){
-
 
         addButtonListeners(this, (device ? device.type : ""), (device ? device.make : ""));
 
@@ -71,7 +70,7 @@ $(() => {
         }
 
 
-    })
+    });
 
 
 

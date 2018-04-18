@@ -1,169 +1,160 @@
-{% extends "backend/views/layouts/page.twig" %}
-
-{% block main %}
-
-<div class="form-wrapper">
-    <form action="admin.php?page=hardware_create" method="POST">
-
-
-
-        <div class="mia-panel hardware-panel">
-            <div class="mia-panel-heading">
-                <h2>Hardware Information</h2>
-                <p>Enter information about one or more hardware items:</p>
-            </div>
-            <div class="hardware-panel">
-                <div class="accordions">
-                    <div class="accordion-handle row">
-                        <div class="accordion-icon col-xs-3">
-                            <div class="number-circle">1</div>
+{% extends "backend/views/layouts/page.twig" %} {% block main %}
+<div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <form action="admin.php?page=hardware_create" method="POST">
+            <div class="mia-panel hardware-panel">
+                <div class="mia-panel-heading">
+                    <h2>Hardware Information</h2>
+                    <p>Enter information about one or more hardware items:</p>
+                </div>
+                <div class="hardware-panel">
+                    <div class="accordions">
+                        <div class="accordion-handle row">
+                            <div class="accordion-icon col-xs-3">
+                                <div class="number-circle">1</div>
+                            </div>
+                            <div class="accordion-title col-xs-9">
+                                New Hardware Item
+                            </div>
+                            <div class="accordion-actions">
+                                <i class="fa fa-chevron-up"></i>
+                            </div>
                         </div>
-                        <div class="accordion-title col-xs-9">
-                            New Hardware Item
-                        </div>
-                        <div class="accordion-actions">
-                            <i class="fa fa-chevron-up"></i>
+                        <div class="accordion-body" data-accordion-id="1">
+
+                            <div class="row mia-field-group">
+                                <div class="col-xs-12 col-sm-3">
+                                    <p class="label">
+                                        Type <span class="required">*</span>
+                                    </p>
+
+                                    <p class="details">
+                                        The type of hardware e.g. Phone, Laptop, Printer etc.
+                                    </p>
+                                </div>
+                                <div class="col-sm-9 col-xs-12 has-button">
+                                    <div>
+                                        <select class="hardware-type-select" name="hardware[1][type]" validation="required|integer|in:1,2,3">
+                                    </select>
+                                    </div>
+                                    <a href="javascript:void(0);" class="button button-primary add-type" id="add-additional-type">Add additional type</a>
+                                </div>
+                            </div>
+
+                            <div id="type-information">
+                                <div class="type-information">
+                                    <div class="row mia-field-group">
+                                        <div class="col-sm-3 col-xs-12">
+                                            <p class="label">
+                                                Type Name <span class="required">*</span>
+                                            </p>
+
+                                            <p class="details">
+                                                Computer, Calculator, etc
+                                            </p>
+                                        </div>
+                                        <div class="col-sm-9 col-xs-12">
+                                            <input name="hardware[1][newType]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter Type Name" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABHklEQVQ4EaVTO26DQBD1ohQWaS2lg9JybZ+AK7hNwx2oIoVf4UPQ0Lj1FdKktevIpel8AKNUkDcWMxpgSaIEaTVv3sx7uztiTdu2s/98DywOw3Dued4Who/M2aIx5lZV1aEsy0+qiwHELyi+Ytl0PQ69SxAxkWIA4RMRTdNsKE59juMcuZd6xIAFeZ6fGCdJ8kY4y7KAuTRNGd7jyEBXsdOPE3a0QGPsniOnnYMO67LgSQN9T41F2QGrQRRFCwyzoIF2qyBuKKbcOgPXdVeY9rMWgNsjf9ccYesJhk3f5dYT1HX9gR0LLQR30TnjkUEcx2uIuS4RnI+aj6sJR0AM8AaumPaM/rRehyWhXqbFAA9kh3/8/NvHxAYGAsZ/il8IalkCLBfNVAAAAABJRU5ErkJggg==&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;">
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+                            </div>
+
+
+
+
+
+                            <div class="row mia-field-group">
+                                <div class="col-xs-12 col-sm-3">
+                                    <p class="label">
+                                        Make <span class="required">*</span>
+                                    </p>
+
+                                    <p class="details">
+                                        The make of the hardware e.g. Apple, Samsung, Microsoft etc.
+                                    </p>
+                                </div>
+                                <div class="col-sm-9 col-xs-12 has-button">
+                                    <div>
+                                        <select class="hardware-make-select" name="hardware[1][make]" validation="required|integer|in:1,2,3">
+
+
+                            </select>
+
+                                    </div>
+                                    <a href="javascript:void(0);" class="button button-primary add-make" id="add-additional-make">Add additional make</a>
+                                </div>
+                            </div>
+                            <div id="make-information">
+
+
+                                <div class="type-information">
+                                    <div class="row mia-field-group">
+                                        <div class="col-sm-3 col-xs-12">
+                                            <p class="label">
+                                                Make Name <span class="required">*</span>
+                                            </p>
+
+                                            <p class="details">
+                                                Apple, Samsung, etc
+                                            </p>
+                                        </div>
+                                        <div class="col-sm-9 col-xs-12">
+                                            <input name="hardware[1][newMake]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter Make Name" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABHklEQVQ4EaVTO26DQBD1ohQWaS2lg9JybZ+AK7hNwx2oIoVf4UPQ0Lj1FdKktevIpel8AKNUkDcWMxpgSaIEaTVv3sx7uztiTdu2s/98DywOw3Dued4Who/M2aIx5lZV1aEsy0+qiwHELyi+Ytl0PQ69SxAxkWIA4RMRTdNsKE59juMcuZd6xIAFeZ6fGCdJ8kY4y7KAuTRNGd7jyEBXsdOPE3a0QGPsniOnnYMO67LgSQN9T41F2QGrQRRFCwyzoIF2qyBuKKbcOgPXdVeY9rMWgNsjf9ccYesJhk3f5dYT1HX9gR0LLQR30TnjkUEcx2uIuS4RnI+aj6sJR0AM8AaumPaM/rRehyWhXqbFAA9kh3/8/NvHxAYGAsZ/il8IalkCLBfNVAAAAABJRU5ErkJggg==&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;" validation="required|min:3|max:255">
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="row mia-field-group">
+                                <div class="col-sm-3 col-xs-12">
+                                    <p class="label">
+                                        Serial Number <span class="required">*</span>
+                                    </p>
+
+                                    <p class="details">
+                                        Hardware Serial Number e.g. HNSD564DS
+                                    </p>
+                                </div>
+                                <div class="col-sm-9 col-xs-12">
+                                    <input name="hardware[1][serial]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter Serial Number" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABHklEQVQ4EaVTO26DQBD1ohQWaS2lg9JybZ+AK7hNwx2oIoVf4UPQ0Lj1FdKktevIpel8AKNUkDcWMxpgSaIEaTVv3sx7uztiTdu2s/98DywOw3Dued4Who/M2aIx5lZV1aEsy0+qiwHELyi+Ytl0PQ69SxAxkWIA4RMRTdNsKE59juMcuZd6xIAFeZ6fGCdJ8kY4y7KAuTRNGd7jyEBXsdOPE3a0QGPsniOnnYMO67LgSQN9T41F2QGrQRRFCwyzoIF2qyBuKKbcOgPXdVeY9rMWgNsjf9ccYesJhk3f5dYT1HX9gR0LLQR30TnjkUEcx2uIuS4RnI+aj6sJR0AM8AaumPaM/rRehyWhXqbFAA9kh3/8/NvHxAYGAsZ/il8IalkCLBfNVAAAAABJRU5ErkJggg==&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;" validation="required|min:3|max:255">
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="accordion-body" data-accordion-id="1">
-
-                        <div class="row mia-field-group">
-                            <div class="col-xs-12 col-sm-3">
-                                <p class="label">
-                                    Type <span class="required">*</span>
-                                </p>
-
-                                <p class="details">
-                                    The type of hardware e.g. Phone, Laptop, Printer etc.
-                                </p>
-                            </div>
-                            <div class="col-sm-9 col-xs-12 has-button">
-                                <div>
-                                    <select class="hardware-type-select" name="hardware[1][type]" validation="required|integer|in:1,2,3">
-
-
-                            </select>
-
-                                </div>
-                                <a href="javascript:void(0);" class="button button-primary add-type" id="add-additional-type">Add additional type</a>
-                            </div>
+                    <div class="mia-panel-footer">
+                        <div class="mia-button-group">
+                            <p>More Hardware Items?</p>
+                            <a href="javascript:void(0);" class="button button-primary" id="add-additional-hardware">Add additional hardware form</a>
                         </div>
-
-                        <div id="type-information">
-
-
-                                <div class="type-information">
-                                  <div class="row mia-field-group">
-                            <div class="col-sm-3 col-xs-12">
-                                <p class="label">
-                                    Type Name <span class="required">*</span>
-                                </p>
-
-                                <p class="details">
-                                    Computer, Calculator, etc
-                                </p>
-                            </div>
-                            <div class="col-sm-9 col-xs-12">
-                                <input name="hardware[1][newType]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter Type Name" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABHklEQVQ4EaVTO26DQBD1ohQWaS2lg9JybZ+AK7hNwx2oIoVf4UPQ0Lj1FdKktevIpel8AKNUkDcWMxpgSaIEaTVv3sx7uztiTdu2s/98DywOw3Dued4Who/M2aIx5lZV1aEsy0+qiwHELyi+Ytl0PQ69SxAxkWIA4RMRTdNsKE59juMcuZd6xIAFeZ6fGCdJ8kY4y7KAuTRNGd7jyEBXsdOPE3a0QGPsniOnnYMO67LgSQN9T41F2QGrQRRFCwyzoIF2qyBuKKbcOgPXdVeY9rMWgNsjf9ccYesJhk3f5dYT1HX9gR0LLQR30TnjkUEcx2uIuS4RnI+aj6sJR0AM8AaumPaM/rRehyWhXqbFAA9kh3/8/NvHxAYGAsZ/il8IalkCLBfNVAAAAABJRU5ErkJggg==&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;">
-                            </div>
-                        </div>
-
-
-
-                                </div>
-
-                        </div>
-
-
-
-
-
-                        <div class="row mia-field-group">
-                            <div class="col-xs-12 col-sm-3">
-                                <p class="label">
-                                    Make <span class="required">*</span>
-                                </p>
-
-                                <p class="details">
-                                    The make of the hardware e.g. Apple, Samsung, Microsoft etc.
-                                </p>
-                            </div>
-                            <div class="col-sm-9 col-xs-12 has-button">
-                                <div>
-                                    <select class="hardware-make-select" name="hardware[1][make]" validation="required|integer|in:1,2,3">
-
-
-                            </select>
-
-                                </div>
-                                <a href="javascript:void(0);" class="button button-primary add-make" id="add-additional-make">Add additional make</a>
-                            </div>
-                        </div>
-                        <div id="make-information">
-
-
-                                <div class="type-information">
-                                  <div class="row mia-field-group">
-                            <div class="col-sm-3 col-xs-12">
-                                <p class="label">
-                                    Make Name <span class="required">*</span>
-                                </p>
-
-                                <p class="details">
-                                    Apple, Samsung, etc
-                                </p>
-                            </div>
-                            <div class="col-sm-9 col-xs-12">
-                                <input name="hardware[1][newMake]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter Make Name" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABHklEQVQ4EaVTO26DQBD1ohQWaS2lg9JybZ+AK7hNwx2oIoVf4UPQ0Lj1FdKktevIpel8AKNUkDcWMxpgSaIEaTVv3sx7uztiTdu2s/98DywOw3Dued4Who/M2aIx5lZV1aEsy0+qiwHELyi+Ytl0PQ69SxAxkWIA4RMRTdNsKE59juMcuZd6xIAFeZ6fGCdJ8kY4y7KAuTRNGd7jyEBXsdOPE3a0QGPsniOnnYMO67LgSQN9T41F2QGrQRRFCwyzoIF2qyBuKKbcOgPXdVeY9rMWgNsjf9ccYesJhk3f5dYT1HX9gR0LLQR30TnjkUEcx2uIuS4RnI+aj6sJR0AM8AaumPaM/rRehyWhXqbFAA9kh3/8/NvHxAYGAsZ/il8IalkCLBfNVAAAAABJRU5ErkJggg==&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;" validation="required|min:3|max:255">
-                            </div>
-                        </div>
-
-
-
-                                </div>
-
-                        </div>
-
-
-
-                        <div class="row mia-field-group">
-                            <div class="col-sm-3 col-xs-12">
-                                <p class="label">
-                                    Serial Number <span class="required" >*</span>
-                                </p>
-
-                                <p class="details">
-                                    Hardware Serial Number e.g. HNSD564DS
-                                </p>
-                            </div>
-                            <div class="col-sm-9 col-xs-12">
-                                <input name="hardware[1][serial]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter Serial Number" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABHklEQVQ4EaVTO26DQBD1ohQWaS2lg9JybZ+AK7hNwx2oIoVf4UPQ0Lj1FdKktevIpel8AKNUkDcWMxpgSaIEaTVv3sx7uztiTdu2s/98DywOw3Dued4Who/M2aIx5lZV1aEsy0+qiwHELyi+Ytl0PQ69SxAxkWIA4RMRTdNsKE59juMcuZd6xIAFeZ6fGCdJ8kY4y7KAuTRNGd7jyEBXsdOPE3a0QGPsniOnnYMO67LgSQN9T41F2QGrQRRFCwyzoIF2qyBuKKbcOgPXdVeY9rMWgNsjf9ccYesJhk3f5dYT1HX9gR0LLQR30TnjkUEcx2uIuS4RnI+aj6sJR0AM8AaumPaM/rRehyWhXqbFAA9kh3/8/NvHxAYGAsZ/il8IalkCLBfNVAAAAABJRU5ErkJggg==&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;" validation="required|min:3|max:255">
-                            </div>
+                        <div class="mia-button-group pull-right">
+                            <p>All done?</p>
+                            <button class="button button-primary" type="submit">Submit new hardware</button>
                         </div>
                     </div>
                 </div>
-    <div class="mia-panel-footer">
-        <div class="mia-button-group">
-            <p>More Hardware Items?</p>
-            <a href="javascript:void(0);" class="button button-primary" id="add-additional-hardware">Add additional hardware form</a>
-        </div>
-        <div class="mia-button-group pull-right">
-            <p>All done?</p>
-            <button class="button button-primary" type="submit">Submit new hardware</button>
-        </div>
-    </div>
- </div>
-    </form>
+        </form>
 
 
+        </div>
     </div>
 </div>
 
 {% endblock %} {% block scripts %}
 <script>
-    var devices = {{devices}},
-        types = {{types}},
-        makes = {{makes}};
+    var devices = {{ devices }},
+        types   = {{ types   }},
+        makes   = {{ makes   }};
 
 </script>
 {% endblock %}

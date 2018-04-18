@@ -29,7 +29,6 @@ abstract class Query {
      * @return (int|false) Number of rows affected/selected or false on error
      */
     public function mia_insert($columns) {
-        var_dump($columns);
         if (!$this->validate($columns)) return;
 
         $columns['created_at'] = date('Y-m-d H:i:s');
