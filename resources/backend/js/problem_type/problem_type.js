@@ -52,7 +52,7 @@ ExpertiseTypeManager.prototype.loadChildrenExpertiseTypes = (function($typeColum
 	`);
 
 	// Append the new .type-column, scroll to the right to view it
-	if (clickedExpertiseTypeChildren.length > 0) $typeColumns.append($typeColumn);
+	$typeColumns.append($typeColumn);
 	$typeColumns.scrollLeft($typeColumns.width());
 });
 
