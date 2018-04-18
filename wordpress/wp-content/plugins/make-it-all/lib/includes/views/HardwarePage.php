@@ -85,20 +85,22 @@ class HardwarePage extends Page {
 
         foreach ($_POST['hardware'] as $hardware) {
 
-            $type = $harware['type'];
-            $make = $harware['make'];
+            $type = $hardware['type'];
+            $make = $hardware['make'];
 
-            if(strcmp($harware['type'], "new")){
+            if($hardware['type'] == NULL){
                 $type = $hardware['newType'];
             }
-            if(strcmp($harware['make'], "new")){
+            if($hardware['make'] == NULL){
                 $make = $hardware['newMake'];
             }
 
+
+
             $deviceQuery->mia_insert([
-                $harware['type'],
-                $harware['make'],
-                $hardware['serial']
+                'type' => $type,
+                'make' => $make,
+                'serial_no'  => $hardware['serial']
                 ]);
 
             $hardwareID = $wpdb->insert_id;
@@ -138,15 +140,15 @@ class HardwarePage extends Page {
         $hardwareId = $hardware['id'];
 
         //Deal with new type/make
-        $type = $harware['type'];
-        $make = $harware['make'];
-        if(strcmp($harware['type'], "new")){
-            $type = $hardware['newType'];
+        $type = $hardware['type'];
+        $make = $hardware['make'];
+            if($hardware['type'] == NULL){
+                $type = $hardware['newType'];
+            }
+            if($hardware['make'] == NULL){
+                $make = $hardware['newMake'];
+            }
 
-        }
-        if(strcmp($harware['make'], "new")){
-            $make = $hardware['newMake'];
-        }
 
 
 
@@ -155,7 +157,9 @@ class HardwarePage extends Page {
             [
                 'type'          => $type,
                 'make'          => $make,
-                'serial_no'     => $hardware['serial_no']
+                'serial_no'     => $hardware['serial_no'],
+
+
 
             ]
         );
