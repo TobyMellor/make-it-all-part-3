@@ -5,11 +5,7 @@ namespace MakeItAll\Includes\Views;
 use MakeItAll\Includes\Views\Page;
 use MakeItAll\Includes\Views\Tables\HardwareTable;
 
-use MakeItAll\Includes\Database\Queries\{
-	DeviceQuery,
-	TypeQuery,
-	MakeQuery
-};
+use MakeItAll\Includes\Database\Queries\DeviceQuery;
 
 class HardwarePage extends Page {
 	protected $name     = 'Hardware';
@@ -37,17 +33,17 @@ class HardwarePage extends Page {
 
 		if (isset($_GET['id'])) {
 			$context = $this->get_context('Viewing Hardware');
-			$context = $this->getHardware($context, $_GET['id']);
+			$context = $this->get_hardware($context, $_GET['id']);
 
 			$this->render_pane($context); // render page before inserting table
 		} else {
 			$context = $this->get_context('View Hardware');
 			$this->render_pane($context); // render page before inserting table
 
-			$hardTable = new HardwareTable();
-			$hardTable->prepare_items();
+			$hardwareTable = new HardwareTable();
+			$hardwareTable->prepare_items();
 
-			$hardTable->display();
+			$hardwareTable->display();
 		}
 	}
 
@@ -58,13 +54,7 @@ class HardwarePage extends Page {
 	public function create_pane() {
 		parent::create_pane();
 
-		$context = $this->get_context('Create Hardware');
-
-		$context['devices'] = json_encode((new DeviceQuery)->get());
-		$context['types']   = json_encode((new TypeQuery)->get());
-		$context['makes']   = json_encode((new MakeQuery)->get());
-
-		$this->render_pane($context);
+		$this->render_pane($this->get_required_data('Create Hardware'));
 	}
 
 	protected function create_action() {
@@ -93,17 +83,13 @@ class HardwarePage extends Page {
 	public function update_pane() {
 		parent::update_pane();
 
-		$context = $this->get_context('Update Hardware');
-
-		$context['devices'] = json_encode((new DeviceQuery)->get());
-		$context['types']   = json_encode((new TypeQuery)->get());
-		$context['makes']   = json_encode((new MakeQuery)->get());
+		$context = $this->get_required_data('Update Hardware');
 
 		if (isset($_GET['id'])) {
 			$hardwareID = $_GET['id'];
 
 			// ticket's current data
-			$context = $this->getHardware($context, $hardwareID);
+			$context = $this->get_hardware($context, $hardwareID);
 		}
 
 		$this->render_pane($context);
@@ -112,14 +98,14 @@ class HardwarePage extends Page {
 	protected function update_action() {
 		global $wpdb;
 
-		$deviceQuery = new DeviceQuery();
-
 		$hardware   = $_POST['hardware'];
 		$hardwareId = $hardware['id'];
 
 		// deal with new type/make
 		$type = $hardware['type'] || $hardware['newType'];
 		$make = $hardware['make'] || $hardware['newMake'];
+
+		$deviceQuery = new DeviceQuery();
 
 		$deviceQuery->mia_update(
 			$hardwareId,
@@ -133,11 +119,23 @@ class HardwarePage extends Page {
 		$this->mia_redirect('admin.php?page=hardware&id=' . $hardwareId); exit;
 	}
 
-	private function getHardware($context, $id) {
+	private function get_hardware($context, $id) {
 		$deviceQuery = new DeviceQuery();
 
 		$context['device_object'] = $deviceQuery->get_device($id)[0];
 		$context['device'] = json_encode($context['device_object']);
+
+		return $context;
+	}
+
+	private function get_required_data($pageName) {
+		$deviceQuery = new DeviceQuery();
+
+		$context = $this->get_context($pageName);
+
+		$context['devices'] = json_encode($deviceQuery->get());
+		$context['types']   = json_encode($deviceQuery->get_types());
+		$context['makes']   = json_encode($deviceQuery->get_makes());
 
 		return $context;
 	}

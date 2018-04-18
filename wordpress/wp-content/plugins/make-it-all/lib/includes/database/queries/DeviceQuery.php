@@ -31,6 +31,36 @@ class DeviceQuery extends Query {
 			"
 		);
 	}
+
+	/**
+	 * Select all types.
+	 *
+	 * @return Array
+	 */
+	public function get_types() {
+		return $this->get_results(
+			"
+				SELECT type
+				FROM {$this->prefix}{$this->table}
+				GROUP BY type
+			"
+		);
+	}
+
+	/**
+	 * Select all makes.
+	 *
+	 * @return Array
+	 */
+	public function get_makes() {
+		return $this->get_results(
+			"
+				SELECT make as type
+				FROM {$this->prefix}{$this->table}
+				GROUP BY make
+			"
+		);
+	}
 	
 	/**
 	 * Deletes a record from the DB.
