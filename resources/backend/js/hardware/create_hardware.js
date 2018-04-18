@@ -3,12 +3,10 @@ import HardwareManager from "../HardwareManager";
 $(() => {
 	let hardwaremanager = new HardwareManager(devices, types, makes);
 
-	$(document).ready(function() {
-		// add button listeners for new type/make.
-		addButtonListeners(this);
-		addTypeSelectActions($('.hardware-type-select'));
-		addMakeSelectActions($('.hardware-make-select'));
-	});
+	// add button listeners for new type/make.
+	addButtonListeners(this);
+	addTypeSelectActions($('.hardware-type-select'));
+	addMakeSelectActions($('.hardware-make-select'));
 
 	// make the chevron handle go up/down when an accordion is expanded/minimized
 	$(document).on('click', '.accordion-handle', function() {
