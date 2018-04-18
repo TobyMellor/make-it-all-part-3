@@ -73,17 +73,6 @@ function compileBackend() {
         }
     }
 
-
-        for (let action of actions) {
-            let actionPath = page + "/" + action + "_" + page + ".js";
-
-            // scripts for an individual action, e.g. tickets/c.js
-            if (fs.existsSync(backendResources(actionPath))) {
-                mix.js(backendResources(actionPath), backendOutput(actionPath));
-            }
-        }
-    }
-
     compileVendors(backendResources, backendOutput);
 }
 
