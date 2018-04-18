@@ -284,4 +284,46 @@ export default class ExpertiseTypeManager {
 			$newProblemType.click();
 		});
 	}
+
+	renameExpertiseType(id, name) {
+		let $renameProblemType = $('#rename-problem-type');
+
+		$renameProblemType.prop('disabled', true);
+
+		$renameProblemType
+			.parent()
+			.siblings('.invalid-feedback')
+			.remove();
+
+		$.ajax({
+			url: '/wp-json/make-it-all/v1/problem-type/' + id,
+			type: 'PUT',
+			data: {
+				name: name
+			}
+		})
+		.fail((xhr) => {
+			$('<div class="invalid-feedback">')
+				.text(xhr.responseJSON.message[0])
+				.insertAfter($renameProblemType.parent());
+
+			$renameProblemType.prev().focus();
+
+			$renameProblemType.prop('disabled', false);
+		})
+		.done(() => {
+
+			// keep this manager up to date
+			this.getExpertiseType(id).name = name;
+
+			$renameProblemType
+				.text('Rename')
+				.removeClass('button-success')
+				.prop('disabled', false)
+				.parent()
+				.removeClass('renaming-problem-type');
+
+			this.loadExpertiseType($('.type-columns'), id);
+		});
+	}
 }

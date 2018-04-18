@@ -111,4 +111,32 @@ $(() => {
 	});
 
 	$('#create-problem-type').click(() => $('.type-columns .last-active').parent().next().find('button').click());
+
+	$(document).on('click', '#rename-problem-type:not(.button-success)', function() {
+		let id     = $('.type-columns li.last-active').data('expertiseTypeId'),
+			$input = $(this).prev();
+
+		$(this).parent().addClass('renaming-problem-type');
+		$(this)
+			.addClass('button-success')
+			.text('Submit name');
+
+		$input.val(expertiseTypeManager.getExpertiseType(id).name);
+		$input.select();
+	});
+
+	$(document).on('keyup', '.renaming-problem-type input', function() {
+		let $button = $(this).siblings('button');
+
+		// the name of the new ExpertiseType must be between 2 and 256
+		$button.prop('disabled', $(this).val().length <= 2 || $(this).val().length >= 256);
+	});
+
+	$(document).on('click', '#rename-problem-type.button-success', function() {
+		let id     = $('.type-columns li.last-active').data('expertiseTypeId'),
+			$input = $(this).prev(),
+			name   = $input.val();
+
+		expertiseTypeManager.renameExpertiseType(id, name);
+	});
 });
