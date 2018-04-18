@@ -1,0 +1,15 @@
+@import "../main.scss";
+
+#type-information, #make-information {
+    visibility: hidden;
+    height: 0;
+
+    &.expanded {
+        visibility: visible;
+        height: auto;
+    }
+
+    .mia-panel-heading {
+        min-width: 210px;
+    }
+}

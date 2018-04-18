@@ -8,7 +8,7 @@
  */
 
 let mix = require("laravel-mix"),
-    fs  = require("fs");
+	fs  = require("fs");
 
 mix.setPublicPath('./');
 mix.options({
@@ -54,7 +54,8 @@ function compileBackend() {
 	mix.js(backendResources("main.js"), backendOutput("main.js"));
 	mix.sass(backendResources("main.scss"), backendOutput("main.css"))
 
-	let pages   = ["ticket"],
+
+	let pages   = ["ticket", "hardware"],
 		actions = ["read", "create", "update"];
 
 	for (let page of pages) {
@@ -65,8 +66,8 @@ function compileBackend() {
 		for (let action of actions) {
 			let actionPath = page + "/" + action + "_" + page + ".js";
 
-		    // scripts for an individual action, e.g. tickets/c.js
-		    if (fs.existsSync(backendResources(actionPath))) {
+			// scripts for an individual action, e.g. tickets/c.js
+			if (fs.existsSync(backendResources(actionPath))) {
 				mix.js(backendResources(actionPath), backendOutput(actionPath));
 			}
 		}

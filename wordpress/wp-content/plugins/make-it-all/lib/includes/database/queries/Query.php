@@ -10,7 +10,7 @@ abstract class Query {
 	function __construct() {
 		global $wpdb; $this->prefix = $wpdb->prefix . 'mia_';
 	}
-	
+
 	/**
 	 * Shorthand for $wpdb->get_results()
 	 *
@@ -35,7 +35,7 @@ abstract class Query {
 		$columns['updated_at'] = date('Y-m-d H:i:s');
 
 		global $wpdb;
-		
+
 		if (!$wpdb->insert($this->prefix . $this->table, $columns)) {
 			wp_die('Sorry! We failed to insert that record. Please try again.');
 		}
@@ -48,11 +48,11 @@ abstract class Query {
 	 *
 	 * @return Boolean
 	 */
-	protected function mia_update($id, $columns, $whereColumn = 'id') {
+	public function mia_update($id, $columns, $whereColumn = 'id') {
 		if (!$this->validate($columns)) wp_die('Server-side validation has failed');
 
 		$columns['updated_at'] = date('Y-m-d H:i:s');
-		
+
 		global $wpdb;
 
 		if (!$wpdb->update($this->prefix . $this->table, $columns, [$whereColumn => $id])) {
@@ -67,7 +67,7 @@ abstract class Query {
 	 *
 	 * @return Boolean
 	 */
-	protected function mia_delete($id, $whereColumn = 'id') {
+	public function mia_delete($id, $whereColumn = 'id') {
 		global $wpdb;
 
 		return $wpdb->delete($this->prefix . $this->table, [$whereColumn => $id]);

@@ -1,0 +1,37 @@
+{% extends "backend/views/layouts/page.twig" %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-xs-9">
+            <table class="wp-list-table widefat fixed striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Type</th>
+                        <th>Make</th>
+                        <th>Serial Number</th>
+                        <th>Created At</th>
+                        <th>Updated At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ device_object.id }}</td>
+                        <td>{{ device_object.type }}</td>
+                        <td>{{ device_object.make }}</td>
+                        <td>{{ device_object.serial_no }}</td>
+                        <td>{{ device_object.created_at }}</td>
+                        <td>{{ device_object.created_at }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        var device             = {{ device }};
+    </script>
+{% endblock %}

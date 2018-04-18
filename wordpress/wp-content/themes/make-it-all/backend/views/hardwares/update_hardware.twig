@@ -1,0 +1,155 @@
+{% extends "backend/views/layouts/page.twig" %} {% block main %}
+<div class="row">
+    <div class="col-xs-12 col-sm-12 {{ ticket is defined ? 'col-md-9' : 'col-md-12' }}">
+        <form action="admin.php?page=hardware_update" method="POST">
+            <input name="hardware[id]" type="text" hidden>
+            <div class="mia-panel ticket-panel">
+                <div class="mia-panel-heading">
+                    <div class="row">
+                        <div class="col-sm-3 col-xs-12">
+                            <h2>Hardware Information</h2>
+                            {% if device_object is not defined %}
+                            <p>Choose a hardware item to get started:</p>
+                            {% else %}
+                            <p>Enter the updated info below:</p>
+                            {% endif %}
+                        </div>
+                        <div class="col-sm-9 col-xs-12 {% if ticket is defined %} defined {% endif %}">
+                            {% if device_object is not defined %}
+                            <img src="/wp-content/uploads/2018/03/arrow-right-other.png"> {% else %}
+                            <img src="/wp-content/uploads/2018/03/arrow-down.png" style="opacity: 0;"> {% endif %}
+                            <select id="change-hardware">
+                                    <option disabled selected>Select a hardware item here…</option>
+                                </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="mia-panel-body negative-margin">
+                    <div class="accordions">
+                        {% if device_object is not defined %}
+                        <div class="accordion-handle row">
+                            <div class="accordion-icon col-xs-3">
+                                <div class="number-circle">?</div>
+                            </div>
+                            <div class="accordion-title col-xs-9">No hardware has been selected…</div>
+                        </div>
+                        {% else %}
+                        <div class="accordion-handle row">
+                            <div class="accordion-icon col-xs-3">
+                                <div class="number-circle">{{ device_object.id }}</div>
+                            </div>
+                            <div class="accordion-title col-xs-9">{{ device_object.serial_no }}</div>
+                        </div>
+                        <div class="accordion-body">
+                            <div class="row mia-field-group">
+                                <div class="col-xs-12 col-sm-3">
+                                    <p class="label">
+                                        Type <span class="required">*</span>
+                                    </p>
+
+                                    <p class="details">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                    </p>
+                                </div>
+                                <div class="col-sm-9 col-xs-12 has-button">
+                                    <div>
+                                        <select class="hardware-type-select" name="hardware[type]">
+                                                </select>
+                                    </div>
+                                    <a href="javascript:void(0);" class="button button-primary add-type" id="add-additional-type">Add additional type</a>
+
+                                    <div></div>
+                                </div>
+                            </div>
+                            <div id="type-information" class="row mia-field-group new-type">
+                                <div class="col-sm-3 col-xs-12">
+                                    <p class="label">
+                                        Type Name <span class="required">*</span>
+                                    </p>
+
+                                    <p class="details">
+                                        Computer, Calculator, etc
+                                    </p>
+                                </div>
+                                <div class="col-sm-9 col-xs-12">
+                                    <input name="hardware[newType]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter Type Name">
+                                </div>
+                            </div>
+
+
+                            <div class="row mia-field-group">
+                                <div class="col-xs-12 col-sm-3">
+                                    <p class="label">
+                                        Make <span class="required">*</span>
+                                    </p>
+
+                                    <p class="details">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                    </p>
+                                </div>
+                                <div class="col-sm-9 col-xs-12 has-button">
+                                    <div>
+                                        <select class="hardware-make-select" name="hardware[make]">
+                                                </select>
+                                    </div>
+                                    <a href="javascript:void(0);" class="button button-primary add-make" id="add-additional-make">Add additional make</a>
+                                    <div></div>
+                                </div>
+                            </div>
+                            <div id="make-information" class="row mia-field-group new-make">
+                                <div class="col-sm-3 col-xs-12">
+                                    <p class="label">
+                                        Make Name <span class="required">*</span>
+                                    </p>
+
+                                    <p class="details">
+                                        Apple, Samsung, etc
+                                    </p>
+                                </div>
+                                <div class="col-sm-9 col-xs-12">
+                                    <input name="hardware[newMake]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter Make Name" >
+                                </div>
+                            </div>
+                            <div class="row mia-field-group">
+                                <div class="col-sm-3 col-xs-12">
+                                    <p class="label">
+                                        Serial Number <span class="required">*</span>
+                                    </p>
+
+                                    <p class="details">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                    </p>
+                                </div>
+                                <div class="col-sm-9 col-xs-12">
+                                    <input class='hardware-serial' name="hardware[serial_no]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter serial number here" validation="required|min:3|max:255">
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% if device_object is defined %}
+                <div class="mia-panel-footer">
+                    <div class="mia-button-group pull-right">
+                        <p>All done?</p>
+                        <button class="button button-primary" type="submit">Update Hardware</button>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+
+</div>
+{% endblock %} {% block scripts %}
+<script>
+    var devices = {{ devices }},
+        types   = {{ types }},
+        makes   = {{ makes }},
+        device  = {{ device|default ('null') }};
+
+</script>
+{% endblock %}
