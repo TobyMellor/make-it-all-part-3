@@ -144,7 +144,9 @@ $(() => {
 	});
 
 	$(document).on('click', '#delete-problem-type', function() {
-		let id     = $('.type-columns li.last-active').data('expertiseTypeId');
+		if (!confirm('Are you sure you want to delete that Problem Type?')) return;
+
+		let id = $('.type-columns li.last-active').data('expertiseTypeId');
 
 		expertiseTypeManager.deleteExpertiseType(id);
 	});
