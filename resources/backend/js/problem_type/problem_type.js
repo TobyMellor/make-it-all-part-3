@@ -27,7 +27,7 @@ $(() => {
 
 			clickedExpertiseTypeChildren = this.getExpertiseTypesWithParent(clickedExpertiseTypeId);
 
-			$breadcrumb.html(this.getExpertiseTypeBreadcrumb(clickedExpertiseTypeId));
+			$breadcrumb.html('<i class="fa fa-warning"></i>' + this.getExpertiseTypeBreadcrumb(clickedExpertiseTypeId));
 
 			$clickedTypeColumn = $clickedLi.parent();
 			$clickedTypeColumn.nextAll().remove();
@@ -88,7 +88,7 @@ $(() => {
 			}
 		}
 
-		return '<i class="fa fa-warning"></i>' + breadcrumb;
+		return breadcrumb;
 	});
 
 	if (!window.employees || !window.expertiseTypes || !window.expertiseTypeStaff) return;
@@ -281,11 +281,31 @@ $(() => {
 
 	function updatePanelInfo(expertiseTypeId) {
 		let $specialistsTbody = $('#problem-specialists'),
-			specialists       = staffManager.getSpecialistsOfSpecialism(expertiseTypeId),
 			$specialistsPanel = $('.problem-specialists-panel'),
-			$table            = $specialistsTbody.parent(),
-			$noMessage        = $table.next(),
-			[$show, $hide]    = specialists.length ? [$table, $noMessage] : [$noMessage, $table];
+			$table            = $specialistsPanel.find('table'),
+			$noSpecialists    = $specialistsPanel.find('#no-specialists'),
+			$parentSpecialist = $specialistsPanel.find('#parent-specialist'),
+			specialists       = staffManager.getSpecialistsOfSpecialism(expertiseTypeId),
+			$show, $hide;
+
+		if (!specialists.length) {
+			let expertiseType = expertiseTypeManager.getExpertiseType(expertiseTypeId);
+
+			while (!specialists.length && expertiseType.parent_id != null) {
+				expertiseType = expertiseTypeManager.getExpertiseType(expertiseType.parent_id);
+				specialists   = staffManager.getSpecialistsOfSpecialism(expertiseType.id);
+			}
+
+			if (specialists.length) {
+				[$show, $hide] = [$parentSpecialist.add($table), $noSpecialists];
+
+				$parentSpecialist.text('Showing specialists for ' + expertiseTypeManager.getExpertiseTypeBreadcrumb(expertiseType.id))
+			} else {
+				[$show, $hide] = [$noSpecialists, $parentSpecialist.add($table)];
+			}
+		} else {
+			[$show, $hide] = [$table, $noSpecialists.add($parentSpecialist)];
+		}
 
 		$specialistsTbody.empty();
 
