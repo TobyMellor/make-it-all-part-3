@@ -3,7 +3,8 @@ export default class DragController {
 		this.runwaySelector = '.type-column'; // where can an element be dropped without deleting it?
 		this.planeSelector  = this.runwaySelector + ' li';
 
-		let $dragging = null;
+		let $dragging      = null,
+			dragController = this;
 
 		$(function() {
 			$(document)
@@ -16,12 +17,23 @@ export default class DragController {
 				.on('mousemove', this.planeSelector, function(e) {
 					if (e.buttons === 1) {
 						if (!$dragging.hasClass('dragging')) $(document).trigger('dragstart');
-						
+
+						let posX = e.pageX - document.getElementById('adminmenuwrap').offsetWidth - 20,
+							posY = e.pageY - document.getElementById('wpadminbar').offsetHeight - 15;
+
 						$dragging
 							.css({
-								top: e.pageY - document.getElementById('wpadminbar').offsetHeight - 15,
-								left: e.pageX - document.getElementById('adminmenuwrap').offsetWidth - 20
+								left: posX,
+								top: posY
 							});
+
+						let $elementDraggedInto = dragController.getElementDraggedInto(posX, posY);
+
+						if ($elementDraggedInto) {
+							$dragging.removeClass('danger');
+						} else {
+							$dragging.addClass('danger')
+						}
 					}
 				})
 				.on('mouseup', this.planeSelector, function() {
@@ -35,7 +47,7 @@ export default class DragController {
 	getElementDraggedInto(posX, posY) {
 		let $elementDraggedInto = null;
 
-		$(this.planeSelector).each((i, element) => {
+		$(this.runwaySelector).each((i, element) => {
 			let $element = $(element);
 
 			if (this.isWithinBoundaries($element, posX, posY)) {
