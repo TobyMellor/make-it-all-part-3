@@ -16,10 +16,12 @@ export default class DragController {
 				})
 				.on('mousemove', this.planeSelector, function(e) {
 					if (e.buttons === 1) {
+						if (!$dragging) return;
+
 						if (!$dragging.hasClass('dragging')) $(document).trigger('dragstart');
 
-						let posX = e.pageX - document.getElementById('adminmenuwrap').offsetWidth - 25,
-							posY = e.pageY - document.getElementById('wpadminbar').offsetHeight - 5;
+						let posX = e.pageX - document.getElementById('adminmenuwrap').offsetWidth - 8,
+							posY = e.pageY - document.getElementById('wpadminbar').offsetHeight - 8;
 
 						$dragging
 							.css({
@@ -27,20 +29,44 @@ export default class DragController {
 								top:  posY
 							});
 
-						dragController.getElementDraggedInto(posX, posY) ? $dragging.removeClass('danger') : $dragging.addClass('danger');
+						let $elementDraggedInto = dragController.getElementDraggedInto(posX, posY);
+
+						$dragging
+							.add($elementDraggedInto)
+							.removeClass('not-allowed')
+
+						if ($elementDraggedInto) {
+							$dragging.removeClass('danger');
+
+							if ($dragging.hasClass('active')) {
+								$dragging.parent().nextAll().each((i, element) => {
+									if ($(element).is($elementDraggedInto)) {
+										$dragging
+											.add($elementDraggedInto)
+											.addClass('not-allowed'); 
+
+										return false;
+									}
+								});
+							}
+						} else {
+							$dragging.addClass('danger');
+						}
 					}
 				})
 				.on('mouseup', this.planeSelector, function() {
 					if ($dragging !== null) {
-						let $elementDraggedInto = dragController.getElementDraggedInto(
-							parseInt($dragging.css('left')),
-							parseInt($dragging.css('top'))
-						);
+						if (!$dragging.hasClass('not-allowed')) {
+							let $elementDraggedInto = dragController.getElementDraggedInto(
+								parseInt($dragging.css('left')),
+								parseInt($dragging.css('top'))
+							);
 
-						$(document).trigger('dragstop', [
-							$dragging,
-							$elementDraggedInto
-						]);
+							$(document).trigger('dragstop', [
+								$dragging,
+								$elementDraggedInto
+							]);
+						}
 
 						$dragging
 							.removeClass('dragging')

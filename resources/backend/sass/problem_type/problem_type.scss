@@ -88,7 +88,8 @@
 						-moz-box-shadow:    0 0 15px -5px $black-hover;
 						-webkit-box-shadow: 0 0 15px -5px $black-hover;
 						box-shadow:         0 0 15px -5px $black-hover;
-						//transform: scale(1.1) rotate(2deg);
+						transform: scale(1.1) rotate(2deg);
+						opacity: .8;
 						z-index: 1;
 						position: absolute;
 						width: 210px;
@@ -98,6 +99,10 @@
 
 						&.danger {
 							background-color: $red !important;
+						}
+
+						&.not-allowed {
+							cursor: not-allowed !important;
 						}
 					}
 				}
