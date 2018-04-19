@@ -89,6 +89,8 @@ ExpertiseTypeManager.prototype.getExpertiseTypeBreadcrumb = (function(expertiseT
 });
 
 $(() => {
+	if (!window.employees || !window.expertiseTypes || !window.expertiseTypeStaff) return;
+	
 	let staffManager         = window.staffManager         = new StaffManager(employees, 1, expertiseTypes, expertiseTypeStaff);
 	let expertiseTypeManager = window.expertiseTypeManager = new ExpertiseTypeManager(expertiseTypes, expertiseTypeStaff, staffManager);
 
