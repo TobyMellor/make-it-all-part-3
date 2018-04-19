@@ -68,7 +68,7 @@
 							<button class="button button-danger" id="delete-problem-type">Delete problem type</button>
 						</div>
 					</div>
-					<p>Create a Problem Type first</p>
+					<p>Create a problem type first</p>
 				</div>
 			</div>
 			<div class="mia-panel mia-panel-short">
@@ -76,7 +76,7 @@
 					Specialists of this Problem
 					<i class="fa fa-chevron-up"></i>
 				</div>
-				<div class="mia-panel-body">
+				<div class="mia-panel-body problem-specialists-panel">
 					<table class="wp-list-table widefat fixed striped">
 						<thead>
 							<tr>
@@ -86,57 +86,9 @@
 								<th></th>
 							</tr>
 						</thead>
-						<tbody id="problem-specialists">
-							<tr>
-								<td>
-									<strong>Toby Mellor</strong>
-									<div class="row-actions visible">
-										<span class="edit">
-											<a href="admin.php?page=ticket&id=1">View</a>
-										</span>
-									</div>
-								</td>
-								<td>10</td>
-								<td>1</td>
-								<td class="contains-filter">
-									<span class="filter">
-										Available
-									</span>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<strong>John Smith</strong>
-									<div class="row-actions visible">
-										<span class="edit">
-											<a href="admin.php?page=ticket&id=1">View</a>
-										</span>
-									</div>
-								</td>
-								<td>20</td>
-								<td>5</td>
-								<td class="contains-filter">
-									<span class="filter">
-										Popular
-									</span>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<strong>Another Person</strong>
-									<div class="row-actions visible">
-										<span class="edit">
-											<a href="admin.php?page=ticket&id=1">View</a>
-										</span>
-									</div>
-								</td>
-								<td>13</td>
-								<td>3</td>
-								<td></td>
-							</tr>
-						</tbody>
+						<tbody id="problem-specialists"></tbody>
 					</table>
-					{# <p>No other tickets with the same problem</p> #}
+					<p>No specialists specialising in this problem</p>
 				</div>
 			</div>
 		</div>

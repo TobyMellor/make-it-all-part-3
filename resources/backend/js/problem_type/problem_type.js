@@ -1,94 +1,96 @@
 import ExpertiseTypeManager from "../ExpertiseTypeManager";
 import StaffManager from "../StaffManager";
 
-/**
- * OVERRIDE to add:
- *    - Create button
- *    - Breadcrumb in necessary place
- *
- * Loads the next column of a Problem Type picker
- *
- * @param {DOM} $typeColumns The div containing .type-column's
- * @param {DOM} $clickedLi the LI that was clicked and needs to load
- */
-ExpertiseTypeManager.prototype.loadChildrenExpertiseTypes = (function($typeColumns, $clickedLi = null) {
-	let $typeColumn        = $('<div class="type-column"></div>'),
-		$clickedTypeColumn = $(),
-		$breadcrumb        = $('.finder-window .problem-type-picker-header p'),
-		clickedExpertiseTypeChildren, specialists;
+$(() => {
+	if (!window.getUrlParameter('page').includes('problem_type')) return;
 
-	$breadcrumb.html('<i class="fa fa-warning"></i> Create a Problem Type to get started');
+	/**
+	 * OVERRIDE to add:
+	 *    - Create button
+	 *    - Breadcrumb in necessary place
+	 *
+	 * Loads the next column of a Problem Type picker
+	 *
+	 * @param {DOM} $typeColumns The div containing .type-column's
+	 * @param {DOM} $clickedLi the LI that was clicked and needs to load
+	 */
+	ExpertiseTypeManager.prototype.loadChildrenExpertiseTypes = (function($typeColumns, $clickedLi = null) {
+		let $typeColumn        = $('<div class="type-column"></div>'),
+			$clickedTypeColumn = $(),
+			$breadcrumb        = $('.finder-window .problem-type-picker-header p'),
+			clickedExpertiseTypeChildren, specialists;
 
-	if ($clickedLi) {
-		let clickedExpertiseTypeId = Number($clickedLi.data('expertiseTypeId'));
+		$breadcrumb.html('<i class="fa fa-warning"></i> Create a Problem Type to get started');
 
-		clickedExpertiseTypeChildren = this.getExpertiseTypesWithParent(clickedExpertiseTypeId);
+		if ($clickedLi) {
+			let clickedExpertiseTypeId = Number($clickedLi.data('expertiseTypeId'));
 
-		$breadcrumb.html(this.getExpertiseTypeBreadcrumb(clickedExpertiseTypeId));
+			clickedExpertiseTypeChildren = this.getExpertiseTypesWithParent(clickedExpertiseTypeId);
 
-		$clickedTypeColumn = $clickedLi.parent();
-		$clickedTypeColumn.nextAll().remove();
-		$clickedTypeColumn.find('li.active').removeClass('active');
-		$clickedTypeColumn.parent().find('li.last-active').removeClass('last-active');
-		$clickedLi.addClass('active last-active');
-	} else {
-		clickedExpertiseTypeChildren = this.getRootExpertiseTypes();
-	}
+			$breadcrumb.html(this.getExpertiseTypeBreadcrumb(clickedExpertiseTypeId));
 
-	clickedExpertiseTypeChildren.forEach((child, i) => {
-		specialists = this.staffManager.getSpecialistsOfSpecialism(child.id);
-		
-		$typeColumn.append(`
-			<li ${(child.children.length === 0 ? 'class="no-children"' : '')} data-expertise-type-id="${child.id}">
-				${child.name}
-				<div class="specialist-counter">
-					${(specialists.length > 0 ? specialists.length + ' <i class="fa fa-user"></i>' : '<i class="fa fa-user-times"></i>')}
-				</div>
-				<i class="fa fa-caret-right"></i>
-			</li>
+			$clickedTypeColumn = $clickedLi.parent();
+			$clickedTypeColumn.nextAll().remove();
+			$clickedTypeColumn.find('li.active').removeClass('active');
+			$clickedTypeColumn.parent().find('li.last-active').removeClass('last-active');
+			$clickedLi.addClass('active last-active');
+		} else {
+			clickedExpertiseTypeChildren = this.getRootExpertiseTypes();
+		}
+
+		clickedExpertiseTypeChildren.forEach((child, i) => {
+			specialists = this.staffManager.getSpecialistsOfSpecialism(child.id);
+			
+			$typeColumn.append(`
+				<li ${(child.children.length === 0 ? 'class="no-children"' : '')} data-expertise-type-id="${child.id}">
+					${child.name}
+					<div class="specialist-counter">
+						${(specialists.length > 0 ? specialists.length + ' <i class="fa fa-user"></i>' : '<i class="fa fa-user-times"></i>')}
+					</div>
+					<i class="fa fa-caret-right"></i>
+				</li>
+			`);
+		});
+
+		$typeColumns.find('button').remove();
+		$typeColumn.add($clickedTypeColumn).append(`
+			<button class="button">Create problem type</button>
 		`);
+
+		// Append the new .type-column, scroll to the right to view it
+		$typeColumns.append($typeColumn);
+		$typeColumns.scrollLeft($typeColumns.width());
 	});
 
-	$typeColumns.find('button').remove();
-	$typeColumn.add($clickedTypeColumn).append(`
-		<button class="button">Create problem type</button>
-	`);
+	/**
+	 * OVERRIDE to add:
+	 *   - Change style of breadcrumb output
+	 *
+	 * Display the names of an ExpertiseType, and its parents,
+	 * in ordered fashion.
+	 *
+	 * e.g. "Electronics / Printer / Printer Ink / Cyan Ink"
+	 *
+	 * @param {ExpertiseType} 
+	 * @return {String} Breadcrumb of ExpertiseType.name's, from the root to a ExpertiseType 
+	 */
+	ExpertiseTypeManager.prototype.getExpertiseTypeBreadcrumb = (function(expertiseTypeId) {
+		let expertiseTypeParent = this.getExpertiseType(expertiseTypeId),
+			breadcrumb           = '';
 
-	// Append the new .type-column, scroll to the right to view it
-	$typeColumns.append($typeColumn);
-	$typeColumns.scrollLeft($typeColumns.width());
-});
+		while (expertiseTypeParent != null) {
+			breadcrumb = expertiseTypeParent.name + breadcrumb;
 
-/**
- * OVERRIDE to add:
- *   - Change style of breadcrumb output
- *
- * Display the names of an ExpertiseType, and its parents,
- * in ordered fashion.
- *
- * e.g. "Electronics / Printer / Printer Ink / Cyan Ink"
- *
- * @param {ExpertiseType} 
- * @return {String} Breadcrumb of ExpertiseType.name's, from the root to a ExpertiseType 
- */
-ExpertiseTypeManager.prototype.getExpertiseTypeBreadcrumb = (function(expertiseTypeId) {
-	let expertiseTypeParent = this.getExpertiseType(expertiseTypeId),
-		breadcrumb           = '';
+			expertiseTypeParent = this.getExpertiseType(expertiseTypeParent.parent_id);
 
-	while (expertiseTypeParent != null) {
-		breadcrumb = expertiseTypeParent.name + breadcrumb;
-
-		expertiseTypeParent = this.getExpertiseType(expertiseTypeParent.parent_id);
-
-		if (expertiseTypeParent != null) {
-			breadcrumb = ' / ' + breadcrumb;
+			if (expertiseTypeParent != null) {
+				breadcrumb = ' / ' + breadcrumb;
+			}
 		}
-	}
 
-	return '<i class="fa fa-warning"></i>' + breadcrumb;
-});
+		return '<i class="fa fa-warning"></i>' + breadcrumb;
+	});
 
-$(() => {
 	if (!window.employees || !window.expertiseTypes || !window.expertiseTypeStaff) return;
 
 	let staffManager         = window.staffManager         = new StaffManager(employees, 1, expertiseTypes, expertiseTypeStaff);
@@ -98,7 +100,7 @@ $(() => {
 		let id = expertiseTypeManager.expertiseTypes[0].id;
 
 		expertiseTypeManager.loadExpertiseType($('.type-columns'), id);
-		
+
 		updatePanelInfo(id)
 	} else {
 		$('.mia-panel-short .problem-type-actions > .row')
@@ -276,37 +278,47 @@ $(() => {
 				$hide.hide();
 			});
 	});
+
+	function updatePanelInfo(expertiseTypeId) {
+		let $specialistsTbody = $('#problem-specialists'),
+			specialists       = staffManager.getSpecialistsOfSpecialism(expertiseTypeId),
+			$specialistsPanel = $('.problem-specialists-panel'),
+			$table            = $specialistsTbody.parent(),
+			$noMessage        = $table.next(),
+			[$show, $hide]    = specialists.length ? [$table, $noMessage] : [$noMessage, $table];
+
+		$specialistsTbody.empty();
+
+		if (specialists.length) {
+			specialists.sort((a, b) => a.open_tickets > b.open_tickets);
+
+			specialists.forEach((specialist, i) => {
+				$specialistsTbody.append(`
+					<tr>
+						<td>
+							<strong>${specialist.name}</strong>
+							<div class="row-actions visible">
+								<span class="edit">
+									<a href="javascript:void(0);">View</a>
+								</span>
+							</div>
+						</td>
+						<td>${specialist.tickets}</td>
+						<td>${specialist.open_tickets}</td>
+						${i === 0 ? `
+							<td class="contains-filter">
+								<span class="filter">
+									Available
+								</span>
+							</td>
+						` : `<td></td>`}
+					</tr>
+				`);
+			});
+		}
+
+		$hide.fadeOut(250, function() {
+			$show.fadeIn(250);
+		});
+	}
 });
-
-function updatePanelInfo(expertiseTypeId) {
-	let $specialistsTable = $('#problem-specialists'),
-		specialists       = staffManager.getSpecialistsOfSpecialism(expertiseTypeId);
-
-	$specialistsTable.empty();
-
-	specialists.sort((a, b) => a.open_tickets > b.open_tickets);
-
-	specialists.forEach((specialist, i) => {
-		$specialistsTable.append(`
-			<tr>
-				<td>
-					<strong>${specialist.name}</strong>
-					<div class="row-actions visible">
-						<span class="edit">
-							<a href="javascript:void(0);">View</a>
-						</span>
-					</div>
-				</td>
-				<td>${specialist.tickets}</td>
-				<td>${specialist.open_tickets}</td>
-				${i === 0 ? `
-					<td class="contains-filter">
-						<span class="filter">
-							Available
-						</span>
-					</td>
-				` : `<td></td>`}
-			</tr>
-		`);
-	});
-}
