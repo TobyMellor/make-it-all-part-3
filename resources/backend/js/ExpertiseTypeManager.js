@@ -106,7 +106,7 @@ export default class ExpertiseTypeManager {
 		this.loadChildrenExpertiseTypes($typeColumns);
 
 		let expertiseTypeChain = this.getExpertiseTypeChain(expertiseTypeId);
-console.log(expertiseTypeChain);
+
 		// load ExpertiseType from the parent down to the clicked one
 		for (let i = expertiseTypeChain.length - 2; i >= -1; i--) {
 			this.loadChildrenExpertiseTypes($typeColumns, $typeColumns.find('.type-column li[data-expertise-type-id="' + expertiseTypeChain[i + 1].id + '"]'));
@@ -219,12 +219,13 @@ console.log(expertiseTypeChain);
 	 * @param {DOM} $button the button the user clicked
 	 */
 	createExpertiseType($button) {
-		$button.add('#create-problem-type').prop('disabled', true);
+		let $input             = $button.siblings('input'),
+			$invalidFeedback   = $button.siblings('.invalid-feedback'),
+			name               = $input.val(),
+			parentId           = $input.parent().prev().find('.active').data('expertiseTypeId') || null,
+			$createProblemType = $('#create-problem-type');
 
-		let $input           = $button.siblings('input'),
-			$invalidFeedback = $button.siblings('.invalid-feedback'),
-			name             = $input.val(),
-			parentId         = $input.parent().prev().find('.active').data('expertiseTypeId') || null;
+		$button.add($createProblemType).prop('disabled', true);
 
 		// remove any previous validation errors
 		$invalidFeedback.remove();
@@ -244,7 +245,7 @@ console.log(expertiseTypeChain);
 				.insertAfter($input);
 
 			$input.focus();
-			$button.add('#create-problem-type').prop('disabled', false);
+			$button.add($createProblemType).prop('disabled', false);
 		})
 		.done((expertiseTypeId) => {
 
@@ -282,6 +283,12 @@ console.log(expertiseTypeChain);
 			
 			// show new problem type
 			$newProblemType.click();
+
+			$createProblemType
+				.closest('.row')
+				.show()
+				.next()
+				.hide();
 		});
 	}
 
@@ -374,6 +381,13 @@ console.log(expertiseTypeChain);
 			}
 
 			$deleteProblemType.prop('disabled', false);
+
+			let $actions       = $deleteProblemType.closest('.row'),
+				$createMessage = $actions.next(),
+				[$show, $hide] = expertiseTypeManager.expertiseTypes.length ? [$actions, $createMessage] : [$createMessage, $actions];
+
+			$show.show();
+			$hide.hide();
 		});
 	}
 }
