@@ -16,12 +16,17 @@ export default class DragController {
 				.on('mousemove', this.planeSelector, function(e) {
 					if (e.buttons === 1) {
 						if (!$dragging.hasClass('dragging')) $(document).trigger('dragstart');
-
-
+						
+						$dragging
+							.css({
+								top: e.pageY - document.getElementById('wpadminbar').offsetHeight - 15,
+								left: e.pageX - document.getElementById('adminmenuwrap').offsetWidth - 20
+							});
 					}
 				})
 				.on('mouseup', this.planeSelector, function() {
 					$dragging.removeClass('dragging');
+					$dragging.css({top: 'initial', left: 'initial'});
 					$dragging = null;
 				});
 		});
@@ -42,11 +47,10 @@ export default class DragController {
 	}
 
 	isWithinBoundaries($element, posX, posY) {
-		let offset = $element.offset(),
-			top    = offset.top,
-			left   = offset.left,
-			bottom = offset.top + $element.height(),
-			right  = offset.left + $element.width();
+		let top    = $element[0].offsetTop,
+			left   = $element[0].offsetLeft,
+			bottom = top + $element.height(),
+			right  = left + $element.width();
 
 		console.log('--------');
 		console.log('TOP: ' + top);
