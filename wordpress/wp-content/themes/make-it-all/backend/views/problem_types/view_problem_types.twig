@@ -12,35 +12,21 @@
 				</div>
 				<div class="row">
 					<div class="recent-problems">
-						<p>Common</p>
+						<p>Popular</p>
 						<ul>
-							<li>
-								Printer / Low Ink
-							</li>
-							<li>
-								Drink Machine
-							</li>
+							{% for expertiseType in popular_expertise_types %}
+								<li data-expertise-type-id="{{ expertiseType.id }}">
+									{{ expertiseType.name }}
+								</li>
+							{% endfor %}
 						</ul>
 						<p>Recents</p>
 						<ul>
-							<li>
-								Printer / Ink
-							</li>
-							<li>
-								Keyboard / Keys
-							</li>
-							<li>
-								Speaker
-							</li>
-						</ul>
-						<p>My Favourites</p>
-						<ul>
-							<li>
-								Security / Cryptography
-							</li>
-							<li>
-								Security / Breach
-							</li>
+							{% for expertiseType in recent_expertise_types %}
+								<li data-expertise-type-id="{{ expertiseType.id }}">
+									{{ expertiseType.name }}
+								</li>
+							{% endfor %}
 						</ul>
 					</div>
 					<div class="problem-type-picker">
@@ -98,8 +84,8 @@
 
 {% block scripts %}
 	<script>
-		var employees          = {{ employees }},
-			expertiseTypes     = {{ expertise_types }},
-			expertiseTypeStaff = {{ expertise_type_staff }};
+		var employees             = {{ employees }},
+			expertiseTypes        = {{ expertise_types }},
+			expertiseTypeStaff    = {{ expertise_type_staff }};
 	</script>
 {% endblock %}

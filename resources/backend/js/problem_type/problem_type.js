@@ -119,6 +119,14 @@ $(() => {
 		updatePanelInfo(id);
 	});
 
+	$('.recent-problems li').click(function() {
+		let id = $(this).data('expertiseTypeId');
+
+		expertiseTypeManager.loadExpertiseType($('.type-columns'), id);
+
+		updatePanelInfo(id)
+	});
+
 	$(document).on('click', '.type-column button:not(.button-success)', function() {
 		expertiseTypeManager.showCreateExpertiseTypeField($(this));
 	});
@@ -299,7 +307,7 @@ $(() => {
 			if (specialists.length) {
 				[$show, $hide] = [$parentSpecialist.add($table), $noSpecialists];
 
-				$parentSpecialist.text('Showing specialists for ' + expertiseTypeManager.getExpertiseTypeBreadcrumb(expertiseType.id))
+				$parentSpecialist.html('Showing specialists for<br />' + expertiseTypeManager.getExpertiseTypeBreadcrumb(expertiseType.id))
 			} else {
 				[$show, $hide] = [$noSpecialists, $parentSpecialist.add($table)];
 			}

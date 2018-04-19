@@ -36,9 +36,14 @@ class ProblemTypePage extends Page {
 	private function get_required_data($pageName) {
 		$context = $this->get_context($pageName);
 
+		$expertiseTypeQuery = new ExpertiseTypeQuery();
+
 		$context['employees']            = json_encode((new StaffQuery)->get());
-		$context['expertise_types']      = json_encode((new ExpertiseTypeQuery)->get());
+		$context['expertise_types']      = json_encode($expertiseTypeQuery->get());
 		$context['expertise_type_staff'] = json_encode((new ExpertiseTypeStaffQuery)->get());
+
+		$context['popular_expertise_types'] = $expertiseTypeQuery->get_popular();
+		$context['recent_expertise_types']  = $expertiseTypeQuery->get_recent();
 
 		return $context;
 	}
