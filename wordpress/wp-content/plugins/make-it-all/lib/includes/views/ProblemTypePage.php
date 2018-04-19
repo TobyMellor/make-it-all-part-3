@@ -69,6 +69,8 @@ class ProblemTypePage extends Page {
 		register_rest_route($this->apiNamespace, '/problem-type', [
 			'methods'  => 'POST',
 			'callback' => function($request) {
+				if (!$request['parent_id']) $request['parent_id'] = null;
+
 				return (new ExpertiseTypeQuery)->mia_insert($request->get_params());
 			},
 		]);

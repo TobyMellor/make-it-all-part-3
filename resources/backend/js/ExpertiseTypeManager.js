@@ -106,7 +106,7 @@ export default class ExpertiseTypeManager {
 		this.loadChildrenExpertiseTypes($typeColumns);
 
 		let expertiseTypeChain = this.getExpertiseTypeChain(expertiseTypeId);
-
+console.log(expertiseTypeChain);
 		// load ExpertiseType from the parent down to the clicked one
 		for (let i = expertiseTypeChain.length - 2; i >= -1; i--) {
 			this.loadChildrenExpertiseTypes($typeColumns, $typeColumns.find('.type-column li[data-expertise-type-id="' + expertiseTypeChain[i + 1].id + '"]'));

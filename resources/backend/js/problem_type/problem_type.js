@@ -14,14 +14,17 @@ import StaffManager from "../StaffManager";
 ExpertiseTypeManager.prototype.loadChildrenExpertiseTypes = (function($typeColumns, $clickedLi = null) {
 	let $typeColumn        = $('<div class="type-column"></div>'),
 		$clickedTypeColumn = $(),
+		$breadcrumb        = $('.finder-window .problem-type-picker-header p'),
 		clickedExpertiseTypeChildren, specialists;
+
+	$breadcrumb.html('<i class="fa fa-warning"></i> Create a Problem Type to get started');
 
 	if ($clickedLi) {
 		let clickedExpertiseTypeId = Number($clickedLi.data('expertiseTypeId'));
 
 		clickedExpertiseTypeChildren = this.getExpertiseTypesWithParent(clickedExpertiseTypeId);
 
-		$clickedLi.closest('.finder-window').find('.problem-type-picker-header p').html(this.getExpertiseTypeBreadcrumb(clickedExpertiseTypeId));
+		$breadcrumb.html(this.getExpertiseTypeBreadcrumb(clickedExpertiseTypeId));
 
 		$clickedTypeColumn = $clickedLi.parent();
 		$clickedTypeColumn.nextAll().remove();
@@ -89,7 +92,7 @@ $(() => {
 	let staffManager         = window.staffManager         = new StaffManager(employees, 1, expertiseTypes, expertiseTypeStaff);
 	let expertiseTypeManager = window.expertiseTypeManager = new ExpertiseTypeManager(expertiseTypes, expertiseTypeStaff, staffManager);
 
-	expertiseTypeManager.loadExpertiseType($('.type-columns'), expertiseTypeManager.expertiseTypes[0].id);
+	if (expertiseTypeManager.length) expertiseTypeManager.loadExpertiseType($('.type-columns'), expertiseTypeManager.expertiseTypes[0].id);
 
 	// on clicking a problem type, load and display all children of this type
 	$(document).on('click', '.type-column li', function() {
