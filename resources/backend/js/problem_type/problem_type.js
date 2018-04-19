@@ -1,5 +1,6 @@
 import ExpertiseTypeManager from "./ExpertiseTypeManager";
 import StaffManager from "../StaffManager";
+import DragController from "./DragController";
 
 $(() => {
 	if (!window.getUrlParameter('page').includes('problem_type')) return;
@@ -9,6 +10,7 @@ $(() => {
 	let staffManager         = window.staffManager         = new StaffManager(employees, 1, expertiseTypes, expertiseTypeStaff);
 	let expertiseTypeManager = window.expertiseTypeManager = new ExpertiseTypeManager(expertiseTypes, expertiseTypeStaff, staffManager);
 
+	let dragController = window.dragController = new DragController();
 	init();
 
 	// on clicking a problem type, load and display all children of this type

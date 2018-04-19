@@ -83,6 +83,23 @@
 					&, &.last-active {
 						cursor: grab !important;
 					}
+
+					&.dragging {
+						-moz-box-shadow:    0 0 15px -5px $black-hover;
+						-webkit-box-shadow: 0 0 15px -5px $black-hover;
+						box-shadow:         0 0 15px -5px $black-hover;
+						transform: scale(1.1) rotate(2deg);
+						z-index: 1;
+						position: absolute;
+						width: 210px;
+						height: 18px;
+						background-color: $green !important;
+						color: $white;
+
+						&.danger {
+							background-color: $red !important;
+						}
+					}
 				}
 
 				input {
