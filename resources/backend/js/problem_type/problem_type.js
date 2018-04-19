@@ -117,7 +117,60 @@ $(() => {
 	});
 
 	$(document).on('click', '.type-column button.button-success', function() {
-		expertiseTypeManager.createExpertiseType($(this));
+		let $button            = $(this),
+			$input             = $button.siblings('input'),
+			$invalidFeedback   = $button.siblings('.invalid-feedback'),
+			name               = $input.val(),
+			parentId           = $input.parent().prev().find('.active').data('expertiseTypeId') || null,
+			$createProblemType = $('#create-problem-type');
+
+		$button.add($createProblemType).prop('disabled', true);
+
+		// remove any previous validation errors
+		$invalidFeedback.remove();
+
+		expertiseTypeManager.createExpertiseType(name, parentId)
+			.fail((xhr) => {
+				// insert only the first validation error (should only be one anyway)
+				$('<div class="invalid-feedback">')
+					.text(xhr.responseJSON.message[0])
+					.insertAfter($input);
+
+				$input.focus();
+				$button.add($createProblemType).prop('disabled', false);
+			})
+			.done((expertiseTypeId) => {
+				$input.remove();
+
+				let $newProblemType = $(`
+					<li class="no-children" data-expertise-type-id="${expertiseTypeId}">
+						${name}
+						<div class="specialist-counter">
+							<i class="fa fa-user-times"></i>
+						</div>
+					</li>
+				`);
+
+				$button
+					.add($createProblemType)
+					.prop('disabled', false)
+					.removeClass()
+					.addClass('button');
+
+				$button.text('Create problem type');
+				$createProblemType.text('Create within');
+					
+				$newProblemType.insertBefore($button);
+				
+				// show new problem type
+				$newProblemType.click();
+
+				$createProblemType
+					.closest('.row')
+					.show()
+					.next()
+					.hide();
+			});
 	});
 
 	$('#create-problem-type').click(() => $('.type-columns .last-active').parent().next().find('button').click());
@@ -126,10 +179,11 @@ $(() => {
 		let id     = $('.type-columns li.last-active').data('expertiseTypeId'),
 			$input = $(this).prev();
 
-		$(this).parent().addClass('renaming-problem-type');
 		$(this)
 			.addClass('button-success')
-			.text('Submit name');
+			.text('Submit name')
+			.parent()
+			.addClass('renaming-problem-type')
 
 		$input.val(expertiseTypeManager.getExpertiseType(id).name);
 		$input.select();
@@ -143,18 +197,74 @@ $(() => {
 	});
 
 	$(document).on('click', '#rename-problem-type.button-success', function() {
-		let id     = $('.type-columns li.last-active').data('expertiseTypeId'),
-			$input = $(this).prev(),
-			name   = $input.val();
+		let id                 = $('.type-columns li.last-active').data('expertiseTypeId'),
+			$input             = $(this).prev(),
+			name               = $input.val(),
+			$renameProblemType = $('#rename-problem-type');
 
-		expertiseTypeManager.renameExpertiseType(id, name);
+		$renameProblemType.prop('disabled', true)
+			.parent()
+			.siblings('.invalid-feedback')
+			.remove();
+
+		expertiseTypeManager.renameExpertiseType(id, name)
+			.fail((xhr) => {
+				$('<div class="invalid-feedback">')
+					.text(xhr.responseJSON.message[0])
+					.insertAfter($renameProblemType.parent());
+
+				$renameProblemType.prev().focus();
+
+				$renameProblemType.prop('disabled', false);
+			})
+			.done(() => {
+				$renameProblemType
+					.text('Rename')
+					.removeClass('button-success')
+					.prop('disabled', false)
+					.parent()
+					.removeClass('renaming-problem-type');
+
+				expertiseTypeManager.loadExpertiseType($('.type-columns'), id);
+			});
 	});
 
 	$(document).on('click', '#delete-problem-type', function() {
 		if (!confirm('Are you sure you want to delete that Problem Type?')) return;
 
-		let id = $('.type-columns li.last-active').data('expertiseTypeId');
+		let id                 = $('.type-columns li.last-active').data('expertiseTypeId'),
+			$deleteProblemType = $('#delete-problem-type');
 
-		expertiseTypeManager.deleteExpertiseType(id);
+		$deleteProblemType.prop('disabled', true);
+
+		expertiseTypeManager.deleteExpertiseType(id)
+			.done(() => {
+				let $removedLi = $('li.last-active'),
+					$nextLi    = $removedLi.siblings('li').first();
+
+				if ($nextLi.length === 0) {
+					$nextLi = $removedLi.parent().prev().find('.active');
+				}
+
+				$removedLi.remove();
+
+				if ($nextLi.length === 0) {
+					let $typeColumns = $('.type-columns');
+
+					$typeColumns.empty();
+					expertiseTypeManager.loadChildrenExpertiseTypes($typeColumns);
+				} else {
+					$nextLi.click();
+				}
+
+				$deleteProblemType.prop('disabled', false);
+
+				let $actions       = $deleteProblemType.closest('.row'),
+					$createMessage = $actions.next(),
+					[$show, $hide] = expertiseTypeManager.expertiseTypes.length ? [$actions, $createMessage] : [$createMessage, $actions];
+
+				$show.show();
+				$hide.hide();
+			});
 	});
 });

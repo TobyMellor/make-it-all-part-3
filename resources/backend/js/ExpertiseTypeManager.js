@@ -218,19 +218,8 @@ export default class ExpertiseTypeManager {
 	 *
 	 * @param {DOM} $button the button the user clicked
 	 */
-	createExpertiseType($button) {
-		let $input             = $button.siblings('input'),
-			$invalidFeedback   = $button.siblings('.invalid-feedback'),
-			name               = $input.val(),
-			parentId           = $input.parent().prev().find('.active').data('expertiseTypeId') || null,
-			$createProblemType = $('#create-problem-type');
-
-		$button.add($createProblemType).prop('disabled', true);
-
-		// remove any previous validation errors
-		$invalidFeedback.remove();
-
-		$.ajax({
+	createExpertiseType(name, parentId) {
+		return $.ajax({
 			url: '/wp-json/make-it-all/v1/problem-type',
 			type: 'POST',
 			data: {
@@ -238,17 +227,7 @@ export default class ExpertiseTypeManager {
 				parent_id: parentId
 			}
 		})
-		.fail((xhr) => {
-			// insert only the first validation error (should only be one anyway)
-			$('<div class="invalid-feedback">')
-				.text(xhr.responseJSON.message[0])
-				.insertAfter($input);
-
-			$input.focus();
-			$button.add($createProblemType).prop('disabled', false);
-		})
 		.done((expertiseTypeId) => {
-
 			// keep this manager up to date
 			this.expertiseTypes.push({
 				id: expertiseTypeId,
@@ -258,88 +237,25 @@ export default class ExpertiseTypeManager {
 			});
 
 			if (parentId !== null) this.getExpertiseType(parentId).children.push(expertiseTypeId);
-
-			$input.remove();
-
-			let $newProblemType = $(`
-				<li class="no-children" data-expertise-type-id="${expertiseTypeId}">
-					${name}
-					<div class="specialist-counter">
-						<i class="fa fa-user-times"></i>
-					</div>
-				</li>
-			`);
-
-			$button
-				.add('#create-problem-type')
-				.prop('disabled', false)
-				.removeClass()
-				.addClass('button');
-
-			$button.text('Create problem type');
-			$('#create-problem-type').text('Create within');
-				
-			$newProblemType.insertBefore($button);
-			
-			// show new problem type
-			$newProblemType.click();
-
-			$createProblemType
-				.closest('.row')
-				.show()
-				.next()
-				.hide();
 		});
 	}
 
 	renameExpertiseType(id, name) {
-		let $renameProblemType = $('#rename-problem-type');
-
-		$renameProblemType.prop('disabled', true);
-
-		$renameProblemType
-			.parent()
-			.siblings('.invalid-feedback')
-			.remove();
-
-		$.ajax({
+		return $.ajax({
 			url: '/wp-json/make-it-all/v1/problem-type/' + id,
 			type: 'PUT',
 			data: {
 				name: name
 			}
 		})
-		.fail((xhr) => {
-			$('<div class="invalid-feedback">')
-				.text(xhr.responseJSON.message[0])
-				.insertAfter($renameProblemType.parent());
-
-			$renameProblemType.prev().focus();
-
-			$renameProblemType.prop('disabled', false);
-		})
 		.done(() => {
-
 			// keep this manager up to date
 			this.getExpertiseType(id).name = name;
-
-			$renameProblemType
-				.text('Rename')
-				.removeClass('button-success')
-				.prop('disabled', false)
-				.parent()
-				.removeClass('renaming-problem-type');
-
-			this.loadExpertiseType($('.type-columns'), id);
 		});
 	}
 
 	deleteExpertiseType(id) {
-		let $deleteProblemType = $('#delete-problem-type');
-
-		$deleteProblemType.prop('disabled', true);
-
-		$.ajax({
+		return $.ajax({
 			url: '/wp-json/make-it-all/v1/problem-type/' + id,
 			type: 'DELETE'
 		})
@@ -361,33 +277,6 @@ export default class ExpertiseTypeManager {
 					this.expertiseTypes.splice(i, 1); return;
 				}
 			});
-
-			let $removedLi = $('li.last-active'),
-				$nextLi    = $removedLi.siblings('li').first();
-
-			if ($nextLi.length === 0) {
-				$nextLi = $removedLi.parent().prev().find('.active');
-			}
-
-			$removedLi.remove();
-
-			if ($nextLi.length === 0) {
-				let $typeColumns = $('.type-columns');
-
-				$typeColumns.empty();
-				this.loadChildrenExpertiseTypes($typeColumns);
-			} else {
-				$nextLi.click();
-			}
-
-			$deleteProblemType.prop('disabled', false);
-
-			let $actions       = $deleteProblemType.closest('.row'),
-				$createMessage = $actions.next(),
-				[$show, $hide] = expertiseTypeManager.expertiseTypes.length ? [$actions, $createMessage] : [$createMessage, $actions];
-
-			$show.show();
-			$hide.hide();
 		});
 	}
 }
