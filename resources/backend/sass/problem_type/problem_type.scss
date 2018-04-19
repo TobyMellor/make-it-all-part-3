@@ -2,6 +2,8 @@
 
 .finder-window {
 	background-color: $white;
+	border: 1px solid $silver;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
 
 	.problem-type-picker-header {
 		background: $blue;
@@ -22,10 +24,13 @@
 	.recent-problems, .problem-type-picker {
 		border: 1px solid $grey-hover;
 		border-top: none;
-		border-left: none;
 
 		&:first-child {
-			border-left: 1px solid $grey-hover;
+			border-right: 1px solid $grey-hover;
+		}
+
+		&:last-child {
+			border-left: none;
 		}
 	}
 
