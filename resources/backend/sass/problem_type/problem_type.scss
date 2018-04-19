@@ -79,6 +79,12 @@
 			.type-column {
 				box-shadow: none;
 
+				li {
+					&, &.last-active {
+						cursor: grab !important;
+					}
+				}
+
 				input {
 					width: 100%;
 					margin: 0;
