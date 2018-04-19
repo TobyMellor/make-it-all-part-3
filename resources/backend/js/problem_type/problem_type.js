@@ -92,7 +92,7 @@ $(() => {
 	let staffManager         = window.staffManager         = new StaffManager(employees, 1, expertiseTypes, expertiseTypeStaff);
 	let expertiseTypeManager = window.expertiseTypeManager = new ExpertiseTypeManager(expertiseTypes, expertiseTypeStaff, staffManager);
 
-	if (expertiseTypeManager.length) expertiseTypeManager.loadExpertiseType($('.type-columns'), expertiseTypeManager.expertiseTypes[0].id);
+	if (expertiseTypeManager.expertiseTypes.length) expertiseTypeManager.loadExpertiseType($('.type-columns'), expertiseTypeManager.expertiseTypes[0].id);
 
 	// on clicking a problem type, load and display all children of this type
 	$(document).on('click', '.type-column li', function() {
