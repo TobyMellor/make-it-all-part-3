@@ -23,21 +23,26 @@ class TicketQuery extends Query {
 	}
 
 	/**
-	 * Get the tickets that are unresolved
+	 * Get the tickets for a staff member
 	 *
 	 * @return Array
 	 */
-	public function get_open_tickets() {
+	public function get_staff_tickets() {
 		return $this->get_results(
 			"
-				SELECT staff_id
-				FROM {$this->prefix}ticket_status
-				WHERE id IN (
+				SELECT
+					ticket_status.staff_id,
+					ticket_status.status_id,
+					ticket.assigned_to_specialist_id,
+					ticket.assigned_to_operator_id
+				FROM {$this->prefix}ticket_status AS ticket_status
+				LEFT JOIN {$this->prefix}ticket AS ticket
+					ON ticket.id = ticket_status.ticket_id
+				WHERE ticket_status.id IN (
 					SELECT MAX(id) AS id
 					FROM {$this->prefix}ticket_status
 					GROUP BY ticket_id
 				)
-				AND status_id <> 3
 				ORDER BY ticket_id
 			"
 		);

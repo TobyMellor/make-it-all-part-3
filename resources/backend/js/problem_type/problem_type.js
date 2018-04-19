@@ -90,12 +90,16 @@ ExpertiseTypeManager.prototype.getExpertiseTypeBreadcrumb = (function(expertiseT
 
 $(() => {
 	if (!window.employees || !window.expertiseTypes || !window.expertiseTypeStaff) return;
-	
+
 	let staffManager         = window.staffManager         = new StaffManager(employees, 1, expertiseTypes, expertiseTypeStaff);
 	let expertiseTypeManager = window.expertiseTypeManager = new ExpertiseTypeManager(expertiseTypes, expertiseTypeStaff, staffManager);
 
 	if (expertiseTypeManager.expertiseTypes.length) {
-		expertiseTypeManager.loadExpertiseType($('.type-columns'), expertiseTypeManager.expertiseTypes[0].id);
+		let id = expertiseTypeManager.expertiseTypes[0].id;
+
+		expertiseTypeManager.loadExpertiseType($('.type-columns'), id);
+		
+		updatePanelInfo(id)
 	} else {
 		$('.mia-panel-short .problem-type-actions > .row')
 			.hide()
@@ -105,9 +109,12 @@ $(() => {
 
 	// on clicking a problem type, load and display all children of this type
 	$(document).on('click', '.type-column li', function() {
+		let id = $(this).data('expertiseTypeId');
 
 		// show the children of the selected type in the main view
 		expertiseTypeManager.loadChildrenExpertiseTypes($(this).closest('.type-columns'), $(this));
+
+		updatePanelInfo(id);
 	});
 
 	$(document).on('click', '.type-column button:not(.button-success)', function() {
@@ -270,3 +277,36 @@ $(() => {
 			});
 	});
 });
+
+function updatePanelInfo(expertiseTypeId) {
+	let $specialistsTable = $('#problem-specialists'),
+		specialists       = staffManager.getSpecialistsOfSpecialism(expertiseTypeId);
+
+	$specialistsTable.empty();
+
+	specialists.sort((a, b) => a.open_tickets > b.open_tickets);
+
+	specialists.forEach((specialist, i) => {
+		$specialistsTable.append(`
+			<tr>
+				<td>
+					<strong>${specialist.name}</strong>
+					<div class="row-actions visible">
+						<span class="edit">
+							<a href="javascript:void(0);">View</a>
+						</span>
+					</div>
+				</td>
+				<td>${specialist.tickets}</td>
+				<td>${specialist.open_tickets}</td>
+				${i === 0 ? `
+					<td class="contains-filter">
+						<span class="filter">
+							Available
+						</span>
+					</td>
+				` : `<td></td>`}
+			</tr>
+		`);
+	});
+}
