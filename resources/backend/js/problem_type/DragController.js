@@ -1,10 +1,10 @@
 export default class DragController {
 	constructor() {
-		this.runwaySelector = '.type-column'; // where can an element be dropped without deleting it?
-		this.planeSelector  = this.runwaySelector + ' li';
+		let dragController = this,
+			$dragging      = null;
 
-		let $dragging      = null,
-			dragController = this;
+		this.runwaySelector = '.type-column'; // where can an element be dropped without deleting it?
+		this.planeSelector  = this.runwaySelector + ' li'; // what are the draggable elements?
 
 		$(function() {
 			$(document)
@@ -18,28 +18,39 @@ export default class DragController {
 					if (e.buttons === 1) {
 						if (!$dragging.hasClass('dragging')) $(document).trigger('dragstart');
 
-						let posX = e.pageX - document.getElementById('adminmenuwrap').offsetWidth - 20,
-							posY = e.pageY - document.getElementById('wpadminbar').offsetHeight - 15;
+						let posX = e.pageX - document.getElementById('adminmenuwrap').offsetWidth - 25,
+							posY = e.pageY - document.getElementById('wpadminbar').offsetHeight - 5;
 
 						$dragging
 							.css({
 								left: posX,
-								top: posY
+								top:  posY
 							});
 
-						let $elementDraggedInto = dragController.getElementDraggedInto(posX, posY);
-
-						if ($elementDraggedInto) {
-							$dragging.removeClass('danger');
-						} else {
-							$dragging.addClass('danger')
-						}
+						dragController.getElementDraggedInto(posX, posY) ? $dragging.removeClass('danger') : $dragging.addClass('danger');
 					}
 				})
 				.on('mouseup', this.planeSelector, function() {
-					$dragging.removeClass('dragging');
-					$dragging.css({top: 'initial', left: 'initial'});
-					$dragging = null;
+					if ($dragging !== null) {
+						let $elementDraggedInto = dragController.getElementDraggedInto(
+							parseInt($dragging.css('left')),
+							parseInt($dragging.css('top'))
+						);
+
+						$(document).trigger('dragstop', [
+							$dragging,
+							$elementDraggedInto
+						]);
+
+						$dragging
+							.removeClass('dragging')
+							.css({
+								top:  'initial',
+								left: 'initial'
+							});
+
+						$dragging = null;
+					}
 				});
 		});
 	}
@@ -64,18 +75,18 @@ export default class DragController {
 			bottom = top + $element.height(),
 			right  = left + $element.width();
 
-		console.log('--------');
-		console.log('TOP: ' + top);
-		console.log('BOTTOM: ' + bottom);
-		console.log('LEFT: ' + left);
-		console.log('RIGHT: ' + right);
-		console.log('POSX: ' + posX);
-		console.log('POSY: ' + posY);
+		// console.log('--------');
+		// console.log('TOP: ' + top);
+		// console.log('BOTTOM: ' + bottom);
+		// console.log('LEFT: ' + left);
+		// console.log('RIGHT: ' + right);
+		// console.log('POSX: ' + posX);
+		// console.log('POSY: ' + posY);
 
-		console.log(posX >= left);
-		console.log(posX <= right);
-		console.log(posY >= top);
-		console.log(posY <= bottom);
+		// console.log(posX >= left);
+		// console.log(posX <= right);
+		// console.log(posY >= top);
+		// console.log(posY <= bottom);
 
 		return posX >= left && posX <= right && posY >= top && posY <= bottom;
 	}

@@ -10,8 +10,28 @@ $(() => {
 	let staffManager         = window.staffManager         = new StaffManager(employees, 1, expertiseTypes, expertiseTypeStaff);
 	let expertiseTypeManager = window.expertiseTypeManager = new ExpertiseTypeManager(expertiseTypes, expertiseTypeStaff, staffManager);
 
-	let dragController = window.dragController = new DragController();
 	init();
+
+
+	let dragController = window.dragController = new DragController();
+
+	$(function() {
+		$(document).on('dragstop', function(e, $dragging, $elementDraggedInto) {
+			if (!$elementDraggedInto) return;
+
+			let $parent  = $elementDraggedInto.parent().prev().find('.active'),
+				parentId = $parent.data('expertiseTypeId') || null,
+				id       = $dragging.data('expertiseTypeId');
+
+			$dragging
+				.hide()
+				.insertBefore(
+					$elementDraggedInto.find('button')
+				);
+
+			expertiseTypeManager.updateExpertiseTypeParent(id, parentId);
+		});
+	});
 
 	// on clicking a problem type, load and display all children of this type
 	$(document).on('click', '.type-column li', function() {

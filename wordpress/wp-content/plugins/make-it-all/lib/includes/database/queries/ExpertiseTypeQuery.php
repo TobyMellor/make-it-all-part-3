@@ -84,8 +84,6 @@ class ExpertiseTypeQuery extends Query {
 	 * @return Boolean true if pass, dies (and returns false) on fail
 	 */
 	protected function validate($columns) {
-		if (!isset($columns['parent_id'])) $columns['parent_id'] = null;
-
 		$validator = v::key('name', v::alnum()->length(2, 256))
 			->key('parent_id', v::optional(v::intVal()));
 
