@@ -28,14 +28,42 @@ class ProgramQuery extends Query {
 	 * @return array
 	 */
 	public function get_software($id) {
+		if($id){
+			return $this->get_results(
+				"
+					SELECT *
+					FROM {$this->prefix}{$this->table}
+					WHERE id = $id
+				"
+			);
+		} else {
+			return $this->get_results(
+				"
+					SELECT *
+					FROM {$this->prefix}{$this->table}
+					
+				"
+			);			
+			
+		}
+	}
+
+	/**
+	 * Retuns all operating systems
+	 *
+	 * @return array
+	 */
+	public function get_opsystems(){
 		return $this->get_results(
-			"
-				SELECT *
-				FROM {$this->prefix}{$this->table}
-				WHERE id = $id
-			"
+		"
+			SELECT *
+			FROM {$this->prefix}{$this->table}
+			WHERE operating_system = '1'
+		"
 		);
 	}
+	
+	
 
 	protected function validate($columns) {
 		return true;

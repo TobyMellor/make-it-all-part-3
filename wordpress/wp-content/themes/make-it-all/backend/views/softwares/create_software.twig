@@ -1,0 +1,61 @@
+{% extends "backend/views/layouts/page.twig" %}
+{% block main %}
+<div class="row">
+	<div class="col-xs-12 col-sm-12">
+		<form action="admin.php?page=software_create" method="POST">
+			<div class="mia-panel software-panel">
+		
+					<div class="mia-panel-heading">
+						<h2>Software Information</h2>
+						<p>Enter some information about one or more software items</p>
+					</div>
+					
+					<div class="mia-panel-body">
+						<div class="accordions">
+							<div class="accordion-handle row">
+								<div class="accordion-icon col-xs-3">
+									<div class="number-circle">1</div>
+								</div>
+								<div class="accordion-title col-xs-9">
+									New Software Item
+								</div>
+								<div class="accordion-actions">
+									<i class="fa fa-chevron-up"></i>
+								</div>
+							</div>
+							<div class="accordion-body" data-accordion-id="1">
+							<!-- Accordian Fields Here -->
+								
+								<div class="row mia-field-group">
+									<div class="col-xs-12 col-sm-3">
+										<p class="label">
+											Name <span class="required">*</span>
+										</p>
+
+										<p class="details">
+											Name of Software e.g Windows 7, Notepad etc.
+										</p>
+									</div>
+                                    <div class="col-sm-9 col-xs-12">
+                                    	<input name="software[1][name]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter Software Name" >	
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+			
+			</div>
+		</form>
+	</div>
+</div>
+
+
+
+{% endblock %}
+
+{% block scripts %}
+	<script>
+		var software = {{software}},
+			os		 = {{operating_systems}}
+	</script>
+{% endblock %}

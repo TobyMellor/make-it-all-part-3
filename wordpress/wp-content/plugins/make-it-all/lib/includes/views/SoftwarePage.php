@@ -36,11 +36,27 @@ class SoftwarePage extends Page {
 		
 	}
 	
-	private function get_software($context, $id) {
-		$softwareQuery = new ProgramQuery();
+	public function create_pane(){
+		parent::create_pane();
+		
+		$this->render_pane($this->get_required_data('Create Software'));
+	}
+	
+	private function get_required_data($pageName) {
+		$programQuery = new ProgramQuery();
+		$context = $this->get_context($pageName);
 
-		$context['software_object'] = $softwareQuery->get_software($id)[0];
-		$context['software'] = json_encode($context['software_object']);
+		$context['software'] 			= json_encode($programQuery->get_software(null));
+		$context['operating_systems']   = json_encode($programQuery->get_opsystems());
+
+		return $context;
+	}
+	
+	private function get_software($context, $id) {
+		$programQuery = new ProgramQuery();
+
+		$context['software_object'] = $programQuery->get_software($id)[0];
+		$context['software'] 		= json_encode($context['software_object']);
 
 		return $context;
 	}
