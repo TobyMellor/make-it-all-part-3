@@ -129,21 +129,10 @@ export default class NewExpertiseTypeManager extends ExpertiseTypeManager {
 	}
 
 	/**
-	 * Handles the "Submit new Problem Type" button click
-	 *     - Disables the button
-	 *     - Removes any invalid feedback from validation issues
-	 *     - Sends an AJAX request to store the Problem
-	 *     - On Fail:
-	 *           - Show the validation error
-	 *           - Enables the button again
-	 *     - On Success:
-	 *           - Saves the expertiseType locally
-	 *           - Removes the input field
-	 *           - Adds the new problem type li element
-	 *           - Returns the button to normal
-	 *           - Loads the new problem type
+	 * Stores a new Expertise Type in the database
 	 *
-	 * @param {DOM} $button the button the user clicked
+	 * @param {String} name of the problem
+	 * @param {Integer} parentId ID of the parent expertise type
 	 */
 	createExpertiseType(name, parentId) {
 		return $.ajax({
@@ -167,6 +156,12 @@ export default class NewExpertiseTypeManager extends ExpertiseTypeManager {
 		});
 	}
 
+	/**
+	 * Renames an Expertise Type in the database
+	 *
+	 * @param {Integer} id of the Expertise Type to rename
+	 * @param {String} name the new name
+	 */
 	renameExpertiseType(id, name) {
 		let expertiseType = this.getExpertiseType(id);
 
@@ -184,6 +179,12 @@ export default class NewExpertiseTypeManager extends ExpertiseTypeManager {
 		});
 	}
 
+	/**
+	 * Updates an Expertise Type parent in the database
+	 *
+	 * @param {Integer} id of the Expertise Type to update
+	 * @param {Integer} id new id of the parent Expertise Type
+	 */
 	updateExpertiseTypeParent(id, parentId) {
 		let expertiseType = this.getExpertiseType(id);
 
@@ -209,6 +210,11 @@ export default class NewExpertiseTypeManager extends ExpertiseTypeManager {
 		});
 	}
 
+	/**
+	 * Deletes an Expertise Type from the database
+	 *
+	 * @param {Integer} id of the Expertise Type to delete
+	 */
 	deleteExpertiseType(id) {
 		return $.ajax({
 			url: '/wp-json/make-it-all/v1/problem-type/' + id,
@@ -225,6 +231,11 @@ export default class NewExpertiseTypeManager extends ExpertiseTypeManager {
 		});
 	}
 
+	/**
+	 * Locally removes an Expertise Type completely from this.expertiseTypes
+	 *
+	 * @param {Integer} childId of the Expertise Type to remove locally
+	 */
 	removeParentReferences(childId) {
 		let parentId = this.getExpertiseType(childId).parent_id;
 

@@ -17,30 +17,15 @@ $(() => {
 
 	$(function() {
 		$(document).on('dragstop', function(e, $dragging, $elementDraggedInto) {
-			if (!$elementDraggedInto) return;
+			if (!$elementDraggedInto) {
+				$dragging.show(); return;
+			}
 
 			let $parent  = $elementDraggedInto.prev().find('.active'),
 				parentId = $parent.data('expertiseTypeId') || null,
 				id       = $dragging.data('expertiseTypeId');
 
-			let $insertBefore = (function() {
-				let lastId   = 0,
-					$element;
-
-				$elementDraggedInto.find('li').each((i, element) => {
-					$element = $(element);
-
-					if ($element.data('expertiseTypeId') < lastId) return false;
-				});
-
-				return $element || null
-			})();
-
-			if ($insertBefore) {
-				$dragging.insertBefore();
-			} else {
-				$elementDraggedInto.prepend($dragging.detach());
-			}
+			$elementDraggedInto.prepend($dragging.detach());
 			
 			expertiseTypeManager.updateExpertiseTypeParent(id, parentId)
 				.done(() => expertiseTypeManager.loadExpertiseType($('.type-columns'), id));
