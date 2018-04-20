@@ -3,7 +3,7 @@ import HardwareManager from "../HardwareManager";
 $(() => {
 	let hardwaremanager = new HardwareManager(devices, types, makes);
 
-	$(document).ready(function() {
+	$(document).ready(function () {
 		// add button listeners for new type/make.
 		addButtonListeners(this);
 		addTypeSelectActions($('.hardware-type-select'));
@@ -11,17 +11,17 @@ $(() => {
 	});
 
 	// make the chevron handle go up/down when an accordion is expanded/minimized
-	$(document).on('click', '.accordion-handle', function() {
+	$(document).on('click', '.accordion-handle', function () {
 		$('.accordions .accordion-handle .fa:not(.fa-trash-o)').removeClass().addClass('fa fa-chevron-up');
 		$('.accordions .accordion-handle.ui-state-active .fa:not(.fa-trash-o)').removeClass().addClass('fa fa-chevron-down');
 	});
 
-	$(document).on('click', '.accordion-handle .accordion-actions .fa-trash-o', function() {
+	$(document).on('click', '.accordion-handle .accordion-actions .fa-trash-o', function () {
 		if (!confirm('Are you sure you want to delete this hardware device?')) return;
 
 		let $accordionHandle = $(this).closest('.accordion-handle');
 
-		$accordionHandle.add($accordionHandle.next()).fadeOut(250, function() {
+		$accordionHandle.add($accordionHandle.next()).fadeOut(250, function () {
 			$(this).remove();
 
 			// if no accordions are expanded, expand the first
@@ -29,15 +29,12 @@ $(() => {
 		});
 	});
 
-	$('#add-additional-hardware').click(function() {
-		// deinit all TinyMCE's before cloning
-		tinyMCE.EditorManager.editors.forEach((editor) => {
-			tinyMCE.get(editor.id).remove();
-		});
+	$('#add-additional-hardware').click(function () {
 
-		let $accordions    = $(this).closest('.mia-panel').find('.accordions'),
+
+		let $accordions = $(this).closest('.mia-panel').find('.accordions'),
 			newAccordionId = Number($('.accordions .accordion-handle:nth-last-child(2) .number-circle').text()) + 1,
-			$newAccordion  = cloneAccordion($accordions, newAccordionId);
+			$newAccordion = cloneAccordion($accordions, newAccordionId);
 
 		clearAccordion($newAccordion, newAccordionId);
 
@@ -45,18 +42,17 @@ $(() => {
 		$newAccordion.find('input[type=radio]').first().click();
 
 		// reinitialize after appending new accordion
-		initTinyMCE();
+
 		$accordions.accordion('refresh');
 		$newAccordion.click(); // expand new accordion
 	});
 
-	initTinyMCE();
 	initAccordions();
 	clearAccordion($('.mia-panel-body')); // clear all fields
 });
 
 function addTypeSelectActions($select) {
-	$($select).on('change', function() {
+	$($select).on('change', function () {
 		if (this.value !== "new") {
 			hideTypeForm(this);
 		}
@@ -64,7 +60,7 @@ function addTypeSelectActions($select) {
 }
 
 function addMakeSelectActions($select) {
-	$($select).on('change', function() {
+	$($select).on('change', function () {
 		if (this.value !== "new") {
 			hideMakeForm(this);
 		}
@@ -83,7 +79,7 @@ function hideTypeForm(select) {
 function hideMakeForm(select) {
 	// hides closes select form
 	let makePanel = $(select).closest('.accordion-body').find('#make-information');
-	
+
 	if (makePanel.hasClass('expanded')) {
 		makePanel.removeClass('expanded');
 	}
@@ -94,8 +90,8 @@ function addButtonListeners($accordian) {
 		makes = $($accordian).find('.add-make');
 
 	// expand type section on button press.
-	types.on('click', function() {
-		let typePanel  = $(this).closest('.accordion-body').find('#type-information'),
+	types.on('click', function () {
+		let typePanel = $(this).closest('.accordion-body').find('#type-information'),
 			typeSelect = $(this).closest('.accordion-body').find('.hardware-type-select');
 
 		if (typePanel.hasClass('expanded')) {
@@ -111,8 +107,8 @@ function addButtonListeners($accordian) {
 	});
 
 	// expand make section on button press.
-	makes.on('click', function() {
-		let makePanel  = $(this).closest('.accordion-body').find('#make-information'),
+	makes.on('click', function () {
+		let makePanel = $(this).closest('.accordion-body').find('#make-information'),
 			makeSelect = $(this).closest('.accordion-body').find('.hardware-make-select');
 
 		if (makePanel.hasClass('expanded')) {
@@ -130,7 +126,7 @@ function addButtonListeners($accordian) {
 
 function cloneAccordion($accordions, newAccordionId) {
 	let $existingAccordion = $accordions.find('.accordion-handle:first-child, .accordion-body:nth-child(2)').wrapAll('<div>'),
-		$newAccordion      = $existingAccordion.clone().unwrap();
+		$newAccordion = $existingAccordion.clone().unwrap();
 
 	$existingAccordion.unwrap();
 
@@ -160,13 +156,6 @@ function clearAccordion($accordion, newAccordionId, affectedItemsManager = null,
 	// set the accordion number and the new ticket text in the accordion handle
 	$accordion.find('.accordion-icon .number-circle').text(newAccordionId);
 	$accordion.find('.accordion-title').text('New Hardware Item');
-}
-
-function initTinyMCE() {
-	tinyMCE.init({
-		selector: 'textarea',
-		branding: false
-	});
 }
 
 function initAccordions() {
