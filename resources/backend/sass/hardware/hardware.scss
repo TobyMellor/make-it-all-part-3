@@ -1,33 +1,36 @@
 @import "../main.scss";
 
 .hardware-panel .col-xs-9 {
-    max-width: 100%;
-    flex-basis: 100%;
+	max-width: 100%;
+	flex-basis: 100%;
 
 }
+
 .hardware-panel .col-sm-9 {
 
-      align-items: center;
+	align-items: center;
 
 }
 
-#add-additional-type, #add-additional-make {
+#add-additional-type,
+#add-additional-make {
 
-    margin: 5px;
+	margin: 5px;
 
 }
 
 
-#type-information, #make-information {
-    visibility: hidden;
-    height: 0;
+#type-information,
+#make-information {
+	visibility: hidden;
+	height: 0;
 
-    &.expanded {
-        visibility: visible;
-        height: auto;
-    }
+	&.expanded {
+		visibility: visible;
+		height: auto;
+	}
 
-    .mia-panel-heading {
-        min-width: 210px;
-    }
+	.mia-panel-heading {
+		min-width: 210px;
+	}
 }
