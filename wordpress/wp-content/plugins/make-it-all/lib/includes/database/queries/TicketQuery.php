@@ -22,6 +22,51 @@ class TicketQuery extends Query {
 		);
 	}
 
+	public function get_tickets_table() {
+		return $this->get_results(
+			"
+				SELECT
+					ticket.id AS id,
+					title,
+					assigned_to_operator_id,
+					status.name AS status,
+					caller.name AS last_caller,
+					ticket.created_at AS created_at,
+					ticket.updated_at AS updated_at
+				FROM {$this->prefix}{$this->table} AS ticket
+				JOIN (
+					SELECT
+						ticket_id, status_id
+					FROM {$this->prefix}ticket_status
+					WHERE id IN (
+						SELECT MAX(id) AS id
+						FROM {$this->prefix}ticket_status
+						GROUP BY ticket_id
+					)
+				) AS ticket_status
+					ON ticket_status.ticket_id = ticket.id
+				JOIN {$this->prefix}status AS status
+					ON status.id = ticket_status.status_id
+				JOIN (
+					SELECT
+						ticket_id, call_id
+					FROM {$this->prefix}call_ticket
+					WHERE id IN (
+						SELECT MIN(id) AS id
+						FROM {$this->prefix}call_ticket
+						GROUP BY ticket_id
+					)
+				) AS call_ticket
+					ON call_ticket.ticket_id = ticket.id
+				JOIN {$this->prefix}call AS _call
+					ON _call.id = call_ticket.call_id
+				JOIN {$this->prefix}staff AS caller
+					ON caller.id = _call.caller_id
+				ORDER BY UNIX_TIMESTAMP(ticket.updated_at) ASC
+			"
+		);
+	}
+
 	/**
 	 * Get the tickets for a staff member
 	 *

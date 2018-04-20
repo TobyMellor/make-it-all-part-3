@@ -8,7 +8,8 @@
         }
     ],
     "require": {
-        "respect/validation": "^1.1"
+        "respect/validation": "^1.1",
+        "nesbot/carbon": "^1.26"
     },
     "autoload": {
     	"psr-4": {"MakeItAll\\": "lib/"}
