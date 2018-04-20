@@ -1,12 +1,20 @@
 @import "../main.scss";
 
-.col-xs-9 {
+.hardware-panel .col-xs-9 {
     max-width: 100%;
     flex-basis: 100%;
+
+}
+.hardware-panel .col-sm-9 {
+
+      align-items: center;
+
 }
 
 #add-additional-type, #add-additional-make {
-    margin: 10px;
+
+    margin: 5px;
+
 }
 
 
@@ -22,8 +30,4 @@
     .mia-panel-heading {
         min-width: 210px;
     }
-}
-
-.has-button{
-    align-items: center;
 }
