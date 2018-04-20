@@ -81,11 +81,11 @@ export default class DragController {
 
 						// position back to normal
 						$dragging
-							.removeClass('dragging')
 							.css({
 								top:  'initial',
 								left: 'initial'
-							});
+							})
+							.removeClass('dragging');
 
 						$dragging = null;
 					}
@@ -112,19 +112,6 @@ export default class DragController {
 			left   = $element[0].offsetLeft,
 			bottom = top + $element.height(),
 			right  = left + $element.width();
-
-		// console.log('--------');
-		// console.log('TOP: ' + top);
-		// console.log('BOTTOM: ' + bottom);
-		// console.log('LEFT: ' + left);
-		// console.log('RIGHT: ' + right);
-		// console.log('POSX: ' + posX);
-		// console.log('POSY: ' + posY);
-
-		// console.log(posX >= left);
-		// console.log(posX <= right);
-		// console.log(posY >= top);
-		// console.log(posY <= bottom);
 
 		return posX >= left && posX <= right && posY >= top && posY <= bottom;
 	}

@@ -17,9 +17,9 @@ $(() => {
 
 	$(function() {
 		$(document).on('dragstop', function(e, $dragging, $elementDraggedInto) {
-			if (!$elementDraggedInto) {
-				$dragging.show(); return;
-			}
+			$dragging.show();
+
+			if (!$elementDraggedInto) return;
 
 			let $parent  = $elementDraggedInto.prev().find('.active'),
 				parentId = $parent.data('expertiseTypeId') || null,
