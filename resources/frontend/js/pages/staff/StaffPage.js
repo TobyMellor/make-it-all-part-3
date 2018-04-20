@@ -48,10 +48,11 @@ export default class StaffPage extends DynamicPage {
 		// Get assigned ticket counts asynchronously
 		(async(ids) => {
 			// Get number of assigned tickets and fill column
-			let $rows = $(this.tableSelector).find("tbody").children("tr");
+			let $rows   = $(this.tableSelector).find("tbody").children("tr");
 			let tickets = this.ticketManager.getTicketsAssignedToStaffIds(ids);
+
 			$rows.each((i, el) => {
-				el.children[ticketsColumnIndex].textContent = tickets[i+1] ? (tickets[i+1].length || 0) : 0;
+				el.children[ticketsColumnIndex].textContent = tickets[i + 1] ? (tickets[i + 1].length || 0) : 0;
 			});
 		})(staffForTickets);
 	}
@@ -106,7 +107,11 @@ export default class StaffPage extends DynamicPage {
 				case "tickets.assigned":
 					el.textContent = "…";
 					(async(el) => {
-						el.textContent = this.ticketManager.getTicketsAssignedToStaffId(this.employee.id).length;
+						let tickets = this.ticketManager.getTicketsAssignedToStaffId(this.employee.id);
+
+						el.textContent = tickets.length;
+
+						$(el).parent().attr("href", "/tickets" + (tickets.length > 0 ? '#' + tickets[0].id : ''));
 					})(el);
 					break;
 
