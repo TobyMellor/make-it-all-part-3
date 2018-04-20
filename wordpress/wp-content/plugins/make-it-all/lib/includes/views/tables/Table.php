@@ -90,11 +90,10 @@ abstract class Table extends WP_List_Table {
 	 *
 	 * @return Mixed
 	 */
-	private function sort_data($a, $b)
-	{
+	private function sort_data($a, $b) {
 		// Set defaults
-		$orderBy = 'updated_at';
-		$order   = 'asc';
+		$orderBy = 'updated_at_real';
+		$order   = 'desc';
 
 		// If orderby is set, use this as the sort column
 		if (!empty($_GET['orderby'])) {

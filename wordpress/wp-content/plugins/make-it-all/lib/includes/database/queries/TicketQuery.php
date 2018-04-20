@@ -62,7 +62,7 @@ class TicketQuery extends Query {
 					ON _call.id = call_ticket.call_id
 				JOIN {$this->prefix}staff AS caller
 					ON caller.id = _call.caller_id
-				ORDER BY UNIX_TIMESTAMP(ticket.updated_at) ASC
+				ORDER BY UNIX_TIMESTAMP(ticket.updated_at) DESC
 			"
 		);
 	}

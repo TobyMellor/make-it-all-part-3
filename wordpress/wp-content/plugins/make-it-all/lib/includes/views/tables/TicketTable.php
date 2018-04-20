@@ -6,7 +6,7 @@ use MakeItAll\Includes\Views\Tables\Table;
 use MakeItAll\Includes\Database\Queries\TicketQuery;
 
 class TicketTable extends Table {
-	protected $table = 'ticket';
+	protected $table   = 'ticket';
 	protected $primary = 'title';
 
 	/**
