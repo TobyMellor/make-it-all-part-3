@@ -54,7 +54,8 @@ $(() => {
 function addTypeSelectActions($select) {
 	$($select).on('change', function () {
 		if (this.value !== "new") {
-			hideTypeForm(this);
+			let typePanel = $(this).closest('.accordion-body').find('#type-information')
+			hideForm(typePanel, this);
 		}
 	});
 }
@@ -62,27 +63,35 @@ function addTypeSelectActions($select) {
 function addMakeSelectActions($select) {
 	$($select).on('change', function () {
 		if (this.value !== "new") {
-			hideMakeForm(this);
+			let makePanel = $(this).closest('.accordion-body').find('#make-information')
+			hideForm(makePanel, this);
 		}
 	});
 }
 
-function hideTypeForm(select) {
-	// get closest type form
-	let typePanel = $(select).closest('.accordion-body').find('#type-information');
 
-	if (typePanel.hasClass('expanded')) {
-		typePanel.removeClass('expanded');
+
+function hideForm(form, selector){
+	if(form.hasClass('expanded')){
+		//If form is expanded, shrink it.
+		form.removeClass('expanded');
+		var newType = form.find('input').val();
+		if(newType !== ""){
+			//Get selector and add append
+			selector.append($('<option>', {
+				value: newType,
+				text: newType
+			}));
+			selector.val(newType);
+			
+		}
+		
+		
+		//If form input has text in it, add text to selector, select it and shrink
+		return true;
 	}
-}
-
-function hideMakeForm(select) {
-	// hides closes select form
-	let makePanel = $(select).closest('.accordion-body').find('#make-information');
-
-	if (makePanel.hasClass('expanded')) {
-		makePanel.removeClass('expanded');
-	}
+	return false;
+	
 }
 
 function addButtonListeners($accordian) {
@@ -93,34 +102,30 @@ function addButtonListeners($accordian) {
 	types.on('click', function () {
 		let typePanel = $(this).closest('.accordion-body').find('#type-information'),
 			typeSelect = $(this).closest('.accordion-body').find('.hardware-type-select');
-
-		if (typePanel.hasClass('expanded')) {
-			typePanel.removeClass('expanded');
-
-			// reset select too
-			typeSelect.val($("#target option:first").val());
+		
+		if(hideForm(typePanel, typeSelect)){
+			
 		} else {
 			typePanel.addClass('expanded');
-
 			$(this).closest('.accordion-body').find('.hardware-type-select').val('new');
-		}
+			
+		}	
+		
 	});
 
 	// expand make section on button press.
 	makes.on('click', function () {
 		let makePanel = $(this).closest('.accordion-body').find('#make-information'),
 			makeSelect = $(this).closest('.accordion-body').find('.hardware-make-select');
-
-		if (makePanel.hasClass('expanded')) {
-			makePanel.removeClass('expanded');
-
-			//Should also reset the select.
-			makeSelect.val($("#target option:first").val());
+		
+		if(hideForm(makePanel, makeSelect)){
+			
 		} else {
 			makePanel.addClass('expanded');
-
 			$(this).closest('.accordion-body').find('.hardware-make-select').val('new');
-		}
+			
+		}	
+
 	});
 }
 

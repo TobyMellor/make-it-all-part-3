@@ -32,44 +32,69 @@ $(() => {
 
 	});
 
-	function addButtonListeners($accordian, $type, $make) {
+	function hideForm(form, selector) {
+		if (form.hasClass('expanded')) {
+			//If form is expanded, shrink it.
+			form.removeClass('expanded');
+			var newType = form.find('input').val();
+			if (newType !== "") {
+				//Get selector and add append
+				selector.append($('<option>', {
+					value: newType,
+					text: newType
+				}));
+				selector.val(newType);
+
+			}
+
+
+			//If form input has text in it, add text to selector, select it and shrink
+			return true;
+		}
+		return false;
+
+	}
+
+	function addButtonListeners($accordian) {
 		let types = $($accordian).find('.add-type'),
 			makes = $($accordian).find('.add-make');
 
 		// expand type section on button press.
 		types.on('click', function () {
-			let typePanel = $(this).closest('.accordion-body').find('#type-information');
+			let typePanel = $(this).closest('.accordion-body').find('#type-information'),
+				typeSelect = $(this).closest('.accordion-body').find('.hardware-type-select');
 
-			if (typePanel.hasClass('expanded')) {
-				typePanel.removeClass('expanded');
+			if (hideForm(typePanel, typeSelect)) {
 
-				$('.hardware-type-select option[value="' + $type + '"]').prop('selected', true);
 			} else {
 				typePanel.addClass('expanded');
-
 				$(this).closest('.accordion-body').find('.hardware-type-select').val('new');
+
 			}
+
 		});
 
 		// expand make section on button press.
 		makes.on('click', function () {
-			let makePanel = $(this).closest('.accordion-body').find('#make-information');
-			if (makePanel.hasClass('expanded')) {
-				makePanel.removeClass('expanded');
+			let makePanel = $(this).closest('.accordion-body').find('#make-information'),
+				makeSelect = $(this).closest('.accordion-body').find('.hardware-make-select');
 
-				$('.hardware-make-select option[value="' + $make + '"]').prop('selected', true);
+			if (hideForm(makePanel, makeSelect)) {
+
 			} else {
 				makePanel.addClass('expanded');
-
 				$(this).closest('.accordion-body').find('.hardware-make-select').val('new');
+
 			}
+
 		});
 	}
 
 	function addTypeSelectActions($select) {
 		$($select).on('change', function () {
 			if (this.value !== "new") {
-				hideTypeForm(this);
+				let typePanel = $(this).closest('.accordion-body').find('#type-information')
+				hideForm(typePanel, this);
 			}
 		});
 	}
@@ -77,7 +102,8 @@ $(() => {
 	function addMakeSelectActions($select) {
 		$($select).on('change', function () {
 			if (this.value !== "new") {
-				hideMakeForm(this);
+				let makePanel = $(this).closest('.accordion-body').find('#make-information')
+				hideForm(makePanel, this);
 			}
 		});
 	}

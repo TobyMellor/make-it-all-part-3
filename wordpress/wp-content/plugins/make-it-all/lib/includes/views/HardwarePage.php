@@ -64,8 +64,18 @@ class HardwarePage extends Page {
 
 		// insert type, make, sn, date
 		foreach ($_POST['hardware'] as $hardware) {
-			$type = $hardware['type'] || $hardware['newType'];
-			$make = $hardware['make'] || $hardware['newMake'];
+			
+			
+			$type = $hardware['type'];
+			$make = $hardware['make'];
+			if($hardware['type'] === ""){
+				$type = $hardware['newType'];	
+			}
+			if($hardaware['make'] === ""){
+				$make = $hardware['newMake'];
+			}
+			
+			
 
 			$deviceQuery->mia_insert([
 				'type'      => $type,
@@ -101,9 +111,14 @@ class HardwarePage extends Page {
 		$hardware   = $_POST['hardware'];
 		$hardwareId = $hardware['id'];
 
-		// deal with new type/make
-		$type = $hardware['type'] || $hardware['newType'];
-		$make = $hardware['make'] || $hardware['newMake'];
+		$type = $hardware['type'];
+		$make = $hardware['make'];
+		if($hardware['type'] === ""){
+			$type = $hardware['newType'];	
+		}
+		if($hardaware['make'] === ""){
+			$make = $hardware['newMake'];
+		}
 
 		$deviceQuery = new DeviceQuery();
 
