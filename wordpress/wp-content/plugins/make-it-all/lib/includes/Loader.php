@@ -100,7 +100,8 @@ class Loader {
 		$pages = [
 			'TicketPage',
 			'HardwarePage',
-			'ProblemTypePage'
+			'ProblemTypePage',
+			'SoftwarePage'
 		];
 
 		foreach ($pages as $pageName) {

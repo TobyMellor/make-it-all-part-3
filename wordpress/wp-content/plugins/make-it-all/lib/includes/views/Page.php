@@ -25,8 +25,19 @@ abstract class Page {
 		$name = $this->name;
 
 		$parentSlug = $this->get_string_as_slug($this->name);
+		
+		//Fast fix for Hardwares/Softwares -> Hardware/Software
+		if($name == "Hardware" || $name == "Software"){
+			
+			add_menu_page('View ' . $name, $name, 'read_make_it_all', $parentSlug, [$this, 'read_pane'], $this->icon, $this->position);	
+			
+		} else {
+			
+			add_menu_page('View ' . $name, $name . 's', 'read_make_it_all', $parentSlug, [$this, 'read_pane'], $this->icon, $this->position);	
+			
+		}
+		
 
-		add_menu_page('View ' . $name, ($name == "Hardware" ? $name : $name . 's'), 'read_make_it_all', $parentSlug, [$this, 'read_pane'], $this->icon, $this->position);
 
 		// Create submenu for each page in Pages, e.g. Create [Ticket], Update [Ticket]
 		foreach ($this->pages as $pageName) {

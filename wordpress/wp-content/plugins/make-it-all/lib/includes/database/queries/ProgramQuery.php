@@ -21,6 +21,21 @@ class ProgramQuery extends Query {
 			"
 		);
 	}
+	
+	/**
+	 * Retuns software with given ID
+	 *
+	 * @return array
+	 */
+	public function get_software($id) {
+		return $this->get_results(
+			"
+				SELECT *
+				FROM {$this->prefix}{$this->table}
+				WHERE id = $id
+			"
+		);
+	}
 
 	protected function validate($columns) {
 		return true;
