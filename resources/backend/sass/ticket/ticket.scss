@@ -14,7 +14,7 @@
 			flex-basis: 0px;
 
 			&.expanded {
-				flex-basis: 30%;
+				flex-basis: 40%;
 			}
 
 			.mia-panel-heading {
@@ -148,7 +148,7 @@
 		& > div:last-child {
 			border-left: 1px solid $silver;
 			overflow: auto;
-			height: 249px;
+			height: 231px;
 		}
 
 		.mia-field-group:last-child > div {
@@ -241,7 +241,7 @@
 
 .date-time-picker {
 	line-height: 24px;
-	margin-top: -1px;
+	margin-top: -3px;
 	flex-grow: 1;
 	width: 100%;
 
