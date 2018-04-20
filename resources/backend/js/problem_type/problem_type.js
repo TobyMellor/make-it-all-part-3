@@ -19,16 +19,22 @@ $(() => {
 		$(document).on('dragstop', function(e, $dragging, $elementDraggedInto) {
 			$dragging.show();
 
-			if (!$elementDraggedInto) return;
+			let id = $dragging.data('expertiseTypeId');
 
-			let $parent  = $elementDraggedInto.prev().find('.active'),
-				parentId = $parent.data('expertiseTypeId') || null,
-				id       = $dragging.data('expertiseTypeId');
+			// try to move to new location
+			if ($elementDraggedInto) {
+				let $parent  = $elementDraggedInto.prev().find('.active'),
+					parentId = $parent.data('expertiseTypeId') || null;
 
-			$elementDraggedInto.prepend($dragging.detach());
-			
-			expertiseTypeManager.updateExpertiseTypeParent(id, parentId)
-				.done(() => expertiseTypeManager.loadExpertiseType($('.type-columns'), id));
+				$elementDraggedInto.prepend($dragging.detach());
+				
+				expertiseTypeManager.updateExpertiseTypeParent(id, parentId)
+					.done(() => expertiseTypeManager.loadExpertiseType($('.type-columns'), id));
+			} else {
+				// dragged outside, so attempt to delete
+				expertiseTypeManager.loadExpertiseType($('.type-columns'), id);
+				$('#delete-problem-type').click();
+			}
 		});
 	});
 
