@@ -10,7 +10,7 @@ export default class DragController {
 			$(document)
 				// set the element that we're dragging
 				.on('mousedown', this.planeSelector, function(e) {
-					$dragging = $(e.target);
+					$dragging = $(e.target).closest('li');
 				})
 				// the user has the mousedown and have moved their mouse. Add the dragging class
 				.on('dragstart', this.planeSelector, function(e) {

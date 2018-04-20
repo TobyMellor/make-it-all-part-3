@@ -31,9 +31,11 @@ $(() => {
 				expertiseTypeManager.updateExpertiseTypeParent(id, parentId)
 					.done(() => expertiseTypeManager.loadExpertiseType($('.type-columns'), id));
 			} else {
-				// dragged outside, so attempt to delete
-				expertiseTypeManager.loadExpertiseType($('.type-columns'), id);
-				$('#delete-problem-type').click();
+				if ($dragging.hasClass('danger')) {
+					// dragged outside, so attempt to delete
+					expertiseTypeManager.loadExpertiseType($('.type-columns'), id);
+					$('#delete-problem-type').click();
+				}
 			}
 		});
 	});
