@@ -10,7 +10,7 @@ use MakeItAll\Includes\Database\Queries\DeviceQuery;
 class HardwarePage extends Page {
 	protected $name     = 'Hardware';
 	protected $icon     = 'dashicons-laptop';
-	protected $position = 3;
+	protected $position = 4;
 
 	// what you see if you just click "Hardware"
 	public function read_pane(){

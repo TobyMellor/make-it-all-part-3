@@ -8,6 +8,7 @@ $blue-hover: #006799;
 $silver: #e5e5e5;
 $silver-hover: rgba(229, 229, 229, .5);
 $grey: #899194;
+$grey-hover: rgba(137, 145, 148, .5);
 $highlight: rgba(241, 196, 15, 0.2);
 $highlight-hover: rgba(241, 196, 15, 0.3);
 $green: #28a745;
@@ -40,6 +41,24 @@ $red-hover: #c0392b;
 			background: $red-hover;
 			color: $white;
 			border-color: $red-hover;
+			box-shadow: 0 1px 0 $black;
+		}
+	}
+
+	&.button-success {
+		&, &:focus {
+			background: $green;
+			border-color: $green-hover;
+			box-shadow: 0 1px 0 $green-hover;
+			color: $white;
+			text-decoration: none;
+			text-shadow: 0 -1px 1px $green-hover, 1px 0 1px $green-hover, 0 1px 1px $green-hover, -1px 0 1px $green-hover;
+		}
+
+		&:hover {
+			background: $green-hover;
+			color: $white;
+			border-color: $green-hover;
 			box-shadow: 0 1px 0 $black;
 		}
 	}
@@ -240,8 +259,8 @@ table {
 
 .mia-panel {
 	position: relative;
-	border: 1px solid #e5e5e5;
-	box-shadow: 0 1px 1px rgba(0,0,0,.04);
+	border: 1px solid $grey-hover;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
 	background: #fff;
 	font-size: 13px;
 	line-height: 1px;
@@ -400,6 +419,7 @@ input, select, textarea {
 .invalid-feedback {
 	margin-top: 4px;
 	color: $red;
+	cursor: pointer;
 
 	&::before {
 		content: "\f071";

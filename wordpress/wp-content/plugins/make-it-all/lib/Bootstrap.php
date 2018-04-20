@@ -53,7 +53,7 @@ class Bootstrap {
 	 * This action is documented in includes/class-plugin-name-activator.php
 	 */
 	public function activate_make_it_all() {
-		new \MakeItAll\Includes\Activator();
+		new Activator();
 	}
 
 	/**
@@ -61,6 +61,6 @@ class Bootstrap {
 	 * This action is documented in includes/class-plugin-name-deactivator.php
 	 */
 	public function deactivate_make_it_all() {
-		new \MakeItAll\Includes\Deactivator();
+		new Deactivator();
 	}
 }

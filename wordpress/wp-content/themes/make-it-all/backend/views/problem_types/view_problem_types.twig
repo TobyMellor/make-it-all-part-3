@@ -1,0 +1,91 @@
+{% extends "backend/views/layouts/page.twig" %}
+
+{% block main %}
+	<div class="row">
+		<div class="col-md-9">
+			<div class="finder-window">
+				<div class="row problem-type-picker-header">
+					<p>
+						<i class="fa fa-warning"></i>
+						Loading…
+					</p>
+				</div>
+				<div class="row">
+					<div class="recent-problems">
+						<p>Popular</p>
+						<ul>
+							{% for expertiseType in popular_expertise_types %}
+								<li data-expertise-type-id="{{ expertiseType.id }}">
+									{{ expertiseType.name }}
+								</li>
+							{% endfor %}
+						</ul>
+						<p>Recents</p>
+						<ul>
+							{% for expertiseType in recent_expertise_types %}
+								<li data-expertise-type-id="{{ expertiseType.id }}">
+									{{ expertiseType.name }}
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+					<div class="problem-type-picker">
+						<div class="type-columns"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-3">
+			<div class="mia-panel mia-panel-short">
+				<div class="mia-panel-heading">
+					Problem Type Actions
+					<i class="fa fa-chevron-up"></i>
+				</div>
+				<div class="mia-panel-body problem-type-actions">
+					<div class="row">
+						<div class="col-xs-12">
+							<button class="button" id="create-problem-type">Create within</button>
+						</div>
+						<div class="col-xs-12" class="renaming-problem-type">
+							<input type="text" name="name" placeholder="Enter new name here…" autocomplete="off">
+							<button class="button" id="rename-problem-type">Rename</button>
+						</div>
+						<div class="col-xs-12">
+							<button class="button button-danger" id="delete-problem-type">Delete problem type</button>
+						</div>
+					</div>
+					<p>Create a problem type first</p>
+				</div>
+			</div>
+			<div class="mia-panel mia-panel-short">
+				<div class="mia-panel-heading">
+					Specialists of this Problem
+					<i class="fa fa-chevron-up"></i>
+				</div>
+				<div class="mia-panel-body problem-specialists-panel">
+					<p id="no-specialists">No specialists specialising in this problem</p>
+					<p id="parent-specialist"></p>
+					<table class="wp-list-table widefat fixed striped">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Tickets</th>
+								<th>Open</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody id="problem-specialists"></tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block scripts %}
+	<script>
+		var employees             = {{ employees }},
+			expertiseTypes        = {{ expertise_types }},
+			expertiseTypeStaff    = {{ expertise_type_staff }};
+	</script>
+{% endblock %}

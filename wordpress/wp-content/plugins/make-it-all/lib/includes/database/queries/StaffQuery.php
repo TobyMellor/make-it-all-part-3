@@ -32,16 +32,24 @@ class StaffQuery extends Query {
 			"
 		);
 
-		$openTickets = (new TicketQuery)->get_open_tickets();
+		$tickets = (new TicketQuery)->get_staff_tickets();
 
 		// give each employee a .open_tickets count
 		foreach ($employees as $employee) {
 			$employee->open_tickets = 0;
+			$employee->tickets = 0;
 
-			foreach ($openTickets as $key => $openTicket) {
-				if ($openTicket->staff_id === $employee->id) {
-					$employee->open_tickets += 1;
-					unset($openTickets[$key]);
+			foreach ($tickets as $key => $ticket) {
+				if ($ticket->staff_id === $employee->id
+						|| $ticket->assigned_to_specialist_id === $employee->id
+						|| $ticket->assigned_to_operator_id === $employee->id
+					) {
+					$employee->tickets += 1;
+
+					if ($ticket->status_id != 3) {
+						$employee->open_tickets += 1;
+						unset($tickets[$key]);
+					}
 				}
 			}
 		}
