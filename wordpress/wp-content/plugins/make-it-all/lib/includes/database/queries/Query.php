@@ -3,6 +3,7 @@
 namespace MakeItAll\Includes\Database\Queries;
 
 use \WP_Error;
+use Carbon\Carbon;
 
 abstract class Query {
 	protected $sqlStatement = null;
@@ -19,7 +20,18 @@ abstract class Query {
 	 * @return void
 	 */
 	protected function get_results($query) {
-		global $wpdb; return $wpdb->get_results($query);
+		global $wpdb;
+
+		$results = $wpdb->get_results($query);
+
+		foreach ($results as $result) {
+			$result->created_at_real = $result->created_at;
+			$result->created_at      = Carbon::parse($result->created_at)->diffForHumans();
+			$result->updated_at_real = $result->updated_at;
+			$result->updated_at      = Carbon::parse($result->updated_at)->diffForHumans();
+		}
+
+		return $results;
 	}
 
 	/**
@@ -77,7 +89,7 @@ abstract class Query {
 		global $wpdb;
 
 		if (!$wpdb->delete($this->prefix . $this->table, [$whereColumn => $id])) {
-			return WP_Error(400, 'Sorry! We failed to delete that record. Please try again.');
+			return new WP_Error(400, 'Sorry! We failed to delete that record. Please try again.');
 		}
 
 		return false;

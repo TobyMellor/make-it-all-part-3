@@ -4,13 +4,13 @@ export default class DragController {
 			$dragging      = null; // the element the user is dragging
 
 		this.runwaySelector = '.type-column'; // where can an element be dropped without deleting it?
-		this.planeSelector  = this.runwaySelector + ' li'; // what are the draggable elements?
+		this.planeSelector  = this.runwaySelector + ' > li'; // what are the draggable elements?
 
 		$(function() {
 			$(document)
 				// set the element that we're dragging
 				.on('mousedown', this.planeSelector, function(e) {
-					$dragging = $(e.target).closest('li');
+					$dragging = $(e.target).closest(dragController.planeSelector);
 				})
 				// the user has the mousedown and have moved their mouse. Add the dragging class
 				.on('dragstart', this.planeSelector, function(e) {

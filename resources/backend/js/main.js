@@ -17,7 +17,7 @@ $(() => {
 	});
 
 	// Remove filter/status, clear the select field
-	$(document).on('click', '.filter', function() {
+	$(document).on('click', '.filter.removeable', function() {
 		$(this).closest('.has-button').find('select').prop('selectedIndex', 0);
 
 		$(this).fadeOut(250, function() {

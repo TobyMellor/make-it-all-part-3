@@ -1,44 +1,44 @@
 @import "../main";
 
-@include colhide(1); //Forces #list-view to use flex-shrink:1
+@include colhide(1); // forces #list-view to use flex-shrink: 1
 
 .collapsible {
-	display:none;
+	display: none;
 }
 
 input.form-control[disabled=disabled] {
-	background-color:#ffffff;
+	background-color: #ffffff;
 }
 
 .breaker {
-	margin-bottom:25px;
+	margin-bottom: 25px;
 }
 
 div.form-group.pull-right{
-	width:200px;
+	width: 200px;
 }
 
 .card {
-	border-radius:0px;
+	border-radius: 0px;
 }
 
 h4 {
-	margin:0;
+	margin: 0;
 }
 
 #list-view {
-	flex-shrink:1;
+	flex-shrink: 1;
 }
 
-@media (min-width:1200px) {
-	#problem-type-card {
-		margin:auto;
-		width:50vh;
-	}
+#ticket-backlog {
+	position: relative;
+	margin: auto;
+	min-height: 250px;
+	width: 100%;
 }
 
-@media (max-width:$small) {
+@media (max-width: $small) {
 	#problem-type-card {
-		margin:auto;
+		margin: auto;
 	}
 }

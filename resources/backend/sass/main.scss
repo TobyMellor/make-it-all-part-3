@@ -82,6 +82,7 @@ $red-hover: #c0392b;
 table {
 	.row-actions {
 		white-space: nowrap;
+		left: 0 !important;
 	}
 
 	tr.highlight {

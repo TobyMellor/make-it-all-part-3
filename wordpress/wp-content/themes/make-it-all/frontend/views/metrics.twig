@@ -21,19 +21,19 @@ stats. Users without analyst privileges will only be able to see their own stats
 			<div class="col-md-4 collapsible">
 				<div class="form-group">
 					<label> Name </label>
-					<input disabled="disabled" class="form-control" id="name">
+					<input readonly="readonly" class="form-control" id="name">
 				</div>
 			</div>
 			<div class="col-md-4 collapsible">
 				<div class="form-group">
 					<label> Phone</label>
-					<input disabled="disabled" class="form-control" id="phone">
+					<input readonly="readonly" class="form-control" id="phone">
 				</div>
 			</div>
 			<div class="col-md-4 collapsible">
 				<div class="form-group">
 					<label> Role</label>
-					<input disabled="disabled" class="form-control" id="role">
+					<input readonly="readonly" class="form-control" id="role">
 				</div>
 			</div>
 			<div class="breaker collapsible"></div>
@@ -45,7 +45,7 @@ stats. Users without analyst privileges will only be able to see their own stats
 					<div class="card-header">
 						<h4 id="ticketTitle" class="main-content-title">Ticket Backlog</h4>
 					</div>
-					<div class="card-body" id="ticket-backlog" style="position:relative; margin:auto; height:20vh; width:100%;">
+					<div class="card-body" id="ticket-backlog">
 						<canvas id="ticketBacklog"></canvas>
 					</div>
 				</div>
@@ -63,21 +63,21 @@ stats. Users without analyst privileges will only be able to see their own stats
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>Average Time Taken to Solve a Ticket</label>
-									<input class="form-control" id="avgTimeToSolveTicket">
+									<input class="form-control" id="avgTimeToSolveTicket" readonly="readonly">
 								</div>
 								<div class="form-group">
 									<label>Average Replies per Ticket</label>
-									<input class="form-control" id="avgRepliesPerTicket">
+									<input class="form-control" id="avgRepliesPerTicket" readonly="readonly">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>Total Tickets Assigned</label>
-									<input class="form-control" id="totalTicketsAssigned">
+									<input class="form-control" id="totalTicketsAssigned" readonly="readonly">
 								</div>
 								<div class="form-group">
 									<label>Total Tickets Solved</label>
-									<input class="form-control" id="totalTicketsSolved">
+									<input class="form-control" id="totalTicketsSolved" readonly="readonly">
 								</div>
 							</div>
 						</div>
@@ -87,21 +87,21 @@ stats. Users without analyst privileges will only be able to see their own stats
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>Total Number of Software </label>
-									<input class="form-control" id="noOfSoftware">
+									<input class="form-control" id="noOfSoftware" readonly="readonly">
 								</div>
 								<div class="form-group">
 									<label>Number of Software with Issues</label>
-									<input class="form-control" id="noOfSoftwareWithIssues">
+									<input class="form-control" id="noOfSoftwareWithIssues" readonly="readonly">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label>Total Number of Devices</label>
-									<input class="form-control" id="noOfDevices">
+									<input class="form-control" id="noOfDevices" readonly="readonly">
 								</div>
 								<div class="form-group">
 									<label>Number of Devices with Issues</label>
-									<input class="form-control" id="noOfDevicesWithIssues">
+									<input class="form-control" id="noOfDevicesWithIssues" readonly="readonly">
 								</div>
 							</div>
 						</div>

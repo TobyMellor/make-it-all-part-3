@@ -91,7 +91,7 @@ $(() => {
 			$(this).closest('.has-button').find('div:last-child').append($filter);
 		}
 
-		$filter.removeClass().addClass('filter filter-' + className);
+		$filter.removeClass().addClass('filter removeable filter-' + className);
 		$filter.html(`
 			${selected.text()}
 			<i class="fa fa-times"></i>

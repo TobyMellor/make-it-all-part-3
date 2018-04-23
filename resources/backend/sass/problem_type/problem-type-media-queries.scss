@@ -1,0 +1,59 @@
+//
+// Column Breakpoints
+//
+
+$breakpoint-xs: 782px;
+
+@media (max-width: 782px) {
+	.renaming-problem-type {
+		input {
+			margin-bottom: 4px;
+		}
+	}
+}
+
+@media(max-width: 524px) {
+	.finder-window {
+		.recent-problems {
+			display: inherit;
+			padding-top: 0;
+			padding-bottom: 0;
+			overflow-x: auto;
+
+			p, ul {
+				display: inherit;
+			}
+
+			p {
+				line-height: 34px;
+			}
+
+			ul {
+				display: inherit;
+				margin: 0 20px 0 12px;
+
+				li {
+					border: none;
+				}
+			}
+		}
+
+		.problem-type-picker {
+			border-left: 1px solid $grey-hover !important;
+		}
+	}
+}
+
+@media(max-width: 494px) {
+	.finder-window {
+		.problem-type-picker {
+			.type-columns {
+				.type-column {
+					&:last-child {
+						border-right: none;
+					}
+				}
+			}
+		}
+	}
+}
