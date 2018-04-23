@@ -22,6 +22,26 @@ class DeviceQuery extends Query {
 		);
 	}
 
+	/**
+	 * Get the data required for the table
+	 *
+	 * @return Array
+	 */
+	public function get_device_table() {
+		return $this->get_results(
+			"
+				SELECT
+					id,
+					type AS title,
+					make,
+					serial_no,
+					created_at,
+					updated_at
+				FROM {$this->prefix}{$this->table}
+			"
+		);
+	}
+
 	public function get_device($id) {
 		return $this->get_results(
 			"

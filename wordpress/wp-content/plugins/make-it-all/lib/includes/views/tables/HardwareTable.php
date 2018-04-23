@@ -1,7 +1,9 @@
 <?php
 
 namespace MakeItAll\Includes\Views\Tables;
+
 use MakeItAll\Includes\Views\Tables\Table;
+use MakeItAll\Includes\Database\Queries\DeviceQuery;
 
 class HardwareTable extends Table {
 	protected $table = 'device';
@@ -45,18 +47,7 @@ class HardwareTable extends Table {
 	 * @return Array
 	 */
 	protected function table_data() {
-		global $wpdb;
-
-		return $wpdb->get_results("
-			SELECT
-				id,
-				type AS title,
-				make,
-				serial_no,
-				created_at,
-				updated_at
-			FROM {$this->prefix}{$this->table}
-		");
+		return (new DeviceQuery)->get_device_table();
 	}
 
 	/**
