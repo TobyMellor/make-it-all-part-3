@@ -46,8 +46,8 @@ $(() => {
 function setDateDisplay($spans, date) {
 	let setDigit = ($span, digit) => $span.text(('0' + digit).slice(-2));
 
-	setDigit($spans.eq(0), date.getDay());
-	setDigit($spans.eq(2), date.getMonth());
+	setDigit($spans.eq(0), date.getDate());
+	setDigit($spans.eq(2), date.getMonth() + 1);
 	setDigit($spans.eq(4), date.getFullYear().toString());
 
 	setDigit($spans.eq(6), date.getHours());
