@@ -169,12 +169,8 @@ class TicketQuery extends Query {
 					similar_ticket.title,
 					status.name AS status
 				FROM {$this->prefix}ticket AS ticket
-				JOIN {$this->prefix}expertise_type_staff AS ticket_expertise_type_staff
-					ON ticket_expertise_type_staff.id = ticket.expertise_type_staff_id
-				JOIN {$this->prefix}expertise_type_staff AS expertise_type_staff
-					ON expertise_type_staff.expertise_type_id = ticket_expertise_type_staff.expertise_type_id
 				JOIN {$this->prefix}ticket AS similar_ticket
-					ON similar_ticket.expertise_type_staff_id = expertise_type_staff.id
+					ON similar_ticket.expertise_type_id = ticket.expertise_type_id
 				JOIN (
 					SELECT
 						ticket_id, status_id
