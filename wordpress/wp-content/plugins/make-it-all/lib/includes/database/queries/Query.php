@@ -24,11 +24,13 @@ abstract class Query {
 
 		$results = $wpdb->get_results($query);
 
-		foreach ($results as $result) {
-			$result->created_at_real = $result->created_at;
-			$result->created_at      = Carbon::parse($result->created_at)->diffForHumans();
-			$result->updated_at_real = $result->updated_at;
-			$result->updated_at      = Carbon::parse($result->updated_at)->diffForHumans();
+		if (sizeOf($results) > 0 && isset($results[0]->created_at) && isset($results[0]->updated_at)) {
+			foreach ($results as $result) {
+				$result->created_at_real = $result->created_at;
+				$result->created_at      = Carbon::parse($result->created_at)->diffForHumans();
+				$result->updated_at_real = $result->updated_at;
+				$result->updated_at      = Carbon::parse($result->updated_at)->diffForHumans();
+			}
 		}
 
 		return $results;
