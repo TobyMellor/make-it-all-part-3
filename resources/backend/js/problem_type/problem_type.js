@@ -76,48 +76,60 @@ $(() => {
 		// remove any previous validation errors
 		$invalidFeedback.remove();
 
-		expertiseTypeManager.createExpertiseType(name, parentId)
-			.fail((xhr) => {
-				// insert only the first validation error (should only be one anyway)
-				$('<div class="invalid-feedback">')
-					.text(xhr.responseJSON.message[0])
-					.insertAfter($input);
+		let fail = (message => {
+			// insert only the first validation error (should only be one anyway)
+			$('<div class="invalid-feedback">')
+				.text(message)
+				.insertAfter($input);
 
-				$input.focus();
-				$button.add($createProblemType).prop('disabled', false);
-			})
-			.done((expertiseTypeId) => {
-				$input.remove();
+			$input.focus();
+			$button.add($createProblemType).prop('disabled', false);
+		});
 
-				let $newProblemType = $(`
-					<li class="no-children" data-expertise-type-id="${expertiseTypeId}">
-						${name}
-						<div class="specialist-counter">
-							<i class="fa fa-user-times"></i>
-						</div>
-					</li>
-				`);
+		$button.siblings('li').each(function() {
+			let id = $(this).data('expertiseTypeId');
 
-				$button
-					.add($createProblemType)
-					.prop('disabled', false)
-					.removeClass()
-					.addClass('button');
+			if (expertiseTypeManager.getExpertiseType(id).name == name) {
+				fail('You have another problem with this name on the same level'); return false;
+			}
+		});
 
-				$button.text('Create problem type');
-				$createProblemType.text('Create within');
+		if ($button.prop('disabled')) {
+			expertiseTypeManager.createExpertiseType(name, parentId)
+				.fail(xhr => fail(xhr.responseJSON.message[0]))
+				.done(expertiseTypeId => {
+					$input.remove();
+
+					let $newProblemType = $(`
+						<li class="no-children" data-expertise-type-id="${expertiseTypeId}">
+							${name}
+							<div class="specialist-counter">
+								<i class="fa fa-user-times"></i>
+							</div>
+						</li>
+					`);
+
+					$button
+						.add($createProblemType)
+						.prop('disabled', false)
+						.removeClass()
+						.addClass('button');
+
+					$button.text('Create problem type');
+					$createProblemType.text('Create within');
+						
+					$newProblemType.insertBefore($button);
 					
-				$newProblemType.insertBefore($button);
-				
-				// show new problem type
-				$newProblemType.click();
+					// show new problem type
+					$newProblemType.click();
 
-				$createProblemType
-					.closest('.row')
-					.show()
-					.next()
-					.hide();
-			});
+					$createProblemType
+						.closest('.row')
+						.show()
+						.next()
+						.hide();
+				});
+		}
 	});
 
 	// redirect the "Create" within button under "Problem Type Actions"
@@ -148,7 +160,8 @@ $(() => {
 
 	// clicking on the submit button next to the rename field
 	$(document).on('click', '#rename-problem-type.button-success', function() {
-		let id                 = $('.type-columns li.last-active').data('expertiseTypeId'),
+		let $lastActive        = $('.type-columns li.last-active'),
+			id                 = $lastActive.data('expertiseTypeId'),
 			$input             = $(this).prev(),
 			name               = $input.val(),
 			$renameProblemType = $('#rename-problem-type');
@@ -158,26 +171,38 @@ $(() => {
 			.siblings('.invalid-feedback')
 			.remove();
 
-		expertiseTypeManager.renameExpertiseType(id, name)
-			.fail((xhr) => {
-				$('<div class="invalid-feedback">')
-					.text(xhr.responseJSON.message[0])
-					.insertAfter($renameProblemType.parent());
+		let fail = (message => {
+			// insert only the first validation error (should only be one anyway)
+			$('<div class="invalid-feedback">')
+				.text(message)
+				.insertAfter($renameProblemType.parent());
 
-				$renameProblemType.prev().focus();
+			$renameProblemType.prev().focus();
+			$renameProblemType.prop('disabled', false);
+		});
 
-				$renameProblemType.prop('disabled', false);
-			})
-			.done(() => {
-				$renameProblemType
-					.text('Rename')
-					.removeClass('button-success')
-					.prop('disabled', false)
-					.parent()
-					.removeClass('renaming-problem-type');
+		$lastActive.siblings('li').each(function() {
+			let id = $(this).data('expertiseTypeId');
+			
+			if (expertiseTypeManager.getExpertiseType(id).name == name) {
+				fail('You have another problem with this name on the same level'); return false;
+			}
+		});
 
-				expertiseTypeManager.loadExpertiseType($('.type-columns'), id);
-			});
+		if ($renameProblemType.prop('disabled')) {
+			expertiseTypeManager.renameExpertiseType(id, name)
+				.fail(xhr => fail(xhr.responseJSON.messages[0]))
+				.done(() => {
+					$renameProblemType
+						.text('Rename')
+						.removeClass('button-success')
+						.prop('disabled', false)
+						.parent()
+						.removeClass('renaming-problem-type');
+
+					expertiseTypeManager.loadExpertiseType($('.type-columns'), id);
+				});
+		}
 	});
 
 	// clicking "Delete problem type"
