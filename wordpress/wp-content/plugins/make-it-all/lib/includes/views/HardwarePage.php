@@ -65,21 +65,23 @@ class HardwarePage extends Page {
 		// insert type, make, sn, date
 		foreach ($_POST['hardware'] as $hardware) {
 			
+		
+
+	
 			
-			$type = $hardware['type'];
-			$make = $hardware['make'];
-			if($hardware['type'] === ""){
-				$type = $hardware['newType'];	
+			if(empty($hardware['type'])){
+				$hardware['type'] = $hardware['newType'];	
 			}
-			if($hardaware['make'] === ""){
-				$make = $hardware['newMake'];
+			if(empty($hardware['make'])){
+				$hardware['make'] = $hardware['newMake'];	
+				
 			}
 			
 			
 
 			$deviceQuery->mia_insert([
-				'type'      => $type,
-				'make'      => $make,
+				'type'      => $hardware['type'],
+				'make'      => $hardware['make'],
 				'serial_no' => $hardware['serial']
 			]);
 
@@ -107,26 +109,25 @@ class HardwarePage extends Page {
 	
 	protected function update_action() {
 		global $wpdb;
-
-		$hardware   = $_POST['hardware'];
-		$hardwareId = $hardware['id'];
-
-		$type = $hardware['type'];
-		$make = $hardware['make'];
-		if($hardware['type'] === ""){
-			$type = $hardware['newType'];	
+		
+		if(empty($hardware['type'])){
+			$hardware['type'] = $hardware['newType'];	
 		}
-		if($hardaware['make'] === ""){
-			$make = $hardware['newMake'];
+		if(empty($hardware['make'])){
+			$hardware['make'] = $hardware['newMake'];	
+				
 		}
+			
+
+
 
 		$deviceQuery = new DeviceQuery();
 
 		$deviceQuery->mia_update(
 			$hardwareId,
 			[
-				'type'          => $type,
-				'make'          => $make,
+				'type'          => $hardware['type'],
+				'make'          => $hardware['make'],
 				'serial_no'     => $hardware['serial_no'],
 			]
 		);
