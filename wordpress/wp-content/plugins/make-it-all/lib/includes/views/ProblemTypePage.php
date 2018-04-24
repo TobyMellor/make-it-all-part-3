@@ -15,13 +15,11 @@ class ProblemTypePage extends Page {
 	protected $pages    = [];
 
 	/**
-	 * Displays the Tickets table
+	 * Displays the Problem Type table
 	 *
 	 * @return @void
 	 */
 	public function read_pane() {
-		// parent::read_pane();
-
 		$context = $this->get_required_data('View Problem Types');
 		
 		$this->render_pane($context);

@@ -103,15 +103,31 @@ class Loader {
 			'ProblemTypePage'
 		];
 
+		$basePageName = __NAMESPACE__ . '\Views\\';
+
 		foreach ($pages as $pageName) {
-			$pageName = __NAMESPACE__ . '\Views\\' . $pageName;
+			$pageName = $basePageName . $pageName;
 			$page     = new $pageName;
 
 			$this->add_action('admin_menu', new $pageName, 'init');
+
 			if (method_exists($page, 'add_api_endpoints')) {
 				$this->add_action('rest_api_init', $page, 'add_api_endpoints');
 			}
 		}
+
+		/**
+		 * Register the additional info needed for the staff page
+		 */
+		$pageName = $basePageName . 'StaffPage';
+
+		$this->add_action('admin_menu', new $pageName, 'init');
+		$this->add_action('show_user_profile', new $pageName, 'read_pane');
+		$this->add_action('edit_user_profile', new $pageName, 'read_pane');
+
+		/**
+		 * Now execute all of the filters and actions
+		 */
 
 		foreach ($this->filters as $hook) {
 			add_filter(
