@@ -99,8 +99,9 @@ class Loader {
 		 */
 		$pages = [
 			'TicketPage',
-			'HardwarePage',
-			'ProblemTypePage'
+			'ProblemTypePage',
+			'DepartmentPage',
+			'HardwarePage'
 		];
 
 		$basePageName = __NAMESPACE__ . '\Views\\';
