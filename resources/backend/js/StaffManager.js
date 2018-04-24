@@ -2,6 +2,7 @@ export default class StaffManager {
 	constructor(employees, currentEmployeeId, expertiseTypes, expertiseTypeStaff) {
 		this.employees             = employees;
 		this.currentEmployee       = this.getEmployee(currentEmployeeId);
+		this.currentEmployeeId     = currentEmployeeId;
 		this.expertiseTypes        = expertiseTypes;
 		this.expertiseTypeStaff    = expertiseTypeStaff;
 
@@ -65,6 +66,42 @@ export default class StaffManager {
 				.map(ets => ets.staff_id)
 				.indexOf(String(employee.id)) > -1
 		});
+	}
+
+	/**
+	 * Get specialisms of the logged in user
+	 *
+	 * @return {Array} ExpertiseTypeStaff in an Expertise Type
+	 */
+	getCurrentUserSpecialisms() {
+		return this.expertiseTypeStaff.filter(ets => ets.staff_id == this.currentEmployeeId);
+	}
+
+	/**
+	 * Adds a new specialism to logged in users Expertise Type Staff records
+	 *
+	 * @param {Integer} expertiseTypeId ID of Expertise Type
+	 */
+	addCurrentUserSpecialism(expertiseTypeId) {
+		if (!this.getExpertiseTypeStaff(this.currentEmployeeId, expertiseTypeId)) {
+			this.expertiseTypeStaff.push({
+				staff_id: this.currentEmployeeId,
+				expertise_type_id: expertiseTypeId
+			});
+		}
+	}
+
+	/**
+	 * Removes specialism from the logged in users Expertise Type Staff records
+	 *
+	 * @param {Integer} expertiseTypeId ID of Expertise Type
+	 */
+	removeCurrentUserSpecialism(expertiseTypeId) {
+		let currentUserSpecialismIndex = this.expertiseTypeStaff.findIndex(ets => ets.staff_id == this.currentEmployeeId && ets.expertise_type_id == expertiseTypeId);
+
+		if (currentUserSpecialismIndex !== -1) {
+			this.expertiseTypeStaff.splice(currentUserSpecialismIndex, 1);
+		}
 	}
 
 	/**

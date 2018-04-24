@@ -63,8 +63,6 @@ export default class ExpertiseTypeManager {
 
 			clickedExpertiseTypeChildren = this.getExpertiseTypesWithParent(clickedExpertiseTypeId);
 
-			// $clickedLi.closest('.form-group').find('span.subtle').text(this.getExpertiseTypeBreadcrum(expertiseType));
-
 			$clickedLi.parent().nextAll().remove();
 			$clickedLi.parent().find('li.active').removeClass('active');
 			$clickedLi.parent().parent().find('li.last-active').removeClass('last-active');

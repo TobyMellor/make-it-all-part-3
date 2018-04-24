@@ -7,7 +7,7 @@
 	.type-columns {
 		.type-column {
 			li {
-				&:hover {
+				&:hover, &.last-active {
 					.specialism-checkbox {
 						border: 2px solid $white;
 					}
@@ -21,9 +21,9 @@
 
 					i {
 						position: absolute;
-						right: 11px;
-						top: 5px;
-						font-size: 14px;
+						right: 10px;
+						top: 6px;
+						font-size: 13px;
 
 						&.fa-times {
 							display: none;
