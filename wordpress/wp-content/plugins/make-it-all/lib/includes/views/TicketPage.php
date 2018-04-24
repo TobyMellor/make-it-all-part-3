@@ -38,10 +38,10 @@ class TicketPage extends Page {
 				$ticketQuery = new TicketQuery();
 
 				if (isset($_GET['ticket_id'])) {
-					$ticketQuery->delete($_GET['ticket_id']);
+					$ticketQuery->mia_delete($_GET['ticket_id']);
 				} else if (isset($_GET['ticket'])) {
 					foreach ($_GET['ticket'] as $ticketId) {
-						$ticketQuery->delete($ticketId);
+						$ticketQuery->mia_delete($ticketId);
 					}
 				}
 			}

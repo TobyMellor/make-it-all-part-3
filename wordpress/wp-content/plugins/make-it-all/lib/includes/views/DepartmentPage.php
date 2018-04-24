@@ -26,10 +26,10 @@ class DepartmentPage extends Page {
 				$departmentQuery = new DepartmentQuery();
 
 				if (isset($_GET['department_id'])) {
-					$departmentQuery->delete($_GET['department_id']);
+					$departmentQuery->mia_delete($_GET['department_id']);
 				} else if (isset($_GET['department'])) {
 					foreach ($_GET['department'] as $departmentId) {
-						$departmentQuery->delete($departmentId);
+						$departmentQuery->mia_delete($departmentId);
 					}
 				}
 			}
