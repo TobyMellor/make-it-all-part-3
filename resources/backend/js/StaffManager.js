@@ -186,7 +186,7 @@ export default class StaffManager {
 	populateSelectField($selectField, employees) {
 		employees.forEach(employee => {
 			$selectField.append(`
-				<option value="${employee.id}">#${employee.id} – ${employee.name}</option>
+				<option value="${employee.id}">#${employee.id} – ${employee.display_name}</option>
 			`);
 		});
 	}
