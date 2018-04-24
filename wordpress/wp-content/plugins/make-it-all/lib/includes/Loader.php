@@ -109,7 +109,7 @@ class Loader {
 			$pageName = $basePageName . $pageName;
 			$page     = new $pageName;
 
-			$this->add_action('admin_menu', new $pageName, 'init');
+			$this->add_action('admin_menu', $page, 'init');
 
 			if (method_exists($page, 'add_api_endpoints')) {
 				$this->add_action('rest_api_init', $page, 'add_api_endpoints');
@@ -120,10 +120,13 @@ class Loader {
 		 * Register the additional info needed for the staff page
 		 */
 		$pageName = $basePageName . 'StaffPage';
+		$page     = new $pageName;
 
-		$this->add_action('admin_menu', new $pageName, 'init');
-		$this->add_action('show_user_profile', new $pageName, 'read_pane');
-		$this->add_action('edit_user_profile', new $pageName, 'read_pane');
+		$this->add_action('admin_menu', $page, 'init');
+		$this->add_action('show_user_profile', $page, 'read_pane');
+		$this->add_action('edit_user_profile', $page, 'read_pane');
+		$this->add_action('personal_options_update', $page, 'update_action');
+		$this->add_action('edit_user_profile_update', $page, 'update_action');
 
 		/**
 		 * Now execute all of the filters and actions

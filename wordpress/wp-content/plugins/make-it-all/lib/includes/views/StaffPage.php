@@ -44,4 +44,21 @@ class StaffPage extends Page {
 
 		$this->render_pane($context);
 	}
+
+	public function update_action($userId) {
+		$expertiseTypeStaffQuery = new ExpertiseTypeStaffQuery();
+		$expertiseTypeStaff = array_map(
+			function($a) use ($userId) {
+				return ['expertise_type_id' => $a, 'staff_id' => $userId];
+			},
+			explode(',', $_POST['specialisms'])
+		);
+
+		$expertiseTypeStaffQuery->mia_delete($userId, 'staff_id');
+		$expertiseTypeStaffQuery->mia_bulk_insert(
+			'(%d, %d, %s, %s)',
+			'(expertise_type_id, staff_id, created_at, updated_at)',
+			$expertiseTypeStaff
+		);
+	}
 }

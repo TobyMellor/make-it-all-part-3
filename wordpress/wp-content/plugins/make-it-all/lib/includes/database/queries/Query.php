@@ -62,6 +62,31 @@ abstract class Query {
 	}
 
 	/**
+	 * Bulk inserts data into the db
+	 *
+	 * @return (int|false) Number of rows affected/selected or false on error
+	 */
+	public function mia_bulk_insert($placeholder, $columnNames, $rows) {
+		global $wpdb;
+
+		$date         = date('Y-m-d H:i:s');
+		$values       = [];
+
+		foreach ($rows as $columns) {
+			$validationResponse = $this->validate($columns);
+
+			if (is_wp_error($validationResponse)) return $validationResponse;
+
+			$columns['created_at'] = $date;
+			$columns['updated_at'] = $date;
+
+			$values[] = $wpdb->prepare($placeholder, $columns);
+		}
+
+		return $wpdb->query("INSERT INTO {$this->prefix}{$this->table} {$columnNames} VALUES " . implode(',', $values));
+	}
+
+	/**
 	 * Updates a record by ID in the db
 	 *
 	 * @return Boolean
