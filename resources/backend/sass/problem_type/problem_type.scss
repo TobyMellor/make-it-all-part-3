@@ -142,6 +142,12 @@
 		padding: 12px;
 		padding-top: 0;
 
+		.col-xs-12:last-child {
+			button {
+				margin-bottom: 12px;
+			}
+		}
+
 		button {
 			display: block;
 			width: 100%;
