@@ -17,13 +17,13 @@ class CreateCallTable extends Migration {
 			CREATE TABLE IF NOT EXISTS {$this->prefix}{$this->table} (
 				id int(10) unsigned NOT NULL AUTO_INCREMENT,
 				time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-				operator_id int(10) unsigned NOT NULL,
-				caller_id int(10) unsigned NULL DEFAULT NULL,
+				operator_id bigint(20) unsigned NOT NULL,
+				caller_id bigint(20) unsigned NULL DEFAULT NULL,
 				created_at timestamp NULL DEFAULT NULL,
 				updated_at timestamp NULL DEFAULT NULL,
 				PRIMARY KEY (id),
-				FOREIGN KEY (caller_id) REFERENCES {$this->prefix}staff (id) ON DELETE SET NULL,
-				FOREIGN KEY (operator_id) REFERENCES {$this->prefix}staff (id) ON DELETE CASCADE
+				FOREIGN KEY (caller_id) REFERENCES {$this->rawPrefix}users (id) ON DELETE SET NULL,
+				FOREIGN KEY (operator_id) REFERENCES {$this->rawPrefix}users (id) ON DELETE CASCADE
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 		";
 	}

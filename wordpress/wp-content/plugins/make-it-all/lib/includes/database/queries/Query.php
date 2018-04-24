@@ -44,13 +44,15 @@ abstract class Query {
 	 *
 	 * @return (int|false) Number of rows affected/selected or false on error
 	 */
-	public function mia_insert($columns) {
+	public function mia_insert($columns, $shouldIncludeDate = true) {
 		$validationResponse = $this->validate($columns);
 
 		if (is_wp_error($validationResponse)) return $validationResponse;
 
-		$columns['created_at'] = date('Y-m-d H:i:s');
-		$columns['updated_at'] = date('Y-m-d H:i:s');
+		if ($shouldIncludeDate) {
+			$columns['created_at'] = date('Y-m-d H:i:s');
+			$columns['updated_at'] = date('Y-m-d H:i:s');
+		}
 
 		global $wpdb;
 

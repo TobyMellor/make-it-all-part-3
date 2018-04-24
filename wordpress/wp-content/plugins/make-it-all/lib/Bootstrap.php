@@ -52,15 +52,16 @@ class Bootstrap {
 	 * The code that runs during plugin activation.
 	 * This action is documented in includes/class-plugin-name-activator.php
 	 */
-	public function activate_make_it_all() {
+	public static function activate_make_it_all() {
 		new Activator();
+		// new Deactivator();
 	}
 
 	/**
 	 * The code that runs during plugin deactivation.
 	 * This action is documented in includes/class-plugin-name-deactivator.php
 	 */
-	public function deactivate_make_it_all() {
+	public static function deactivate_make_it_all() {
 		new Deactivator();
 	}
 }

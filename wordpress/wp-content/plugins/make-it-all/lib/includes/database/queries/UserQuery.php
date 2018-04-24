@@ -6,8 +6,12 @@ use MakeItAll\Includes\Database\Queries\Query;
 use MakeItAll\Includes\Database\Queries\TicketQuery;
 use Respect\Validation\Validator as v;
 
-class StaffQuery extends Query {
-	protected $table = 'staff';
+class UserQuery extends Query {
+	protected $table = 'users';
+
+	function __construct() {
+		global $wpdb; $this->prefix = $wpdb->prefix;
+	}
 
 	/**
 	 * Select all staff with the important joins.
@@ -18,17 +22,15 @@ class StaffQuery extends Query {
 		$employees = $this->get_results(
 			"
 				SELECT 
-					staff.id,
-					staff.name,
-					job_title,
+					users.id,
+					users.name,
+					users.job_title,
 					department.name AS department,
-					staff.phone_number,
-					operator,
-					analyst,
-					specialist
-				FROM {$this->prefix}{$this->table} AS {$this->table}
+					department.id AS department_id,
+					users.phone_number
+				FROM {$this->prefix} AS {$this->table}
 					JOIN {$this->prefix}department AS department
-						ON staff.department_id = department.id;
+						ON users.department_id = department.id;
 			"
 		);
 

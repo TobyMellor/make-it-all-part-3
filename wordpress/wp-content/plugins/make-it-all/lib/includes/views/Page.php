@@ -50,8 +50,8 @@ abstract class Page {
 
 		add_action('admin_enqueue_scripts', [$this, 'enqueue_dependencies']); // Style/script only used for this page, e.g. ticket.css NOT main.css
 
-		$this->error   = $_SESSION['mia_error'];
-		$this->message = $_SESSION['mia_message'];
+		$this->error   = isset($_SESSION['mia_error'])   ?? $_SESSION['mia_error'];
+		$this->message = isset($_SESSION['mia_message']) ?? $_SESSION['mia_message'];
 	}
 	/**
 	 * Enqueues the scripts that are required
