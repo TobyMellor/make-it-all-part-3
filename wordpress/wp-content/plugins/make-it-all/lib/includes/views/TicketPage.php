@@ -12,7 +12,7 @@ use MakeItAll\Includes\Database\Queries\{
 	TicketStatusQuery,
 	CallQuery,
 	CallTicketQuery,
-	StaffQuery,
+	UserQuery,
 	ExpertiseTypeStaffQuery,
 	ExpertiseTypeQuery,
 	DeviceQuery,
@@ -134,7 +134,7 @@ class TicketPage extends Page {
 			$ticketStatusQuery->mia_insert([
 				'ticket_id' => $ticketId,
 				'status_id' => $ticket['status'],
-				'staff_id'  => get_current_user_id()
+				'user_id'   => get_current_user_id()
 			]);
 
 			// link the first call to the ticket
@@ -216,7 +216,7 @@ class TicketPage extends Page {
 			$ticketStatusQuery->mia_insert([
 				'ticket_id' => $ticketId,
 				'status_id' => $ticket['status'],
-				'staff_id'  => get_current_user_id()
+				'user_id'   => get_current_user_id()
 			]);
 		}
 
@@ -226,7 +226,7 @@ class TicketPage extends Page {
 	private function get_required_data($pageName) {
 		$context = $this->get_context($pageName);
 
-		$context['employees']            = json_encode((new StaffQuery)->get());
+		$context['employees']            = json_encode((new UserQuery)->get());
 		$context['expertise_types']      = json_encode((new ExpertiseTypeQuery)->get());
 		$context['expertise_type_staff'] = json_encode((new ExpertiseTypeStaffQuery)->get());
 		$context['devices']              = json_encode((new DeviceQuery)->get());

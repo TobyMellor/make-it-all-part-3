@@ -204,21 +204,19 @@ class SeedUserTable extends Seeder {
 				'role'          => 'contributor'
 			]
 		];
-		
-		foreach ($users as $name => $user) {
-			$displayName = str_replace(' ', '', $name);
 
+		foreach ($users as $name => $user) {
 			$userId = $userQuery->mia_insert([
-				'user_login'          => $displayName,
+				'user_login'          => str_replace(' ', '', $name),
 				'user_pass'           => $hashedPassword,
-				'user_nicename'       => strtolower($displayName),
+				'user_nicename'       => strtolower(str_replace(' ', '', $name)),
 				'user_email'          => strtolower(explode(' ', $name)[0]) . '@makeitall.com',
 				'user_url'            => '',
 				'user_registered'     => $date,
 				'user_activation_key' => '',
 				'user_status'         => 0,
-				'display_name'        => $displayName
-			], false);
+				'display_name'        => $name
+			], true);
 
 			update_user_meta($userId, 'job_title',     $user['job_title']);
 			update_user_meta($userId, 'department_id', $user['department_id']);
@@ -237,6 +235,7 @@ class SeedUserTable extends Seeder {
 		global $wpdb;
 
 		$wpdb->query("DELETE FROM {$this->prefix}{$this->table} WHERE id <> '1'");
+		$wpdb->query("ALTER TABLE {$this->prefix}{$this->table} AUTO_INCREMENT = 1");
 		$wpdb->query("DELETE FROM {$this->prefix}usermeta WHERE user_id <> '1'");
 	}
 

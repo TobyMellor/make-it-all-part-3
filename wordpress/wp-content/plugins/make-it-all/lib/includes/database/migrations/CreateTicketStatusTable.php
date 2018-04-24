@@ -18,11 +18,11 @@ class CreateTicketStatusTable extends Migration {
 				id int(10) unsigned NOT NULL AUTO_INCREMENT,
 				ticket_id int(10) unsigned NOT NULL,
 				status_id int(10) unsigned NOT NULL,
-				staff_id bigint(20) unsigned NOT NULL,
+				user_id bigint(20) unsigned NOT NULL,
 				created_at timestamp NULL DEFAULT NULL,
 				updated_at timestamp NULL DEFAULT NULL,
 				PRIMARY KEY (id),
-				FOREIGN KEY (staff_id) REFERENCES {$this->rawPrefix}users (id) ON DELETE CASCADE,
+				FOREIGN KEY (user_id) REFERENCES {$this->rawPrefix}users (id) ON DELETE CASCADE,
 				FOREIGN KEY (status_id) REFERENCES {$this->prefix}status (id) ON DELETE CASCADE,
 				FOREIGN KEY (ticket_id) REFERENCES {$this->prefix}ticket (id) ON DELETE CASCADE
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

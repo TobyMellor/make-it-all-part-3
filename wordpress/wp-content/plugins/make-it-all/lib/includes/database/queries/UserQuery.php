@@ -9,10 +9,6 @@ use Respect\Validation\Validator as v;
 class UserQuery extends Query {
 	protected $table = 'users';
 
-	function __construct() {
-		global $wpdb; $this->prefix = $wpdb->prefix;
-	}
-
 	/**
 	 * Select all staff with the important joins.
 	 *
@@ -23,14 +19,34 @@ class UserQuery extends Query {
 			"
 				SELECT 
 					users.id,
-					users.name,
-					users.job_title,
-					department.name AS department,
-					department.id AS department_id,
-					users.phone_number
-				FROM {$this->prefix} AS {$this->table}
-					JOIN {$this->prefix}department AS department
-						ON users.department_id = department.id;
+					users.display_name,
+					(
+						SELECT meta_value AS job_title
+						FROM {$this->rawPrefix}usermeta AS usermeta
+						WHERE users.id = usermeta.user_id
+							AND meta_key = 'job_title'
+					) AS job_title,
+					(
+						SELECT meta_value AS department_id
+						FROM {$this->rawPrefix}usermeta AS usermeta
+						WHERE users.id = usermeta.user_id
+							AND meta_key = 'department_id'
+					) AS department_id,
+					(
+						SELECT meta_value AS phone_number
+						FROM {$this->rawPrefix}usermeta AS usermeta
+						WHERE users.id = usermeta.user_id
+							AND meta_key = 'phone_number'
+					) AS phone_number,
+					(
+						SELECT department.name AS department_name
+						FROM {$this->rawPrefix}usermeta AS usermeta
+							JOIN {$this->prefix}department AS department
+								ON department.id = usermeta.meta_value
+						WHERE users.id = usermeta.user_id
+							AND meta_key = 'department_id'
+					) AS department_name
+				FROM {$this->rawPrefix}{$this->table} AS users;
 			"
 		);
 
@@ -42,7 +58,7 @@ class UserQuery extends Query {
 			$employee->tickets = 0;
 
 			foreach ($tickets as $key => $ticket) {
-				if ($ticket->staff_id === $employee->id
+				if ($ticket->user_id === $employee->id
 						|| $ticket->assigned_to_specialist_id === $employee->id
 						|| $ticket->assigned_to_operator_id === $employee->id
 					) {

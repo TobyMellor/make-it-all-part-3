@@ -4,7 +4,7 @@ namespace MakeItAll\Includes\Views;
 
 use MakeItAll\Includes\Views\Page;
 
-use MakeItAll\Includes\Database\Queries\StaffQuery;
+use MakeItAll\Includes\Database\Queries\UserQuery;
 use MakeItAll\Includes\Database\Queries\ExpertiseTypeQuery;
 use MakeItAll\Includes\Database\Queries\ExpertiseTypeStaffQuery;
 
@@ -36,7 +36,7 @@ class ProblemTypePage extends Page {
 
 		$expertiseTypeQuery = new ExpertiseTypeQuery();
 
-		$context['employees']            = json_encode((new StaffQuery)->get());
+		$context['employees']            = json_encode((new UserQuery)->get());
 		$context['expertise_types']      = json_encode($expertiseTypeQuery->get());
 		$context['expertise_type_staff'] = json_encode((new ExpertiseTypeStaffQuery)->get());
 

@@ -36,12 +36,12 @@ export default class StaffManager {
 	/**
 	 * Get an Expertise Type Staff
 	 *
-	 * @param {Integer} staffId ID of staff
+	 * @param {Integer} userId ID of staff
 	 * @param {Integer} expertiseTypeId ID of ExpertiseType
 	 * @return {Object} ExpertiseTypeStaff
 	 */
-	getExpertiseTypeStaff(staffId, expertiseTypeId) {
-		return this.expertiseTypeStaff.find(ets => ets.staff_id == staffId && ets.expertise_type_id == expertiseTypeId) || null;
+	getExpertiseTypeStaff(userId, expertiseTypeId) {
+		return this.expertiseTypeStaff.find(ets => ets.user_id == userId && ets.expertise_type_id == expertiseTypeId) || null;
 	}
 
 	/**
@@ -63,7 +63,7 @@ export default class StaffManager {
 	getSpecialistsOfSpecialism(expertiseTypeId) {
 		return this.employees.filter(employee => {
 			return this.expertiseTypeStaff.filter(ets => ets.expertise_type_id == expertiseTypeId)
-				.map(ets => ets.staff_id)
+				.map(ets => ets.user_id)
 				.indexOf(String(employee.id)) > -1
 		});
 	}
@@ -74,7 +74,7 @@ export default class StaffManager {
 	 * @return {Array} ExpertiseTypeStaff in an Expertise Type
 	 */
 	getCurrentUserSpecialisms() {
-		return this.expertiseTypeStaff.filter(ets => ets.staff_id == this.currentEmployeeId);
+		return this.expertiseTypeStaff.filter(ets => ets.user_id == this.currentEmployeeId);
 	}
 
 	/**
@@ -85,7 +85,7 @@ export default class StaffManager {
 	addCurrentUserSpecialism(expertiseTypeId) {
 		if (!this.getExpertiseTypeStaff(this.currentEmployeeId, expertiseTypeId)) {
 			this.expertiseTypeStaff.push({
-				staff_id: this.currentEmployeeId,
+				user_id: this.currentEmployeeId,
 				expertise_type_id: expertiseTypeId
 			});
 		}
@@ -97,7 +97,7 @@ export default class StaffManager {
 	 * @param {Integer} expertiseTypeId ID of Expertise Type
 	 */
 	removeCurrentUserSpecialism(expertiseTypeId) {
-		let currentUserSpecialismIndex = this.expertiseTypeStaff.findIndex(ets => ets.staff_id == this.currentEmployeeId && ets.expertise_type_id == expertiseTypeId);
+		let currentUserSpecialismIndex = this.expertiseTypeStaff.findIndex(ets => ets.user_id == this.currentEmployeeId && ets.expertise_type_id == expertiseTypeId);
 
 		if (currentUserSpecialismIndex !== -1) {
 			this.expertiseTypeStaff.splice(currentUserSpecialismIndex, 1);

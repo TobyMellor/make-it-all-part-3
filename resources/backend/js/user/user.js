@@ -2,7 +2,7 @@ import ExpertiseTypeManager from "./ExpertiseTypeManager";
 import StaffManager from "../StaffManager";
 
 $(() => {
-	if (!window.employees || !window.expertiseTypes || !window.expertiseTypeStaff || !currentUserId) return;
+	if (!window.employees || !window.expertiseTypes || !window.expertiseTypeStaff || !window.currentUserId) return;
 
 	let staffManager         = window.staffManager         = new StaffManager(employees, currentUserId, expertiseTypes, expertiseTypeStaff);
 	let expertiseTypeManager = window.expertiseTypeManager = new ExpertiseTypeManager(expertiseTypes, expertiseTypeStaff, staffManager);

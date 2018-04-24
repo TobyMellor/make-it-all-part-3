@@ -8,10 +8,14 @@ use Carbon\Carbon;
 abstract class Query {
 	protected $sqlStatement = null;
 	protected $table;
+	protected $rawPrefix;
 	protected $prefix;
 
 	function __construct() {
-		global $wpdb; $this->prefix = $wpdb->prefix . 'mia_';
+		global $wpdb;
+
+		$this->rawPrefix = $wpdb->prefix;
+		$this->prefix    = $this->rawPrefix . 'mia_';
 	}
 
 	/**
@@ -44,19 +48,23 @@ abstract class Query {
 	 *
 	 * @return (int|false) Number of rows affected/selected or false on error
 	 */
-	public function mia_insert($columns, $shouldIncludeDate = true) {
+	public function mia_insert($columns, $isWordPressTable = false) {
 		$validationResponse = $this->validate($columns);
 
 		if (is_wp_error($validationResponse)) return $validationResponse;
 
-		if ($shouldIncludeDate) {
+		$prefix = $this->prefix;
+
+		if (!$isWordPressTable) {
 			$columns['created_at'] = date('Y-m-d H:i:s');
 			$columns['updated_at'] = date('Y-m-d H:i:s');
+		} else {
+			$prefix = $this->rawPrefix;
 		}
 
 		global $wpdb;
 
-		if (!$wpdb->insert($this->prefix . $this->table, $columns)) {
+		if (!$wpdb->insert($prefix . $this->table, $columns)) {
 			wp_die('Sorry! We failed to insert that record. Please try again.');
 		}
 

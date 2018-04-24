@@ -30,7 +30,7 @@ class TicketQuery extends Query {
 					title,
 					assigned_to_operator_id,
 					status.name AS status,
-					caller.name AS last_caller,
+					caller.display_name AS last_caller,
 					ticket.created_at AS created_at,
 					ticket.updated_at AS updated_at
 				FROM {$this->prefix}{$this->table} AS ticket
@@ -60,7 +60,7 @@ class TicketQuery extends Query {
 					ON call_ticket.ticket_id = ticket.id
 				JOIN {$this->prefix}call AS _call
 					ON _call.id = call_ticket.call_id
-				JOIN {$this->prefix}staff AS caller
+				JOIN {$this->rawPrefix}users AS caller
 					ON caller.id = _call.caller_id
 				ORDER BY UNIX_TIMESTAMP(ticket.updated_at) DESC
 			"
@@ -76,7 +76,7 @@ class TicketQuery extends Query {
 		return $this->get_results(
 			"
 				SELECT
-					ticket_status.staff_id,
+					ticket_status.user_id,
 					ticket_status.status_id,
 					ticket.assigned_to_specialist_id,
 					ticket.assigned_to_operator_id
@@ -140,16 +140,16 @@ class TicketQuery extends Query {
 		return $this->get_results(
 			"
 				SELECT
-					staff_caller.name AS caller,
-					staff_operator.name AS operator,
+					staff_caller.display_name AS caller,
+					staff_operator.display_name AS operator,
 					mia_call.time,
 					mia_call.id
 				FROM {$this->prefix}call AS mia_call
 				JOIN {$this->prefix}call_ticket AS call_ticket
 					ON call_ticket.call_id = mia_call.id
-				JOIN {$this->prefix}staff AS staff_caller
+				JOIN {$this->rawPrefix}users AS staff_caller
 					ON staff_caller.id = mia_call.caller_id
-				JOIN {$this->prefix}staff AS staff_operator
+				JOIN {$this->rawPrefix}users AS staff_operator
 					ON staff_operator.id = mia_call.operator_id
 				WHERE call_ticket.ticket_id = {$ticketId}
 			"
@@ -199,12 +199,12 @@ class TicketQuery extends Query {
 		return $this->get_results(
 			"
 				SELECT
-					staff.name AS staff_name,
+					staff.display_name AS staff_name,
 					ticket_status.created_at,
 					status.name
 				FROM {$this->prefix}ticket_status AS ticket_status
-				JOIN {$this->prefix}staff AS staff
-					ON staff.id = ticket_status.staff_id
+				JOIN {$this->rawPrefix}users AS staff
+					ON staff.id = ticket_status.user_id
 				JOIN {$this->prefix}status AS status
 					ON status.id = ticket_status.status_id
 				WHERE ticket_status.ticket_id = {$ticketId}

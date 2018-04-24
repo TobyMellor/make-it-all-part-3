@@ -307,7 +307,7 @@ $(() => {
 				$specialistsTbody.append(`
 					<tr>
 						<td>
-							<strong>${specialist.name}</strong>
+							<strong>${specialist.display_name}</strong>
 							<div class="row-actions visible">
 								<span class="edit">
 									<a href="javascript:void(0);">View</a>

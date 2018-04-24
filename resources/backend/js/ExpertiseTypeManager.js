@@ -31,12 +31,12 @@ export default class ExpertiseTypeManager {
 	/**
 	 * Get an Expertise Type Staff
 	 *
-	 * @param {Integer} staffId ID of staff
+	 * @param {Integer} userId ID of staff
 	 * @param {Integer} expertiseTypeId ID of ExpertiseType
 	 * @return {Object} ExpertiseTypeStaff
 	 */
-	getExpertiseTypeStaff(staffId, expertiseTypeId) {
-		return this.expertiseTypeStaff.find(ets => ets.staff_id == staffId && ets.expertise_type_id == expertiseTypeId) || null;
+	getExpertiseTypeStaff(userId, expertiseTypeId) {
+		return this.expertiseTypeStaff.find(ets => ets.user_id == userId && ets.expertise_type_id == expertiseTypeId) || null;
 	}
 
 	/**

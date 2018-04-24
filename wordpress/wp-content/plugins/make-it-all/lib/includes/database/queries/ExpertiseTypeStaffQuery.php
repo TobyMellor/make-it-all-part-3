@@ -16,7 +16,7 @@ class ExpertiseTypeStaffQuery extends Query {
 	public function get() {
 		return $this->get_results(
 			"
-				SELECT id, staff_id, expertise_type_id
+				SELECT id, user_id, expertise_type_id
 				FROM {$this->prefix}{$this->table}
 			"
 		);

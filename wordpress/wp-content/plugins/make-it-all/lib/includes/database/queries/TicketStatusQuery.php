@@ -21,7 +21,7 @@ class TicketStatusQuery extends Query {
 	protected function validate($columns) {
 		$validator = v::key('ticket_id', v::intVal())
 			->key('status_id', v::intVal())
-			->key('staff_id', v::intVal());
+			->key('user_id', v::intVal());
 
 		return $this->assert_validation($validator, $columns);
 	}

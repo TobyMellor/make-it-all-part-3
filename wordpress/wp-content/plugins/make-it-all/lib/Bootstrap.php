@@ -27,7 +27,6 @@ use MakeItAll\Includes\{MakeItAll, Activator, Deactivator};
  */
 class Bootstrap {
 	public function __construct() {
-
 		// If this file is called directly, abort.
 		if (!defined('WPINC')) {
 			die;
@@ -54,7 +53,6 @@ class Bootstrap {
 	 */
 	public static function activate_make_it_all() {
 		new Activator();
-		// new Deactivator();
 	}
 
 	/**
