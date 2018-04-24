@@ -15,6 +15,8 @@ abstract class Page {
 	protected $apiNamespace = 'make-it-all/v1';
 	protected $error        = null;
 	protected $message      = null;
+	protected $scripts      = [];
+	protected $styles       = [];
 	
 	/**
 	 * Initialises the menu and submenu, and
@@ -48,8 +50,6 @@ abstract class Page {
 			);
 		}
 
-		add_action('admin_enqueue_scripts', [$this, 'enqueue_dependencies']); // Style/script only used for this page, e.g. ticket.css NOT main.css
-
 		$this->error   = isset($_SESSION['mia_error'])   ?? $_SESSION['mia_error'];
 		$this->message = isset($_SESSION['mia_message']) ?? $_SESSION['mia_message'];
 	}
@@ -66,14 +66,27 @@ abstract class Page {
 	public function enqueue_dependencies() {
 		$fileName = $this->get_string_as_slug($this->name);
 
-		wp_enqueue_style('mia_' . $fileName, get_template_directory_uri() . '/backend/css/' . $fileName . '/' . $fileName . '.css', [], '1.0.0', 'all');
-		wp_enqueue_script('mia_' . $fileName, get_template_directory_uri() . '/backend/js/' . $fileName . '/' . $fileName . '.js', ['jquery', 'jquery-ui-accordion'], '1.0.0', false);
+		$this->enqueue_dependency('mia_' . $fileName, '/backend/css/' . $fileName . '/' . $fileName . '.css');
+		$this->enqueue_dependency('mia_' . $fileName, '/backend/js/' . $fileName . '/' . $fileName . '.js');
+
+		foreach ($this->styles as $style) {
+			wp_enqueue_style($style['name'], $style['location'], [], '1.0.0', 'all');
+		}
+
+		foreach (array_reverse($this->scripts) as $script) { // reverse to get the main script first
+			wp_enqueue_script($script['name'], $script['location'], ['jquery', 'jquery-ui-accordion'], '1.0.0', false);
+		}
 	}
 
 	public function enqueue_dependency($name, $location) {
 		if (!is_file(get_template_directory() . $location)) return;
 
-		wp_enqueue_script($name, get_template_directory_uri() . $location, ['jquery', 'jquery-ui-accordion'], '1.0.0', false);
+		$type = pathinfo($location, PATHINFO_EXTENSION) === 'js' ? 'scripts' : 'styles';
+
+		$this->{$type}[] = [
+			'name'     => $name,
+			'location' => get_template_directory_uri() . $location
+		];
 	}
 
 	public function read_pane() {
@@ -108,7 +121,10 @@ abstract class Page {
 	 * @return Timber::context
 	 */
 	protected function get_context($pageName) {
+		$this->enqueue_dependencies();
+
 		$context = Timber::get_context();
+
 		$context['page_name']   = $pageName; // e.g. Create Ticket
 		$context['mia_error']   = $this->error;
 		$context['mia_message'] = $this->message;
