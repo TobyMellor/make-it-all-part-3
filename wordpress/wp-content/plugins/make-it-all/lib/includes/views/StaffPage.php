@@ -57,17 +57,20 @@ class StaffPage extends Page {
 		$expertiseTypeStaffQuery = new ExpertiseTypeStaffQuery();
 		$expertiseTypeStaff = array_map(
 			function($a) use ($userId) {
-				return ['expertise_type_id' => $a, 'staff_id' => $userId];
+				return ['expertise_type_id' => $a, 'user_id' => $userId];
 			},
-			explode(',', $_POST['specialisms'])
+			$_POST['specialisms'] ? explode(',', $_POST['specialisms']) : []
 		);
 
-		$expertiseTypeStaffQuery->mia_delete($userId, 'staff_id');
-		$expertiseTypeStaffQuery->mia_bulk_insert(
-			'(%d, %d, %s, %s)',
-			'(expertise_type_id, staff_id, created_at, updated_at)',
-			$expertiseTypeStaff
-		);
+		$expertiseTypeStaffQuery->mia_delete($userId, 'user_id');
+
+		if (sizeOf($expertiseTypeStaff) > 0) {
+			$expertiseTypeStaffQuery->mia_bulk_insert(
+				'(%d, %d, %s, %s)',
+				'(expertise_type_id, user_id, created_at, updated_at)',
+				$expertiseTypeStaff
+			);
+		}
 
 		update_user_meta($userId, 'job_title', $_POST['job_title']);
 		update_user_meta($userId, 'department_id', $_POST['department_id']);
