@@ -7,6 +7,7 @@ use MakeItAll\Includes\Views\Page;
 use MakeItAll\Includes\Database\Queries\UserQuery;
 use MakeItAll\Includes\Database\Queries\ExpertiseTypeQuery;
 use MakeItAll\Includes\Database\Queries\ExpertiseTypeStaffQuery;
+use MakeItAll\Includes\Database\Queries\DepartmentQuery;
 
 class StaffPage extends Page {
 	protected $name = 'User';
@@ -26,8 +27,9 @@ class StaffPage extends Page {
 		$context['employees']            = json_encode((new UserQuery)->get());
 		$context['expertise_types']      = json_encode((new ExpertiseTypeQuery)->get());
 		$context['expertise_type_staff'] = json_encode((new ExpertiseTypeStaffQuery)->get());
+		$context['departments_obj']      = (new DepartmentQuery)->get();
 
-		$viewingUserId = $_GET['user_id'] ?: get_current_user_id();
+		$viewingUserId = isset($_GET['user_id']) ? $_GET['user_id'] : get_current_user_id();
 
 		$context['viewing_user'] = get_user_by('id', $viewingUserId);
 

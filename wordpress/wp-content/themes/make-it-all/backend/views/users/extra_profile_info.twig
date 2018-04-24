@@ -7,8 +7,15 @@
 			</td>
 		</tr>
 		<tr class="user-email-wrap">
-			<th><label for="department">Department</label></th>
-			<td><input name="department" id="department" value="{{ viewing_user.department }}" class="regular-text ltr" type="text">
+			<th><label for="department_id">Department</label></th>
+			<td>
+				<select name="department_id" id="department_id" class="regular-text ltr" autocomplete="off">
+					{% for department in departments_obj %}
+						<option value="{{ department.id }}" {% if viewing_user.department_id == department.id %} selected="selected" {% endif %}>
+							#{{ department.id }} – {{ department.name }}
+						</option>
+					{% endfor %}
+				</select>
 			</td>
 		</tr>
 		<tr class="user-email-wrap">
