@@ -33,7 +33,7 @@ class DepartmentQuery extends Query {
 	 */
 	protected function validate($columns) {
 		$validator = v::key('name', v::stringType()->length(2, 256))
-			->key('phone', v::phone());
+			->key('phone_number', v::phone());
 
 		return $this->assert_validation($validator, $columns);
 	}

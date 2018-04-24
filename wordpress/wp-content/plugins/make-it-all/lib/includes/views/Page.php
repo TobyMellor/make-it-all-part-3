@@ -13,6 +13,8 @@ abstract class Page {
 		'Update'
 	]; // to add/remove a page, redefine this in the child
 	protected $apiNamespace = 'make-it-all/v1';
+	protected $error        = null;
+	protected $message      = null;
 	
 	/**
 	 * Initialises the menu and submenu, and
@@ -47,6 +49,9 @@ abstract class Page {
 		}
 
 		add_action('admin_enqueue_scripts', [$this, 'enqueue_dependencies']); // Style/script only used for this page, e.g. ticket.css NOT main.css
+
+		$this->error   = $_SESSION['mia_error'];
+		$this->message = $_SESSION['mia_message'];
 	}
 	/**
 	 * Enqueues the scripts that are required
@@ -104,7 +109,11 @@ abstract class Page {
 	 */
 	protected function get_context($pageName) {
 		$context = Timber::get_context();
-		$context['page_name'] = $pageName; // e.g. Create Ticket
+		$context['page_name']   = $pageName; // e.g. Create Ticket
+		$context['mia_error']   = $this->error;
+		$context['mia_message'] = $this->message;
+
+		unset($_SESSION['mia_error'], $_SESSION['mia_message']);
 
 		return $context;
 	}
@@ -150,6 +159,21 @@ abstract class Page {
 			<script type="text/javascript">
 				window.location="' . $url . '";
 			</script>
-		';
+		'; exit;
+	}
+
+	protected function is_error($WPError) {
+		if (is_wp_error($WPError)) {
+			if ($WPError->errors
+					&& sizeOf($WPError->errors) > 0
+					&& sizeOf($WPError->errors[400] > 0)
+					&& sizeOf($WPError->errors[400][0]) > 0) {
+				return $_SESSION['mia_error'] = $WPError->errors[400][0][0];
+			}
+
+			return $_SESSION['mia_error'] = 'Sorry! An unknown error has occurred. Please try that action again.';
+		}
+
+		return false;
 	}
 }

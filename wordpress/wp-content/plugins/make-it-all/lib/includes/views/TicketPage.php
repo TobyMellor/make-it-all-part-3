@@ -144,7 +144,7 @@ class TicketPage extends Page {
 			]);
 		}
 
-		$this->mia_redirect('admin.php?page=ticket&id=' . $ticketId); exit;
+		return $this->mia_redirect('admin.php?page=ticket&id=' . $ticketId);
 	}
 
 	public function update_pane() {
@@ -220,7 +220,7 @@ class TicketPage extends Page {
 			]);
 		}
 
-		$this->mia_redirect('admin.php?page=ticket&id=' . $ticketId); exit;
+		return $this->mia_redirect('admin.php?page=ticket&id=' . $ticketId);
 	}
 
 	private function get_required_data($pageName) {

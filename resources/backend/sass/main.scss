@@ -94,6 +94,15 @@ table {
 	}
 }
 
+#message {
+	margin: 0;
+	margin-bottom: 20px;
+		
+	&.error {
+		border-left-color: $red;
+	}
+}
+
 //
 // Common Make-It-All styles for Admin pages
 //

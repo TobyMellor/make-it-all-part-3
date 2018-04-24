@@ -86,7 +86,7 @@ class HardwarePage extends Page {
 			$hardwareID = $wpdb->insert_id;
 		}
 		
-		$this->mia_redirect('admin.php?page=hardware&id=' . $hardwareID); exit;
+		return $this->mia_redirect('admin.php?page=hardware&id=' . $hardwareID);
 	}
 
 	// updating hardware
@@ -131,7 +131,7 @@ class HardwarePage extends Page {
 			]
 		);
 
-		$this->mia_redirect('admin.php?page=hardware&id=' . $hardwareId); exit;
+		return $this->mia_redirect('admin.php?page=hardware&id=' . $hardwareId);
 	}
 
 	private function get_hardware($context, $id) {

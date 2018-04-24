@@ -63,7 +63,7 @@ class DepartmentPage extends Page {
 	}
 
 	protected function create_action() {
-		global $wpdb;
+		global $wpdb, $session;
 
 		$departmentQuery = new DepartmentQuery();
 
@@ -73,9 +73,11 @@ class DepartmentPage extends Page {
 				'name'         => $department['name'],
 				'phone_number' => $department['phone_number']
 			]);
+
+			if ($this->is_error($departmentId)) return $this->mia_redirect('admin.php?page=department_create');
 		}
 
-		$this->mia_redirect('admin.php?page=department&id=' . $departmentId); exit;
+		$this->mia_redirect('admin.php?page=department_update&departmentId=' . $departmentId);
 	}
 
 	public function update_pane() {
@@ -151,6 +153,6 @@ class DepartmentPage extends Page {
 			]);
 		}
 
-		$this->mia_redirect('admin.php?page=ticket&id=' . $ticketId); exit;
+		return $this->mia_redirect('admin.php?page=ticket&id=' . $ticketId);
 	}
 }

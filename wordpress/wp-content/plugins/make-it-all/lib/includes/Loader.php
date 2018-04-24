@@ -130,6 +130,13 @@ class Loader {
 		$this->add_action('edit_user_profile_update', $page, 'update_action');
 
 		/**
+		 * Allow $_SESSION to be used in this plugin if it's not already enabled
+		 */
+		if (!session_id()) {
+			session_start();
+		}
+
+		/**
 		 * Now execute all of the filters and actions
 		 */
 
