@@ -20,6 +20,21 @@ class DepartmentQuery extends Query {
 				FROM {$this->prefix}{$this->table}
 			"
 		);
+	}
+
+	/**
+	 * Get department by ID
+	 *
+	 * @return Array
+	 */
+	public function get_department($departmentId) {
+		return $this->get_results(
+			"
+				SELECT *
+				FROM {$this->prefix}{$this->table}
+				WHERE id = {$departmentId}
+			"
+		);
 	}	
 
 	/**
