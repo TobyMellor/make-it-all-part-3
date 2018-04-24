@@ -27,7 +27,13 @@ class StaffPage extends Page {
 		$context['expertise_types']      = json_encode((new ExpertiseTypeQuery)->get());
 		$context['expertise_type_staff'] = json_encode((new ExpertiseTypeStaffQuery)->get());
 
-		$context['viewing_user'] = get_user_by('id', $_GET['user_id']) ?: wp_get_current_user();
+		$viewingUserId = $_GET['user_id'] ?: get_current_user_id();
+
+		$context['viewing_user'] = get_user_by('id', $viewingUserId);
+
+		$context['viewing_user']->job_title     = get_user_meta($viewingUserId, 'job_title', true);
+		$context['viewing_user']->department_id = get_user_meta($viewingUserId, 'department_id', true);
+		$context['viewing_user']->phone_number  = get_user_meta($viewingUserId, 'phone_number', true);
 
 		// Administrator > Analyst > Operator > Viewer
 		// Analyst = Author, Operator = Contributor, Viewer = Subscriber
@@ -60,5 +66,9 @@ class StaffPage extends Page {
 			'(expertise_type_id, staff_id, created_at, updated_at)',
 			$expertiseTypeStaff
 		);
+
+		update_user_meta($userId, 'job_title', $_POST['job_title']);
+		update_user_meta($userId, 'department_id', $_POST['department_id']);
+		update_user_meta($userId, 'phone_number', $_POST['phone_number']);
 	}
 }
