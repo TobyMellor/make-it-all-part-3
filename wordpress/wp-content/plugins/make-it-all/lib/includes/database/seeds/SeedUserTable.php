@@ -218,9 +218,10 @@ class SeedUserTable extends Seeder {
 				'display_name'        => $name
 			], true);
 
+			update_user_meta($userId, 'nickname',      $name);
 			update_user_meta($userId, 'job_title',     $user['job_title']);
 			update_user_meta($userId, 'department_id', $user['department_id']);
-			update_user_meta($userId, 'phone_number',   $user['phone_number']);
+			update_user_meta($userId, 'phone_number',  $user['phone_number']);
 
 			$user = (new \WP_User($userId))->add_role($user['role']);
 		}
