@@ -57,6 +57,12 @@ class UserQuery extends Query {
 			$employee->open_tickets = 0;
 			$employee->tickets = 0;
 
+			// TODO: Pull in the actual meta that gives the user's roles
+			$employee->administrator = 0;
+			$employee->analyst       = 0;
+			$employee->operator      = 1;
+			$employee->read          = 1;
+
 			foreach ($tickets as $key => $ticket) {
 				if ($ticket->user_id === $employee->id
 						|| $ticket->assigned_to_specialist_id === $employee->id
