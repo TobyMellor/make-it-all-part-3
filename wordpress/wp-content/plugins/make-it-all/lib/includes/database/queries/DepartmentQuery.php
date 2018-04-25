@@ -23,6 +23,28 @@ class DepartmentQuery extends Query {
 	}
 
 	/**
+	 * Get a list of departments /w search functionality
+	 *
+	 * @return Array
+	 */
+	public function get_department_table($search = null) {
+		$sql = "
+			SELECT *
+			FROM {$this->prefix}{$this->table}
+		";
+
+		if ($search) {
+			$search = $this->wpdb->esc_like($search);
+
+			$sql .= $this->wpdb->prepare(" WHERE name LIKE '%%%s%%' OR id LIKE '%%%s%%'", [$search, $search]);
+		}
+
+		$sql .= " ORDER BY UNIX_TIMESTAMP(updated_at) DESC";
+
+		return $this->get_results($sql);
+	}
+
+	/**
 	 * Get department by ID
 	 *
 	 * @return Array

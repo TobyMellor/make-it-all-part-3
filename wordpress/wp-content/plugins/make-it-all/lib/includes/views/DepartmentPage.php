@@ -41,6 +41,7 @@ class DepartmentPage extends Page {
 
 		$departmentTable = new DepartmentTable();
 		$departmentTable->prepare_items();
+		$departmentTable->search_box('search', 'search_id');
 		$departmentTable->display();
 	}
 
