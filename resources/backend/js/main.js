@@ -63,7 +63,9 @@ $(() => {
 
 	// if a panel has a slug, modify sessionStorage's collapsed_mia_panel_shorts
 	$(document).on('click', '.mia-panel-heading', function() {
-		if ($(this).parent().data('slug')) setCollapsedPanels(slug);
+		let slug = $(this).parent().data('slug');
+		
+		if (slug) setCollapsedPanels(slug);
 	});
 
 	let $miaPanelShort = $('.mia-panel-short');
