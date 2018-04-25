@@ -374,6 +374,96 @@
 	}
 }
 
+#comments {
+	margin-top: 18px;
+	background-color: $white;
+	padding: 18px;
+	border: 1px solid $grey-hover;
+
+	.comment {
+		display: flex;
+
+		> div:first-child {
+			flex-basis: 50px;
+
+			img {
+				display: block;
+				width: 65px;
+				height: 65px;
+				border-radius: 50%;
+			}
+
+			i {
+				display: block;
+				font-size: 40px;
+				text-align: center;
+				margin-top: 10px;
+			}
+		}
+
+		> div:last-child {
+			flex-grow: 1;
+
+			> .row {
+				margin-left: 18px;
+			}
+
+			.comment-header {
+				line-height: 45px;
+
+				h1 {
+					font-size: 22px;
+					font-weight: 500;
+					padding: 0;
+					display: inline;
+				}
+
+				span.filter {
+					float: none;
+					line-height: initial;
+				}
+
+				p {
+					float: right;
+					font-weight: 100;
+					color: $black-hover;
+					font-size: 16px;
+					margin: 0;
+					line-height: 40px;
+				}
+			}
+
+			.comment-body {
+				border-top: 1px solid $grey;
+				display: flex;
+
+				p {
+					font-size: 15px;
+					text-align: justify;
+					flex-grow: 1;
+					margin-bottom: 5px;
+				}
+
+				> div {
+					flex-basis: 95px;
+				}
+			}
+		}
+
+		&.solution {
+			> div:first-child {
+				i {
+					color: $green;
+
+					&:hover {
+						color: $green-hover;
+					}
+				}
+			}
+		}
+	}
+}
+
 //
 // Hardware/Software/OS
 //
