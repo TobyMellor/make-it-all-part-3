@@ -83,11 +83,28 @@ class SoftwarePage extends Page {
 		$this->mia_redirect('admin.php?page=software&id=' . $softwareID); exit;
 	}
 	
+	public function update_pane() {
+		parent::update_pane();
+
+		$context = $this->get_required_data('Update Software');
+
+		if (isset($_GET['id'])) {
+			$softwareID = $_GET['id'];
+
+			// ticket's current data
+			$context = $this->get_software($context, $softwareID);
+		}
+
+		$this->render_pane($context);
+	}
+	
+	
+	
 	private function get_required_data($pageName) {
 		$programQuery = new ProgramQuery();
 		$context = $this->get_context($pageName);
 
-		$context['software'] 			= json_encode($programQuery->get_software(null));
+		$context['softwares'] 			= json_encode($programQuery->get_software(null));
 		$context['operating_systems']   = json_encode($programQuery->get_opsystems());
 
 		return $context;
