@@ -3,8 +3,6 @@ import StaffManager from "../StaffManager";
 import DragController from "./DragController";
 
 $(() => {
-	if (!window.getUrlParameter('page').includes('problem_type')) return;
-
 	if (!window.employees || !window.expertiseTypes || !window.expertiseTypeStaff) return;
 
 	let staffManager         = window.staffManager         = new StaffManager(employees, 1, expertiseTypes, expertiseTypeStaff);
@@ -307,7 +305,7 @@ $(() => {
 				$specialistsTbody.append(`
 					<tr>
 						<td>
-							<strong>${specialist.name}</strong>
+							<strong>${specialist.display_name}</strong>
 							<div class="row-actions visible">
 								<span class="edit">
 									<a href="javascript:void(0);">View</a>

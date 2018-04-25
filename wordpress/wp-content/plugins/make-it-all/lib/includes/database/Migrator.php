@@ -21,7 +21,6 @@ class Migrator {
 		'CreateProgramTable',
 		'CreateDeviceTable',
 		'CreateExpertiseTypeTable',
-		'CreateStaffTable',
 		'CreateExpertiseTypeStaffTable',
 		'CreateCallTable',
 		'CreateTicketTable',

@@ -1,0 +1,80 @@
+{% extends "backend/views/layouts/page.twig" %}
+
+{% block main %}
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-9">
+			<form action="admin.php?page=department_create" method="POST">
+				<div class="mia-panel">
+					<div class="mia-panel-heading">
+						<h2>Department Information</h2>
+						<p>Enter information about one or more departments:</p>
+					</div>
+					<div class="mia-panel-body negative-margin">
+						<div class="accordions">
+							<div class="accordion-handle row">
+								<div class="accordion-icon col-xs-3">
+									<div class="number-circle">1</div>
+								</div>
+								<div class="accordion-title col-xs-9">
+									New Department
+								</div>
+								<div class="accordion-actions">
+									<i class="fa fa-chevron-up"></i>
+								</div>
+							</div>
+							<div class="accordion-body" data-accordion-id="1">
+								<div class="row mia-field-group">
+									<div class="col-sm-3 col-xs-12">
+										<p class="label">
+											Name <span class="required">*</span>
+										</p>
+
+										<p class="details">
+											Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+										</p>
+									</div>
+									<div class="col-sm-9 col-xs-12">
+										<input name="departments[1][name]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter department name here" validation="required|min:3|max:255">
+									</div>
+								</div>
+								<div class="row mia-field-group">
+									<div class="col-sm-3 col-xs-12">
+										<p class="label">
+											Phone Number <span class="required">*</span>
+										</p>
+
+										<p class="details">
+											Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+										</p>
+									</div>
+									<div class="col-sm-9 col-xs-12">
+										<input name="departments[1][phone_number]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter department phone number here" validation="required|phone">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="mia-panel-footer">
+						<div class="mia-button-group">
+							<p>More departments?</p>
+							<a href="javascript:void(0);" class="button button-primary" id="add-additional-department">Add additional department</a>
+						</div>
+						<div class="mia-button-group pull-right">
+							<p>All done?</p>
+							<button class="button button-primary" type="submit">Submit department(s)</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-3">
+			Helpful information about departments will go here…
+		</div>
+	</div>
+{% endblock %}
+
+{% block scripts %}
+	<script>
+
+	</script>
+{% endblock %}

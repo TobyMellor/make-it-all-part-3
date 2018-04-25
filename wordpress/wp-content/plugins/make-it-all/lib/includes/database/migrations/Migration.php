@@ -7,9 +7,13 @@ abstract class Migration {
 	protected $table;
 	protected $isTable = true;
 	protected $prefix;
+	protected $rawPrefix;
 
 	function __construct() {
-		global $wpdb; $this->prefix = $wpdb->prefix . 'mia_';
+		global $wpdb;
+
+		$this->rawPrefix = $wpdb->prefix;
+		$this->prefix    = $this->rawPrefix . 'mia_';
 	}
 
 	/**

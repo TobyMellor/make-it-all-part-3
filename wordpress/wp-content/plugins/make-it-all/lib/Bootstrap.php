@@ -27,7 +27,6 @@ use MakeItAll\Includes\{MakeItAll, Activator, Deactivator};
  */
 class Bootstrap {
 	public function __construct() {
-
 		// If this file is called directly, abort.
 		if (!defined('WPINC')) {
 			die;
@@ -52,7 +51,7 @@ class Bootstrap {
 	 * The code that runs during plugin activation.
 	 * This action is documented in includes/class-plugin-name-activator.php
 	 */
-	public function activate_make_it_all() {
+	public static function activate_make_it_all() {
 		new Activator();
 	}
 
@@ -60,7 +59,7 @@ class Bootstrap {
 	 * The code that runs during plugin deactivation.
 	 * This action is documented in includes/class-plugin-name-deactivator.php
 	 */
-	public function deactivate_make_it_all() {
+	public static function deactivate_make_it_all() {
 		new Deactivator();
 	}
 }

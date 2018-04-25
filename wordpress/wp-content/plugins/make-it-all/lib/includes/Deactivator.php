@@ -3,6 +3,7 @@
 namespace MakeItAll\Includes;
 
 use MakeItAll\Includes\Database\Migrator;
+use MakeItAll\Includes\Database\Seeds\SeedUserTable;
 
 /**
  * Fired during plugin deactivation.
@@ -25,5 +26,8 @@ class Deactivator {
 
 		$migrator = new Migrator;
 		$migrator->down();
+
+		$userSeeder = new SeedUserTable();
+		$userSeeder->truncate();
 	}
 }

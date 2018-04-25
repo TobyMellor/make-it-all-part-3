@@ -1,0 +1,36 @@
+@import "../main.scss";
+
+.problem-type-picker.problem-type-checkboxes {
+	background-color: $white;
+	height: 170px;
+
+	.type-columns {
+		.type-column {
+			li {
+				&:hover, &.last-active {
+					.specialism-checkbox {
+						border: 2px solid $white;
+					}
+				}
+
+				.specialism-checkbox {
+					width: 13px;
+					height: 13px;
+					border: 2px solid $black;
+					cursor: pointer;
+
+					i {
+						position: absolute;
+						right: 10px;
+						top: 6px;
+						font-size: 13px;
+
+						&.fa-times {
+							display: none;
+						}
+					}
+				}
+			}
+		}
+	}
+}
