@@ -10,7 +10,6 @@ $(() => {
 
 	init();
 
-
 	let dragController = window.dragController = new DragController();
 
 	$(function() {

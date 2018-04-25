@@ -169,29 +169,47 @@
 		}
 	}
 
-	.renaming-problem-type {
-		display: flex;
-
-		input {
-			display: initial;
-			flex: 3;
-		}
-
-		button {
-			border-radius: 0 3px 3px 0;
-			flex: 1;
-
-			&:disabled {
-				border-bottom: 2px solid #eee;
-				height: 29px;
-			}
-		}
-	}
-
 	.problem-specialists-panel {
 		p {
 			display: none;
 		}
+	}
+}
+
+.renaming-problem-type, .searching-problem-types {
+	display: flex;
+
+	input {
+		display: initial !important;
+		flex: 3;
+	}
+
+	button {
+		border-radius: 0 3px 3px 0 !important;
+		flex: 1;
+
+		&:disabled {
+			border-bottom: 2px solid #eee;
+			height: 29px;
+		}
+	}
+}
+
+.searching-problem-types {
+	margin-bottom: 18px;
+
+	input {
+		display: none;
+		margin: 0;
+		border-right: 0;
+		border-radius: 3px 0 0 3px;
+		border-color: #ccc;
+		box-shadow: 0 1px 0 #ccc;
+		padding: 7px 8px;
+	}
+
+	button {
+		height: auto !important;
 	}
 }
 
