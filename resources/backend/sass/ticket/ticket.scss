@@ -174,16 +174,15 @@
 		}
 
 		.breadcrumb { 
-			text-align: center;
 			margin-top: 15px;
+			margin-left: 25px;
 
 			li {
 				display: inline;
 
 				&:last-child {
 					a {
-						font-weight: 600;
-						text-decoration: underline;
+						font-weight: 500;
 					}
 
 					i {
@@ -195,11 +194,12 @@
 					color: $black;
 					font-size: 20px;
 					text-decoration: none;
-					font-weight: 500;
+					font-weight: 400;
+					cursor: pointer;
 
 					&:hover {
-						text-decoration: underline;
 						color: $black-hover;
+						text-decoration: underline;
 					}
 				}
 
