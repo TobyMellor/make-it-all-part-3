@@ -258,12 +258,15 @@ $(() => {
 			if (matches.length) {
 				matches.forEach(match => $tbody.append(
 					`	
-						<tr>
+						<tr data-expertise-type-id="${match.id}">
 							<td class="has-row-actions">
 								${expertiseTypeManager.getExpertiseTypeBreadcrumb(match.id)}
 								<div class="row-actions visible">
 									<span class="view">
-										<a href="javascript:void(0);">View</a> | </span><span class="delete"><a href="javascript:void(0);">Delete</a>
+										<a href="javascript:void(0);">View</a> |
+									</span>
+									<span class="delete">
+										<a href="javascript:void(0);">Delete</a>
 									</span>
 								</div>
 							</td>
@@ -285,6 +288,21 @@ $(() => {
 		if (!$show.is(':visible')) {
 			$hide.fadeOut(250, () => $show.fadeIn(250));
 		}
+	});
+
+	$(document).on('click', 'tr .view', function() {
+		let id = $(this).closest('tr').data('expertiseTypeId');
+
+		expertiseTypeManager.loadExpertiseType($('.type-columns'), id);
+		$('.searching-problem-types input').val('').trigger('keyup');
+	});
+
+	$(document).on('click', 'tr .delete', function() {
+		let id = $(this).closest('tr').data('expertiseTypeId');
+
+		expertiseTypeManager.loadExpertiseType($('.type-columns'), id);
+		$('.searching-problem-types input').val('').trigger('keyup');
+		$('#delete-problem-type').click();
 	});
 
 	// load the initial problem types. If not present, hide "Problem Type Actions"
