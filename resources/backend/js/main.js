@@ -48,24 +48,6 @@ $(() => {
 		$('.accordions .accordion-handle.ui-state-active .fa:not(.fa-trash-o), .mia-panel-short .mia-panel-heading.ui-state-active .fa').removeClass().addClass('fa fa-chevron-down');
 	});
 
-	// if a panel has a slug, modify sessionStorage's collapsed_mia_panel_shorts
-	$(document).on('click', '.mia-panel-heading', function() {
-		let slug = $(this).parent().data('slug');
-
-		if (slug) {
-			let collapsedPanels = sessionStorage.getItem('collapsed_mia_panel_shorts') !== "" ? sessionStorage.getItem('collapsed_mia_panel_shorts').split(',') : [],
-				slugIndexOf     = collapsedPanels.indexOf(slug);
-
-			if (slugIndexOf > -1) {
-				collapsedPanels.splice(slugIndexOf, 1);
-			} else {
-				collapsedPanels = [...collapsedPanels, slug];
-			}
-
-			sessionStorage.setItem('collapsed_mia_panel_shorts', collapsedPanels);
-		}
-	});
-
 	$(document).on('click', '.accordion-handle .accordion-actions .fa-trash-o', function() {
 		if (!confirm('Are you sure you want to delete this ticket?')) return;
 
@@ -79,10 +61,15 @@ $(() => {
 		});
 	});
 
+	// if a panel has a slug, modify sessionStorage's collapsed_mia_panel_shorts
+	$(document).on('click', '.mia-panel-heading', function() {
+		if ($(this).parent().data('slug')) setCollapsedPanels(slug);
+	});
+
 	let $miaPanelShort = $('.mia-panel-short');
 
 	if ($miaPanelShort.length) {
-		let collapsedPanels = sessionStorage.getItem('collapsed_mia_panel_shorts').split(','); // if a mia_panel_short's slug is in here, it will be collapsed
+		let collapsedPanels = getCollapsedPanels(); // if a mia_panel_short's slug is in here, it will be collapsed
 
 		$miaPanelShort.each(function(el) {
 			if (collapsedPanels.includes($(this).data('slug'))) {
@@ -104,6 +91,29 @@ $(() => {
 			icons: false,
 			collapsible: true
 		});
+	}
+
+	function getCollapsedPanels() {
+		let collapsedPanels = sessionStorage.getItem('collapsed_mia_panel_shorts');
+
+		if (collapsedPanels) {
+			return collapsedPanels.split(',') || [];
+		}
+
+		return [];
+	}
+
+	function setCollapsedPanels(slug) {
+		let collapsedPanels = getCollapsedPanels(),
+			slugIndexOf     = collapsedPanels.indexOf(slug);
+
+		if (slugIndexOf > -1) {
+			collapsedPanels.splice(slugIndexOf, 1);
+		} else {
+			collapsedPanels = [...collapsedPanels, slug];
+		}
+
+		sessionStorage.setItem('collapsed_mia_panel_shorts', collapsedPanels);
 	}
 });
 
