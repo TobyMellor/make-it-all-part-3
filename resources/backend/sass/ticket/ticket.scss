@@ -377,11 +377,16 @@
 #comments {
 	margin-top: 18px;
 	background-color: $white;
-	padding: 18px;
+	padding: 22px 40px 22px 32px;
 	border: 1px solid $grey-hover;
 
 	.comment {
 		display: flex;
+		margin-top: 32px;
+
+		&:first-child {
+			margin-top: 0;
+		}
 
 		> div:first-child {
 			flex-basis: 50px;
@@ -398,6 +403,12 @@
 				font-size: 40px;
 				text-align: center;
 				margin-top: 10px;
+				color: $silver;
+				cursor: pointer;
+
+				&:hover {
+					color: $black-hover;
+				}
 			}
 		}
 
@@ -421,6 +432,7 @@
 				span.filter {
 					float: none;
 					line-height: initial;
+					cursor: pointer;
 				}
 
 				p {
@@ -451,6 +463,10 @@
 		}
 
 		&.solution {
+			background-color: $highlight;
+			margin: -22px -40px -10px -32px;
+			padding: 22px 40px 22px 32px;
+
 			> div:first-child {
 				i {
 					color: $green;
