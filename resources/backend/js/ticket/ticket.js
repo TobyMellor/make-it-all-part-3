@@ -49,6 +49,8 @@ $(() => {
 			$operatorSelect = $assignOptions.find('select'),
 			$input          = $(this).find('input');
 
+		if ($input.attr('disabled')) return;
+
 		$operatorSelect.prop('selectedIndex', 0);
 
 		if ($input.val() === 'operator') {
