@@ -5,69 +5,8 @@
 $breakpoint-xs: 767px;
 
 @media (max-width: $breakpoint-xs) {
-	.mia-panel .mia-panel-body .accordion-body, .mia-panel.call-panel #call-information .mia-panel-body {
-		> .mia-field-group {
-			&:first-child > div:first-child {
-				border-top: 0;
-			}
-
-			> div {
-				border-bottom: 0;
-
-				&:first-child {
-					border-right: 0;
-					border-top: 1px solid $silver;
-					border-bottom: 1px solid $silver;
-					border-left: 2px solid $blue-hover;
-				}
-			}
-		}
-	}
-	
-	.mia-panel {
-		.mia-panel-heading {
-			.col-sm-9 {
-				select {
-					width: 100%;
-					margin: 12px 0 0 0;
-				}
-			}
-		}
-	}
-
-	.mia-panel-footer {
-		border-top: 1px solid $silver;
-	}
-
 	.call-panel .details {
 		max-width: initial;
-	}
-
-	.assign-options {
-		display: block;
-		max-height: 180px;
-
-		> div:first-child {
-			width: 100%;
-
-			label {
-				margin-right: 16px;
-				margin-bottom: 0;
-				margin-top: 2px;
-				display: inline-block;
-			}
-
-			select {
-				margin-top: 10px;
-				width: 50%;
-   				display: block;
-			}
-		}
-
-		> div:last-child {
-			border-top: 1px solid #e5e5e5;
-			border-left: 0;
-		}
 	}
 }
 
