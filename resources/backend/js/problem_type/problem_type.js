@@ -255,21 +255,31 @@ $(() => {
 
 			$tbody.empty();
 
-			matches.forEach(match => $tbody.append(
-				`	
-					<tr>
-						<td class="has-row-actions">
-							${expertiseTypeManager.getExpertiseTypeBreadcrumb(match.id)}
-							<div class="row-actions visible">
-								<span class="view">
-									<a href="javascript:void(0);">View</a> | </span><span class="delete"><a href="javascript:void(0);">Delete</a>
-								</span>
-							</div>
+			if (matches.length) {
+				matches.forEach(match => $tbody.append(
+					`	
+						<tr>
+							<td class="has-row-actions">
+								${expertiseTypeManager.getExpertiseTypeBreadcrumb(match.id)}
+								<div class="row-actions visible">
+									<span class="view">
+										<a href="javascript:void(0);">View</a> | </span><span class="delete"><a href="javascript:void(0);">Delete</a>
+									</span>
+								</div>
+							</td>
+							<td>${staffManager.getSpecialistsOfSpecialism(match.id).length}</td>
+						</tr>
+					`
+				));
+			} else {
+				$tbody.html(`
+					<tr class="no-items">
+						<td colspan="2">
+							No items found.
 						</td>
-						<td>${staffManager.getSpecialistsOfSpecialism(match.id).length}</td>
 					</tr>
-				`
-			));
+				`);
+			}
 		}
 
 		if (!$show.is(':visible')) {
