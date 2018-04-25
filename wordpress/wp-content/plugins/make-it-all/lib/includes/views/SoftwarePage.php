@@ -90,14 +90,30 @@ class SoftwarePage extends Page {
 
 		if (isset($_GET['id'])) {
 			$softwareID = $_GET['id'];
-
 			// ticket's current data
 			$context = $this->get_software($context, $softwareID);
 		}
 
 		$this->render_pane($context);
 	}
-	
+
+	protected function update_action() {
+		global $wpdb;
+		$programQuery = new ProgramQuery();
+		$software = $_POST['software'];
+		$softwareID = $software['id'];
+		$programQuery->mia_update(
+			$softwareID,
+			[
+				'name'      	   => $software['name'],
+				'expiry_date'      => date('Y-m-d H:i:s', strtotime($software['expiry'])),
+				'operating_system' => $software['type']
+			]
+		);
+
+		$this->mia_redirect('admin.php?page=software&id=' . $softwareID); exit;
+
+	}
 	
 	
 	private function get_required_data($pageName) {
