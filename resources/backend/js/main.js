@@ -42,17 +42,28 @@ $(() => {
 		})
 	});
 
-	$('.mia-panel-short').accordion({
-		heightStyle: 'content',
-		handle: '.mia-panel-heading',
-		icons: false,
-		collapsible: true
-	});
-
 	// make the chevron handle go up/down when an accordion is expanded/minimized
 	$(document).on('click', '.accordion-handle, .mia-panel-heading', function() {
 		$('.accordions .accordion-handle .fa:not(.fa-trash-o), .mia-panel-short .mia-panel-heading .fa').removeClass().addClass('fa fa-chevron-up');
 		$('.accordions .accordion-handle.ui-state-active .fa:not(.fa-trash-o), .mia-panel-short .mia-panel-heading.ui-state-active .fa').removeClass().addClass('fa fa-chevron-down');
+	});
+
+	// if a panel has a slug, modify sessionStorage's collapsed_mia_panel_shorts
+	$(document).on('click', '.mia-panel-heading', function() {
+		let slug = $(this).parent().data('slug');
+
+		if (slug) {
+			let collapsedPanels = sessionStorage.getItem('collapsed_mia_panel_shorts') !== "" ? sessionStorage.getItem('collapsed_mia_panel_shorts').split(',') : [],
+				slugIndexOf     = collapsedPanels.indexOf(slug);
+
+			if (slugIndexOf > -1) {
+				collapsedPanels.splice(slugIndexOf, 1);
+			} else {
+				collapsedPanels = [...collapsedPanels, slug];
+			}
+
+			sessionStorage.setItem('collapsed_mia_panel_shorts', collapsedPanels);
+		}
 	});
 
 	$(document).on('click', '.accordion-handle .accordion-actions .fa-trash-o', function() {
@@ -67,6 +78,23 @@ $(() => {
 			if ($('.accordion-handle.ui-state-active').length === 0) $('.accordion-handle').first().click();
 		});
 	});
+
+	let $miaPanelShort = $('.mia-panel-short');
+
+	if ($miaPanelShort.length) {
+		$miaPanelShort.accordion({
+			heightStyle: 'content',
+			handle: '.mia-panel-heading',
+			icons: false,
+			collapsible: true
+		});
+
+		let collapsedPanels = sessionStorage.getItem('collapsed_mia_panel_shorts').split(','); // if a mia_panel_short's slug is in here, it will be collapsed
+		
+		$miaPanelShort.each(function(el) {
+			if (collapsedPanels.includes($(this).data('slug'))) $(this).find('div').first().click();
+		});
+	}
 });
 
 function setDateDisplay($spans, date) {
