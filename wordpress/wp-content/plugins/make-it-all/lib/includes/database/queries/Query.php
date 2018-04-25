@@ -10,12 +10,14 @@ abstract class Query {
 	protected $table;
 	protected $rawPrefix;
 	protected $prefix;
+	protected $wpdb;
 
 	function __construct() {
 		global $wpdb;
 
 		$this->rawPrefix = $wpdb->prefix;
 		$this->prefix    = $this->rawPrefix . 'mia_';
+		$this->wpdb      = $wpdb;
 	}
 
 	/**
@@ -24,9 +26,7 @@ abstract class Query {
 	 * @return void
 	 */
 	protected function get_results($query) {
-		global $wpdb;
-
-		$results = $wpdb->get_results($query);
+		$results = $this->wpdb->get_results($query);
 
 		if (sizeOf($results) > 0 && isset($results[0]->created_at) && isset($results[0]->updated_at)) {
 			foreach ($results as $result) {
@@ -62,13 +62,11 @@ abstract class Query {
 			$prefix = $this->rawPrefix;
 		}
 
-		global $wpdb;
-
-		if (!$wpdb->insert($prefix . $this->table, $columns)) {
+		if (!$this->wpdb->insert($prefix . $this->table, $columns)) {
 			wp_die('Sorry! We failed to insert that record. Please try again.');
 		}
 
-		return $wpdb->insert_id;
+		return $this->wpdb->insert_id;
 	}
 
 	/**
@@ -77,8 +75,6 @@ abstract class Query {
 	 * @return (int|false) Number of rows affected/selected or false on error
 	 */
 	public function mia_bulk_insert($placeholder, $columnNames, $rows) {
-		global $wpdb;
-
 		$date         = date('Y-m-d H:i:s');
 		$values       = [];
 
@@ -90,10 +86,10 @@ abstract class Query {
 			$columns['created_at'] = $date;
 			$columns['updated_at'] = $date;
 
-			$values[] = $wpdb->prepare($placeholder, $columns);
+			$values[] = $this->wpdb->prepare($placeholder, $columns);
 		}
 
-		return $wpdb->query("INSERT INTO {$this->prefix}{$this->table} {$columnNames} VALUES " . implode(',', $values));
+		return $this->wpdb->query("INSERT INTO {$this->prefix}{$this->table} {$columnNames} VALUES " . implode(',', $values));
 	}
 
 	/**
@@ -108,13 +104,11 @@ abstract class Query {
 
 		$columns['updated_at'] = date('Y-m-d H:i:s');
 
-		global $wpdb;
-
-		if (!$wpdb->update($this->prefix . $this->table, $columns, [$whereColumn => $id])) {
+		if (!$this->wpdb->update($this->prefix . $this->table, $columns, [$whereColumn => $id])) {
 			wp_die('Sorry! We failed to update that record. Please try again.');
 		}
 
-		return $wpdb->insert_id;
+		return $this->wpdb->insert_id;
 	}
 
 	/**
@@ -123,9 +117,7 @@ abstract class Query {
 	 * @return Boolean
 	 */
 	public function mia_delete($id, $whereColumn = 'id') {
-		global $wpdb;
-
-		if (!$wpdb->delete($this->prefix . $this->table, [$whereColumn => $id])) {
+		if (!$this->wpdb->delete($this->prefix . $this->table, [$whereColumn => $id])) {
 			return new WP_Error(400, 'Sorry! We failed to delete that record. Please try again.');
 		}
 

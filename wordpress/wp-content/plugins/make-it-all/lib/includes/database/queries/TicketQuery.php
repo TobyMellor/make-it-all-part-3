@@ -22,9 +22,8 @@ class TicketQuery extends Query {
 		);
 	}
 
-	public function get_tickets_table() {
-		return $this->get_results(
-			"
+	public function get_tickets_table($search = null) {
+		$sql = "
 				SELECT
 					ticket.id AS id,
 					title,
@@ -62,9 +61,17 @@ class TicketQuery extends Query {
 					ON _call.id = call_ticket.call_id
 				JOIN {$this->rawPrefix}users AS caller
 					ON caller.id = _call.caller_id
-				ORDER BY UNIX_TIMESTAMP(ticket.updated_at) DESC
-			"
-		);
+			";
+
+		if ($search) {
+			$search = $this->wpdb->esc_like($search);
+
+			$sql .= $this->wpdb->prepare(" WHERE ticket.title LIKE '%%%s%%' OR ticket.id LIKE '%%%s%%'", [$search, $search]);
+		}
+
+		$sql .= " ORDER BY UNIX_TIMESTAMP(ticket.updated_at) DESC";
+
+		return $this->get_results($sql);
 	}
 
 	/**

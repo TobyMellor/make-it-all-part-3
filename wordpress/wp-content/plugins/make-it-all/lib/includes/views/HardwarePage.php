@@ -42,7 +42,7 @@ class HardwarePage extends Page {
 
 			$hardwareTable = new HardwareTable();
 			$hardwareTable->prepare_items();
-
+			$hardwareTable->search_box('search', 'search_id');
 			$hardwareTable->display();
 		}
 	}

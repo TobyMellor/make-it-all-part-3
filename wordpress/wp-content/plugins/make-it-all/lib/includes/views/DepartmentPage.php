@@ -41,6 +41,7 @@ class DepartmentPage extends Page {
 
 		$departmentTable = new DepartmentTable();
 		$departmentTable->prepare_items();
+		$departmentTable->search_box('search', 'search_id');
 		$departmentTable->display();
 	}
 
@@ -77,6 +78,7 @@ class DepartmentPage extends Page {
 			if ($this->is_error($departmentId)) return $this->mia_redirect('admin.php?page=department_create');
 		}
 
+		$_SESSION['mia_message'] = 'Department(s) successfully created.';
 		$this->mia_redirect('admin.php?page=department_update&id=' . $departmentId);
 	}
 

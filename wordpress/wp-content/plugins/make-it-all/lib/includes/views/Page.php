@@ -50,8 +50,8 @@ abstract class Page {
 			);
 		}
 
-		$this->error   = isset($_SESSION['mia_error'])   ?? $_SESSION['mia_error'];
-		$this->message = isset($_SESSION['mia_message']) ?? $_SESSION['mia_message'];
+		$this->error   = isset($_SESSION['mia_error'])   ? $_SESSION['mia_error'] : null;
+		$this->message = isset($_SESSION['mia_message']) ? $_SESSION['mia_message'] : null;
 	}
 	/**
 	 * Enqueues the scripts that are required

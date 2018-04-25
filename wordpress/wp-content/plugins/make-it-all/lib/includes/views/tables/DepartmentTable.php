@@ -46,7 +46,7 @@ class DepartmentTable extends Table {
 	 * @return Array
 	 */
 	protected function table_data() {
-		return (new DepartmentQuery)->get();
+		return (new DepartmentQuery)->get_department_table(isset($_GET['s']) ? $_GET['s'] : null);
 	}
 
 	/**
