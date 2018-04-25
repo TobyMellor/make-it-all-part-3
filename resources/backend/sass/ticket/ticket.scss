@@ -387,6 +387,34 @@
 		&:first-child {
 			margin-top: 0;
 		}
+		
+		&:hover {
+			> div:first-child {
+				i {
+					display: block !important;
+				}
+			}
+		}
+
+		&.solution {
+			background-color: $highlight;
+			margin: -22px -40px -10px -32px;
+			padding: 22px 40px 22px 32px;
+
+			> div:first-child {
+				i.toggle-solution {
+					color: $green;
+
+					&:hover {
+						color: $green-hover !important;
+					}
+				}
+
+				i.delete-comment, i.edit-comment {
+					color: $black-hover;
+				}
+			}
+		}
 
 		> div:first-child {
 			flex-basis: 50px;
@@ -406,8 +434,13 @@
 				color: $silver;
 				cursor: pointer;
 
+				&.delete-comment, &.edit-comment {
+					font-size: 30px;
+					display: none;
+				}
+
 				&:hover {
-					color: $black-hover;
+					color: $black !important;
 				}
 			}
 		}
@@ -458,22 +491,6 @@
 
 				> div {
 					flex-basis: 95px;
-				}
-			}
-		}
-
-		&.solution {
-			background-color: $highlight;
-			margin: -22px -40px -10px -32px;
-			padding: 22px 40px 22px 32px;
-
-			> div:first-child {
-				i {
-					color: $green;
-
-					&:hover {
-						color: $green-hover;
-					}
 				}
 			}
 		}
