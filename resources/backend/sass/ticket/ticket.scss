@@ -46,6 +46,7 @@
 	.mia-field-group {
 		& > div {
 			padding: 8px 12px;
+			min-height: auto;
 		}
 
 		.label {
@@ -134,6 +135,7 @@
 			& > div {
 				padding: 8px 12px;
 				overflow-x: auto;
+				min-height: auto;
 			}
 
 			&:last-child > div {
@@ -148,7 +150,7 @@
 		& > div:last-child {
 			border-left: 1px solid $silver;
 			overflow: auto;
-			height: 231px;
+			height: 252px;
 		}
 
 		.mia-field-group:last-child > div {
@@ -232,6 +234,20 @@
 				height: initial;
 			}
 		}
+	}
+}
+
+.viewing-ticket {
+	table, .view-accordion {
+		border: 1px solid $grey-hover;
+	}
+
+	table {
+		border-bottom: none;
+	}
+
+	.view-accordion {
+		border-top: none;
 	}
 }
 
