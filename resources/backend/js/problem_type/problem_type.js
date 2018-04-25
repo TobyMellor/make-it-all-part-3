@@ -242,6 +242,41 @@ $(() => {
 			});
 	});
 
+	$('.searching-problem-types input').keyup(function() {
+		let query          = $(this).val(),
+			$finderWindow  = $('.finder-window'),
+			$table         = $('#search-table');
+		
+		let [$show, $hide] = query.length > 2 ? [$table, $finderWindow] : [$finderWindow, $table];
+
+		if (query.length > 2) {
+			let $tbody  = $table.find('tbody'),
+				matches = expertiseTypeManager.expertiseTypes.filter(expertiseType => expertiseType.name.toLowerCase().includes(query.toLowerCase()));
+
+			$tbody.empty();
+
+			matches.forEach(match => $tbody.append(
+				`	
+					<tr>
+						<td class="has-row-actions">
+							${expertiseTypeManager.getExpertiseTypeBreadcrumb(match.id)}
+							<div class="row-actions visible">
+								<span class="view">
+									<a href="javascript:void(0);">View</a> | </span><span class="delete"><a href="javascript:void(0);">Delete</a>
+								</span>
+							</div>
+						</td>
+						<td>${staffManager.getSpecialistsOfSpecialism(match.id).length}</td>
+					</tr>
+				`
+			));
+		}
+
+		if (!$show.is(':visible')) {
+			$hide.fadeOut(250, () => $show.fadeIn(250));
+		}
+	});
+
 	// load the initial problem types. If not present, hide "Problem Type Actions"
 	function init() {
 		if (expertiseTypeManager.expertiseTypes.length) {
