@@ -41,6 +41,32 @@ $(() => {
 			$(this).remove();
 		})
 	});
+
+	$('.mia-panel-short').accordion({
+		heightStyle: 'content',
+		handle: '.mia-panel-heading',
+		icons: false,
+		collapsible: true
+	});
+
+	// make the chevron handle go up/down when an accordion is expanded/minimized
+	$(document).on('click', '.accordion-handle, .mia-panel-heading', function() {
+		$('.accordions .accordion-handle .fa:not(.fa-trash-o), .mia-panel-short .mia-panel-heading .fa').removeClass().addClass('fa fa-chevron-up');
+		$('.accordions .accordion-handle.ui-state-active .fa:not(.fa-trash-o), .mia-panel-short .mia-panel-heading.ui-state-active .fa').removeClass().addClass('fa fa-chevron-down');
+	});
+
+	$(document).on('click', '.accordion-handle .accordion-actions .fa-trash-o', function() {
+		if (!confirm('Are you sure you want to delete this ticket?')) return;
+
+		let $accordionHandle = $(this).closest('.accordion-handle');
+
+		$accordionHandle.add($accordionHandle.next()).fadeOut(250, function() {
+			$(this).remove();
+
+			// if no accordions are expanded, expand the first
+			if ($('.accordion-handle.ui-state-active').length === 0) $('.accordion-handle').first().click();
+		});
+	});
 });
 
 function setDateDisplay($spans, date) {
