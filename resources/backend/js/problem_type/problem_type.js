@@ -369,8 +369,8 @@ $(() => {
 						<td>
 							<strong>${specialist.display_name}</strong>
 							<div class="row-actions visible">
-								<span class="edit">
-									<a href="javascript:void(0);">View</a>
+								<span>
+									<a href="user-edit.php?user_id=${specialist.id}">View</a>
 								</span>
 							</div>
 						</td>
