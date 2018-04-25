@@ -6,6 +6,7 @@ use Timber;
 
 abstract class Page {
 	protected $name     = 'Unknown';
+	protected $nameSlug = 'unknown';
 	protected $icon     = 'dashicons-editor-help';
 	protected $position = null;
 	protected $pages    = [
@@ -28,7 +29,7 @@ abstract class Page {
 	public function init() {
 		$name = $this->name;
 
-		$parentSlug = $this->get_string_as_slug($this->name);
+		$parentSlug = $this->nameSlug = $this->get_string_as_slug($this->name);
 
 		add_menu_page('View ' . $name, ($name == "Hardware" ? $name : $name . 's'), 'read_make_it_all', $parentSlug, [$this, 'read_pane'], $this->icon, $this->position);
 
@@ -64,7 +65,7 @@ abstract class Page {
 	 * @return @void
 	 */
 	public function enqueue_dependencies() {
-		$fileName = $this->get_string_as_slug($this->name);
+		$fileName = $this->nameSlug;
 
 		$this->enqueue_dependency('mia_' . $fileName, '/backend/css/' . $fileName . '/' . $fileName . '.css');
 		$this->enqueue_dependency('mia_' . $fileName, '/backend/js/' . $fileName . '/' . $fileName . '.js');
@@ -91,15 +92,15 @@ abstract class Page {
 
 	public function read_pane() {
 		$this->enqueue_dependency(
-			'mia_read_' . $this->get_string_as_slug($this->name), // name of script, e.g. mia_read_tickets
-			'/backend/js/' . $this->get_string_as_slug($this->name) . '/read_' . $this->get_string_as_slug($this->name) . '.js' // location of script
+			'mia_read_' . $this->nameSlug, // name of script, e.g. mia_read_tickets
+			'/backend/js/' . $this->nameSlug . '/read_' . $this->nameSlug . '.js' // location of script
 		);
 	}
 
 	public function create_pane() {
 		$this->enqueue_dependency(
-			'mia_create_' . $this->get_string_as_slug($this->name),
-			'/backend/js/' . $this->get_string_as_slug($this->name) . '/create_' . $this->get_string_as_slug($this->name) . '.js'
+			'mia_create_' . $this->nameSlug,
+			'/backend/js/' . $this->nameSlug . '/create_' . $this->nameSlug . '.js'
 		);
 
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') return $this->create_action();
@@ -107,8 +108,8 @@ abstract class Page {
 
 	public function update_pane() {
 		$this->enqueue_dependency(
-			'mia_update_' . $this->get_string_as_slug($this->name),
-			'/backend/js/' . $this->get_string_as_slug($this->name) . '/update_' . $this->get_string_as_slug($this->name) . '.js'
+			'mia_update_' . $this->nameSlug,
+			'/backend/js/' . $this->nameSlug . '/update_' . $this->nameSlug . '.js'
 		);
 
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') return $this->update_action();
@@ -129,6 +130,10 @@ abstract class Page {
 		$context['mia_error']   = $this->error;
 		$context['mia_message'] = $this->message;
 
+		if ($this->nameSlug !== 'problem_type' && strpos(strtolower($pageName), 'create') === false) {
+			$context['create_url'] = 'admin.php?page=' . $this->nameSlug . '_create';
+		}
+
 		unset($_SESSION['mia_error'], $_SESSION['mia_message']);
 
 		return $context;
@@ -145,7 +150,7 @@ abstract class Page {
 	protected function render_pane($context) {
 		Timber::render(
 			'backend/views/' .
-			$this->get_string_as_slug($this->name) . 's/' .
+			$this->nameSlug . 's/' .
 			$this->get_string_as_slug($context['page_name']) .
 			'.twig',
 			$context

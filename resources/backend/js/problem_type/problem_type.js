@@ -10,7 +10,6 @@ $(() => {
 
 	init();
 
-
 	let dragController = window.dragController = new DragController();
 
 	$(function() {
@@ -243,6 +242,69 @@ $(() => {
 			});
 	});
 
+	$('.searching-problem-types input').keyup(function() {
+		let query          = $(this).val(),
+			$finderWindow  = $('.finder-window'),
+			$table         = $('#search-table');
+		
+		let [$show, $hide] = query.length > 2 ? [$table, $finderWindow] : [$finderWindow, $table];
+
+		if (query.length > 2) {
+			let $tbody  = $table.find('tbody'),
+				matches = expertiseTypeManager.expertiseTypes.filter(expertiseType => expertiseType.name.toLowerCase().includes(query.toLowerCase()));
+
+			$tbody.empty();
+
+			if (matches.length) {
+				matches.forEach(match => $tbody.append(
+					`	
+						<tr data-expertise-type-id="${match.id}">
+							<td class="has-row-actions">
+								${expertiseTypeManager.getExpertiseTypeBreadcrumb(match.id)}
+								<div class="row-actions visible">
+									<span class="view">
+										<a href="javascript:void(0);">View</a> |
+									</span>
+									<span class="delete">
+										<a href="javascript:void(0);">Delete</a>
+									</span>
+								</div>
+							</td>
+							<td>${staffManager.getSpecialistsOfSpecialism(match.id).length}</td>
+						</tr>
+					`
+				));
+			} else {
+				$tbody.html(`
+					<tr class="no-items">
+						<td colspan="2">
+							No items found.
+						</td>
+					</tr>
+				`);
+			}
+		}
+
+		if (!$show.is(':visible')) {
+			$hide.fadeOut(250, () => $show.fadeIn(250));
+		}
+	});
+
+	$(document).on('click', 'tr .view', function() {
+		let id = $(this).closest('tr').data('expertiseTypeId');
+
+		expertiseTypeManager.loadExpertiseType($('.type-columns'), id);
+		$('.searching-problem-types input').val('').trigger('keyup');
+	});
+
+	$(document).on('click', 'tr .delete', function() {
+		let id = $(this).closest('tr').data('expertiseTypeId');
+
+		expertiseTypeManager.loadExpertiseType($('.type-columns'), id);
+		$('.searching-problem-types input').val('').trigger('keyup');
+		$('#delete-problem-type').click();
+	});
+
 	// load the initial problem types. If not present, hide "Problem Type Actions"
 	function init() {
 		if (expertiseTypeManager.expertiseTypes.length) {
@@ -307,8 +369,8 @@ $(() => {
 						<td>
 							<strong>${specialist.display_name}</strong>
 							<div class="row-actions visible">
-								<span class="edit">
-									<a href="javascript:void(0);">View</a>
+								<span>
+									<a href="user-edit.php?user_id=${specialist.id}">View</a>
 								</span>
 							</div>
 						</td>
