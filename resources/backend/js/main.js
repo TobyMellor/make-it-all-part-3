@@ -82,17 +82,27 @@ $(() => {
 	let $miaPanelShort = $('.mia-panel-short');
 
 	if ($miaPanelShort.length) {
+		let collapsedPanels = sessionStorage.getItem('collapsed_mia_panel_shorts').split(','); // if a mia_panel_short's slug is in here, it will be collapsed
+
+		$miaPanelShort.each(function(el) {
+			if (collapsedPanels.includes($(this).data('slug'))) {
+				$(this).accordion({
+					heightStyle: 'content',
+					handle: '.mia-panel-heading',
+					icons: false,
+					collapsible: true,
+					active: false
+				});
+
+				$miaPanelShort = $miaPanelShort.not($(this));
+			}
+		});
+
 		$miaPanelShort.accordion({
 			heightStyle: 'content',
 			handle: '.mia-panel-heading',
 			icons: false,
 			collapsible: true
-		});
-
-		let collapsedPanels = sessionStorage.getItem('collapsed_mia_panel_shorts').split(','); // if a mia_panel_short's slug is in here, it will be collapsed
-		
-		$miaPanelShort.each(function(el) {
-			if (collapsedPanels.includes($(this).data('slug'))) $(this).find('div').first().click();
 		});
 	}
 });
