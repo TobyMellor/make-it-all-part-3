@@ -12,6 +12,9 @@ $(() => {
 		$('select[name="ticket[assigned_to_operator]"] option[value="' + ticket.assigned_to_operator_id + '"]').click();
 	}
 
+	$(document).off('click', '.assign-options label');
+	$('.assign-options label input').click(() => false);
+
 	// override the addAffectedItem function in AffectedItemsManager
 	// purpose of this is to add a view button instead of a remove button (and remove unused functionality)
 	affectedItemsManager.addAffectedItem = (function($selectField) {
