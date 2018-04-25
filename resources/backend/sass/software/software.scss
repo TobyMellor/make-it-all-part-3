@@ -5,3 +5,22 @@
 	flex-basis: 100%;
 
 }
+
+.software-panel .mia-panel-body{
+	padding: 0;
+}
+.software-rml{
+	margin-left: 40px;
+}
+.software-date-section{
+	display: flex;
+	align-self: center;
+}
+.software-date-section .mia-picker{
+	margin-right: 20px;
+}
+.software-no-date{
+	display: none;
+	align-self: center;
+	margin: 0 auto;
+}

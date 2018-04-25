@@ -14,6 +14,21 @@ class SoftwarePage extends Page {
 	public function read_pane(){
 		parent::read_pane();
 		
+		// handle single delete and bulk delete before rendering page
+		if (isset($_GET['action']) && $_GET['action'] === 'delete') {
+			if (current_user_can('edit_make_it_all')) {
+				$programQuery = new ProgramQuery();
+
+				if (isset($_GET['software_id'])) {
+					$deviceQuery->delete($_GET['software_id']);
+				} else if (isset($_GET['software'])) {
+					foreach ($_GET['software'] as $softwareID) {
+						$programQuery->delete($softwareID);
+					}
+				}
+			}
+		}
+		
 		if (isset($_GET['id'])) {
 			//If ID in url show that ID, not the software table.
 			
@@ -40,6 +55,32 @@ class SoftwarePage extends Page {
 		parent::create_pane();
 		
 		$this->render_pane($this->get_required_data('Create Software'));
+	}
+	
+	protected function create_action() {
+		global $wpdb;
+
+		$programQuery = new ProgramQuery();
+
+		// insert type, make, sn, date
+		foreach ($_POST['software'] as $software) {
+			$os = 0;
+			if($software['type'] == "Operating System"){
+				$os = 1;
+			}
+			
+
+			$programQuery->mia_insert([
+				'name'      	   => $software['name'],
+				'expiry_date'      => date('Y-m-d H:i:s', strtotime($software['expiry'])),
+				'operating_system' => $os
+			]);
+
+			$softwareID = $wpdb->insert_id;
+		}
+	
+		
+		$this->mia_redirect('admin.php?page=software&id=' . $softwareID); exit;
 	}
 	
 	private function get_required_data($pageName) {
