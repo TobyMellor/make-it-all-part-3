@@ -47,7 +47,7 @@ class HardwareTable extends Table {
 	 * @return Array
 	 */
 	protected function table_data() {
-		return (new DeviceQuery)->get_device_table();
+		return (new DeviceQuery)->get_device_table(isset($_GET['s']) ? $_GET['s'] : null);
 	}
 
 	/**
