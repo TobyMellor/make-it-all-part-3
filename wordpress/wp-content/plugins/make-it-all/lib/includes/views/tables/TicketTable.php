@@ -48,7 +48,7 @@ class TicketTable extends Table {
 	 * @return Array
 	 */
 	protected function table_data() {
-		return (new TicketQuery)->get_tickets_table();
+		return (new TicketQuery)->get_tickets_table(isset($_GET['s']) ? $_GET['s'] : null);
 	}
 
 	/**

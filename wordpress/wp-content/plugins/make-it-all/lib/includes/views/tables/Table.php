@@ -25,9 +25,9 @@ abstract class Table extends WP_List_Table {
 	 * @return Void
 	 */
 	public function prepare_items() {
-		$columns = $this->get_columns();
+		$columns  = $this->get_columns();
 		$sortable = $this->get_sortable_columns();
-		$data = $this->table_data();
+		$data     = $this->table_data();
 
 		usort($data, [
 			&$this, 'sort_data'

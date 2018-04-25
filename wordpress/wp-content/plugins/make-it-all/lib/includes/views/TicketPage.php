@@ -59,6 +59,7 @@ class TicketPage extends Page {
 
 			$ticketTable = new TicketTable();
 			$ticketTable->prepare_items();
+			$ticketTable->search_box('search', 'search_id');
 			$ticketTable->display();
 		}
 	}
