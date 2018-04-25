@@ -77,6 +77,7 @@ class DepartmentPage extends Page {
 			if ($this->is_error($departmentId)) return $this->mia_redirect('admin.php?page=department_create');
 		}
 
+		$_SESSION['mia_message'] = 'Department(s) successfully created.';
 		$this->mia_redirect('admin.php?page=department_update&id=' . $departmentId);
 	}
 

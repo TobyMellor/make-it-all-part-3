@@ -62,7 +62,7 @@ abstract class Query {
 			$prefix = $this->rawPrefix;
 		}
 
-		if (!$wpdb->insert($prefix . $this->table, $columns)) {
+		if (!$this->wpdb->insert($prefix . $this->table, $columns)) {
 			wp_die('Sorry! We failed to insert that record. Please try again.');
 		}
 
@@ -104,7 +104,7 @@ abstract class Query {
 
 		$columns['updated_at'] = date('Y-m-d H:i:s');
 
-		if (!$wpdb->update($this->prefix . $this->table, $columns, [$whereColumn => $id])) {
+		if (!$this->wpdb->update($this->prefix . $this->table, $columns, [$whereColumn => $id])) {
 			wp_die('Sorry! We failed to update that record. Please try again.');
 		}
 
@@ -117,7 +117,7 @@ abstract class Query {
 	 * @return Boolean
 	 */
 	public function mia_delete($id, $whereColumn = 'id') {
-		if (!$wpdb->delete($this->prefix . $this->table, [$whereColumn => $id])) {
+		if (!$this->wpdb->delete($this->prefix . $this->table, [$whereColumn => $id])) {
 			return new WP_Error(400, 'Sorry! We failed to delete that record. Please try again.');
 		}
 
