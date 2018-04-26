@@ -35,14 +35,14 @@ class CommentPage extends Page {
 				if (!$request['call_id']) $request['call_id'] = null;
 
 				return (new CommentQuery)->mia_insert($request->get_params());
-			},
+			}
 		]);
 
 		register_rest_route($this->apiNamespace, '/comment/(?P<id>\d+)', [
 			'methods'  => 'DELETE',
 			'callback' => function($request) {
 				return (new CommentQuery)->mia_delete($request['id']);
-			},
+			}
 		]);
 
 		register_rest_route($this->apiNamespace, '/comment-toggle-solution/(?P<id>\d+)', [
@@ -51,7 +51,7 @@ class CommentPage extends Page {
 				$_SESSION['mia_message'] = 'Successfully updated the solution to this ticket.';
 				
 				return (new CommentQuery)->toggle_solution($request['id']);
-			},
+			}
 		]);
 	}
 }

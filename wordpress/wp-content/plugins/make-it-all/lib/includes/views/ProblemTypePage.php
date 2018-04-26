@@ -36,9 +36,9 @@ class ProblemTypePage extends Page {
 
 		$expertiseTypeQuery = new ExpertiseTypeQuery();
 
-		$context['employees']            = json_encode((new UserQuery)->get());
-		$context['expertise_types']      = json_encode($expertiseTypeQuery->get());
-		$context['expertise_type_staff'] = json_encode((new ExpertiseTypeStaffQuery)->get());
+		$context['employees']            = (new UserQuery)->get();
+		$context['expertise_types']      = $expertiseTypeQuery->get();
+		$context['expertise_type_staff'] = (new ExpertiseTypeStaffQuery)->get();
 
 		$context['popular_expertise_types'] = $expertiseTypeQuery->get_popular();
 		$context['recent_expertise_types']  = $expertiseTypeQuery->get_recent();
@@ -66,7 +66,7 @@ class ProblemTypePage extends Page {
 			'methods'  => 'GET',
 			'callback' => function() {
 				return (new ExpertiseTypeQuery)->get();
-			},
+			}
 		]);
 
 		register_rest_route($this->apiNamespace, '/problem-type', [
@@ -75,7 +75,7 @@ class ProblemTypePage extends Page {
 				if (!$request['parent_id']) $request['parent_id'] = null;
 
 				return (new ExpertiseTypeQuery)->mia_insert($request->get_params());
-			},
+			}
 		]);
 
 		register_rest_route($this->apiNamespace, '/problem-type/(?P<id>\d+)', [
@@ -85,14 +85,14 @@ class ProblemTypePage extends Page {
 					'name'      => $request['name'],
 					'parent_id' => $request['parent_id'] !== '' ? $request['parent_id'] : null
 				]);
-			},
+			}
 		]);
 
 		register_rest_route($this->apiNamespace, '/problem-type/(?P<id>\d+)', [
 			'methods'  => 'DELETE',
 			'callback' => function($request) {
 				return (new ExpertiseTypeQuery)->mia_delete($request['id']);
-			},
+			}
 		]);
 	}
 }

@@ -64,7 +64,7 @@ class TicketPage extends Page {
 
 		if (isset($_GET['id'])) {
 			$context = $this->get_required_data('Viewing Ticket');
-			$context = $this->getTicket($context, $_GET['id']);
+			$context = $this->get_ticket($context, $_GET['id']);
 
 			$this->render_pane($context); // render page before inserting table
 		} else {
@@ -184,13 +184,13 @@ class TicketPage extends Page {
 
 		$context = $this->get_required_data('Update Ticket');
 		
-		$context['tickets'] = json_encode((new TicketQuery)->get());
+		$context['tickets'] = (new TicketQuery)->get();
 
 		if (isset($_GET['id'])) {
 			$ticketId = $_GET['id'];
 
 			// ticket's current data
-			$context = $this->getTicket($context, $ticketId);
+			$context = $this->get_ticket($context, $ticketId);
 		}
 
 		$this->render_pane($context);
@@ -279,9 +279,13 @@ class TicketPage extends Page {
 	}
 
 	public function follow_up_call_pane() {
+		$this->enqueue_dependency('mia_follow_up_call', '/backend/js/' . $this->nameSlug . '/follow_up_call_ticket.js');
+
 		$context = $this->get_required_data('Register Follow-up Call');
-		
-		$context['tickets'] = json_encode((new TicketQuery)->get());
+
+		$context['tickets'] = (new TicketQuery)->get();
+
+		if (isset($_GET['id'])) $context['firstTicketId'] = $_GET['id'];
 
 		$this->render_pane($context);
 	}
@@ -289,37 +293,59 @@ class TicketPage extends Page {
 	private function get_required_data($pageName) {
 		$context = $this->get_context($pageName);
 
-		$context['employees']            = json_encode((new UserQuery)->get());
-		$context['expertise_types']      = json_encode((new ExpertiseTypeQuery)->get());
-		$context['expertise_type_staff'] = json_encode((new ExpertiseTypeStaffQuery)->get());
-		$context['devices']              = json_encode((new DeviceQuery)->get());
-		$context['programs']             = json_encode((new ProgramQuery)->get());
+		$context['employees']            = (new UserQuery)->get();
+		$context['expertise_types']      = (new ExpertiseTypeQuery)->get();
+		$context['expertise_type_staff'] = (new ExpertiseTypeStaffQuery)->get();
+		$context['devices']              = (new DeviceQuery)->get();
+		$context['programs']             = (new ProgramQuery)->get();
 
 		return $context;
 	}
 
-	private function getTicket($context, $id) {
+	private function get_ticket($context, $id) {
 		$ticketQuery        = new TicketQuery();
 		$ticketDeviceQuery  = new TicketDeviceQuery();
 		$ticketProgramQuery = new TicketProgramQuery();
 		$commentQuery       = new CommentQuery();
 
 		// required ticket information
-		$context['ticket_obj']           = $ticketQuery->get_ticket($id)[0];
-		$context['ticket_obj']->devices  = $ticketDeviceQuery->get_device_ids_by_ticket_id($id);
-		$context['ticket_obj']->programs = $ticketProgramQuery->get_program_ids_by_ticket_id($id);
-		$context['ticket_obj']->comments = $commentQuery->get_comments_by_ticket_id($id);
+		$context['ticket']           = $ticketQuery->get_ticket($id)[0];
+		$context['ticket']->devices  = $ticketDeviceQuery->get_device_ids_by_ticket_id($id);
+		$context['ticket']->programs = $ticketProgramQuery->get_program_ids_by_ticket_id($id);
+		$context['ticket']->comments = $commentQuery->get_comments_by_ticket_id($id);
 
-		foreach ($context['ticket_obj']->comments as $comment) $comment->gravatar_url = get_avatar_url($comment->author_id);
+		foreach ($context['ticket']->comments as $comment) $comment->gravatar_url = get_avatar_url($comment->author_id);
 
 		// extra helpful info for the side panels
-		$context['ticket_obj']->call_history                = $ticketQuery->get_call_history($id);
-		$context['ticket_obj']->status_history              = $ticketQuery->get_status_history($id);
-		$context['ticket_obj']->similar_tickets             = $ticketQuery->get_similar_tickets($id);
-		$context['ticket_obj']->tickets_by_caller           = $ticketQuery->get_tickets_by_caller($id);
-
-		$context['ticket'] = json_encode($context['ticket_obj']);
+		$context['ticket']->call_history      = $ticketQuery->get_call_history($id);
+		$context['ticket']->status_history    = $ticketQuery->get_status_history($id);
+		$context['ticket']->similar_tickets   = $ticketQuery->get_similar_tickets($id);
+		$context['ticket']->tickets_by_caller = $ticketQuery->get_tickets_by_caller($id);
 
 		return $context;
+	}
+
+	/**
+	 * Register the API endpoints. This function must be named
+	 * "add_api_endpoints" in any of the classes which extend
+	 * Page to be loaded successfully.
+	 *
+	 * You may also need to change the Permalink Settings:
+	 *     1. /wp-admin
+	 *     2. Settings > Permalinks
+	 *     3. Custom Permalink
+	 *     4. Enter /%postname%/ and save
+	 *
+	 * These urls should be registered at /wp-json/make-it-all/v1/*
+	 *
+	 * @return @void
+	 */
+	public function add_api_endpoints() {
+		register_rest_route($this->apiNamespace, '/ticket/(?P<id>\d+)', [
+			'methods'  => 'GET',
+			'callback' => function($request) {
+				return $this->get_ticket([], $request['id'])['ticket'];
+			}
+		]);
 	}
 }

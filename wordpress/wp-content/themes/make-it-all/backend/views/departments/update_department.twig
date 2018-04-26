@@ -96,7 +96,7 @@
 						<i class="fa fa-chevron-up"></i>
 					</div>
 					<div class="mia-panel-body">
-						{% if ticket_obj.tickets_by_caller|length > 0 %}
+						{% if ticket.tickets_by_caller|length > 0 %}
 							<table class="wp-list-table widefat fixed striped">
 								<thead>
 									<tr>
@@ -106,7 +106,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									{% for ticket_by_caller in ticket_obj.tickets_by_caller %}
+									{% for ticket_by_caller in ticket.tickets_by_caller %}
 										<tr>
 											<td>{{ ticket_by_caller.id }}</td>
 											<td>
@@ -134,7 +134,7 @@
 
 {% block scripts %}
 	<script>
-		var departments = {{ departments }},
-			department  = {{ department|default('null') }};
+		var departments = {{ departments|json_encode }},
+			department  = {{ department|default('null')|json_encode }};
 	</script>
 {% endblock %}

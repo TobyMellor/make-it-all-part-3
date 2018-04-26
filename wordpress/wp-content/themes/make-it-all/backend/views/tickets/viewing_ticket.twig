@@ -15,28 +15,28 @@
 				</thead>
 				<tbody>
 					<tr class="highlight">
-						<td>{{ ticket_obj.id }}</td>
+						<td>{{ ticket.id }}</td>
 						<td>
-							<strong>{{ ticket_obj.title }}</strong>
+							<strong>{{ ticket.title }}</strong>
 							<div class="row-actions visible">
 								<span class="edit">
-									<a href="admin.php?page=ticket_update&id={{ ticket_obj.id }}">Update</a> |
+									<a href="admin.php?page=ticket_update&id={{ ticket.id }}">Update</a> |
 								</span>
 								<span class="follow_up">
-									<a href="admin.php?page=ticket_update&action=follow_up&id={{ ticket_obj.id }}">Register follow-up call</a> |
+									<a href="admin.php?page=ticket_update&action=follow_up&id={{ ticket.id }}">Register follow-up call</a> |
 								</span>
 								<span class="delete">
-									<a href="admin.php?page=ticket&action=delete&ticket_id={{ ticket_obj.id }}">Delete</a>
+									<a href="admin.php?page=ticket&action=delete&ticket_id={{ ticket.id }}">Delete</a>
 								</span>
 							</div>
 						</td>
 						<td>
-							<span class="filter filter-{{ ticket_obj.status|lower }}">
-								{{ ticket_obj.status }}
+							<span class="filter filter-{{ ticket.status|lower }}">
+								{{ ticket.status }}
 							</span>
 						</td>
-						<td>{{ ticket_obj.created_at }}</td>
-						<td>{{ ticket_obj.updated_at }}</td>
+						<td>{{ ticket.created_at }}</td>
+						<td>{{ ticket.updated_at }}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -54,7 +54,7 @@
 						</div>
 						<div class="col-sm-9 col-xs-12 description">
 							<section>
-								{{ ticket_obj.description|striptags('<p>,<b>,<em>,<strong>')|raw }}
+								{{ ticket.description|striptags('<p>,<b>,<em>,<strong>')|raw }}
 							</section>
 						</div>
 					</div>
@@ -213,9 +213,9 @@
 			</div>
 
 			<div id="comments">
-				{% if ticket_obj.comments|length > 0 %}
-					{% for comment in ticket_obj.comments %}
-						<div class="comment {% if comment.id == ticket_obj.solution_id %} solution {% endif %}" data-comment-id="{{ comment.id }}">
+				{% if ticket.comments|length > 0 %}
+					{% for comment in ticket.comments %}
+						<div class="comment {% if comment.id == ticket.solution_id %} solution {% endif %}" data-comment-id="{{ comment.id }}">
 							<div>
 								<a href="user-edit.php?user_id={{ comment.author_id }}">
 									<img src="{{ comment.gravatar_url }}" alt="">
@@ -233,7 +233,7 @@
 											<span class="filter">Notes about a call</span>
 										{% endif %}
 
-										{% if comment.id == ticket_obj.solution_id %}
+										{% if comment.id == ticket.solution_id %}
 											<span class="filter filter-resolved">Solution</span>
 										{% endif %}
 										<p>{{ comment.created_at }}</p>
@@ -286,7 +286,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							{% for call in ticket_obj.call_history %}
+							{% for call in ticket.call_history %}
 								<tr>
 									<td>
 										<strong>{{ call.caller }}</strong>
@@ -326,7 +326,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							{% for status in ticket_obj.status_history %}
+							{% for status in ticket.status_history %}
 								<tr {{ loop.last ? 'class="highlight"' }}>
 									<td>
 										<strong>{{ status.staff_name }}</strong>
@@ -350,7 +350,7 @@
 					<i class="fa fa-chevron-up"></i>
 				</div>
 				<div class="mia-panel-body">
-					{% if ticket_obj.similar_tickets|length > 0 %}
+					{% if ticket.similar_tickets|length > 0 %}
 						<table class="wp-list-table widefat fixed striped">
 							<thead>
 								<tr>
@@ -360,7 +360,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								{% for similar_ticket in ticket_obj.similar_tickets %}
+								{% for similar_ticket in ticket.similar_tickets %}
 									<tr>
 										<td>{{ similar_ticket.id }}</td>
 										<td>
@@ -391,7 +391,7 @@
 					<i class="fa fa-chevron-up"></i>
 				</div>
 				<div class="mia-panel-body">
-					{% if ticket_obj.tickets_by_caller|length > 0 %}
+					{% if ticket.tickets_by_caller|length > 0 %}
 						<table class="wp-list-table widefat fixed striped">
 							<thead>
 								<tr>
@@ -401,7 +401,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								{% for ticket_by_caller in ticket_obj.tickets_by_caller %}
+								{% for ticket_by_caller in ticket.tickets_by_caller %}
 									<tr>
 										<td>{{ ticket_by_caller.id }}</td>
 										<td>
@@ -428,12 +428,12 @@
 
 {% block scripts %}
 	<script>
-		var ticket             = {{ ticket|default('null') }},
+		var ticket             = {{ ticket|default('null')|json_encode }},
 			user               = {{ user|json_encode }},
-			employees          = {{ employees }},
-			expertiseTypes     = {{ expertise_types }},
-			expertiseTypeStaff = {{ expertise_type_staff }},
-			devices            = {{ devices }},
-			programs           = {{ programs }};
+			employees          = {{ employees|json_encode }},
+			expertiseTypes     = {{ expertise_types|json_encode }},
+			expertiseTypeStaff = {{ expertise_type_staff|json_encode }},
+			devices            = {{ devices|json_encode }},
+			programs           = {{ programs|json_encode }};
 	</script>
 {% endblock %}

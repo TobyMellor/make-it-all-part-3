@@ -118,3 +118,105 @@ window.initTinyMCE = function() {
 		autofocus: 'textarea'
 	});
 }
+
+window.initAccordions = function() {
+	$('.accordions').accordion({
+		heightStyle: 'content',
+		handle: '.accordion-handle',
+		icons: false,
+		active: false,
+		collapsible: true
+	});
+}
+
+window.cloneAccordion = function($accordions, newAccordionId) {
+	let $existingAccordion = $accordions.find('.accordion-handle:first-child, .accordion-body:nth-child(2)').wrapAll('<div>'),
+		$newAccordion      = $existingAccordion.clone().unwrap();
+
+	$existingAccordion.unwrap();
+
+	// delete accordion button
+	$newAccordion.find('.accordion-actions').prepend('<i class="fa fa-trash-o"></i>');
+
+	// replace name of input fields, e.g. tickets[1].x to tickets[2].x
+	$newAccordion.last().find('input, textarea, select').each((i, input) => $(input).prop('name', $(input).prop('name').replace(/tickets\[.*?\]\s?/g, 'tickets[' + newAccordionId + ']')));
+	$newAccordion.last().attr('data-accordion-id', newAccordionId);
+
+	return $newAccordion;
+}
+
+window.clearAccordion = function($accordion, newAccordionId, affectedItemsManager = null, expertiseTypeManager = null) {
+	// set input/textarea/select fields to default values
+	$accordion.find('select').prop('selectedIndex', 0);
+	$accordion.find('.set-solution').hide();
+	$accordion.find('input[type=text]:not(.hasDatepicker), textarea').val('');
+	$accordion.find('input[type=radio]').first().click();
+
+	// because problem is initially unselected, hide ability to choose specialist of problem
+	$accordion.find('input[type=radio][value="specialist"]').parent().hide();
+
+	// clear the status tag to the right of the select field, e.g. "New", "Pending"
+	$accordion.find('.has-button div:last-child').empty();
+
+	// refresh accordion, e.g. page has just loaded
+	if (affectedItemsManager !== null && expertiseTypeManager !== null) {
+		let $typeColumns = $accordion.find('.type-columns');
+
+		// clear any selected .affected-items, repopulate select fields
+		$accordion.find('.affected-items').empty();
+		affectedItemsManager.populateAllSelectFields($accordion);
+
+		// reload .type-columns to contain root expertise types
+		$typeColumns.empty();
+		expertiseTypeManager.loadChildrenExpertiseTypes($typeColumns);
+
+		// set the accordion number and the new ticket text in the accordion handle
+		$accordion.find('.accordion-icon .number-circle').text(Number.isInteger(newAccordionId) ? newAccordionId : '+');
+		$accordion.find('.accordion-title').text('New Ticket');
+	}
+}
+
+window.loadTicket = function($accordion, ticket, expertiseTypeManager, staffManager, affectedItemsManager) {
+		$accordion.find('.number-circle').text(ticket.id);
+		$accordion.find('.accordion-title').text('Ticket: ' + ticket.title);
+
+		$accordion.find('select[name*="status"] option[value="' + ticket.status_id + '"]').prop('selected', true).trigger('change');
+
+		if (ticket.status_id == 3) $accordion.find('.set-solution').show();
+		$accordion.find('textarea[name*="solution"]').val(ticket.solution);
+
+		$accordion.find('input[name*="title"]').val(ticket.title);
+		$accordion.find('textarea[name*="description"]').val(ticket.description);
+
+		expertiseTypeManager.loadExpertiseType($accordion.find('.type-columns'), ticket.expertise_type_id);
+		$accordion.find('input[name*="expertise_type_id"]').val(ticket.expertise_type_id);
+		$accordion.find('input[name*="assigned_to_specialist"]').val(ticket.assigned_to_specialist_id);
+
+		if (ticket.assigned_to_operator_id === null) {
+			$accordion.find('input[name*="assigned_to_type"][value="specialist"]').click();
+		} else if (ticket.assigned_to_operator_id == staffManager.currentEmployee.id) {
+			$accordion.find('input[name*="assigned_to_type"][value="self"]').click();
+		} else {
+			$accordion.find('input[name*="assigned_to_type"][value="operator"]').click();
+			$accordion.find('select[name*="assigned_to_operator"] option[value="' + ticket.assigned_to_operator_id + '"]').click();
+		}
+
+		let $addHardwareDevice  = $accordion.find('.add-hardware-device'),
+			$addSoftwareProgram = $accordion.find('.add-application, .add-operating-system');
+
+		ticket.devices.forEach((deviceId) => {
+			$addHardwareDevice.find('option[value="' + deviceId + '"]').prop('selected', true);
+			affectedItemsManager.addAffectedItem($addHardwareDevice);
+		});
+
+		ticket.programs.forEach((programId) => {
+			// this will only return the select field that was changed
+			// e.g. if it's an OS ID, no option exists within the applications select
+			let $select = $addSoftwareProgram
+							.find('option[value="' + programId + '"]')
+							.prop('selected', true)
+							.parent();
+
+			affectedItemsManager.addAffectedItem($select);
+		});
+}
