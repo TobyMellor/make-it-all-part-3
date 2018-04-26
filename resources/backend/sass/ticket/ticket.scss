@@ -8,10 +8,12 @@
 
 		#call-information {
 			flex-grow: 1;
+			height: 100%;
 		}
 
 		#caller-information {
 			flex-basis: 0px;
+			overflow: hidden;
 
 			&.expanded {
 				flex-basis: 40%;
@@ -147,14 +149,24 @@
 
 .mia-panel {
 	&.call-panel > .row {
+		flex-wrap: nowrap;
+
 		& > div:last-child {
 			border-left: 1px solid $silver;
-			overflow: auto;
-			height: 252px;
 		}
 
-		.mia-field-group:last-child > div {
-			border-bottom: 0;
+		.mia-panel-heading {
+			height: 100%;
+
+			.staff-information {
+				height: 100%;
+			}
+		}
+
+		#caller-information {
+			.mia-field-group:last-child {
+				height: 100%;
+			}
 		}
 	}
 }
