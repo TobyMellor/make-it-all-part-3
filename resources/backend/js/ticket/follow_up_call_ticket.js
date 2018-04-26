@@ -24,7 +24,15 @@ window.loadExistingTicket = function(id) {
 
 			let $accordion = $('.accordion-handle:nth-last-child(2), .accordion-body:last-child');
 
+			// deinit all TinyMCE's before cloning
+			tinyMCE.EditorManager.editors.forEach((editor) => {
+				tinyMCE.get(editor.id).remove();
+			});
+
 			loadTicket($accordion, ticket, expertiseTypeManager, staffManager, affectedItemsManager);
+
+			// reinitialize after appending new accordion
+			initTinyMCE();
 		});
 }
 
@@ -38,8 +46,6 @@ window.loadNewTicket = function(existingTicketId = null) {
 	$accordions.append($newAccordion);
 	$newAccordion.find('input[type=radio]').first().click();
 
-	// reinitialize after appending new accordion
-	initTinyMCE();
 	$accordions.accordion('refresh');
 	$newAccordion.click(); // expand new accordion
 }
