@@ -471,7 +471,7 @@
 {% block scripts %}
 	<script>
 		var tickets            = {{ tickets|json_encode }},
-			firstTicketId      = {{ firstTicketId|default(null) }},
+			firstTicketId      = {{ firstTicketId|default(null)|json_encode }},
 			employees          = {{ employees|json_encode }},
 			expertiseTypes     = {{ expertise_types|json_encode }},
 			expertiseTypeStaff = {{ expertise_type_staff|json_encode }},
