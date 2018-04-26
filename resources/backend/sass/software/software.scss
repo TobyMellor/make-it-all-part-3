@@ -27,10 +27,12 @@
 }
 .mia-picker {
 	input {
-		visibility: hidden;
+		// visibility: none; and display: none; throw errors
+		background-color: #0085ba; 
+		border: none;
+		padding: 0 !important;
+		margin: 0 !important;
 		width: 0 !important;
 		height: 0 !important;
-		padding: 0 !important;
-		margin: -3px;
 	}
 }

@@ -4,12 +4,12 @@ $(() => {
 	 */
 
 	// Forward click on button to hidden input with datetimepicker
-	$('.mia-picker').click(function(e) {
-		$('.mia-picker input').datepicker('show');
+	$(document).on('click', '.mia-picker', function() {
+		$(this).find('input').datepicker('show'); // show the nearest input
 	});
 
 	// Update the visual date/time when they finish with the datetimepicker
-	$('.mia-picker input').change(function() {
+	$(document).on('change', '.mia-picker input', function() {
 		let date            = new Date($(this).val()),
 			$spans          = $(this).closest('.mia-field-group').find('.date-time-picker span');
 

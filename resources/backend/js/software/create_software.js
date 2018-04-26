@@ -53,22 +53,15 @@ $(() => {
 });
 
 function addDatePicker($accordion){
-	var $picker = $accordion.find('.mia-picker');
-	var $pickerInput = $picker.find('input');
-		$(document).ready(function () {
-			console.log("new datepicker");
-			$pickerInput.datepicker();
+	let $picker      = $accordion.find('.mia-picker'),
+		$hiddenInput = $('<input>');
+	
+	$picker.find('input').replaceWith($hiddenInput); // generate a fresh input
+
+	$hiddenInput.datetimepicker({
+		controlType: 'slider'
 	});
-	
-	
-	// Forward click on button to hidden input with datetimepicker
-	$picker.click(function(e) {
-		$pickerInput.datepicker('show');
-	});
-	
 }
-
-
 
 function cloneAccordion($accordions, newAccordionId) {
 	let $existingAccordion = $accordions.find('.accordion-handle:first-child, .accordion-body:nth-child(2)').wrapAll('<div>'),
