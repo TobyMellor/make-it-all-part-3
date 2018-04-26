@@ -488,6 +488,10 @@
 }
 
 .follow-up-call-page {
+	.accordion-handle:first-child {
+		background-color: #f39c12;
+	}
+	
 	#add-new-ticket {
 		margin-left: 38px;
 	}
