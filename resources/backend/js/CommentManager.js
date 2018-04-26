@@ -34,4 +34,11 @@ export default class CommentManager {
 			type: 'DELETE'
 		});
 	}
+
+	toggleSolution(commentId) {
+		return $.ajax({
+			url: '/wp-json/make-it-all/v1/comment-toggle-solution/' + commentId,
+			type: 'PUT'
+		});
+	}
 }

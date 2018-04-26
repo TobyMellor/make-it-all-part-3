@@ -61,6 +61,15 @@ $(() => {
 
 	$('.create-comment-section input').val('');
 
+	$(document).on('click', '.toggle-solution', function() {
+		let id = $(this).closest('.comment').data('commentId');
+
+		commentManager.toggleSolution(id)
+			.done(() => {
+				location.reload();
+			});
+	});
+
 	$(document).on('click', '.delete-comment', function() {
 		if (!confirm('Are you sure you want to delete this comment?')) return;
 

@@ -44,5 +44,14 @@ class CommentPage extends Page {
 				return (new CommentQuery)->mia_delete($request['id']);
 			},
 		]);
+
+		register_rest_route($this->apiNamespace, '/comment-toggle-solution/(?P<id>\d+)', [
+			'methods'  => 'PUT',
+			'callback' => function($request) {
+				$_SESSION['mia_message'] = 'Successfully updated the solution to this ticket.';
+				
+				return (new CommentQuery)->toggle_solution($request['id']);
+			},
+		]);
 	}
 }
