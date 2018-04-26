@@ -24,6 +24,26 @@ class CommentQuery extends Query {
 		);
 	}
 
+	public function get_comments_by_ticket_id($ticketId) {
+		return $this->get_results(
+			"
+				SELECT
+					comment.id,
+					comment.content,
+					users.display_name AS author,
+					comment.call_id,
+					comment.created_at,
+					comment.updated_at
+				FROM {$this->prefix}comment AS comment
+				JOIN {$this->rawPrefix}users AS users
+					ON users.id = comment.author_id
+				JOIN {$this->prefix}ticket AS ticket
+					ON ticket.id = comment.ticket_id
+				WHERE ticket.id = {$ticketId}
+			"
+		);
+	}
+
 	/**
 	 * Validation for Comment
 	 *    - Content: String, Length between 2 and 65535

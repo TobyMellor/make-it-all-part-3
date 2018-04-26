@@ -114,6 +114,7 @@ class TicketQuery extends Query {
 					status.name AS status,
 					status.id AS status_id,
 					ticket.description,
+					ticket.solution_id,
 					ticket.expertise_type_id,
 					ticket.assigned_to_specialist_id,
 					ticket.assigned_to_operator_id,

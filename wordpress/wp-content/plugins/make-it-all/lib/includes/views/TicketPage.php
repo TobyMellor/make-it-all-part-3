@@ -16,7 +16,8 @@ use MakeItAll\Includes\Database\Queries\{
 	ExpertiseTypeStaffQuery,
 	ExpertiseTypeQuery,
 	DeviceQuery,
-	ProgramQuery
+	ProgramQuery,
+	CommentQuery
 };
 
 class TicketPage extends Page {
@@ -240,11 +241,13 @@ class TicketPage extends Page {
 		$ticketQuery        = new TicketQuery();
 		$ticketDeviceQuery  = new TicketDeviceQuery();
 		$ticketProgramQuery = new TicketProgramQuery();
+		$commentQuery       = new CommentQuery();
 
 		// required ticket information
 		$context['ticket_obj']           = $ticketQuery->get_ticket($id)[0];
 		$context['ticket_obj']->devices  = $ticketDeviceQuery->get_device_ids_by_ticket_id($id);
 		$context['ticket_obj']->programs = $ticketProgramQuery->get_program_ids_by_ticket_id($id);
+		$context['ticket_obj']->comments = $commentQuery->get_comments_by_ticket_id($id);
 
 		// extra helpful info for the side panels
 		$context['ticket_obj']->call_history                = $ticketQuery->get_call_history($id);
