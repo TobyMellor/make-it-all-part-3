@@ -77,7 +77,7 @@ $(() => {
 	$(document).off('form');
 	$(document).on('submit', '#submit-comment', function(e) {
 		e.preventDefault();
-		
+
 		if (!$(this).serializeObject(true).isValid()) return;
 
 		let content = tinyMCE.get('comment').getContent();
@@ -92,7 +92,6 @@ $(() => {
 							</a>
 							<i class="fa fa-check toggle-solution checked"></i>
 							<i class="fa fa-trash-o delete-comment"></i>
-							<i class="fa fa-pencil edit-comment"></i>
 						</div>
 						<div>
 							<div class="row no-padding">
