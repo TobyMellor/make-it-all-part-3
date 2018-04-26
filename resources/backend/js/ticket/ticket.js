@@ -103,6 +103,16 @@ $(() => {
 			e.preventDefault();
 	});
 
+	$(document).on('change', '.accordions select[name*="status"]', function() {
+		let $setSolution = $(this).closest('.accordion-body').find('.set-solution');
+
+		if ($(this).val() == 3) {
+			$setSolution.slideDown();
+		} else {
+			$setSolution.slideUp();
+		}
+	});
+
 	initTinyMCE();
 });
 

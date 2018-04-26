@@ -44,16 +44,6 @@ $(() => {
 		$headerText.text(newHeaderText);
 	});
 
-	$(document).on('change', '.accordions select[name*=status]', function() {
-		let $setSolution = $(this).closest('.accordion-body').find('.set-solution');
-
-		if ($(this).val() == 3) {
-			$setSolution.slideDown();
-		} else {
-			$setSolution.slideUp();
-		}
-	});
-
 	initAccordions();
 	clearAccordion($('.mia-panel-body')); // clear all fields
 });

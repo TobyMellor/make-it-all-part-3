@@ -35,16 +35,6 @@ $(() => {
 
 	loadTicket($('.accordion-handle, .accordion-body'), ticket, expertiseTypeManager, staffManager, affectedItemsManager);
 
-	$(document).on('change', '.accordions select[name="ticket[status]"]', function() {
-		let $setSolution = $(this).closest('.accordion-body').find('.set-solution');
-
-		if ($(this).val() == 3) {
-			$setSolution.slideDown();
-		} else {
-			$setSolution.slideUp();
-		}
-	});
-
 	let commentManager = window.commentManager = new CommentManager(staffManager.currentEmployeeId, ticket.id);
 
 	$('.create-comment-section input').val('');
