@@ -59,6 +59,8 @@ $(() => {
 		affectedItemsManager.addAffectedItem($select);
 	});
 
+	$('.create-comment-section input').val('');
+
 	$(document).on('click', '.delete-comment', function() {
 		$(this).closest('.comment').fadeOut(250, function() {
 			$(this).remove();
@@ -107,6 +109,7 @@ $(() => {
 		let scrollTop = $(window).scrollTop();
 
 		tinyMCE.get('comment').focus();
+		tinyMCE.get('comment').setContent('');
 
 		setTimeout(function(){
 			if (scrollTop === $(window).scrollTop()) { // only scroll if the user hasn't
