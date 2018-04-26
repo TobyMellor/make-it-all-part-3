@@ -31,12 +31,12 @@ export default class ExpertiseTypeManager {
 	/**
 	 * Get an Expertise Type Staff
 	 *
-	 * @param {Integer} staffId ID of staff
+	 * @param {Integer} userId ID of staff
 	 * @param {Integer} expertiseTypeId ID of ExpertiseType
 	 * @return {Object} ExpertiseTypeStaff
 	 */
-	getExpertiseTypeStaff(staffId, expertiseTypeId) {
-		return this.expertiseTypeStaff.find(ets => ets.staff_id == staffId && ets.expertise_type_id == expertiseTypeId) || null;
+	getExpertiseTypeStaff(userId, expertiseTypeId) {
+		return this.expertiseTypeStaff.find(ets => ets.user_id == userId && ets.expertise_type_id == expertiseTypeId) || null;
 	}
 
 	/**
@@ -62,8 +62,6 @@ export default class ExpertiseTypeManager {
 			let clickedExpertiseTypeId = Number($clickedLi.data('expertiseTypeId'));
 
 			clickedExpertiseTypeChildren = this.getExpertiseTypesWithParent(clickedExpertiseTypeId);
-
-			// $clickedLi.closest('.form-group').find('span.subtle').text(this.getExpertiseTypeBreadcrum(expertiseType));
 
 			$clickedLi.parent().nextAll().remove();
 			$clickedLi.parent().find('li.active').removeClass('active');

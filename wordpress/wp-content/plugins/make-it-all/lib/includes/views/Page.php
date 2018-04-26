@@ -6,6 +6,7 @@ use Timber;
 
 abstract class Page {
 	protected $name     = 'Unknown';
+	protected $nameSlug = 'unknown';
 	protected $icon     = 'dashicons-editor-help';
 	protected $position = null;
 	protected $pages    = [
@@ -13,6 +14,10 @@ abstract class Page {
 		'Update'
 	]; // to add/remove a page, redefine this in the child
 	protected $apiNamespace = 'make-it-all/v1';
+	protected $error        = null;
+	protected $message      = null;
+	protected $scripts      = [];
+	protected $styles       = [];
 	
 	/**
 	 * Initialises the menu and submenu, and
@@ -24,19 +29,9 @@ abstract class Page {
 	public function init() {
 		$name = $this->name;
 
-		$parentSlug = $this->get_string_as_slug($this->name);
-		
-		//Fast fix for Hardwares/Softwares -> Hardware/Software
-		if($name == "Hardware" || $name == "Software"){
-			
-			add_menu_page('View ' . $name, $name, 'read_make_it_all', $parentSlug, [$this, 'read_pane'], $this->icon, $this->position);	
-			
-		} else {
-			
-			add_menu_page('View ' . $name, $name . 's', 'read_make_it_all', $parentSlug, [$this, 'read_pane'], $this->icon, $this->position);	
-			
-		}
-		
+
+		$parentSlug = $this->nameSlug = $this->get_string_as_slug($this->name);
+
 
 
 		// Create submenu for each page in Pages, e.g. Create [Ticket], Update [Ticket]
@@ -57,7 +52,8 @@ abstract class Page {
 			);
 		}
 
-		add_action('admin_enqueue_scripts', [$this, 'enqueue_dependencies']); // Style/script only used for this page, e.g. ticket.css NOT main.css
+		$this->error   = isset($_SESSION['mia_error'])   ? $_SESSION['mia_error'] : null;
+		$this->message = isset($_SESSION['mia_message']) ? $_SESSION['mia_message'] : null;
 	}
 	/**
 	 * Enqueues the scripts that are required
@@ -70,29 +66,42 @@ abstract class Page {
 	 * @return @void
 	 */
 	public function enqueue_dependencies() {
-		$fileName = $this->get_string_as_slug($this->name);
+		$fileName = $this->nameSlug;
 
-		wp_enqueue_style('mia_' . $fileName, get_template_directory_uri() . '/backend/css/' . $fileName . '/' . $fileName . '.css', [], '1.0.0', 'all');
-		wp_enqueue_script('mia_' . $fileName, get_template_directory_uri() . '/backend/js/' . $fileName . '/' . $fileName . '.js', ['jquery', 'jquery-ui-accordion'], '1.0.0', false);
+		$this->enqueue_dependency('mia_' . $fileName, '/backend/css/' . $fileName . '/' . $fileName . '.css');
+		$this->enqueue_dependency('mia_' . $fileName, '/backend/js/' . $fileName . '/' . $fileName . '.js');
+
+		foreach ($this->styles as $style) {
+			wp_enqueue_style($style['name'], $style['location'], [], '1.0.0', 'all');
+		}
+
+		foreach (array_reverse($this->scripts) as $script) { // reverse to get the main script first
+			wp_enqueue_script($script['name'], $script['location'], ['jquery', 'jquery-ui-accordion'], '1.0.0', false);
+		}
 	}
 
 	public function enqueue_dependency($name, $location) {
 		if (!is_file(get_template_directory() . $location)) return;
 
-		wp_enqueue_script($name, get_template_directory_uri() . $location, ['jquery', 'jquery-ui-accordion'], '1.0.0', false);
+		$type = pathinfo($location, PATHINFO_EXTENSION) === 'js' ? 'scripts' : 'styles';
+
+		$this->{$type}[] = [
+			'name'     => $name,
+			'location' => get_template_directory_uri() . $location
+		];
 	}
 
 	public function read_pane() {
 		$this->enqueue_dependency(
-			'mia_read_' . $this->get_string_as_slug($this->name), // name of script, e.g. mia_read_tickets
-			'/backend/js/' . $this->get_string_as_slug($this->name) . '/read_' . $this->get_string_as_slug($this->name) . '.js' // location of script
+			'mia_read_' . $this->nameSlug, // name of script, e.g. mia_read_tickets
+			'/backend/js/' . $this->nameSlug . '/read_' . $this->nameSlug . '.js' // location of script
 		);
 	}
 
 	public function create_pane() {
 		$this->enqueue_dependency(
-			'mia_create_' . $this->get_string_as_slug($this->name),
-			'/backend/js/' . $this->get_string_as_slug($this->name) . '/create_' . $this->get_string_as_slug($this->name) . '.js'
+			'mia_create_' . $this->nameSlug,
+			'/backend/js/' . $this->nameSlug . '/create_' . $this->nameSlug . '.js'
 		);
 
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') return $this->create_action();
@@ -100,8 +109,8 @@ abstract class Page {
 
 	public function update_pane() {
 		$this->enqueue_dependency(
-			'mia_update_' . $this->get_string_as_slug($this->name),
-			'/backend/js/' . $this->get_string_as_slug($this->name) . '/update_' . $this->get_string_as_slug($this->name) . '.js'
+			'mia_update_' . $this->nameSlug,
+			'/backend/js/' . $this->nameSlug . '/update_' . $this->nameSlug . '.js'
 		);
 
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') return $this->update_action();
@@ -114,8 +123,19 @@ abstract class Page {
 	 * @return Timber::context
 	 */
 	protected function get_context($pageName) {
+		$this->enqueue_dependencies();
+
 		$context = Timber::get_context();
-		$context['page_name'] = $pageName; // e.g. Create Ticket
+
+		$context['page_name']   = $pageName; // e.g. Create Ticket
+		$context['mia_error']   = $this->error;
+		$context['mia_message'] = $this->message;
+
+		if ($this->nameSlug !== 'problem_type' && strpos(strtolower($pageName), 'create') === false) {
+			$context['create_url'] = 'admin.php?page=' . $this->nameSlug . '_create';
+		}
+
+		unset($_SESSION['mia_error'], $_SESSION['mia_message']);
 
 		return $context;
 	}
@@ -131,7 +151,7 @@ abstract class Page {
 	protected function render_pane($context) {
 		Timber::render(
 			'backend/views/' .
-			$this->get_string_as_slug($this->name) . 's/' .
+			$this->nameSlug . 's/' .
 			$this->get_string_as_slug($context['page_name']) .
 			'.twig',
 			$context
@@ -161,6 +181,21 @@ abstract class Page {
 			<script type="text/javascript">
 				window.location="' . $url . '";
 			</script>
-		';
+		'; exit;
+	}
+
+	protected function is_error($WPError) {
+		if (is_wp_error($WPError)) {
+			if ($WPError->errors
+					&& sizeOf($WPError->errors) > 0
+					&& sizeOf($WPError->errors[400] > 0)
+					&& sizeOf($WPError->errors[400][0]) > 0) {
+				return $_SESSION['mia_error'] = $WPError->errors[400][0][0];
+			}
+
+			return $_SESSION['mia_error'] = 'Sorry! An unknown error has occurred. Please try that action again.';
+		}
+
+		return false;
 	}
 }

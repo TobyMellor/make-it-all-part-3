@@ -12,7 +12,7 @@ use MakeItAll\Includes\Database\Queries\{
 	TicketStatusQuery,
 	CallQuery,
 	CallTicketQuery,
-	StaffQuery,
+	UserQuery,
 	ExpertiseTypeStaffQuery,
 	ExpertiseTypeQuery,
 	DeviceQuery,
@@ -38,10 +38,10 @@ class TicketPage extends Page {
 				$ticketQuery = new TicketQuery();
 
 				if (isset($_GET['ticket_id'])) {
-					$ticketQuery->delete($_GET['ticket_id']);
+					$ticketQuery->mia_delete($_GET['ticket_id']);
 				} else if (isset($_GET['ticket'])) {
 					foreach ($_GET['ticket'] as $ticketId) {
-						$ticketQuery->delete($ticketId);
+						$ticketQuery->mia_delete($ticketId);
 					}
 				}
 			}
@@ -59,6 +59,7 @@ class TicketPage extends Page {
 
 			$ticketTable = new TicketTable();
 			$ticketTable->prepare_items();
+			$ticketTable->search_box('search', 'search_id');
 			$ticketTable->display();
 		}
 	}
@@ -134,7 +135,7 @@ class TicketPage extends Page {
 			$ticketStatusQuery->mia_insert([
 				'ticket_id' => $ticketId,
 				'status_id' => $ticket['status'],
-				'staff_id'  => get_current_user_id()
+				'user_id'   => get_current_user_id()
 			]);
 
 			// link the first call to the ticket
@@ -144,7 +145,7 @@ class TicketPage extends Page {
 			]);
 		}
 
-		$this->mia_redirect('admin.php?page=ticket&id=' . $ticketId); exit;
+		return $this->mia_redirect('admin.php?page=ticket&id=' . $ticketId);
 	}
 
 	public function update_pane() {
@@ -216,17 +217,17 @@ class TicketPage extends Page {
 			$ticketStatusQuery->mia_insert([
 				'ticket_id' => $ticketId,
 				'status_id' => $ticket['status'],
-				'staff_id'  => get_current_user_id()
+				'user_id'   => get_current_user_id()
 			]);
 		}
 
-		$this->mia_redirect('admin.php?page=ticket&id=' . $ticketId); exit;
+		return $this->mia_redirect('admin.php?page=ticket&id=' . $ticketId);
 	}
 
 	private function get_required_data($pageName) {
 		$context = $this->get_context($pageName);
 
-		$context['employees']            = json_encode((new StaffQuery)->get());
+		$context['employees']            = json_encode((new UserQuery)->get());
 		$context['expertise_types']      = json_encode((new ExpertiseTypeQuery)->get());
 		$context['expertise_type_staff'] = json_encode((new ExpertiseTypeStaffQuery)->get());
 		$context['devices']              = json_encode((new DeviceQuery)->get());

@@ -42,7 +42,7 @@ class HardwarePage extends Page {
 
 			$hardwareTable = new HardwareTable();
 			$hardwareTable->prepare_items();
-
+			$hardwareTable->search_box('search', 'search_id');
 			$hardwareTable->display();
 		}
 	}
@@ -64,19 +64,31 @@ class HardwarePage extends Page {
 
 		// insert type, make, sn, date
 		foreach ($_POST['hardware'] as $hardware) {
-			$type = $hardware['type'] || $hardware['newType'];
-			$make = $hardware['make'] || $hardware['newMake'];
+			
+		
+
+	
+			
+			if(empty($hardware['type'])){
+				$hardware['type'] = $hardware['newType'];	
+			}
+			if(empty($hardware['make'])){
+				$hardware['make'] = $hardware['newMake'];	
+				
+			}
+			
+			
 
 			$deviceQuery->mia_insert([
-				'type'      => $type,
-				'make'      => $make,
+				'type'      => $hardware['type'],
+				'make'      => $hardware['make'],
 				'serial_no' => $hardware['serial']
 			]);
 
 			$hardwareID = $wpdb->insert_id;
 		}
 		
-		$this->mia_redirect('admin.php?page=hardware&id=' . $hardwareID); exit;
+		return $this->mia_redirect('admin.php?page=hardware&id=' . $hardwareID);
 	}
 
 	// updating hardware
@@ -97,26 +109,30 @@ class HardwarePage extends Page {
 	
 	protected function update_action() {
 		global $wpdb;
+		
+		if(empty($hardware['type'])){
+			$hardware['type'] = $hardware['newType'];	
+		}
+		if(empty($hardware['make'])){
+			$hardware['make'] = $hardware['newMake'];	
+				
+		}
+			
 
-		$hardware   = $_POST['hardware'];
-		$hardwareId = $hardware['id'];
 
-		// deal with new type/make
-		$type = $hardware['type'] || $hardware['newType'];
-		$make = $hardware['make'] || $hardware['newMake'];
 
 		$deviceQuery = new DeviceQuery();
 
 		$deviceQuery->mia_update(
 			$hardwareId,
 			[
-				'type'          => $type,
-				'make'          => $make,
+				'type'          => $hardware['type'],
+				'make'          => $hardware['make'],
 				'serial_no'     => $hardware['serial_no'],
 			]
 		);
 
-		$this->mia_redirect('admin.php?page=hardware&id=' . $hardwareId); exit;
+		return $this->mia_redirect('admin.php?page=hardware&id=' . $hardwareId);
 	}
 
 	private function get_hardware($context, $id) {

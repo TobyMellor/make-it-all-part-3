@@ -22,6 +22,38 @@ class DeviceQuery extends Query {
 		);
 	}
 
+	/**
+	 * Get the data required for the table
+	 *
+	 * @return Array
+	 */
+	public function get_device_table($search = null) {
+		$sql = "
+			SELECT
+				id,
+				type AS title,
+				make,
+				serial_no,
+				created_at,
+				updated_at
+			FROM {$this->prefix}{$this->table}
+		";
+
+		if ($search) {
+			$search = $this->wpdb->esc_like($search);
+
+			$sql .= $this->wpdb->prepare("
+				 WHERE type LIKE '%%%s%%'
+				 OR make LIKE '%%%s%%'
+				 OR serial_no LIKE '%%%s%%'",
+				 [$search, $search, $search]);
+		}
+
+		$sql .= " ORDER BY UNIX_TIMESTAMP(updated_at) DESC";
+
+		return $this->get_results($sql);
+	}
+
 	public function get_device($id) {
 		return $this->get_results(
 			"

@@ -17,7 +17,7 @@ $(() => {
 	});
 
 	// Remove filter/status, clear the select field
-	$(document).on('click', '.filter', function() {
+	$(document).on('click', '.filter.removeable', function() {
 		$(this).closest('.has-button').find('select').prop('selectedIndex', 0);
 
 		$(this).fadeOut(250, function() {
@@ -53,21 +53,6 @@ function setDateDisplay($spans, date) {
 	setDigit($spans.eq(8), date.getMinutes());
 	setDigit($spans.eq(10), date.getSeconds());
 }
-
-var getUrlParameter = window.getUrlParameter = function(sParam) {
-    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-        sURLVariables = sPageURL.split('&'),
-        sParameterName,
-        i;
-
-    for (i = 0; i < sURLVariables.length; i++) {
-        sParameterName = sURLVariables[i].split('=');
-
-        if (sParameterName[0] === sParam) {
-            return sParameterName[1] === undefined ? true : sParameterName[1];
-        }
-    }
-};
 
 var validationTimeout = window.validationTimeout = null;
 

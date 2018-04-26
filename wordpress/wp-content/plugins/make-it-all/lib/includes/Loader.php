@@ -99,20 +99,47 @@ class Loader {
 		 */
 		$pages = [
 			'TicketPage',
-			'HardwarePage',
 			'ProblemTypePage',
+			'DepartmentPage',
+			'HardwarePage',
 			'SoftwarePage'
 		];
 
+		$basePageName = __NAMESPACE__ . '\Views\\';
+
 		foreach ($pages as $pageName) {
-			$pageName = __NAMESPACE__ . '\Views\\' . $pageName;
+			$pageName = $basePageName . $pageName;
 			$page     = new $pageName;
 
-			$this->add_action('admin_menu', new $pageName, 'init');
+			$this->add_action('admin_menu', $page, 'init');
+
 			if (method_exists($page, 'add_api_endpoints')) {
 				$this->add_action('rest_api_init', $page, 'add_api_endpoints');
 			}
 		}
+
+		/**
+		 * Register the additional info needed for the staff page
+		 */
+		$pageName = $basePageName . 'StaffPage';
+		$page     = new $pageName;
+
+		$this->add_action('admin_menu', $page, 'init');
+		$this->add_action('show_user_profile', $page, 'read_pane');
+		$this->add_action('edit_user_profile', $page, 'read_pane');
+		$this->add_action('personal_options_update', $page, 'update_action');
+		$this->add_action('edit_user_profile_update', $page, 'update_action');
+
+		/**
+		 * Allow $_SESSION to be used in this plugin if it's not already enabled
+		 */
+		if (!session_id()) {
+			session_start();
+		}
+
+		/**
+		 * Now execute all of the filters and actions
+		 */
 
 		foreach ($this->filters as $hook) {
 			add_filter(

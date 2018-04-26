@@ -2,7 +2,25 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<h1 class="wp-heading-inline">{{ page_name }}</h1>
+			{% if create_url %}
+				<a href="{{ create_url }}" class="page-title-action">Add New</a>
+			{% endif %}
+
+			{% if mia_error %}
+				<div id="message" class="updated notice is-dismissible error">
+					<p><strong>{{ mia_error }}</strong></p>
+					<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>
+				</div>
+			{% endif %}
+
+			{% if mia_message %}
+				<div id="message" class="updated notice is-dismissible">
+					<p><strong>{{ mia_message }}</strong></p>
+					<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button>
+				</div>
+			{% endif %}
 		</div>
 	</div>
+
 	{% block main %}{% endblock %}
 	{% block scripts %}{% endblock %}

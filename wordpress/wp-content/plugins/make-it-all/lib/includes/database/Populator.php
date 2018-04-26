@@ -19,7 +19,7 @@ class Populator {
 		'SeedProgramTable',
 		'SeedDeviceTable',
 		'SeedDepartmentTable',
-		'SeedStaffTable',
+		'SeedUserTable',
 		'SeedExpertiseTypeTable',
 		'SeedExpertiseTypeStaffTable',
 		'SeedTicketTable',

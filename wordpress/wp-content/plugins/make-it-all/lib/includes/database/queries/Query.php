@@ -3,14 +3,21 @@
 namespace MakeItAll\Includes\Database\Queries;
 
 use \WP_Error;
+use Carbon\Carbon;
 
 abstract class Query {
 	protected $sqlStatement = null;
 	protected $table;
+	protected $rawPrefix;
 	protected $prefix;
+	protected $wpdb;
 
 	function __construct() {
-		global $wpdb; $this->prefix = $wpdb->prefix . 'mia_';
+		global $wpdb;
+
+		$this->rawPrefix = $wpdb->prefix;
+		$this->prefix    = $this->rawPrefix . 'mia_';
+		$this->wpdb      = $wpdb;
 	}
 
 	/**
@@ -19,7 +26,18 @@ abstract class Query {
 	 * @return void
 	 */
 	protected function get_results($query) {
-		global $wpdb; return $wpdb->get_results($query);
+		$results = $this->wpdb->get_results($query);
+
+		if (sizeOf($results) > 0 && isset($results[0]->created_at) && isset($results[0]->updated_at)) {
+			foreach ($results as $result) {
+				$result->created_at_real = $result->created_at;
+				$result->created_at      = Carbon::parse($result->created_at)->diffForHumans();
+				$result->updated_at_real = $result->updated_at;
+				$result->updated_at      = Carbon::parse($result->updated_at)->diffForHumans();
+			}
+		}
+
+		return $results;
 	}
 
 	/**
@@ -30,21 +48,48 @@ abstract class Query {
 	 *
 	 * @return (int|false) Number of rows affected/selected or false on error
 	 */
-	public function mia_insert($columns) {
+	public function mia_insert($columns, $isWordPressTable = false) {
 		$validationResponse = $this->validate($columns);
 
 		if (is_wp_error($validationResponse)) return $validationResponse;
 
-		$columns['created_at'] = date('Y-m-d H:i:s');
-		$columns['updated_at'] = date('Y-m-d H:i:s');
+		$prefix = $this->prefix;
 
-		global $wpdb;
+		if (!$isWordPressTable) {
+			$columns['created_at'] = date('Y-m-d H:i:s');
+			$columns['updated_at'] = date('Y-m-d H:i:s');
+		} else {
+			$prefix = $this->rawPrefix;
+		}
 
-		if (!$wpdb->insert($this->prefix . $this->table, $columns)) {
+		if (!$this->wpdb->insert($prefix . $this->table, $columns)) {
 			wp_die('Sorry! We failed to insert that record. Please try again.');
 		}
 
-		return $wpdb->insert_id;
+		return $this->wpdb->insert_id;
+	}
+
+	/**
+	 * Bulk inserts data into the db
+	 *
+	 * @return (int|false) Number of rows affected/selected or false on error
+	 */
+	public function mia_bulk_insert($placeholder, $columnNames, $rows) {
+		$date         = date('Y-m-d H:i:s');
+		$values       = [];
+
+		foreach ($rows as $columns) {
+			$validationResponse = $this->validate($columns);
+
+			if (is_wp_error($validationResponse)) return $validationResponse;
+
+			$columns['created_at'] = $date;
+			$columns['updated_at'] = $date;
+
+			$values[] = $this->wpdb->prepare($placeholder, $columns);
+		}
+
+		return $this->wpdb->query("INSERT INTO {$this->prefix}{$this->table} {$columnNames} VALUES " . implode(',', $values));
 	}
 
 	/**
@@ -59,13 +104,11 @@ abstract class Query {
 
 		$columns['updated_at'] = date('Y-m-d H:i:s');
 
-		global $wpdb;
-
-		if (!$wpdb->update($this->prefix . $this->table, $columns, [$whereColumn => $id])) {
+		if (!$this->wpdb->update($this->prefix . $this->table, $columns, [$whereColumn => $id])) {
 			wp_die('Sorry! We failed to update that record. Please try again.');
 		}
 
-		return $wpdb->insert_id;
+		return $this->wpdb->insert_id;
 	}
 
 	/**
@@ -74,10 +117,8 @@ abstract class Query {
 	 * @return Boolean
 	 */
 	public function mia_delete($id, $whereColumn = 'id') {
-		global $wpdb;
-
-		if (!$wpdb->delete($this->prefix . $this->table, [$whereColumn => $id])) {
-			return WP_Error(400, 'Sorry! We failed to delete that record. Please try again.');
+		if (!$this->wpdb->delete($this->prefix . $this->table, [$whereColumn => $id])) {
+			return new WP_Error(400, 'Sorry! We failed to delete that record. Please try again.');
 		}
 
 		return false;

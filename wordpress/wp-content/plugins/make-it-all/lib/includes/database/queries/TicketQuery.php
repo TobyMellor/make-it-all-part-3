@@ -22,6 +22,58 @@ class TicketQuery extends Query {
 		);
 	}
 
+	public function get_tickets_table($search = null) {
+		$sql = "
+				SELECT
+					ticket.id AS id,
+					title,
+					assigned_to_operator_id,
+					status.name AS status,
+					caller.display_name AS last_caller,
+					ticket.created_at AS created_at,
+					ticket.updated_at AS updated_at
+				FROM {$this->prefix}{$this->table} AS ticket
+				JOIN (
+					SELECT
+						ticket_id, status_id
+					FROM {$this->prefix}ticket_status
+					WHERE id IN (
+						SELECT MAX(id) AS id
+						FROM {$this->prefix}ticket_status
+						GROUP BY ticket_id
+					)
+				) AS ticket_status
+					ON ticket_status.ticket_id = ticket.id
+				JOIN {$this->prefix}status AS status
+					ON status.id = ticket_status.status_id
+				JOIN (
+					SELECT
+						ticket_id, call_id
+					FROM {$this->prefix}call_ticket
+					WHERE id IN (
+						SELECT MIN(id) AS id
+						FROM {$this->prefix}call_ticket
+						GROUP BY ticket_id
+					)
+				) AS call_ticket
+					ON call_ticket.ticket_id = ticket.id
+				JOIN {$this->prefix}call AS _call
+					ON _call.id = call_ticket.call_id
+				JOIN {$this->rawPrefix}users AS caller
+					ON caller.id = _call.caller_id
+			";
+
+		if ($search) {
+			$search = $this->wpdb->esc_like($search);
+
+			$sql .= $this->wpdb->prepare(" WHERE ticket.title LIKE '%%%s%%' OR ticket.id LIKE '%%%s%%'", [$search, $search]);
+		}
+
+		$sql .= " ORDER BY UNIX_TIMESTAMP(ticket.updated_at) DESC";
+
+		return $this->get_results($sql);
+	}
+
 	/**
 	 * Get the tickets for a staff member
 	 *
@@ -31,7 +83,7 @@ class TicketQuery extends Query {
 		return $this->get_results(
 			"
 				SELECT
-					ticket_status.staff_id,
+					ticket_status.user_id,
 					ticket_status.status_id,
 					ticket.assigned_to_specialist_id,
 					ticket.assigned_to_operator_id
@@ -95,16 +147,16 @@ class TicketQuery extends Query {
 		return $this->get_results(
 			"
 				SELECT
-					staff_caller.name AS caller,
-					staff_operator.name AS operator,
+					staff_caller.display_name AS caller,
+					staff_operator.display_name AS operator,
 					mia_call.time,
 					mia_call.id
 				FROM {$this->prefix}call AS mia_call
 				JOIN {$this->prefix}call_ticket AS call_ticket
 					ON call_ticket.call_id = mia_call.id
-				JOIN {$this->prefix}staff AS staff_caller
+				JOIN {$this->rawPrefix}users AS staff_caller
 					ON staff_caller.id = mia_call.caller_id
-				JOIN {$this->prefix}staff AS staff_operator
+				JOIN {$this->rawPrefix}users AS staff_operator
 					ON staff_operator.id = mia_call.operator_id
 				WHERE call_ticket.ticket_id = {$ticketId}
 			"
@@ -124,12 +176,8 @@ class TicketQuery extends Query {
 					similar_ticket.title,
 					status.name AS status
 				FROM {$this->prefix}ticket AS ticket
-				JOIN {$this->prefix}expertise_type_staff AS ticket_expertise_type_staff
-					ON ticket_expertise_type_staff.id = ticket.expertise_type_staff_id
-				JOIN {$this->prefix}expertise_type_staff AS expertise_type_staff
-					ON expertise_type_staff.expertise_type_id = ticket_expertise_type_staff.expertise_type_id
 				JOIN {$this->prefix}ticket AS similar_ticket
-					ON similar_ticket.expertise_type_staff_id = expertise_type_staff.id
+					ON similar_ticket.expertise_type_id = ticket.expertise_type_id
 				JOIN (
 					SELECT
 						ticket_id, status_id
@@ -158,12 +206,12 @@ class TicketQuery extends Query {
 		return $this->get_results(
 			"
 				SELECT
-					staff.name AS staff_name,
+					staff.display_name AS staff_name,
 					ticket_status.created_at,
 					status.name
 				FROM {$this->prefix}ticket_status AS ticket_status
-				JOIN {$this->prefix}staff AS staff
-					ON staff.id = ticket_status.staff_id
+				JOIN {$this->rawPrefix}users AS staff
+					ON staff.id = ticket_status.user_id
 				JOIN {$this->prefix}status AS status
 					ON status.id = ticket_status.status_id
 				WHERE ticket_status.ticket_id = {$ticketId}

@@ -1,0 +1,43 @@
+<h2>Make-It-All</h2>
+<table class="form-table">
+	<tbody>
+		<tr class="user-email-wrap">
+			<th><label for="job_title">Job Title</label></th>
+			<td><input name="job_title" id="job_title" value="{{ viewing_user.job_title }}" class="regular-text ltr" type="text">
+			</td>
+		</tr>
+		<tr class="user-email-wrap">
+			<th><label for="department_id">Department</label></th>
+			<td>
+				<select name="department_id" id="department_id" class="regular-text ltr" autocomplete="off">
+					{% for department in departments_obj %}
+						<option value="{{ department.id }}" {% if viewing_user.department_id == department.id %} selected="selected" {% endif %}>
+							#{{ department.id }} – {{ department.name }}
+						</option>
+					{% endfor %}
+				</select>
+			</td>
+		</tr>
+		<tr class="user-email-wrap">
+			<th><label for="phone_number">Phone Number</label></th>
+			<td><input name="phone_number" id="phone_number" value="{{ viewing_user.phone_number }}" class="regular-text ltr" type="text">
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<div class="row no-padding">
+	<div class="col-xs-6">
+		<div class="problem-type-picker problem-type-checkboxes">
+			<input type="text" name="specialisms" hidden>
+			<div class="type-columns"></div>
+		</div>
+	</div>
+</div>
+
+<script>
+	var employees          = {{ employees }},
+		expertiseTypes     = {{ expertise_types }},
+		expertiseTypeStaff = {{ expertise_type_staff }},
+		currentUserId      = {{ viewing_user.ID }};
+</script>
