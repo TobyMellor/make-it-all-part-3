@@ -308,7 +308,9 @@ $(() => {
 	// load the initial problem types. If not present, hide "Problem Type Actions"
 	function init() {
 		if (expertiseTypeManager.expertiseTypes.length) {
-			loadExpertiseType(expertiseTypeManager.expertiseTypes[0].id);
+			let id = getParameterByName('id') || expertiseTypeManager.expertiseTypes[0].id;
+
+			loadExpertiseType(id);
 		} else {
 			$('.mia-panel-short .problem-type-actions > .row')
 				.hide()
@@ -391,5 +393,11 @@ $(() => {
 		$hide.fadeOut(250, function() {
 			$show.fadeIn(250);
 		});
+	}
+
+	function getParameterByName(name) {
+		let match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+		
+		return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
 	}
 });

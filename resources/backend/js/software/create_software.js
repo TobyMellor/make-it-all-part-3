@@ -41,13 +41,32 @@ $(() => {
 		$accordions.append($newAccordion);
 		// reinitialize after appending new accordion
 		$accordions.accordion('refresh');
+		
 		$newAccordion.click(); // expand new accordion
+		addDatePicker($newAccordion);
+		
 	});
 
 	initAccordions();
 	//This is probably causing the date issue im having.
 	clearAccordion($('.mia-panel-body')); // clear all fields
 });
+
+function addDatePicker($accordion){
+	var $picker = $accordion.find('.mia-picker');
+	var $pickerInput = $picker.find('input');
+		$(document).ready(function () {
+			console.log("new datepicker");
+			$pickerInput.datepicker();
+	});
+	
+	
+	// Forward click on button to hidden input with datetimepicker
+	$picker.click(function(e) {
+		$pickerInput.datepicker('show');
+	});
+	
+}
 
 
 
@@ -64,7 +83,6 @@ function cloneAccordion($accordions, newAccordionId) {
 	$newAccordion.last().find('input, textarea, select').each((i, input) => $(input).prop('name', $(input).prop('name').replace(/software\[.*?\]\s?/g, 'software[' + newAccordionId + ']')));
 	$newAccordion.last().attr('data-accordion-id', newAccordionId);
 	licenceListeners($newAccordion);
-
 	return $newAccordion;
 }
 
@@ -77,6 +95,8 @@ function setDate(dateInput, date){
 	}
 	
 }
+
+
 
 function licenceListeners($accordion){
 	let remove = $accordion.find('.software-rml');

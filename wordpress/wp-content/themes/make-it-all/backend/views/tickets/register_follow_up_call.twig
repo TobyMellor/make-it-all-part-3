@@ -1,0 +1,491 @@
+{% extends "backend/views/layouts/page.twig" %}
+
+{% block main %}
+	<div class="row follow-up-call-page">
+		<div class="col-xs-12 col-sm-12 {% if firstTicketId is defined %}col-md-9{% endif %}">
+			<form action="admin.php?page=call_follow_up" method="POST">
+				{% if firstTicketId is defined %}
+					<div class="mia-panel call-panel">
+						<div class="row no-padding">
+							<div id="call-information">
+								<div class="mia-panel-heading">
+									<h2>Call Information</h2>
+									<p>Enter some information about the call to get started:</p>
+								</div>
+								<div class="mia-panel-body negative-margin">
+									<div class="row mia-field-group">
+										<div class="col-sm-3 col-xs-12">
+											<p class="label">
+												Caller <span class="required">*</span>
+											</p>
+
+											<p class="details">
+												Who called in?
+											</p>
+										</div>
+										<div class="col-sm-9 col-xs-12">
+											<select name="caller_showcase" validation="required|integer" autocomplete="off">
+												<option selected default disabled>Select a caller here…</option>
+											</select>
+										</div>
+									</div>
+									<div class="row mia-field-group">
+										<div class="col-sm-3 col-xs-12">
+											<p class="label">
+												Date of call <span class="required">*</span>
+											</p>
+
+											<p class="details">
+												When was the call?
+											</p>
+										</div>
+										<div class="col-sm-9 col-xs-12 has-button">
+											<div class="date-time-picker">
+												<span></span>
+												<span>/</span>
+												<span></span>
+												<span>/</span>
+												<span></span>
+												<span></span>
+												<span></span>
+												<span>:</span>
+												<span></span>
+												<span>:</span>
+												<span></span>
+											</div>
+											<a class="button button-primary pull-right mia-picker" href="javascript:void(0);">
+												Choose a time
+												<input type="text" name="date_of_call" validation="required">
+											</a>
+										</div>
+									</div>
+									<div class="row mia-field-group">
+										<div class="col-sm-3 col-xs-12">
+											<p class="label">
+												Notes about this call
+											</p>
+
+											<p class="details">
+												Don't include ticket specific info
+											</p>
+											<p class="details" style="margin-top: 10px;">
+												e.g. Caller was frustrated or Needs to be esculated
+											</p>
+										</div>
+										<div class="col-sm-9 col-xs-12">
+											<textarea name="call_notes" validation="nullable"></textarea>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div id="caller-information">
+								<div class="mia-panel-heading">
+									<div>
+										<h2>Caller Information</h2>
+										<p class="staff-information">Who called in?</p>
+									</div>
+
+									<div class="staff-information">
+										<div class="row mia-field-group">
+											<div class="col-xs-5">
+												<p class="label">
+													Name
+												</p>
+											</div>
+											<div class="col-xs-7">
+												<input name="caller[display_name]" type="text" readonly="readonly" data-attribute="display_name">
+											</div>
+										</div>
+										<div class="row mia-field-group">
+											<div class="col-xs-5">
+												<p class="label">
+													ID Number
+												</p>
+											</div>
+											<div class="col-xs-7">
+												<input name="caller[id]" type="text" readonly="readonly" data-attribute="id">
+											</div>
+										</div>
+										<div class="row mia-field-group">
+											<div class="col-xs-5">
+												<p class="label">
+													Job
+												</p>
+											</div>
+											<div class="col-xs-7">
+												<input name="caller[job_title]" type="text" readonly="readonly" data-attribute="job_title">
+											</div>
+										</div>
+										<div class="row mia-field-group">
+											<div class="col-xs-5">
+												<p class="label">
+													Department
+												</p>
+											</div>
+											<div class="col-xs-7">
+												<input name="caller[department_name]" type="text" readonly="readonly" data-attribute="department_name">
+											</div>
+										</div>
+										<div class="row mia-field-group">
+											<div class="col-xs-5">
+												<p class="label">
+													Phone
+												</p>
+											</div>
+											<div class="col-xs-7">
+												<input name="caller[phone_number]" type="text" readonly="readonly" data-attribute="phone_number">
+											</div>
+										</div>
+										<div class="row mia-field-group">
+											<div class="col-xs-5">
+												<p class="label">
+													Permissions
+												</p>
+											</div>
+											<div class="col-xs-7">
+												<div class="mia-permissions">
+													<strong></strong>
+												</div>
+											</div>
+										</div>
+										<div class="row mia-field-group">
+											<div class="col-xs-5"></div>
+											<div class="col-xs-7"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endif %}
+
+				{% if firstTicketId is not defined %}
+					<div class="mia-panel ticket-panel">
+						<div class="mia-panel-heading">
+							<div class="row">
+								<div class="col-sm-3 col-xs-12">
+									<h2>Ticket Information</h2>
+									<p>Choose a ticket to get started:</p>
+								</div>
+								<div class="col-sm-9 col-xs-12 {% if firstTicketId is defined %} defined {% endif %}">
+									<img src="/wp-content/uploads/make-it-all/arrow-right-other.png">
+									<select id="change-ticket">
+										<option disabled selected>Select a ticket here…</option>
+										{% for ticket in tickets %}
+											<option value="{{ticket.id}}">#{{ ticket.id }} – {{ ticket.title }}</option>
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="mia-panel-body negative-margin">
+							<div class="accordions">
+								<div class="accordion-handle row">
+									<div class="accordion-icon col-xs-3">
+										<div class="number-circle">?</div>
+									</div>
+									<div class="accordion-title col-xs-9">No ticket has been selected…</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% else %}
+					<div class="mia-panel ticket-panel">
+						<div class="mia-panel-heading">
+							<h2>Ticket Information</h2>
+							<p>Enter information about one or more tickets:</p>
+						</div>
+						<div class="mia-panel-body negative-margin">
+							<div class="accordions">
+								<div class="accordion-handle row">
+									<div class="accordion-icon col-xs-3">
+										<div class="number-circle">{{ firstTicketId }}</div>
+									</div>
+									<div class="accordion-title col-xs-9">
+										Loading Ticket…
+									</div>
+									<div class="accordion-actions">
+										<i class="fa fa-chevron-up"></i>
+									</div>
+								</div>
+								<div class="accordion-body" data-accordion-id="{{ firstTicketId }}">
+									<input name="tickets[{{ firstTicketId }}][id]" value="{{ firstTicketId }}" hidden>
+									<input name="tickets[{{ firstTicketId }}][solution_id]" hidden>
+									<div class="row mia-field-group">
+										<div class="col-xs-12 col-sm-3">
+											<p class="label">
+												Status <span class="required">*</span>
+											</p>
+
+											<p class="details">
+												What's the situation?
+											</p>
+										</div>
+										<div class="col-sm-9 col-xs-12 has-button">
+											<div>
+												<select name="tickets[{{ firstTicketId }}][status]" validation="required|integer|in:1,2,3">
+													<option disabled selected>Select a status here…</option>
+													<option value="1">New</option>
+													<option value="2">Pending - In Progress</option>
+													<option value="3">Resolved</option>
+												</select>
+											</div>
+											<div></div>
+										</div>
+									</div>
+									<div class="set-solution">
+										<div class="row mia-field-group">
+											<div class="col-sm-3 col-xs-12">
+												<p class="label">
+													Solution
+												</p>
+
+												<p class="details">
+													Since the status is resolved, how did you solve the problem?
+												</p>
+											</div>
+											<div class="col-sm-9 col-xs-12">
+												<textarea name="tickets[{{ firstTicketId }}][solution]" validation="nullable|min:3|max:65535"></textarea>
+											</div>
+										</div>
+									</div>
+									<div class="row mia-field-group">
+										<div class="col-sm-3 col-xs-12">
+											<p class="label">
+												Title <span class="required">*</span>
+											</p>
+
+											<p class="details">
+												A short summary explaining details about the ticket
+											</p>
+										</div>
+										<div class="col-sm-9 col-xs-12">
+											<input name="tickets[{{ firstTicketId }}][title]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter ticket title here" validation="required|min:3|max:255">
+										</div>
+									</div>
+									<div class="row mia-field-group">
+										<div class="col-sm-3 col-xs-12">
+											<p class="label">
+												Description <span class="required">*</span>
+											</p>
+
+											<p class="details">
+												A long detailed explanation of the problem the employee faces
+											</p>
+										</div>
+										<div class="col-sm-9 col-xs-12">
+											<textarea name="tickets[{{ firstTicketId }}][description]" validation="required|min:3|max:65535"></textarea>
+										</div>
+									</div>
+									<div class="row mia-field-group">
+										<div class="col-sm-3 col-xs-12">
+											<p class="label">
+												Problem Type <span class="required">*</span>
+											</p>
+
+											<p class="details">
+												What category does the problem fall in?
+											</p>
+										</div>
+										<div class="col-sm-9 col-xs-12">
+											<div class="problem-type-picker">
+												<input type="text" name="tickets[{{ firstTicketId }}][expertise_type_id]" hidden validation="required|integer">
+												<input type="text" name="tickets[{{ firstTicketId }}][assigned_to_specialist]" hidden validation="nullable|integer">
+												<div class="type-columns"></div>
+											</div>
+										</div>
+									</div>
+									<div class="row mia-field-group">
+										<div class="col-sm-3 col-xs-12">
+											<p class="label">
+												Assigned to <span class="required">*</span>
+											</p>
+
+											<p class="details">
+												Which employee should be assigned to deal with the problem?
+											</p>
+										</div>
+										<div class="col-sm-9 col-xs-12">
+											<div class="assign-options">
+												<div>
+													<label>
+														<input name="tickets[{{ firstTicketId }}][assigned_to_type]" value="self" type="radio">
+														Myself
+													</label>
+												
+													<label>
+														<input name="tickets[{{ firstTicketId }}][assigned_to_type]" value="operator" type="radio">
+														Another operator
+													</label>
+
+													<label>
+														<input name="tickets[{{ firstTicketId }}][assigned_to_type]" value="specialist" type="radio">
+														Best specialist for problem
+													</label>
+
+													<select name="tickets[{{ firstTicketId }}][assigned_to_operator]">
+														<option disabled selected value="">Select an operator here…</option>
+													</select>
+												</div>
+												<div>
+													<div class="assigned-to-details">
+														<div class="row mia-field-group">
+															<div class="col-xs-3">
+																<p class="label">
+																	Name
+																</p>
+															</div>
+															<div class="col-xs-9">
+																<input name="tickets[{{ firstTicketId }}][assigned_to][display_name]" type="text" readonly="readonly" data-attribute="display_name" validation="required">
+															</div>
+														</div>
+														<div class="row mia-field-group">
+															<div class="col-xs-3">
+																<p class="label">
+																	ID Number
+																</p>
+															</div>
+															<div class="col-xs-9">
+																<input name="tickets[{{ firstTicketId }}][assigned_to][id]" type="text" readonly="readonly" data-attribute="id" validation="required|integer">
+															</div>
+														</div>
+														<div class="row mia-field-group">
+															<div class="col-xs-3">
+																<p class="label">
+																	Job
+																</p>
+															</div>
+															<div class="col-xs-9">
+																<input name="tickets[{{ firstTicketId }}][assigned_to][job_title]" type="text" readonly="readonly" data-attribute="job_title" validation="required">
+															</div>
+														</div>
+														<div class="row mia-field-group">
+															<div class="col-xs-3">
+																<p class="label">
+																	Department
+																</p>
+															</div>
+															<div class="col-xs-9">
+																<input name="tickets[{{ firstTicketId }}][assigned_to][department_name]" type="text" readonly="readonly" data-attribute="department_name" validation="required">
+															</div>
+														</div>
+														<div class="row mia-field-group">
+															<div class="col-xs-3">
+																<p class="label">
+																	Phone
+																</p>
+															</div>
+															<div class="col-xs-9">
+																<input name="tickets[{{ firstTicketId }}][assigned_to][phone_number]" type="text" readonly="readonly" data-attribute="phone_number" validation="required">
+															</div>
+														</div>
+														<div class="row mia-field-group">
+															<div class="col-xs-3">
+																<p class="label">
+																	Permissions
+																</p>
+															</div>
+															<div class="col-xs-9">
+																<div class="mia-permissions">
+																	<strong></strong>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row mia-field-group">
+										<div class="col-sm-3 col-xs-12">
+											<p class="label">
+												Hardware Affected <span class="required">*</span>
+											</p>
+
+											<p class="details">
+												Physical devices that may be related to the problem
+											</p>
+										</div>
+										<div class="col-sm-9 col-xs-12">
+											<select name="tickets[{{ firstTicketId }}][hardware_showcase]" class="add-hardware-device" validation="nullable">
+												<option selected disabled>Select a hardware device here…</option>
+											</select>
+											<ul class="affected-items"></ul>
+										</div>
+									</div>
+									<div class="row mia-field-group">
+										<div class="col-sm-3 col-xs-12">
+											<p class="label">
+												Programs Affected
+											</p>
+
+											<p class="details">
+												Software that may be related to the problem, if applicable
+											</p>
+										</div>
+										<div class="col-sm-9 col-xs-12">
+											<select name="tickets[{{ firstTicketId }}][application_showcase]"  class="add-application" validation="nullable">
+												<option selected disabled>Select a software program here…</option>
+											</select>
+											<ul class="affected-items"></ul>
+										</div>
+									</div>
+									<div class="row mia-field-group">
+										<div class="col-sm-3 col-xs-12">
+											<p class="label">
+												Operating Systems Affected
+											</p>
+
+											<p class="details">
+												Running on the chosen Hardware/Software, if applicable
+											</p>
+										</div>
+										<div class="col-sm-9 col-xs-12">
+											<select name="tickets[{{ firstTicketId }}][operating_system_showcase]" class="add-operating-system" validation="nullable">
+												<option selected disabled>Select an operating system here…</option>
+											</select>
+											<ul class="affected-items"></ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="mia-panel-footer">
+							<div class="mia-button-group">
+								<p>More new issues?</p>
+								<a href="javascript:void(0);" class="button" id="add-new-ticket">Add new ticket</a>
+							</div>
+							<div class="mia-button-group pull-right">
+								<p>All done?</p>
+								<button class="button button-success" type="submit">Submit call & ticket(s)</button>
+							</div>
+							<div class="mia-button-group">
+								<p>Another existing issue?</p>
+								<select id="change-ticket" autocomplete="off">
+									<option disabled selected>Select a ticket here…</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				{% endif %}
+			</form>
+		</div>
+		{% if firstTicketId is defined %}
+			<div class="col-xs-12 col-sm-12 col-md-3">
+				Helpful information about tickets will go here…
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}
+
+{% block scripts %}
+	<script>
+		var tickets            = {{ tickets|json_encode }},
+			firstTicketId      = {{ firstTicketId|default(null)|json_encode }},
+			employees          = {{ employees|json_encode }},
+			expertiseTypes     = {{ expertise_types|json_encode }},
+			expertiseTypeStaff = {{ expertise_type_staff|json_encode }},
+			devices            = {{ devices|json_encode }},
+			programs           = {{ programs|json_encode }};
+	</script>
+{% endblock %}

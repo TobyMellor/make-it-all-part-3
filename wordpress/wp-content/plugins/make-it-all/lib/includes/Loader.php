@@ -102,7 +102,8 @@ class Loader {
 			'ProblemTypePage',
 			'DepartmentPage',
 			'HardwarePage',
-			'SoftwarePage'
+			'SoftwarePage',
+			'CommentPage'
 		];
 
 		$basePageName = __NAMESPACE__ . '\Views\\';

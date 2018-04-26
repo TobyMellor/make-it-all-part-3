@@ -6,6 +6,7 @@
 
 }
 
+
 .software-panel .mia-panel-body{
 	padding: 0;
 }
@@ -23,4 +24,13 @@
 	display: none;
 	align-self: center;
 	margin: 0 auto;
+}
+.mia-picker {
+	input {
+		visibility: hidden;
+		width: 0 !important;
+		height: 0 !important;
+		padding: 0 !important;
+		margin: -3px;
+	}
 }
