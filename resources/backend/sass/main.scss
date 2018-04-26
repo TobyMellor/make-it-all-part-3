@@ -209,6 +209,7 @@ table {
 		padding: 12px;
 		background-color: $cloudy-white;
 		border-right: 1px solid $silver;
+		min-height: 85px;
 
 		p {
 			margin: 0;
@@ -343,6 +344,8 @@ table {
 
 	&.mia-panel-short {
 		line-height: initial;
+		cursor: pointer;
+		border: none;
 
 		.mia-panel-heading {
 			min-height: initial;
@@ -365,6 +368,8 @@ table {
 			padding: 0;
 			min-height: initial;
 			overflow-x: scroll;
+			border: 1px solid $grey-hover;
+			border-top: 0;
 
 			table {
 				border: 0;

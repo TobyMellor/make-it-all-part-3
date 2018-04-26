@@ -148,7 +148,7 @@ export default class ExpertiseTypeManager {
 		while (expertiseTypeParent != null) {
 			breadcrumb = `
 				<li>
-					<a>${expertiseTypeParent.name}</a>
+					<a href="admin.php?page=problem_type&id=${expertiseTypeParent.id}">${expertiseTypeParent.name}</a>
 					<i class="fa fa-caret-right"></i>
 				</li>
 			` + breadcrumb;

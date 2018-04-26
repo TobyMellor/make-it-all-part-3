@@ -95,10 +95,10 @@ class DepartmentPage extends Page {
 				return $a->id;
 			}, $context['departments']));
 
-			$context['department'] = json_encode($context['departments'][$departmentsIndex]);
+			$context['department'] = $context['departments'][$departmentsIndex];
 		}
 
-		$context['departments'] = json_encode($context['departments']);
+		$context['departments'] = $context['departments'];
 
 		$this->render_pane($context);
 	}

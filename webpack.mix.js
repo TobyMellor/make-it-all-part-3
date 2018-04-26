@@ -55,7 +55,7 @@ function compileBackend() {
 	mix.sass(backendResources("main.scss"), backendOutput("main.css"))
 
 	let pages   = ["ticket", "hardware", "problem_type", "user", "department"],
-		actions = ["read", "create", "update"];
+		actions = ["read", "create", "update", "follow_up_call"];
 
 	for (let page of pages) {
 		// common styles/scripts across actions, e.g. tickets/tickets.js

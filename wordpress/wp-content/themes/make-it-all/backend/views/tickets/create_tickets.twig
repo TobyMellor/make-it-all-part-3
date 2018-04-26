@@ -35,7 +35,7 @@
 										</p>
 
 										<p class="details">
-											When did the call take place?
+											When was the call?
 										</p>
 									</div>
 									<div class="col-sm-9 col-xs-12 has-button">
@@ -56,6 +56,23 @@
 											Choose a time
 											<input type="text" name="date_of_call" validation="required">
 										</a>
+									</div>
+								</div>
+								<div class="row mia-field-group">
+									<div class="col-sm-3 col-xs-12">
+										<p class="label">
+											Notes about this call
+										</p>
+
+										<p class="details">
+											Don't include ticket specific info
+										</p>
+										<p class="details" style="margin-top: 10px;">
+											e.g. Caller was frustrated or Needs to be esculated
+										</p>
+									</div>
+									<div class="col-sm-9 col-xs-12">
+										<textarea name="call_notes" validation="nullable"></textarea>
 									</div>
 								</div>
 							</div>
@@ -130,6 +147,10 @@
 											</div>
 										</div>
 									</div>
+									<div class="row mia-field-group">
+										<div class="col-xs-5"></div>
+										<div class="col-xs-7"></div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -161,7 +182,7 @@
 										</p>
 
 										<p class="details">
-											Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+											What's the situation?
 										</p>
 									</div>
 									<div class="col-sm-9 col-xs-12 has-button">
@@ -176,6 +197,22 @@
 										<div></div>
 									</div>
 								</div>
+								<div class="set-solution">
+									<div class="row mia-field-group">
+										<div class="col-sm-3 col-xs-12">
+											<p class="label">
+												Solution
+											</p>
+
+											<p class="details">
+												Since the status is resolved, how did you solve the problem?
+											</p>
+										</div>
+										<div class="col-sm-9 col-xs-12">
+											<textarea name="tickets[1][solution]" validation="nullable|min:3|max:65535"></textarea>
+										</div>
+									</div>
+								</div>
 								<div class="row mia-field-group">
 									<div class="col-sm-3 col-xs-12">
 										<p class="label">
@@ -183,7 +220,7 @@
 										</p>
 
 										<p class="details">
-											Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+											A short summary explaining details about the ticket
 										</p>
 									</div>
 									<div class="col-sm-9 col-xs-12">
@@ -197,7 +234,7 @@
 										</p>
 
 										<p class="details">
-											Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+											A long detailed explanation of the problem the employee faces
 										</p>
 									</div>
 									<div class="col-sm-9 col-xs-12">
@@ -211,7 +248,7 @@
 										</p>
 
 										<p class="details">
-											Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+											What category does the problem fall in?
 										</p>
 									</div>
 									<div class="col-sm-9 col-xs-12">
@@ -229,7 +266,7 @@
 										</p>
 
 										<p class="details">
-											Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+											Which employee should be assigned to deal with the problem?
 										</p>
 									</div>
 									<div class="col-sm-9 col-xs-12">
@@ -330,7 +367,7 @@
 										</p>
 
 										<p class="details">
-											Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+											Physical devices that may be related to the problem
 										</p>
 									</div>
 									<div class="col-sm-9 col-xs-12">
@@ -347,7 +384,7 @@
 										</p>
 
 										<p class="details">
-											Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+											Software that may be related to the problem, if applicable
 										</p>
 									</div>
 									<div class="col-sm-9 col-xs-12">
@@ -364,7 +401,7 @@
 										</p>
 
 										<p class="details">
-											Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+											Running on the chosen Hardware/Software, if applicable
 										</p>
 									</div>
 									<div class="col-sm-9 col-xs-12">
@@ -384,7 +421,7 @@
 						</div>
 						<div class="mia-button-group pull-right">
 							<p>All done?</p>
-							<button class="button button-primary" type="submit">Submit ticket(s)</button>
+							<button class="button button-success" type="submit">Submit ticket(s)</button>
 						</div>
 					</div>
 				</div>
@@ -398,10 +435,10 @@
 
 {% block scripts %}
 	<script>
-		var employees          = {{ employees }},
-			expertiseTypes     = {{ expertise_types }},
-			expertiseTypeStaff = {{ expertise_type_staff }},
-			devices            = {{ devices }},
-			programs           = {{ programs }};
+		var employees          = {{ employees|json_encode }},
+			expertiseTypes     = {{ expertise_types|json_encode }},
+			expertiseTypeStaff = {{ expertise_type_staff|json_encode }},
+			devices            = {{ devices|json_encode }},
+			programs           = {{ programs|json_encode }};
 	</script>
 {% endblock %}
