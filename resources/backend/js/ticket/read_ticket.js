@@ -1,5 +1,9 @@
+import CommentManager from "../CommentManager";
+
 $(() => {
 	if (!window.ticket) return;
+
+	let commentManager = window.commentManager = new CommentManager(staffManager.currentEmployeeId, ticket.id);
 
 	$('.breadcrumb').html(expertiseTypeManager.getExpertiseTypeBreadcrumb(ticket.expertise_type_id));
 
@@ -62,7 +66,39 @@ $(() => {
 	});
 
 	$(document).on('click', '#send-comment', function() {
-		$(this).closest('.create-comment-section').removeClass('commenting');
+		let content = tinyMCE.get('comment').getContent();
+
+		commentManager.createComment(content)
+			.done((callId) => {
+				$('#comments').append($(`
+					<div class="comment" style="display: none;">
+						<div>
+							<a href="user-edit.php?user_id=${user.id}">
+								<img src="${user.avatar.abs_url}" alt="${user.display_name}">
+							</a>
+							<i class="fa fa-check toggle-solution checked"></i>
+							<i class="fa fa-trash-o delete-comment"></i>
+							<i class="fa fa-pencil edit-comment"></i>
+						</div>
+						<div>
+							<div class="row no-padding">
+								<div class="col-xs-12 comment-header">
+									<a href="user-edit.php?user_id=${user.id}">
+										<h1>${user.display_name}</h1>
+									</a>
+									<p>Just now</p>
+								</div>
+								<div class="col-xs-12 comment-body">
+									${content}
+									<div></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				`).fadeIn());
+
+				$(this).closest('.create-comment-section').removeClass('commenting');
+			});
 	});
 
 	$(document).on('focus', '.small-comment-box input', function() {

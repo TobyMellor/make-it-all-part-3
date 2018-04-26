@@ -254,6 +254,7 @@
 	.comment {
 		display: flex;
 		margin-top: 32px;
+		min-height: 195px;
 
 		&:first-child {
 			margin-top: 0;
