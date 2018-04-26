@@ -33,9 +33,6 @@ $(() => {
 		$img.hide();
 	}
 
-	$('input[name="ticket[id]"]').val(ticket.id);
-	$('input[name="ticket[solution_id]"]').val(ticket.solution_id || "");
-
 	loadTicket($('.accordion-handle, .accordion-body'), ticket, expertiseTypeManager, staffManager, affectedItemsManager);
 
 	$(document).on('change', '.accordions select[name="ticket[status]"]', function() {

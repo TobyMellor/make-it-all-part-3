@@ -15,6 +15,23 @@ $(() => {
 
 	initAccordions();
 	loadExistingTicket(firstTicketId);
+
+	$('.call-panel select').change(function() {
+		let $callPanel         = $('.call-panel > .row'),
+			$staffInformation  = $('.call-panel .staff-information'),
+			selectedEmployeeId = Number($(this).val());
+
+		// populate the caller information
+		let employee = staffManager.getEmployee(selectedEmployeeId);
+
+		// show the employees details
+		showEmployee($staffInformation, employee, staffManager);
+
+		// slide in the the caller information
+		$callPanel.find('#caller-information').addClass('expanded');
+
+		if ($('.accordions .accordion-handle.ui-state-active').length === 0) $('.accordions .accordion-handle').click(); // expand the accordion if not done already
+	});
 });
 
 window.loadExistingTicket = function(id) {

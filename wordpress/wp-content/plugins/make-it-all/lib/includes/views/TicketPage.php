@@ -311,6 +311,9 @@ class TicketPage extends Page {
 	}
 
 	private function follow_up_call_action() {
+		$callQuery    = new CallQuery();
+		$commentQuery = new CommentQuery();
+
 		// create the call containing the tickets
 		$callId = $callQuery->mia_insert([
 			'time'        => date('Y-m-d H:i:s', strtotime($_POST['date_of_call'])),

@@ -177,46 +177,49 @@ window.clearAccordion = function($accordion, newAccordionId, affectedItemsManage
 }
 
 window.loadTicket = function($accordion, ticket, expertiseTypeManager, staffManager, affectedItemsManager) {
-		$accordion.find('.number-circle').text(ticket.id);
-		$accordion.find('.accordion-title').text('Ticket: ' + ticket.title);
+	$accordion.find('input[name*="[id]"]').val(ticket.id);
+	$accordion.find('input[name*="solution_id"]').val(ticket.solution_id || "");
 
-		$accordion.find('select[name*="status"] option[value="' + ticket.status_id + '"]').prop('selected', true).trigger('change');
+	$accordion.find('.number-circle').text(ticket.id);
+	$accordion.find('.accordion-title').text('Ticket: ' + ticket.title);
 
-		if (ticket.status_id == 3) $accordion.find('.set-solution').show();
-		$accordion.find('textarea[name*="solution"]').val(ticket.solution);
+	$accordion.find('select[name*="status"] option[value="' + ticket.status_id + '"]').prop('selected', true).trigger('change');
 
-		$accordion.find('input[name*="title"]').val(ticket.title);
-		$accordion.find('textarea[name*="description"]').val(ticket.description);
+	if (ticket.status_id == 3) $accordion.find('.set-solution').show();
+	$accordion.find('textarea[name*="solution"]').val(ticket.solution);
 
-		expertiseTypeManager.loadExpertiseType($accordion.find('.type-columns'), ticket.expertise_type_id);
-		$accordion.find('input[name*="expertise_type_id"]').val(ticket.expertise_type_id);
-		$accordion.find('input[name*="assigned_to_specialist"]').val(ticket.assigned_to_specialist_id);
+	$accordion.find('input[name*="title"]').val(ticket.title);
+	$accordion.find('textarea[name*="description"]').val(ticket.description);
 
-		if (ticket.assigned_to_operator_id === null) {
-			$accordion.find('input[name*="assigned_to_type"][value="specialist"]').click();
-		} else if (ticket.assigned_to_operator_id == staffManager.currentEmployee.id) {
-			$accordion.find('input[name*="assigned_to_type"][value="self"]').click();
-		} else {
-			$accordion.find('input[name*="assigned_to_type"][value="operator"]').click();
-			$accordion.find('select[name*="assigned_to_operator"] option[value="' + ticket.assigned_to_operator_id + '"]').click();
-		}
+	expertiseTypeManager.loadExpertiseType($accordion.find('.type-columns'), ticket.expertise_type_id);
+	$accordion.find('input[name*="expertise_type_id"]').val(ticket.expertise_type_id);
+	$accordion.find('input[name*="assigned_to_specialist"]').val(ticket.assigned_to_specialist_id);
 
-		let $addHardwareDevice  = $accordion.find('.add-hardware-device'),
-			$addSoftwareProgram = $accordion.find('.add-application, .add-operating-system');
+	if (ticket.assigned_to_operator_id === null) {
+		$accordion.find('input[name*="assigned_to_type"][value="specialist"]').click();
+	} else if (ticket.assigned_to_operator_id == staffManager.currentEmployee.id) {
+		$accordion.find('input[name*="assigned_to_type"][value="self"]').click();
+	} else {
+		$accordion.find('input[name*="assigned_to_type"][value="operator"]').click();
+		$accordion.find('select[name*="assigned_to_operator"] option[value="' + ticket.assigned_to_operator_id + '"]').click();
+	}
 
-		ticket.devices.forEach((deviceId) => {
-			$addHardwareDevice.find('option[value="' + deviceId + '"]').prop('selected', true);
-			affectedItemsManager.addAffectedItem($addHardwareDevice);
-		});
+	let $addHardwareDevice  = $accordion.find('.add-hardware-device'),
+		$addSoftwareProgram = $accordion.find('.add-application, .add-operating-system');
 
-		ticket.programs.forEach((programId) => {
-			// this will only return the select field that was changed
-			// e.g. if it's an OS ID, no option exists within the applications select
-			let $select = $addSoftwareProgram
-							.find('option[value="' + programId + '"]')
-							.prop('selected', true)
-							.parent();
+	ticket.devices.forEach((deviceId) => {
+		$addHardwareDevice.find('option[value="' + deviceId + '"]').prop('selected', true);
+		affectedItemsManager.addAffectedItem($addHardwareDevice);
+	});
 
-			affectedItemsManager.addAffectedItem($select);
-		});
+	ticket.programs.forEach((programId) => {
+		// this will only return the select field that was changed
+		// e.g. if it's an OS ID, no option exists within the applications select
+		let $select = $addSoftwareProgram
+						.find('option[value="' + programId + '"]')
+						.prop('selected', true)
+						.parent();
+
+		affectedItemsManager.addAffectedItem($select);
+	});
 }
