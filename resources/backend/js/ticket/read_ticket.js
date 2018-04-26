@@ -54,4 +54,31 @@ $(() => {
 
 		affectedItemsManager.addAffectedItem($select);
 	});
+
+	$(document).on('click', '.delete-comment', function() {
+		$(this).closest('.comment').fadeOut(250, function() {
+			$(this).remove();
+		});
+	});
+
+	$(document).on('click', '#send-comment', function() {
+		$(this).closest('.create-comment-section').removeClass('commenting');
+	});
+
+	$(document).on('focus', '.small-comment-box input', function() {
+		$(this).closest('.create-comment-section').addClass('commenting');
+
+		let scrollTop = $(window).scrollTop();
+
+		setTimeout(function(){
+			if (scrollTop === $(window).scrollTop()) { // only scroll if the user hasn't
+				$('html, body').animate(
+					{ 
+						scrollTop: $(document).height() - $(window).height()
+					}, 
+					300
+				);
+			}
+		}, 300);
+	});
 });

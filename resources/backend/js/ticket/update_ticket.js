@@ -40,16 +40,6 @@ $(() => {
 	$('input[name="ticket[title]"]').val(ticket.title);
 	$('textarea[name="ticket[description]"]').val(ticket.description);
 
-	tinyMCE.init({
-		selector: 'textarea',
-		branding: false,
-		setup: function (editor) {
-			editor.on('change', function () {
-				editor.save(); // keep hidden textarea up to date
-			});
-		}
-	});
-
 	expertiseTypeManager.loadExpertiseType($('.type-columns'), ticket.expertise_type_id);
 	$('input[name*="expertise_type_id"]').val(ticket.expertise_type_id);
 	$('input[name*="assigned_to_specialist"]').val(ticket.assigned_to_specialist_id);

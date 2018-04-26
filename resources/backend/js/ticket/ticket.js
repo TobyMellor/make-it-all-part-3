@@ -102,4 +102,18 @@ $(() => {
 		if (!$(this).serializeObject(true).isValid())
 			e.preventDefault();
 	});
+
+	initTinyMCE();
 });
+
+window.initTinyMCE = function() {
+	tinyMCE.init({
+		selector: 'textarea',
+		branding: false,
+		setup: function (editor) {
+			editor.on('change', function () {
+				editor.save(); // keep hidden textarea up to date
+			});
+		}
+	});
+}

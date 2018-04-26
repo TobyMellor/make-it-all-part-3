@@ -221,12 +221,6 @@
 			margin: 0;
 		}
 
-		.no-affected-items {
-			text-align: center;
-			margin-top: 19px;
-			color: $silver;
-		}
-
 		.assign-options {
 			max-height: initial;
 
@@ -249,6 +243,228 @@
 	.view-accordion {
 		border-top: none;
 	}
+}
+
+#comments {
+	margin-top: 18px;
+	background-color: $white;
+	padding: 22px 40px 22px 32px;
+	border: 1px solid $grey-hover;
+
+	.comment {
+		display: flex;
+		margin-top: 32px;
+
+		&:first-child {
+			margin-top: 0;
+		}
+		
+		&:hover {
+			> div:first-child {
+				i {
+					display: block !important;
+				}
+			}
+		}
+
+		&.solution {
+			background-color: $highlight;
+			margin: -22px -40px -10px -32px;
+			padding: 22px 40px 22px 32px;
+
+			> div:first-child {
+				i.toggle-solution {
+					color: $green;
+
+					&:hover {
+						color: $green-hover !important;
+					}
+				}
+
+				i.delete-comment, i.edit-comment {
+					color: $black-hover;
+				}
+			}
+		}
+
+		> div:first-child {
+			flex-basis: 50px;
+
+			img {
+				display: block;
+				width: 65px;
+				height: 65px;
+				border-radius: 50%;
+			}
+
+			i {
+				display: block;
+				font-size: 40px;
+				text-align: center;
+				margin-top: 10px;
+				color: $silver;
+				cursor: pointer;
+
+				&.delete-comment, &.edit-comment {
+					font-size: 30px;
+					display: none;
+				}
+
+				&:hover {
+					color: $black !important;
+				}
+			}
+		}
+
+		> div:last-child {
+			flex-grow: 1;
+
+			> .row {
+				margin-left: 18px;
+			}
+
+			.comment-header {
+				line-height: 45px;
+
+				a {
+					text-decoration: none;
+				}
+
+				h1 {
+					font-size: 22px;
+					font-weight: 500;
+					padding: 0;
+					display: inline;
+				}
+
+				span.filter {
+					float: none;
+					line-height: initial;
+					cursor: pointer;
+				}
+
+				p {
+					float: right;
+					font-weight: 100;
+					color: $black-hover;
+					font-size: 16px;
+					margin: 0;
+					line-height: 40px;
+				}
+			}
+
+			.comment-body {
+				border-top: 1px solid $grey;
+				display: flex;
+
+				p {
+					font-size: 15px;
+					text-align: justify;
+					flex-grow: 1;
+					margin-bottom: 5px;
+				}
+
+				> div {
+					flex-basis: 95px;
+				}
+			}
+		}
+	}
+}
+
+.create-comment-section {
+	margin-top: 18px;
+	margin-right: 2px;
+	background-color: $white;
+	padding: 18px;
+	display: flex;
+	border: 1px solid $grey-hover;
+
+	* {
+		transition: width .4s, height .4s, flex-basis .4s;
+	}
+
+	> div:first-child {
+		flex-basis: 50px;
+
+		img {
+			display: block;
+			width: 46px;
+			height: 46px;
+			border-radius: 50%;
+			margin-left: auto;
+		}
+	}
+
+	> div:last-child {
+		display: flex;
+		flex-grow: 1;
+		height: 65px;
+	
+		.small-comment-box {
+			flex-grow: 1;
+			padding-left: 14px;
+			width: 100%;
+			overflow: hidden;
+			padding-right: 1px;
+
+			input {
+				width: 100%;
+				border: 1px solid $silver;
+				border-radius: 24px;
+				padding: 12px;
+			}
+		}
+
+		.big-comment-box {
+			height: 0;
+			width: 0;
+			overflow: hidden;
+
+			> div {
+				margin-right: 2px;
+
+				#send-comment {
+					float: right;
+					margin-top: 18px;
+					height: auto;
+					padding: 4px 35px;
+					font-size: 15px;
+				}
+			}
+		}
+	}
+
+	&.commenting {
+		> div:first-child {
+			flex-basis: 79px;
+
+			img {
+				width: 65px;
+				height: 65px;
+			}
+		}
+
+		> div:last-child {
+			min-height: 270px;
+		}
+
+		.small-comment-box {
+			width: 0 !important;
+		}
+
+		.big-comment-box {
+			height: 100% !important;
+			width: 100% !important;
+			margin-left: 4px;
+		}
+	}
+}
+
+.no-affected-items {
+	text-align: center;
+	margin-top: 19px;
+	color: $silver;
 }
 
 //
@@ -371,129 +587,6 @@
 
 	.ui-datepicker-header {
 		background-color: $silver;
-	}
-}
-
-#comments {
-	margin-top: 18px;
-	background-color: $white;
-	padding: 22px 40px 22px 32px;
-	border: 1px solid $grey-hover;
-
-	.comment {
-		display: flex;
-		margin-top: 32px;
-
-		&:first-child {
-			margin-top: 0;
-		}
-		
-		&:hover {
-			> div:first-child {
-				i {
-					display: block !important;
-				}
-			}
-		}
-
-		&.solution {
-			background-color: $highlight;
-			margin: -22px -40px -10px -32px;
-			padding: 22px 40px 22px 32px;
-
-			> div:first-child {
-				i.toggle-solution {
-					color: $green;
-
-					&:hover {
-						color: $green-hover !important;
-					}
-				}
-
-				i.delete-comment, i.edit-comment {
-					color: $black-hover;
-				}
-			}
-		}
-
-		> div:first-child {
-			flex-basis: 50px;
-
-			img {
-				display: block;
-				width: 65px;
-				height: 65px;
-				border-radius: 50%;
-			}
-
-			i {
-				display: block;
-				font-size: 40px;
-				text-align: center;
-				margin-top: 10px;
-				color: $silver;
-				cursor: pointer;
-
-				&.delete-comment, &.edit-comment {
-					font-size: 30px;
-					display: none;
-				}
-
-				&:hover {
-					color: $black !important;
-				}
-			}
-		}
-
-		> div:last-child {
-			flex-grow: 1;
-
-			> .row {
-				margin-left: 18px;
-			}
-
-			.comment-header {
-				line-height: 45px;
-
-				h1 {
-					font-size: 22px;
-					font-weight: 500;
-					padding: 0;
-					display: inline;
-				}
-
-				span.filter {
-					float: none;
-					line-height: initial;
-					cursor: pointer;
-				}
-
-				p {
-					float: right;
-					font-weight: 100;
-					color: $black-hover;
-					font-size: 16px;
-					margin: 0;
-					line-height: 40px;
-				}
-			}
-
-			.comment-body {
-				border-top: 1px solid $grey;
-				display: flex;
-
-				p {
-					font-size: 15px;
-					text-align: justify;
-					flex-grow: 1;
-					margin-bottom: 5px;
-				}
-
-				> div {
-					flex-basis: 95px;
-				}
-			}
-		}
 	}
 }
 

@@ -44,7 +44,6 @@ $(() => {
 		$headerText.text(newHeaderText);
 	});
 
-	initTinyMCE();
 	initAccordions();
 	clearAccordion($('.mia-panel-body')); // clear all fields
 });
@@ -93,18 +92,6 @@ function clearAccordion($accordion, newAccordionId, affectedItemsManager = null,
 		$accordion.find('.accordion-icon .number-circle').text(newAccordionId);
 		$accordion.find('.accordion-title').text('New Ticket');
 	}
-}
-
-function initTinyMCE() {
-	tinyMCE.init({
-		selector: 'textarea',
-		branding: false,
-		setup: function (editor) {
-			editor.on('change', function () {
-				editor.save(); // keep hidden textarea up to date
-			});
-		}
-	});
 }
 
 function initAccordions() {
