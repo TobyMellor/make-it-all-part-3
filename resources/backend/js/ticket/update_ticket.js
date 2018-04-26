@@ -32,11 +32,16 @@ $(() => {
 	}
 
 	$('input[name="ticket[id]"]').val(ticket.id);
+	$('input[name="ticket[solution_id]"]').val(ticket.solution_id || "");
 
 	$('.number-circle').text(ticket.id);
 	$('.accordion-title').text('Ticket: ' + ticket.title);
 
 	$('select[name="ticket[status]"] option[value="' + ticket.status_id + '"]').prop('selected', true).trigger('change');
+
+	if (ticket.status_id == 3) $('.set-solution').show();
+	$('textarea[name="ticket[solution]"]').val(ticket.solution);
+
 	$('input[name="ticket[title]"]').val(ticket.title);
 	$('textarea[name="ticket[description]"]').val(ticket.description);
 
@@ -70,5 +75,15 @@ $(() => {
 						.parent();
 
 		affectedItemsManager.addAffectedItem($select);
+	});
+
+	$(document).on('change', '.accordions select[name="ticket[status]"]', function() {
+		let $setSolution = $(this).closest('.accordion-body').find('.set-solution');
+
+		if ($(this).val() == 3) {
+			$setSolution.slideDown();
+		} else {
+			$setSolution.slideUp();
+		}
 	});
 });

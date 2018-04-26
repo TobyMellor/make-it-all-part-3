@@ -189,16 +189,39 @@ class TicketPage extends Page {
 		$ticketDeviceQuery  = new TicketDeviceQuery();
 		$ticketProgramQuery = new TicketProgramQuery();
 		$ticketStatusQuery  = new TicketStatusQuery();
+		$commentQuery       = new CommentQuery();
 
 		$ticket   = $_POST['ticket'];
 		$ticketId = $ticket['id'];
+
+		$commentId   = null;
+		$commentData = [
+			'content'   => $ticket['solution'],
+			'author_id' => get_current_user_id(),
+			'ticket_id' => $ticketId,
+			'call_id'   => null
+		];
+
+		if ($ticket['solution_id']) { // a solution was previously set
+			if ($ticket['status'] == 3) { // if the status is resolved, update the previous solution
+				$commentQuery->mia_update($ticket['solution_id'], $commentData);
+
+				$commentId = $ticket['solution_id'];
+			} else { // if the status is not resolved, unset the previous solution
+				$commentData['ticket_id'] = null;
+
+				$commentQuery->mia_update($ticket['solution_id'], $commentData);
+			}
+		} else if ($ticket['status'] == 3) { // if no previous solution and status is resolved, create a new solution
+			$commentId = $commentQuery->mia_insert($commentData);
+		}
 
 		$ticketQuery->mia_update(
 			$ticketId,
 			[
 				'title'                     => $ticket['title'], 
 				'description'               => $ticket['description'], 
-				'solution_id'               => null, // TODO: If status is resolved, then allow solution to be set
+				'solution_id'               => $commentId,
 				'author_id'                 => get_current_user_id(), 
 				'assigned_to_operator_id'   => isset($ticket['assigned_to_operator']) ? $ticket['assigned_to_operator'] : null,
 				'expertise_type_id'         => $ticket['expertise_type_id'],

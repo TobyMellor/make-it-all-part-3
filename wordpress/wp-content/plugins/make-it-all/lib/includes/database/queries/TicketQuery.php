@@ -115,6 +115,7 @@ class TicketQuery extends Query {
 					status.id AS status_id,
 					ticket.description,
 					ticket.solution_id,
+					comment.content AS solution,
 					ticket.expertise_type_id,
 					ticket.assigned_to_specialist_id,
 					ticket.assigned_to_operator_id,
@@ -134,6 +135,8 @@ class TicketQuery extends Query {
 					ON ticket_status.ticket_id = ticket.id
 				JOIN {$this->prefix}status AS status
 					ON status.id = ticket_status.status_id
+				LEFT JOIN {$this->prefix}comment AS comment
+					ON comment.id = ticket.solution_id
 				WHERE ticket.id = {$ticketId};
 			"
 		);
