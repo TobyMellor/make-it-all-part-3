@@ -428,7 +428,7 @@
 
 {% block scripts %}
 	<script>
-		var ticket             = {{ ticket|default('null')|json_encode }},
+		var ticket             = {{ ticket|default(null)|json_encode }},
 			user               = {{ user|json_encode }},
 			employees          = {{ employees|json_encode }},
 			expertiseTypes     = {{ expertise_types|json_encode }},
