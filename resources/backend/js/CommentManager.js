@@ -22,4 +22,16 @@ export default class CommentManager {
 			}
 		});
 	}
+
+	/**
+	 * Stores a new comment in the database
+	 *
+	 * @param {String} content text body of the comment
+	 */
+	deleteComment(commentId) {
+		return $.ajax({
+			url: '/wp-json/make-it-all/v1/comment/' + commentId,
+			type: 'DELETE'
+		});
+	}
 }

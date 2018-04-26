@@ -37,5 +37,12 @@ class CommentPage extends Page {
 				return (new CommentQuery)->mia_insert($request->get_params());
 			},
 		]);
+
+		register_rest_route($this->apiNamespace, '/comment/(?P<id>\d+)', [
+			'methods'  => 'DELETE',
+			'callback' => function($request) {
+				return (new CommentQuery)->mia_delete($request['id']);
+			},
+		]);
 	}
 }

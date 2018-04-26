@@ -215,7 +215,7 @@
 			<div id="comments">
 				{% if ticket_obj.comments|length > 0 %}
 					{% for comment in ticket_obj.comments %}
-						<div class="comment {% if comment.id == ticket_obj.solution_id %} solution {% endif %}">
+						<div class="comment {% if comment.id == ticket_obj.solution_id %} solution {% endif %}" data-comment-id="{{ comment.id }}">
 							<div>
 								<a href="user-edit.php?user_id={{ comment.author_id }}">
 									<img src="{{ comment.gravatar_url }}" alt="">

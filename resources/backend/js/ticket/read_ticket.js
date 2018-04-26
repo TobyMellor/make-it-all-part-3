@@ -62,18 +62,25 @@ $(() => {
 	$('.create-comment-section input').val('');
 
 	$(document).on('click', '.delete-comment', function() {
-		$(this).closest('.comment').fadeOut(250, function() {
-			$(this).remove();
-		});
+		if (!confirm('Are you sure you want to delete this comment?')) return;
+
+		let id = $(this).closest('.comment').data('commentId');
+
+		commentManager.deleteComment(id)
+			.done(() => {
+				$(this).closest('.comment').fadeOut(250, function() {
+					$(this).remove();
+				});
+			});
 	});
 
 	$(document).on('click', '#send-comment', function() {
 		let content = tinyMCE.get('comment').getContent();
 
 		commentManager.createComment(content)
-			.done((callId) => {
+			.done((commentId) => {
 				$('#comments').append($(`
-					<div class="comment" style="display: none;">
+					<div class="comment" style="display: none;" data-comment-id="${commentId}">
 						<div>
 							<a href="user-edit.php?user_id=${user.id}">
 								<img src="${user.avatar.abs_url}" alt="${user.display_name}">
