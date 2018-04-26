@@ -83,7 +83,7 @@ $(() => {
 			});
 	});
 
-	$(document).off('form');
+	$(document).off('.create-comment-section form');
 	$(document).on('submit', '#submit-comment', function(e) {
 		e.preventDefault();
 
