@@ -44,6 +44,16 @@ $(() => {
 		$headerText.text(newHeaderText);
 	});
 
+	$(document).on('change', '.accordions select[name*=status]', function() {
+		let $setSolution = $(this).closest('.accordion-body').find('.set-solution');
+
+		if ($(this).val() == 3) {
+			$setSolution.slideDown();
+		} else {
+			$setSolution.slideUp();
+		}
+	});
+
 	initAccordions();
 	clearAccordion($('.mia-panel-body')); // clear all fields
 });
@@ -67,6 +77,7 @@ function cloneAccordion($accordions, newAccordionId) {
 function clearAccordion($accordion, newAccordionId, affectedItemsManager = null, expertiseTypeManager = null) {
 	// set input/textarea/select fields to default values
 	$accordion.find('select').prop('selectedIndex', 0);
+	$accordion.find('.set-solution').hide();
 	$accordion.find('input[type=text]:not(.hasDatepicker), textarea').val('');
 	$accordion.find('input[type=radio]').first().click();
 

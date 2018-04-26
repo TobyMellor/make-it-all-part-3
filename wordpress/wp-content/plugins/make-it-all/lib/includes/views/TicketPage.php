@@ -92,6 +92,7 @@ class TicketPage extends Page {
 		$ticketProgramQuery = new TicketProgramQuery();
 		$ticketStatusQuery  = new TicketStatusQuery();
 		$callTicketQuery    = new CallTicketQuery();
+		$commentQuery       = new CommentQuery();
 
 		// create the call containing the tickets
 		$callId = $callQuery->mia_insert([
@@ -102,15 +103,30 @@ class TicketPage extends Page {
 
 		// create the tickets, each containing a status and potentially multiple devices/programs
 		foreach ($_POST['tickets'] as $ticket) {
-			$ticketId = $ticketQuery->mia_insert([
+			$ticketData = [
 				'title'                     => $ticket['title'], 
 				'description'               => $ticket['description'], 
-				'solution_id'               => null, // TODO: If status is resolved, then allow solution to be set
+				'solution_id'               => null,
 				'author_id'                 => get_current_user_id(), 
 				'assigned_to_operator_id'   => isset($ticket['assigned_to_operator']) ? $ticket['assigned_to_operator'] : null,
 				'expertise_type_id'         => $ticket['expertise_type_id'],
 				'assigned_to_specialist_id' => isset($ticket['assigned_to_specialist']) ? $ticket['assigned_to_specialist'] : null
-			]);
+			];
+
+			$ticketId = $ticketQuery->mia_insert($ticketData);
+
+			if ($ticket['status'] == 3) {
+				$commentId = $commentQuery->mia_insert([
+					'content' => $ticket['solution'],
+					'author_id' => get_current_user_id(),
+					'ticket_id' => $ticketId,
+					'call_id'   => null
+				]);
+
+				$ticketData['solution_id'] = $commentId;
+
+				$ticketQuery->mia_update($ticketId, $ticketData);
+			}
 
 			// create devices
 			foreach ($ticket['devices'] as $deviceId) {

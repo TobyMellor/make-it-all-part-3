@@ -18,7 +18,7 @@ $(() => {
 
 	// Remove filter/status, clear the select field
 	$(document).on('click', '.filter.removeable', function() {
-		$(this).closest('.has-button').find('select').prop('selectedIndex', 0);
+		$(this).closest('.has-button').find('select').prop('selectedIndex', 0).trigger('change');
 
 		$(this).fadeOut(250, function() {
 			$(this).remove();
@@ -64,7 +64,7 @@ $(() => {
 	// if a panel has a slug, modify sessionStorage's collapsed_mia_panel_shorts
 	$(document).on('click', '.mia-panel-heading', function() {
 		let slug = $(this).parent().data('slug');
-		
+
 		if (slug) setCollapsedPanels(slug);
 	});
 
