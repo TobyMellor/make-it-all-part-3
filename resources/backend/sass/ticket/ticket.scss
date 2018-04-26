@@ -252,17 +252,20 @@
 #comments {
 	margin-top: 18px;
 	background-color: $white;
-	padding: 22px 40px 10px 32px;
+	padding-right: 40px;
+	padding-left: 32px;
 	border: 1px solid $grey-hover;
+
+	.no-affected-items {
+		margin-top: 27px;
+		margin-bottom: 27px;
+	}
 
 	.comment {
 		display: flex;
-		margin-top: 32px;
+		margin-top: 22px;
+		margin-bottom: 22px;
 		min-height: 155px;
-
-		&:first-child {
-			margin-top: 0;
-		}
 		
 		&:hover {
 			> div:first-child {
@@ -274,8 +277,8 @@
 
 		&.solution {
 			background-color: $highlight;
-			margin: -22px -40px -10px -32px;
-			padding: 22px 40px 22px 32px;
+			margin: 0 -40px 0 -32px;
+			padding: 20px 40px 20px 32px;
 
 			> div:first-child {
 				i.toggle-solution {

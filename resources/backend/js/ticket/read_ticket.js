@@ -79,6 +79,12 @@ $(() => {
 			.done(() => {
 				$(this).closest('.comment').fadeOut(250, function() {
 					$(this).remove();
+
+					let $comments = $('#comments');
+
+					if ($comments.find('.comment').length === 0) {
+						$comments.prepend(`<p class="no-affected-items">No comments have been left yet</p>`)
+					}
 				});
 			});
 	});
@@ -92,32 +98,37 @@ $(() => {
 		let content = tinyMCE.get('comment').getContent();
 
 		commentManager.createComment(content)
-			.done((commentId) => {
-				$('#comments').append($(`
-					<div class="comment" style="display: none;" data-comment-id="${commentId}">
-						<div>
-							<a href="user-edit.php?user_id=${user.id}">
-								<img src="${user.avatar.abs_url}" alt="${user.display_name}">
-							</a>
-							<i class="fa fa-check toggle-solution checked"></i>
-							<i class="fa fa-trash-o delete-comment"></i>
-						</div>
-						<div>
-							<div class="row no-padding">
-								<div class="col-xs-12 comment-header">
+			.done(commentId => {
+				$('#comments')
+					.append(
+						$(`
+							<div class="comment" style="display: none;" data-comment-id="${commentId}">
+								<div>
 									<a href="user-edit.php?user_id=${user.id}">
-										<h1>${user.display_name}</h1>
+										<img src="${user.avatar.abs_url}" alt="${user.display_name}">
 									</a>
-									<p>Just now</p>
+									<i class="fa fa-check toggle-solution checked"></i>
+									<i class="fa fa-trash-o delete-comment"></i>
 								</div>
-								<div class="col-xs-12 comment-body">
-									${content}
-									<div></div>
+								<div>
+									<div class="row no-padding">
+										<div class="col-xs-12 comment-header">
+											<a href="user-edit.php?user_id=${user.id}">
+												<h1>${user.display_name}</h1>
+											</a>
+											<p>Just now</p>
+										</div>
+										<div class="col-xs-12 comment-body">
+											${content}
+											<div></div>
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>
-					</div>
-				`).fadeIn());
+						`).fadeIn(250)
+					)
+					.find('.no-affected-items')
+					.hide();
 
 				$(this).closest('.create-comment-section').removeClass('commenting');
 			});

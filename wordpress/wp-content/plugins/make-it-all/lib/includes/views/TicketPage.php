@@ -24,6 +24,11 @@ class TicketPage extends Page {
 	protected $name     = 'Ticket';
 	protected $icon     = 'dashicons-tickets-alt';
 	protected $position = 2;
+	protected $pages = [
+		'Create',
+		'Update',
+		'Follow-up'
+	];
 
 	/**
 	 * Displays the Tickets table
