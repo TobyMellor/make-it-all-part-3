@@ -488,7 +488,24 @@
 }
 
 .follow-up-call-page {
-	//
+	#add-new-ticket {
+		margin-left: 38px;
+	}
+
+	.mia-panel-footer {
+		position: relative;
+
+		.mia-button-group:last-child {
+			display: block;
+			margin-top: 12px;
+		}
+
+		.pull-right {
+			bottom: 16px;
+			position: absolute;
+			right: 18px;
+		}
+	}
 }
 
 //

@@ -32,6 +32,19 @@ $(() => {
 
 		if ($('.accordions .accordion-handle.ui-state-active').length === 0) $('.accordions .accordion-handle').click(); // expand the accordion if not done already
 	});
+
+	$('#add-new-ticket').click(loadNewTicket);
+	$('#change-ticket').click(function() {
+		loadExistingTicket($(this).val());
+
+		$(this).find('option:selected').remove();
+	});
+
+	$(document).on('click', '.accordion-handle .accordion-actions .fa-trash-o', function() {
+		loadExistingTickets();
+	});
+
+	loadExistingTickets();
 });
 
 window.loadExistingTicket = function(id) {
@@ -65,4 +78,18 @@ window.loadNewTicket = function(existingTicketId = null) {
 
 	$accordions.accordion('refresh');
 	$newAccordion.click(); // expand new accordion
+}
+
+function loadExistingTickets() {
+	let $changeTicket = $('#change-ticket');
+
+	$changeTicket.html(`<option disabled selected>Select a ticket here…</option>`);
+
+	tickets.forEach(ticket => {
+		if (ticket.id !== firstTicketId) {
+			$changeTicket.append(`
+				<option value="${ticket.id}">#${ticket.id} – ${ticket.title}</option>
+			`);
+		}
+	});
 }
