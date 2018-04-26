@@ -25,9 +25,18 @@ class TicketPage extends Page {
 	protected $icon     = 'dashicons-tickets-alt';
 	protected $position = 2;
 	protected $pages = [
-		'Create',
-		'Update',
-		'Follow-up'
+		'Create Ticket'  => [
+			'callback'    => 'create_pane',
+			'page_action' => 'ticket_create'
+		],
+		'Update Ticket'  => [
+			'callback' => 'update_pane',
+			'page_action' => 'ticket_update'
+		],
+		'Follow-up Call' => [
+			'callback' => 'follow_up_call_pane',
+			'page_action' => 'call_follow_up'
+		]
 	];
 
 	/**
@@ -267,6 +276,14 @@ class TicketPage extends Page {
 		}
 
 		return $this->mia_redirect('admin.php?page=ticket&id=' . $ticketId);
+	}
+
+	public function follow_up_call_pane() {
+		$context = $this->get_required_data('Register Follow-up Call');
+		
+		$context['tickets'] = json_encode((new TicketQuery)->get());
+
+		$this->render_pane($context);
 	}
 
 	private function get_required_data($pageName) {

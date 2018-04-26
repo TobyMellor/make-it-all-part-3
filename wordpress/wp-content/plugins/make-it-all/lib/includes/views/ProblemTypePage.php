@@ -12,7 +12,7 @@ class ProblemTypePage extends Page {
 	protected $name     = 'Problem Type';
 	protected $icon     = 'dashicons-info';
 	protected $position = 3;
-	protected $pages    = [];
+	protected $pages = [];
 
 	/**
 	 * Displays the Problem Type table

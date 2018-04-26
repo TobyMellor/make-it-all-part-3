@@ -5,14 +5,18 @@ namespace MakeItAll\Includes\Views;
 use Timber;
 
 abstract class Page {
-	protected $name     = 'Unknown';
-	protected $nameSlug = 'unknown';
-	protected $icon     = 'dashicons-editor-help';
-	protected $position = null;
-	protected $pages    = [
-		'Create',
-		'Update'
-	]; // to add/remove a page, redefine this in the child
+	protected $name      = 'Unknown';
+	protected $nameSlug  = 'unknown';
+	protected $icon      = 'dashicons-editor-help';
+	protected $position  = null;
+	protected $pages     = [
+		'Create' => [
+			'callback' => 'create_pane'
+		],
+		'Update' => [
+			'callback' => 'update_pane'
+		]
+	]; // to add/remove a page, redefine this in the child. When you redefine, include the $name
 	protected $apiNamespace = 'make-it-all/v1';
 	protected $error        = null;
 	protected $message      = null;
@@ -34,19 +38,21 @@ abstract class Page {
 		add_menu_page('View ' . $name, ($name == "Hardware" ? $name : $name . 's'), 'read_make_it_all', $parentSlug, [$this, 'read_pane'], $this->icon, $this->position);
 
 		// Create submenu for each page in Pages, e.g. Create [Ticket], Update [Ticket]
-		foreach ($this->pages as $pageName) {
-			$pageNameLower = strtolower($pageName);
-			$title         = $pageName . ' ' . $name;
+		foreach ($this->pages as $pageName => $options) {
+			$pageNameSlug = $this->get_string_as_slug($pageName);
+
+			$title          = isset($options['page_action']) ? $pageName               : $pageName . ' ' . $name;
+			$pageActionSlug = isset($options['page_action']) ? $options['page_action'] : $parentSlug . '_' . $pageNameSlug;
 
 			add_submenu_page(
 				$parentSlug,
 				$title, // page title
 				$title, // menu title
 				'edit_make_it_all',
-				$parentSlug . '_' . $pageNameLower, // slug, e.g. ticket_create
+				$pageActionSlug, // slug, e.g. ticket_create
 				[
 					$this,
-					$pageNameLower . '_pane' // callback that renders the page, e.g. read_pane
+					$options['callback'] // callback that renders the page, e.g. read_pane
 				]
 			);
 		}
@@ -160,11 +166,17 @@ abstract class Page {
 	/**
 	 * Turns string into a lowercase slug, e.g.
 	 * My Tickets > my_tickets
+	 * Follow-up Call > follow_up_call
 	 *
 	 * @return String
 	 */
 	private function get_string_as_slug($string) {
-		return str_replace(' ', '_', strtolower($string));
+		return 
+			str_replace(' ', '_',
+				str_replace('-', '_',
+					strtolower($string)
+				)
+			);
 	}
 
 	/**
