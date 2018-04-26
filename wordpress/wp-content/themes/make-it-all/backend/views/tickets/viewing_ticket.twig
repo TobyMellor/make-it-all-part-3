@@ -262,8 +262,10 @@
 					</div>
 					<div class="big-comment-box">
 						<div>
-							<textarea name="comment"></textarea>
-							<button class="button button-success" id="send-comment">Send Reply</button>
+							<form id="submit-comment">
+								<textarea name="comment" validation="required|min:3|max:65535"></textarea>
+								<button class="button button-success" id="send-comment" type="submit">Send Reply</button>
+							</form>
 						</div>
 					</div>
 				</div>

@@ -74,7 +74,12 @@ $(() => {
 			});
 	});
 
-	$(document).on('click', '#send-comment', function() {
+	$(document).off('form');
+	$(document).on('submit', '#submit-comment', function(e) {
+		e.preventDefault();
+		
+		if (!$(this).serializeObject(true).isValid()) return;
+
 		let content = tinyMCE.get('comment').getContent();
 
 		commentManager.createComment(content)
