@@ -249,6 +249,8 @@ class TicketPage extends Page {
 		$context['ticket_obj']->programs = $ticketProgramQuery->get_program_ids_by_ticket_id($id);
 		$context['ticket_obj']->comments = $commentQuery->get_comments_by_ticket_id($id);
 
+		foreach ($context['ticket_obj']->comments as $comment) $comment->gravatar_url = get_avatar_url($comment->author_id);
+
 		// extra helpful info for the side panels
 		$context['ticket_obj']->call_history                = $ticketQuery->get_call_history($id);
 		$context['ticket_obj']->status_history              = $ticketQuery->get_status_history($id);

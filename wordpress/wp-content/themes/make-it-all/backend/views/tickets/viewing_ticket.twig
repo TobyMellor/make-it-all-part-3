@@ -216,7 +216,7 @@
 				{% for comment in ticket_obj.comments %}
 					<div class="comment {% if comment.id == ticket_obj.solution_id %} solution {% endif %}">
 						<div>
-							<img src="https://placehold.it/275x275" alt="">
+							<img src="{{ comment.gravatar_url }}" alt="">
 							<i class="fa fa-check toggle-solution checked"></i>
 							<i class="fa fa-trash-o delete-comment"></i>
 							<i class="fa fa-pencil edit-comment"></i>
@@ -228,7 +228,7 @@
 									{% if comment.call_id != null %}
 										<span class="filter">Notes about a call</span>
 									{% endif %}
-									
+
 									{% if comment.id == ticket_obj.solution_id %}
 										<span class="filter filter-resolved">Solution</span>
 									{% endif %}

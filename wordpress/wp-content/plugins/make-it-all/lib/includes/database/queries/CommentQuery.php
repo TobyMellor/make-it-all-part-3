@@ -31,6 +31,7 @@ class CommentQuery extends Query {
 					comment.id,
 					comment.content,
 					users.display_name AS author,
+					comment.author_id,
 					comment.call_id,
 					comment.created_at,
 					comment.updated_at
