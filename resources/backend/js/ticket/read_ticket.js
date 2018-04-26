@@ -70,6 +70,8 @@ $(() => {
 
 		let scrollTop = $(window).scrollTop();
 
+		tinyMCE.get('comment').focus();
+
 		setTimeout(function(){
 			if (scrollTop === $(window).scrollTop()) { // only scroll if the user hasn't
 				$('html, body').animate(

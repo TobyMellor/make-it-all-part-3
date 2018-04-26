@@ -114,6 +114,7 @@ window.initTinyMCE = function() {
 			editor.on('change', function () {
 				editor.save(); // keep hidden textarea up to date
 			});
-		}
+		},
+		autofocus: 'textarea'
 	});
 }
