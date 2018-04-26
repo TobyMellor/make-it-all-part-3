@@ -98,15 +98,8 @@ class TicketPage extends Page {
 	}
 
 	protected function create_action() {
-		global $wpdb;
-
-		$callQuery          = new CallQuery();
-		$ticketQuery        = new TicketQuery();
-		$ticketDeviceQuery  = new TicketDeviceQuery();
-		$ticketProgramQuery = new TicketProgramQuery();
-		$ticketStatusQuery  = new TicketStatusQuery();
-		$callTicketQuery    = new CallTicketQuery();
-		$commentQuery       = new CommentQuery();
+		$callQuery    = new CallQuery();
+		$commentQuery = new CommentQuery();
 
 		// create the call containing the tickets
 		$callId = $callQuery->mia_insert([
@@ -117,66 +110,88 @@ class TicketPage extends Page {
 
 		// create the tickets, each containing a status and potentially multiple devices/programs
 		foreach ($_POST['tickets'] as $ticket) {
-			$ticketData = [
-				'title'                     => $ticket['title'], 
-				'description'               => $ticket['description'], 
-				'solution_id'               => null,
-				'author_id'                 => get_current_user_id(), 
-				'assigned_to_operator_id'   => isset($ticket['assigned_to_operator']) ? $ticket['assigned_to_operator'] : null,
-				'expertise_type_id'         => $ticket['expertise_type_id'],
-				'assigned_to_specialist_id' => isset($ticket['assigned_to_specialist']) ? $ticket['assigned_to_specialist'] : null
-			];
+			$ticketId = $this->create_ticket($ticket, $callId);
 
-			$ticketId = $ticketQuery->mia_insert($ticketData);
-
-			if ($ticket['status'] == 3) {
+			if ($_POST['call_notes']) {
 				$commentId = $commentQuery->mia_insert([
-					'content' => $ticket['solution'],
+					'content'   => $_POST['call_notes'],
 					'author_id' => get_current_user_id(),
 					'ticket_id' => $ticketId,
-					'call_id'   => null
-				]);
-
-				$ticketData['solution_id'] = $commentId;
-
-				$ticketQuery->mia_update($ticketId, $ticketData);
-			}
-
-			// create devices
-			foreach ($ticket['devices'] as $deviceId) {
-				$ticketDeviceQuery->mia_insert([
-					'ticket_id' => $ticketId,
-					'device_id' => $deviceId
+					'call_id'   => $callId
 				]);
 			}
-
-			// software/OS's are not required...
-			if (isset($ticket['programs'])) {
-
-				// create the programs
-				foreach ($ticket['programs'] as $programId) {
-					$ticketProgramQuery->mia_insert([
-						'ticket_id'  => $ticketId,
-						'program_id' => $programId
-					]);
-				}
-			}
-
-			// set the ticket's status
-			$ticketStatusQuery->mia_insert([
-				'ticket_id' => $ticketId,
-				'status_id' => $ticket['status'],
-				'user_id'   => get_current_user_id()
-			]);
-
-			// link the first call to the ticket
-			$callTicketQuery->mia_insert([
-				'call_id'   => $callId,
-				'ticket_id' => $ticketId
-			]);
 		}
 
 		return $this->mia_redirect('admin.php?page=ticket&id=' . $ticketId);
+	}
+
+	private function create_ticket($ticket, $callId) {
+		$ticketQuery        = new TicketQuery();
+		$ticketDeviceQuery  = new TicketDeviceQuery();
+		$ticketProgramQuery = new TicketProgramQuery();
+		$ticketStatusQuery  = new TicketStatusQuery();
+		$callTicketQuery    = new CallTicketQuery();
+		$commentQuery       = new CommentQuery();
+
+		$ticketData = [
+			'title'                     => $ticket['title'], 
+			'description'               => $ticket['description'], 
+			'solution_id'               => null,
+			'author_id'                 => get_current_user_id(), 
+			'assigned_to_operator_id'   => isset($ticket['assigned_to_operator']) ? $ticket['assigned_to_operator'] : null,
+			'expertise_type_id'         => $ticket['expertise_type_id'],
+			'assigned_to_specialist_id' => isset($ticket['assigned_to_specialist']) ? $ticket['assigned_to_specialist'] : null
+		];
+
+		$ticketId = $ticketQuery->mia_insert($ticketData);
+
+		if ($ticket['status'] == 3) {
+			$commentId = $commentQuery->mia_insert([
+				'content' => $ticket['solution'],
+				'author_id' => get_current_user_id(),
+				'ticket_id' => $ticketId,
+				'call_id'   => null
+			]);
+
+			$ticketData['solution_id'] = $commentId;
+
+			$ticketQuery->mia_update($ticketId, $ticketData);
+		}
+
+		// create devices
+		foreach ($ticket['devices'] as $deviceId) {
+			$ticketDeviceQuery->mia_insert([
+				'ticket_id' => $ticketId,
+				'device_id' => $deviceId
+			]);
+		}
+
+		// software/OS's are not required...
+		if (isset($ticket['programs'])) {
+
+			// create the programs
+			foreach ($ticket['programs'] as $programId) {
+				$ticketProgramQuery->mia_insert([
+					'ticket_id'  => $ticketId,
+					'program_id' => $programId
+				]);
+			}
+		}
+
+		// set the ticket's status
+		$ticketStatusQuery->mia_insert([
+			'ticket_id' => $ticketId,
+			'status_id' => $ticket['status'],
+			'user_id'   => get_current_user_id()
+		]);
+
+		// link the first call to the ticket
+		$callTicketQuery->mia_insert([
+			'call_id'   => $callId,
+			'ticket_id' => $ticketId
+		]);
+
+		return $ticketId;
 	}
 
 	public function update_pane() {
@@ -197,15 +212,22 @@ class TicketPage extends Page {
 	}
 
 	protected function update_action() {
-		global $wpdb;
-		
+		$ticket = $_POST['ticket'];
+
+		var_dump($ticket);
+
+		$this->update_ticket($ticket);
+
+		return $this->mia_redirect('admin.php?page=ticket&id=' . $ticket['id']);
+	}
+
+	private function update_ticket($ticket) {
 		$ticketQuery        = new TicketQuery();
 		$ticketDeviceQuery  = new TicketDeviceQuery();
 		$ticketProgramQuery = new TicketProgramQuery();
 		$ticketStatusQuery  = new TicketStatusQuery();
 		$commentQuery       = new CommentQuery();
 
-		$ticket   = $_POST['ticket'];
 		$ticketId = $ticket['id'];
 
 		$commentId   = null;
@@ -274,11 +296,11 @@ class TicketPage extends Page {
 				'user_id'   => get_current_user_id()
 			]);
 		}
-
-		return $this->mia_redirect('admin.php?page=ticket&id=' . $ticketId);
 	}
 
 	public function follow_up_call_pane() {
+		if ($_SERVER['REQUEST_METHOD'] === 'POST') return $this->follow_up_call_action();
+
 		$this->enqueue_dependency('mia_follow_up_call', '/backend/js/' . $this->nameSlug . '/follow_up_call_ticket.js');
 
 		$context = $this->get_required_data('Register Follow-up Call');
@@ -288,6 +310,37 @@ class TicketPage extends Page {
 		if (isset($_GET['id'])) $context['firstTicketId'] = $_GET['id'];
 
 		$this->render_pane($context);
+	}
+
+	private function follow_up_call_action() {
+		// create the call containing the tickets
+		$callId = $callQuery->mia_insert([
+			'time'        => date('Y-m-d H:i:s', strtotime($_POST['date_of_call'])),
+			'operator_id' => get_current_user_id(),
+			'caller_id'   => $_POST['caller']['id']
+		]);
+
+		// create the tickets, each containing a status and potentially multiple devices/programs
+		foreach ($_POST['tickets'] as $key => $ticket) {
+			if ($key === 'new') { // create new ticket
+				foreach ($ticket['new'] as $ticket) {
+					$ticket['id'] = $this->create_ticket($ticket, $callId);
+				}
+			} else { // update existing ticket
+				$this->update_ticket($ticket);
+			}
+
+			if ($_POST['call_notes']) {
+				$commentId = $commentQuery->mia_insert([
+					'content'   => $_POST['call_notes'],
+					'author_id' => get_current_user_id(),
+					'ticket_id' => $ticket['id'],
+					'call_id'   => $callId
+				]);
+			}
+		}
+
+		return $this->mia_redirect('admin.php?page=ticket&id=' . $ticket['id']);
 	}
 
 	private function get_required_data($pageName) {
