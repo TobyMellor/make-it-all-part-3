@@ -104,6 +104,8 @@ abstract class Query {
 
 		$columns['updated_at'] = date('Y-m-d H:i:s');
 
+	
+
 		if (!$this->wpdb->update($this->prefix . $this->table, $columns, [$whereColumn => $id])) {
 			wp_die('Sorry! We failed to update that record. Please try again.');
 		}

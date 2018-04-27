@@ -32,8 +32,10 @@ class HardwarePage extends Page {
 		}
 
 		if (isset($_GET['id'])) {
-			$context = $this->get_context('Viewing Hardware');
+			
+			$context = $this->get_required_data('Viewing Hardware');
 			$context = $this->get_hardware($context, $_GET['id']);
+		
 
 			$this->render_pane($context); // render page before inserting table
 		} else {
@@ -59,7 +61,6 @@ class HardwarePage extends Page {
 
 	protected function create_action() {
 		global $wpdb;
-
 		$deviceQuery = new DeviceQuery();
 
 		// insert type, make, sn, date
@@ -76,9 +77,6 @@ class HardwarePage extends Page {
 				$hardware['make'] = $hardware['newMake'];	
 				
 			}
-			
-			
-
 			$deviceQuery->mia_insert([
 				'type'      => $hardware['type'],
 				'make'      => $hardware['make'],
@@ -87,8 +85,8 @@ class HardwarePage extends Page {
 
 			$hardwareID = $wpdb->insert_id;
 		}
-		
-		return $this->mia_redirect('admin.php?page=hardware&id=' . $hardwareID);
+		$_SESSION['mia_message'] = 'Hardware successfully added.';
+		return $this->mia_redirect('admin.php?page=hardware_update&id=' . $hardwareID);
 	}
 
 	// updating hardware
@@ -109,7 +107,11 @@ class HardwarePage extends Page {
 	
 	protected function update_action() {
 		global $wpdb;
-		
+		$deviceQuery = new DeviceQuery();
+		$hardware = $_POST['hardware'];
+	
+		$hardwareID = $hardware['id'];
+
 		if(empty($hardware['type'])){
 			$hardware['type'] = $hardware['newType'];	
 		}
@@ -117,22 +119,18 @@ class HardwarePage extends Page {
 			$hardware['make'] = $hardware['newMake'];	
 				
 		}
-			
-
-
-
-		$deviceQuery = new DeviceQuery();
-
 		$deviceQuery->mia_update(
-			$hardwareId,
+			$hardwareID,
 			[
-				'type'          => $hardware['type'],
-				'make'          => $hardware['make'],
-				'serial_no'     => $hardware['serial_no'],
+				'type'      => $hardware['type'],
+				'make'      => $hardware['make'],
+				'serial_no' => $hardware['serial_no']
 			]
 		);
-
-		return $this->mia_redirect('admin.php?page=hardware&id=' . $hardwareId);
+		
+		
+		$_SESSION['mia_message'] = 'Hardware successfully updated.';
+		return $this->mia_redirect('admin.php?page=hardware_update&id=' . $hardwareID);
 	}
 
 	private function get_hardware($context, $id) {

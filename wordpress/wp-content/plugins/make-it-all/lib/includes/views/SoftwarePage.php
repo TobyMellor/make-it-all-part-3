@@ -32,8 +32,9 @@ class SoftwarePage extends Page {
 		if (isset($_GET['id'])) {
 			//If ID in url show that ID, not the software table.
 			
-			$context = $this->get_context('Viewing Software');
+			$context = $this->get_required_data('Viewing Software');
 			$context = $this->get_software($context, $_GET['id']);
+	
 		
 			
 			$this->render_pane($context);
@@ -79,8 +80,9 @@ class SoftwarePage extends Page {
 			$softwareID = $wpdb->insert_id;
 		}
 	
-		
-		$this->mia_redirect('admin.php?page=software&id=' . $softwareID); exit;
+		$_SESSION['mia_message'] = 'Software successfully inserted.';
+		return $this->mia_redirect('admin.php?page=software_update&id=' . $softwareID);
+	
 	}
 	
 	public function update_pane() {
@@ -111,7 +113,9 @@ class SoftwarePage extends Page {
 			]
 		);
 
-		$this->mia_redirect('admin.php?page=software&id=' . $softwareID); exit;
+	
+		$_SESSION['mia_message'] = 'Software successfully updated.';
+		return $this->mia_redirect('admin.php?page=software_update&id=' . $softwareID);
 
 	}
 	

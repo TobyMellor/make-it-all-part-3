@@ -168,7 +168,6 @@ function initAccordions() {
 		heightStyle: 'content',
 		handle: '.accordion-handle',
 		icons: false,
-		active: false,
 		collapsible: true
 	});
 }

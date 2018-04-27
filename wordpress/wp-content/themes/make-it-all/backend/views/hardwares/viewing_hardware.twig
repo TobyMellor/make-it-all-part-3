@@ -1,37 +1,103 @@
-{% extends "backend/views/layouts/page.twig" %}
+{% extends "backend/views/layouts/page.twig" %} {% block main %}
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-9">
+		<form action="admin.php?page=hardware_update" method="POST">
+			<input name="hardware[id]" type="text" hidden>
+			<div class="mia-panel ticket-panel">
+				<div class="mia-panel-heading">
+					<div class="row">
+						<div class="col-sm-3 col-xs-12">
+							<h2>Hardware Information</h2>
+						</div>
+						<div class="col-sm-9 col-xs-12 defined">
+							<img src="/wp-content/uploads/2018/03/arrow-down.png" style="opacity: 0;">
+						</div>
+					</div>
+				</div>
+				<div class="mia-panel-body negative-margin">
+					<div class="hardware-panel">
+						<div class="accordions">
+							<div class="accordion-handle row">
+								<div class="accordion-icon col-xs-3">
+									<div class="number-circle">{{ device_object.id }}</div>
+								</div>
+								<div class="accordion-title col-xs-9">{{ device_object.serial_no }}</div>
+							</div>
+							<div class="accordion-body">
+								<div class="row mia-field-group">
+									<div class="col-xs-12 col-sm-3">
+										<p class="label">
+											Type <span class="required">*</span>
+										</p>
 
-{% block main %}
-    <div class="row">
-        <div class="col-xs-9">
-            <table class="wp-list-table widefat fixed striped">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Type</th>
-                        <th>Make</th>
-                        <th>Serial Number</th>
-                        <th>Created At</th>
-                        <th>Updated At</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{{ device_object.id }}</td>
-                        <td>{{ device_object.type }}</td>
-                        <td>{{ device_object.make }}</td>
-                        <td>{{ device_object.serial_no }}</td>
-                        <td>{{ device_object.created_at }}</td>
-                        <td>{{ device_object.created_at }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+										<p class="details">
+											Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+										</p>
+									</div>
+									<div class="col-sm-9 col-xs-12 has-button">
+										<div>
+											<select class="hardware-type-select" name="hardware[type]">
+												<option selected>{{ device_object.type}}</option>
+											</select>
+										</div>
+									</div>
+								</div>
+
+
+
+								<div class="row mia-field-group">
+									<div class="col-xs-12 col-sm-3">
+										<p class="label">
+											Make <span class="required">*</span>
+										</p>
+
+										<p class="details">
+											Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+										</p>
+									</div>
+									<div class="col-sm-9 col-xs-12 has-button">
+										<div>
+											<select class="hardware-make-select" name="hardware[make]">
+												<option selected>{{ device_object.make}}</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="row mia-field-group">
+									<div class="col-sm-3 col-xs-12">
+										<p class="label">
+											Serial Number <span class="required">*</span>
+										</p>
+
+										<p class="details">
+											Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+										</p>
+									</div>
+									<div class="col-sm-9 col-xs-12">
+										<input class='hardware-serial' name="hardware[serial_no]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter serial number here" validation="required|min:3|max:255" value="{{ device_object.serial_no}}">
+									</div>
+								</div>
+							</div>
+							<div class="mia-panel-footer"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+			<div class="col-xs-12 col-sm-12 col-md-3">
+
+			<div class="test">Hello hardware information</div>
+	
+		</div>
+
 </div>
+{% endblock %} {% block scripts %}
+<script>
+	var devices	= {{devices}},
+		types	= {{types}},
+		makes	= {{makes}},
+		device	= {{device|default ('null')}};
 
-{% endblock %}
-
-{% block scripts %}
-    <script>
-        var device             = {{ device }};
-    </script>
+</script>
 {% endblock %}
