@@ -137,6 +137,9 @@ class HardwarePage extends Page {
 		$deviceQuery = new DeviceQuery();
 
 		$context['device_object'] = $deviceQuery->get_device($id)[0];
+		$context['device_tick'] = $deviceQuery->get_ticket_info($id);
+		
+		//Want to also get additional info here
 		$context['device'] = json_encode($context['device_object']);
 
 		return $context;
