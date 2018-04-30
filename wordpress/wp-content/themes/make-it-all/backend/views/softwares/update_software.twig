@@ -106,7 +106,6 @@
 										<p class="label">
 											Software Type <span class="required">*</span>
 										</p>
-
 										<p class="details">
 											Type of software.
 										</p>
@@ -150,21 +149,21 @@
 							<td>
 								<strong>Total Tickets</strong>
 							</td>
-							<td>{{ software_info[0]}}</td>
+							<td>{{ software_info[0][0]}}</td>
 
 						</tr>
 						<tr>
 							<td>
 								<strong>Open Tickets</strong>
 							</td>
-							<td>{{ software_info[1]}}</td>
+							<td>{{ software_info[0][1]}}</td>
 
 						</tr>
 						<tr>
 							<td>
 								<strong>Closed Tickets</strong>
 							</td>
-							<td>{{ software_info[2]}}</td>
+							<td>{{ software_info[0][2]}}</td>
 
 						</tr>
 					</tbody>

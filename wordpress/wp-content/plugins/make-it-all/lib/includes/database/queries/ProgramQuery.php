@@ -81,6 +81,7 @@ class ProgramQuery extends Query {
 		
 		//Get additional information.
 		$tickets = [];
+		$recentTickets = [];
 		$status = [];
 		foreach($programTickets as $record){
 			array_push($tickets, $record->{'ticket_id'});
@@ -99,7 +100,15 @@ class ProgramQuery extends Query {
 				ORDER BY created_at DESC";
 				$result = $this->get_results($statusQuery);
 				
-				array_push($status, $result[0]);	
+				array_push($status, $result[0]);
+				if($i < 3){
+					//Get ticket info
+					$ticketQuery = "SELECT id, title FROM {$this->prefix}ticket WHERE id = $tickets[$i]";
+					$ticketRes = $this->get_results($ticketQuery);
+					$ticket = [$ticketRes[0]->{'id'}, $ticketRes[0]->{'title'}];
+					array_push($recentTickets, $ticket);
+				
+				}
 			}
 		}
 		
@@ -115,7 +124,8 @@ class ProgramQuery extends Query {
 		}
 		
 		
-		return $toReturn;
+		$returnArray = [$toReturn, $recentTickets];
+		return $returnArray;
 	}	
 
 	/**

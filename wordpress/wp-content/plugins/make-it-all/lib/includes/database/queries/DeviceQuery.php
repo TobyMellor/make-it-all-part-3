@@ -111,14 +111,15 @@ class DeviceQuery extends Query {
 		
 		//Get additional information.
 		$tickets = [];
+		$recentTickets = [];
 		$status = [];
 		foreach($deviceTickets as $record){
 			array_push($tickets, $record->{'ticket_id'});
 		}
 		if($tickets){
-			//Easier for me to make multiple dbqueries than clean list
+			//Easier for me to make multiple dbqueries than to clean the list
 			for($i = 0; $i < sizeof($tickets); $i++){
-				//For each ticket (with associated hardware device) get list of statuses ordered by date, get newest. 
+				//For each ticket (with associated hardware device) get list of statuses ordered by date, get newest status. 
 				$statusQuery = "
 				SELECT id,
 				ticket_id,
@@ -130,6 +131,14 @@ class DeviceQuery extends Query {
 				$result = $this->get_results($statusQuery);
 				
 				array_push($status, $result[0]);	
+				if($i < 3){
+					//Get ticket info
+					$ticketQuery = "SELECT id, title FROM {$this->prefix}ticket WHERE id = $tickets[$i]";
+					$ticketRes = $this->get_results($ticketQuery);
+					$ticket = [$ticketRes[0]->{'id'}, $ticketRes[0]->{'title'}];
+					array_push($recentTickets, $ticket);
+				
+				}
 			}
 		}
 		
@@ -144,8 +153,8 @@ class DeviceQuery extends Query {
 			}
 		}
 		
-		
-		return $toReturn;
+		$returnArray = [$toReturn, $recentTickets];
+		return $returnArray;
 	}
 
 	
