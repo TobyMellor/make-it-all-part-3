@@ -127,6 +127,7 @@ class SoftwarePage extends Page {
 		$context['softwares'] 			= json_encode($programQuery->get_software(null));
 		$context['operating_systems']   = json_encode($programQuery->get_opsystems());
 
+
 		return $context;
 	}
 	
@@ -135,6 +136,7 @@ class SoftwarePage extends Page {
 
 		$context['software_object'] = $programQuery->get_software($id)[0];
 		$context['software'] 		= json_encode($context['software_object']);
+				$context['software_info'] = $programQuery->get_program_info($id);
 
 		return $context;
 	}

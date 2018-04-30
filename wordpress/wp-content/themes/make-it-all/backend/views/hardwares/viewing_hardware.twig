@@ -85,52 +85,51 @@
 			</div>
 		</form>
 	</div>
-			<div class="col-xs-12 col-sm-12 col-md-3">
-			<div class="mia-panel mia-panel-short" data-slug="hardware_info">
-				<div class="mia-panel-heading">
-					Hardware Info
-					<i class="fa fa-chevron-up"></i>
-				</div>
-				<div class="mia-panel-body">
-					<table class="wp-list-table widefat fixed striped">
-						<tbody>
-					
-								<tr>
-									<td>
-										<strong>Total Tickets</strong>
-									</td>
-									<td>{{ device_tick[0]}}</td>
-		
-								</tr>
-								<tr>
-									<td>
-										<strong>Open Tickets</strong>
-									</td>
-									<td>{{ device_tick[1]}}</td>
-		
-								</tr>
-								<tr>
-									<td>
-										<strong>Closed Tickets</strong>
-									</td>
-									<td>{{ device_tick[2]}}</td>
-		
-								</tr>
-						</tbody>
-					</table>
-				</div>
+	<div class="col-xs-12 col-sm-12 col-md-3">
+		<div class="mia-panel mia-panel-short" data-slug="hardware_info">
+			<div class="mia-panel-heading">
+				Hardware Info
+				<i class="fa fa-chevron-up"></i>
 			</div>
+			<div class="mia-panel-body">
+				<table class="wp-list-table widefat fixed striped">
+					<tbody>
 
-	
-	
+						<tr>
+							<td>
+								<strong>Total Tickets</strong>
+							</td>
+							<td>{{ device_tick[0]}}</td>
+
+						</tr>
+						<tr>
+							<td>
+								<strong>Open Tickets</strong>
+							</td>
+							<td>{{ device_tick[1]}}</td>
+
+						</tr>
+						<tr>
+							<td>
+								<strong>Closed Tickets</strong>
+							</td>
+							<td>{{ device_tick[2]}}</td>
+
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
+
+
+
+	</div>
 
 </div>
 {% endblock %} {% block scripts %}
 <script>
-	var devices	= {{devices}},
-		device	= {{device|default ('null')}},
-		device_stats = {{device_tick}};
+	var devices = {{devices}},
+		device = {{device|default ('null')}};
 
 </script>
 {% endblock %}
