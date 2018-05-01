@@ -56,31 +56,34 @@ class HardwarePage extends Page {
 		$this->render_pane($this->get_required_data('Create Hardware'));
 	}
 
-	protected function create_action() {
+ 	protected function create_action() {
 		$deviceQuery = new DeviceQuery();
-
 		// insert type, make, sn, date
 		foreach ($_POST['hardware'] as $hardware) {
-			$hardwareID = $deviceQuery->mia_insert([
-				'type'      => $hardware['type'] || $hardware['newType'],
-				'make'      => $hardware['make'] || $hardware['newMake'],
+			if(empty($hardware['type'])){
+				$hardware['type'] = $hardware['newType'];	
+			}
+			if(empty($hardware['make'])){
+				$hardware['make'] = $hardware['newMake'];		
+			}
+			$deviceQuery->mia_insert([
+				'type'      => $hardware['type'],
+				'make'      => $hardware['make'],
 				'serial_no' => $hardware['serial']
 			]);
+			$hardwareID = $wpdb->insert_id;	
 		}
-	
 		$_SESSION['mia_message'] = 'Hardware successfully added.';
 		return $this->mia_redirect('admin.php?page=hardware_update&id=' . $hardwareID);
 	}
+				
 
 	// updating hardware
 	public function update_pane() {
 		parent::update_pane();
-
 		$context = $this->get_required_data('Update Hardware');
-
 		if (isset($_GET['id'])) {
 			$hardwareID = $_GET['id'];
-
 			// ticket's current data
 			$context = $this->get_hardware($context, $hardwareID);
 		}
@@ -90,19 +93,22 @@ class HardwarePage extends Page {
 	
 	protected function update_action() {
 		$deviceQuery = new DeviceQuery();
-
 		$hardware = $_POST['hardware'];
 		$hardwareID = $hardware['id'];
-
+		if(empty($hardware['type'])){
+			$hardware['type'] = $hardware['newType'];	
+		}
+		if(empty($hardware['make'])){
+			$hardware['make'] = $hardware['newMake'];		
+		}
 		$deviceQuery->mia_update(
 			$hardwareID,
 			[
-				'type'      => $hardware['type'] || $hardware['newType'],
-				'make'      => $hardware['make'] || $hardware['newMake'],
+				'type'      => $hardware['type'],
+				'make'      => $hardware['make'],
 				'serial_no' => $hardware['serial_no']
 			]
 		);
-		
 		$_SESSION['mia_message'] = 'Hardware successfully updated.';
 		return $this->mia_redirect('admin.php?page=hardware_update&id=' . $hardwareID);
 	}

@@ -60,7 +60,7 @@ class SoftwarePage extends Page {
 			$softwareID = $programQuery->mia_insert([
 				'name'      	   => $software['name'],
 				'expiry_date'      => date('Y-m-d H:i:s', strtotime($software['expiry'])),
-				'operating_system' => $software['type'] === "Operating System"
+				'operating_system' => $software['type']
 			]);
 		}
 		
