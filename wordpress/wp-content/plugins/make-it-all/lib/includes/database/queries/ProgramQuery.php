@@ -23,6 +23,39 @@ class ProgramQuery extends Query {
 	}
 	
 	/**
+	 * Get the data required for the table
+	 *
+	 * @return Array
+	 */
+	public function get_program_table($search = null) {
+		$sql = "
+			SELECT
+				id,
+				name AS title,
+				expiry_date,
+				created_at,
+				updated_at,
+				CASE WHEN operating_system = 1 THEN 'OS' ELSE 'APP' END AS operating_system
+			FROM {$this->prefix}{$this->table}
+		";
+
+		if ($search) {
+			$search = $this->wpdb->esc_like($search);
+
+			$sql .= $this->wpdb->prepare("
+				 WHERE type LIKE '%%%s%%'
+				 OR make LIKE '%%%s%%'
+				 OR serial_no LIKE '%%%s%%'",
+				 [$search, $search, $search]);
+		}
+
+		$sql .= " ORDER BY UNIX_TIMESTAMP(updated_at) DESC";
+
+		return $this->get_results($sql);
+	}	
+	
+	
+	/**
 	 * Retuns software with given ID
 	 *
 	 * @return array

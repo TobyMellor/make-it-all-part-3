@@ -35,7 +35,8 @@ $(() => {
 		let $accordions = $(this).closest('.mia-panel').find('.accordions'),
 			newAccordionId = Number($('.accordions .accordion-handle:nth-last-child(2) .number-circle').text()) + 1,
 			$newAccordion = cloneAccordion($accordions, newAccordionId);
-
+		
+		licenceListeners($newAccordion);
 		clearAccordion($newAccordion, newAccordionId);
 
 		$accordions.append($newAccordion);
@@ -43,8 +44,9 @@ $(() => {
 		$accordions.accordion('refresh');
 		
 		$newAccordion.click(); // expand new accordion
-		addDatePicker($newAccordion);
 		
+	
+	
 	});
 
 	initAccordions();
@@ -52,7 +54,7 @@ $(() => {
 	clearAccordion($('.mia-panel-body')); // clear all fields
 });
 
-function addDatePicker($accordion){
+function addDatePicker($accordion, $expdate){
 	let $picker      = $accordion.find('.mia-picker'),
 		$hiddenInput = $('<input>');
 	
@@ -61,6 +63,15 @@ function addDatePicker($accordion){
 	$hiddenInput.datetimepicker({
 		controlType: 'slider'
 	});
+	if($expdate){
+			$hiddenInput.attr('name','software[' + $expdate + '][expiry]');	
+	} else {
+		//already has number (first accordion)
+		$expdate = Number($('.accordions .accordion-handle:nth-last-child(2) .number-circle').text());
+		$hiddenInput.attr('name','software[' + $expdate + '][expiry]');	
+	}
+	setDate($hiddenInput);
+
 }
 
 function cloneAccordion($accordions, newAccordionId) {
@@ -68,19 +79,24 @@ function cloneAccordion($accordions, newAccordionId) {
 		$newAccordion = $existingAccordion.clone().unwrap();
 
 	$existingAccordion.unwrap();
-
 	// delete accordion button
 	$newAccordion.find('.accordion-actions').prepend('<i class="fa fa-trash-o"></i>');
 
 	// replace name of input fields, e.g. tickets[1].x to tickets[2].x
 	$newAccordion.last().find('input, textarea, select').each((i, input) => $(input).prop('name', $(input).prop('name').replace(/software\[.*?\]\s?/g, 'software[' + newAccordionId + ']')));
+	
 	$newAccordion.last().attr('data-accordion-id', newAccordionId);
-	licenceListeners($newAccordion);
+	
+	
+	
+	
+	
+	
+	
 	return $newAccordion;
 }
 
 function setDate(dateInput, date){
-	console.log("setting date");
 	if(date){
 		dateInput.datepicker('setDate', '');
 	} else {
@@ -95,7 +111,6 @@ function licenceListeners($accordion){
 	let remove = $accordion.find('.software-rml');
 	let add = $accordion.find('.software-addl'); 
 	remove.click(function(){
-		console.log("remove clicked");
 	//Button is on licence panel, remove this panel and make the closes no date visible.
 		$accordion.find('.software-date-section').css({display : 'none'});
 		$accordion.find('.software-no-date').css({display : 'flex'});
@@ -105,6 +120,7 @@ function licenceListeners($accordion){
 	});
 	add.click(function(){
 	//Remove this panel, make date visible.
+		console.log("should be date");
 		$accordion.find('.software-no-date').css({display : 'none'});
 		$accordion.find('.software-date-section').css({display : 'flex'});
 		setDate($accordion.find('.mia-picker input'));
@@ -113,12 +129,14 @@ function licenceListeners($accordion){
 
 function clearAccordion($accordion, newAccordionId, affectedItemsManager = null, expertiseTypeManager = null) {
 	// set input/textarea/select fields to default values
+	$accordion.find('input').val('');
 	$accordion.find('select').prop('selectedIndex', 0);
-	$accordion.find('input[type=text], textarea').val('');
-	$accordion.find('input[type=text]:not(.hasDatepicker), textarea').val('');
+	$accordion.find('.software-date-section').css({display : 'flex'});
+	$accordion.find('.software-no-date').css({display : 'none'});
 	// set the accordion number and the new ticket text in the accordion handle
 	$accordion.find('.accordion-icon .number-circle').text(newAccordionId);
 	$accordion.find('.accordion-title').text('New Software Item');
+	addDatePicker($accordion, newAccordionId);
 }
 
 function initAccordions() {

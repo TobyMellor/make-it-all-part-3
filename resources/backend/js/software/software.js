@@ -1,7 +1,5 @@
 $(() => {
-	$(document).ready(function () {
-	console.log("viewing software loaded");
-	});
+
 	if(software){
 
 	let $heading = $('.mia-panel-heading'),
@@ -18,14 +16,21 @@ $(() => {
 		$('.software-no-date').css({display : 'flex'});
 	
 	}
+		
 	$('.mia-picker input').datepicker('setDate', new Date(date));
 	$('select[name="software[type]"]').val(software ? software.operating_system : "");
 	}
 	
-$('form').submit(function(e) {
-	console.log("form submit");
+    $('form').submit(function(e) {
 		if (!$(this).serializeObject(true).isValid())
-			e.preventDefault();
+		e.preventDefault();
+	});	
+	
+	$(document).on('keyup', '.accordions .accordion-body input[name*="name"]', function() {
+		let $headerText    = $(this).closest('.accordion-body').prev().find('.accordion-title'),
+			newHeaderText  = $(this).val().length <= 2 ? 'Software' : 'Software: ' + $(this).val();
+
+		$headerText.text(newHeaderText);
 	});	
 	
 	

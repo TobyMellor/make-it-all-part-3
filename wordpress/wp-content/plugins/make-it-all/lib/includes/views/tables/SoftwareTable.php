@@ -2,6 +2,7 @@
 
 namespace MakeItAll\Includes\Views\Tables;
 use MakeItAll\Includes\Views\Tables\Table;
+use MakeItAll\Includes\Database\Queries\ProgramQuery;
 
 class SoftwareTable extends Table {
 	protected $table = "program";
@@ -17,7 +18,7 @@ class SoftwareTable extends Table {
 			'id'				=> 'ID',
 			'title'				=> 'Name',
 			'expiry_date'       => 'Expiry Date',
-			'operating_system'  => 'Operating System',
+			'operating_system'  => 'Type',
 			'created_at' 		=> 'Created At',
 			'updated_at' 		=> 'Updated At'
 		];
@@ -46,17 +47,7 @@ class SoftwareTable extends Table {
 	 */
 	protected function table_data() {
 		global $wpdb;
-
-		return $wpdb->get_results("
-			SELECT
-				id,
-				name AS title,
-				expiry_date,
-				operating_system,
-				created_at,
-				updated_at
-			FROM {$this->prefix}{$this->table}
-		");
+		return (new ProgramQuery)->get_program_table(isset($_GET['s']) ? $_GET['s'] : null);
 	}
 	
 	/**
@@ -76,7 +67,7 @@ class SoftwareTable extends Table {
 	 * @return String
 	 */
 	protected function column_cb($item) {
-		return '<input type="checkbox" name="hardware[]" value="' . $item->id . '">';
+		return '<input type="checkbox" name="software[]" value="' . $item->id . '">';
 	}
 	
 	/**

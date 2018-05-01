@@ -17,12 +17,17 @@ class SoftwarePage extends Page {
 		// handle single delete and bulk delete before rendering page
 		if (isset($_GET['action']) && $_GET['action'] === 'delete') {
 			if (current_user_can('edit_make_it_all')) {
+				
 				$programQuery = new ProgramQuery();
 
 				if (isset($_GET['software_id'])) {
-					$deviceQuery->delete($_GET['software_id']);
+					
+					$programQuery->delete($_GET['software_id']);
+					
 				} else if (isset($_GET['software'])) {
+					
 					foreach ($_GET['software'] as $softwareID) {
+						
 						$programQuery->delete($softwareID);
 					}
 				}
@@ -65,6 +70,8 @@ class SoftwarePage extends Page {
 
 		// insert type, make, sn, date
 		foreach ($_POST['software'] as $software) {
+		
+		
 			$os = 0;
 			if($software['type'] == "Operating System"){
 				$os = 1;
@@ -79,6 +86,7 @@ class SoftwarePage extends Page {
 
 			$softwareID = $wpdb->insert_id;
 		}
+		
 	
 		$_SESSION['mia_message'] = 'Software successfully inserted.';
 		return $this->mia_redirect('admin.php?page=software_update&id=' . $softwareID);

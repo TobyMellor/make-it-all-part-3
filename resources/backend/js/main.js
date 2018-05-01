@@ -48,18 +48,7 @@ $(() => {
 		$('.accordions .accordion-handle.ui-state-active .fa:not(.fa-trash-o), .mia-panel-short .mia-panel-heading.ui-state-active .fa').removeClass().addClass('fa fa-chevron-down');
 	});
 
-	$(document).on('click', '.accordion-handle .accordion-actions .fa-trash-o', function() {
-		if (!confirm('Are you sure you want to delete this ticket?')) return;
 
-		let $accordionHandle = $(this).closest('.accordion-handle');
-
-		$accordionHandle.add($accordionHandle.next()).fadeOut(250, function() {
-			$(this).remove();
-
-			// if no accordions are expanded, expand the first
-			if ($('.accordion-handle.ui-state-active').length === 0) $('.accordion-handle').first().click();
-		});
-	});
 
 	// if a panel has a slug, modify sessionStorage's collapsed_mia_panel_shorts
 	$(document).on('click', '.mia-panel-heading', function() {
