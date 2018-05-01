@@ -54,6 +54,7 @@ class SoftwarePage extends Page {
 	
 	protected function create_action() {
 		$programQuery = new ProgramQuery();
+		global $wpdb;
 
 		// insert type, make, sn, date
 		foreach ($_POST['software'] as $software) {
