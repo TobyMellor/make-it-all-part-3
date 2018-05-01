@@ -40,10 +40,19 @@ $(() => {
 	});
 
 	$(document).on('keyup', '.accordions .accordion-body input[name*="name"]', function() {
-		let $headerText   = $(this).closest('.accordion-body').prev().find('.accordion-title'),
-			newHeaderText = $(this).val().length <= 2 ? 'New Software' : 'New Software: ' + $(this).val();
+		let $accordionBody   = $(this).closest('.accordion-body'),
+			$accordionHeader = $accordionBody.prev(),
+			$headerText      = $accordionHeader.find('.accordion-title'),
+			$typeSelect      = $accordionBody.find('select[name*="type"]'),
+			type             = 'New ';
 
-		$headerText.text(newHeaderText);
+		if ($typeSelect.val()) {
+			type += $typeSelect.find('option:selected').text();
+		} else {
+			type += 'Software';
+		}
+
+		$headerText.text(type + ($(this).val().length <= 2 ? '' : ': ' + $(this).val()));
 	});
 
 	initAccordions();

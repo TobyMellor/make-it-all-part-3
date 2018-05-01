@@ -20,7 +20,7 @@ $(() => {
 	$('input[name="software[id]"]').val(software ? software.id : "");
 	$('input[name="software[name]"]').val(software ? software.name : "");
 	
-	var date = (software ? software.expiry_date : "");
+	let date = (software ? software.expiry_date : "");
 	
 	if (date === "0000-00-00 00:00:00") {
 		// no licence
@@ -32,10 +32,19 @@ $(() => {
 	$('select[name="software[type]"]').val(software ? software.operating_system : "");
 	
 	$(document).on('keyup', '.accordions .accordion-body input[name*="name"]', function() {
-		let $headerText   = $(this).closest('.accordion-body').prev().find('.accordion-title'),
-			newHeaderText = $(this).val().length <= 2 ? 'Software' : 'Software: ' + $(this).val();
+		let $accordionBody   = $(this).closest('.accordion-body'),
+			$accordionHeader = $accordionBody.prev(),
+			$headerText      = $accordionHeader.find('.accordion-title'),
+			$typeSelect      = $accordionBody.find('select[name*="type"]'),
+			type             = '';
 
-		$headerText.text(newHeaderText);
+		if ($typeSelect.val()) {
+			type += $typeSelect.find('option:selected').text();
+		} else {
+			type += 'Software';
+		}
+
+		$headerText.text(type + ($(this).val().length <= 2 ? '' : ': ' + $(this).val()));
 	});
 });
 

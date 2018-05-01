@@ -22,5 +22,10 @@ $(() => {
 		if (!$(this).serializeObject(true).isValid())
 			e.preventDefault();
 	});
+
+    // if the user changes the Software Type, fake a keypress in the name field to update the accordion header
+	$(document).on('change', 'select[name*="type"]', function() {
+		$(this).closest('.accordion-body').find('input[name*="name"]').trigger('keyup');
+	});
 });
 
