@@ -58,6 +58,7 @@ class HardwarePage extends Page {
 
  	protected function create_action() {
 		$deviceQuery = new DeviceQuery();
+		global $wpdb;
 		// insert type, make, sn, date
 		foreach ($_POST['hardware'] as $hardware) {
 			if(empty($hardware['type'])){
