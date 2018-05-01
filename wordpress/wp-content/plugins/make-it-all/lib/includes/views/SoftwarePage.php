@@ -57,11 +57,12 @@ class SoftwarePage extends Page {
 
 		// insert type, make, sn, date
 		foreach ($_POST['software'] as $software) {
-			$softwareID = $programQuery->mia_insert([
+			$programQuery->mia_insert([
 				'name'      	   => $software['name'],
 				'expiry_date'      => date('Y-m-d H:i:s', strtotime($software['expiry'])),
 				'operating_system' => $software['type']
 			]);
+			$softwareID = $wpdb->insert_id;	
 		}
 		
 	
