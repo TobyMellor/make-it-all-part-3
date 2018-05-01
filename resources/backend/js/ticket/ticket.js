@@ -3,6 +3,19 @@ import AffectedItemsManager from "../AffectedItemsManager";
 import StaffManager from "../StaffManager";
 
 $(() => {
+		$(document).on('click', '.accordion-handle .accordion-actions .fa-trash-o', function() {
+		if (!confirm('Are you sure you want to delete this ticket?')) return;
+
+		let $accordionHandle = $(this).closest('.accordion-handle');
+
+		$accordionHandle.add($accordionHandle.next()).fadeOut(250, function() {
+			$(this).remove();
+
+			// if no accordions are expanded, expand the first
+			if ($('.accordion-handle.ui-state-active').length === 0) $('.accordion-handle').first().click();
+		});
+	});
+	
 	let showEmployee = window.showEmployee = (function($element, employee, staffManager) {
 		$element.find('input').each((i, input) => $(input).val(employee[$(input).data('attribute')] || 'N/A')); // populate input fields
 		$element.find('.mia-permissions strong').html(staffManager.getPermissions(employee)); // populate permissions field

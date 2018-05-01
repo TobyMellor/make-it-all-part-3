@@ -54,7 +54,8 @@ function compileBackend() {
 	mix.js(backendResources("main.js"), backendOutput("main.js"));
 	mix.sass(backendResources("main.scss"), backendOutput("main.css"))
 
-	let pages   = ["ticket", "hardware", "problem_type", "user", "department"],
+
+	let pages   = ["ticket", "hardware", "software", "problem_type", "user", "department"],
 		actions = ["read", "create", "update", "follow_up_call"];
 
 	for (let page of pages) {

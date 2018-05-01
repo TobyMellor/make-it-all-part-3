@@ -102,6 +102,7 @@ class Loader {
 			'ProblemTypePage',
 			'DepartmentPage',
 			'HardwarePage',
+			'SoftwarePage',
 			'CommentPage'
 		];
 

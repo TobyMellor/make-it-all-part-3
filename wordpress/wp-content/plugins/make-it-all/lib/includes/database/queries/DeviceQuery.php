@@ -94,6 +94,71 @@ class DeviceQuery extends Query {
 		);
 	}
 	
+	public function get_ticket_info($id){
+		//toReturn = total, open, closed
+		$toReturn = [0,0,0];
+		
+		//gets all tickets with hardware associated. 
+		$deviceTickets = $this->get_results(
+			"
+				SELECT * 
+				FROM {$this->prefix}ticket_{$this->table}
+				WHERE device_id LIKE $id
+			"
+		);
+		//So total ticket is the size of the array, need additional queries for other info. 
+		$toReturn[0] = sizeof($deviceTickets);
+		
+		//Get additional information.
+		$tickets = [];
+		$recentTickets = [];
+		$status = [];
+		foreach($deviceTickets as $record){
+			array_push($tickets, $record->{'ticket_id'});
+		}
+		if($tickets){
+			//Easier for me to make multiple dbqueries than to clean the list
+			for($i = 0; $i < sizeof($tickets); $i++){
+				//For each ticket (with associated hardware device) get list of statuses ordered by date, get newest status. 
+				$statusQuery = "
+				SELECT id,
+				ticket_id,
+				status_id,
+				created_at
+				FROM {$this->prefix}ticket_status
+				WHERE ticket_id = $tickets[$i]
+				ORDER BY created_at DESC";
+				$result = $this->get_results($statusQuery);
+				
+				array_push($status, $result[0]);	
+				if($i < 3){
+					//Get ticket info
+					$ticketQuery = "SELECT id, title FROM {$this->prefix}ticket WHERE id = $tickets[$i]";
+					$ticketRes = $this->get_results($ticketQuery);
+					$ticket = [$ticketRes[0]->{'id'}, $ticketRes[0]->{'title'}];
+					array_push($recentTickets, $ticket);
+				
+				}
+			}
+		}
+		
+		if($status){
+			for($i = 0; $i < sizeof($status); $i++){
+				$statNum = $status[$i]->{'status_id'};
+				if($statNum == 1 || $statNum == 2 ){
+					$toReturn[1]++;
+				} else {
+					$toReturn[2]++;
+				}
+			}
+		}
+		
+		$returnArray = [$toReturn, $recentTickets];
+		return $returnArray;
+	}
+
+	
+	
 	/**
 	 * Deletes a record from the DB.
 	 *
@@ -104,6 +169,10 @@ class DeviceQuery extends Query {
 	}
 
 	protected function validate($columns) {
-		return true;
+			$validator = v::key('type', v::stringType()->length(2, 65535))
+			->key('make',               v::stringType()->length(2, 65535))
+			->key('serial_no',          v::stringType()->length(2, 65535));
+
+		return $this->assert_validation($validator, $columns);
 	}
 }
