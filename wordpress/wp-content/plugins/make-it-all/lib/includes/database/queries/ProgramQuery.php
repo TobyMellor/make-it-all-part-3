@@ -140,6 +140,8 @@ class ProgramQuery extends Query {
 	
 
 	protected function validate($columns) {
-		return true;
+		$validator = v::key('name', v::stringType()->length(2, 65535));
+
+		return $this->assert_validation($validator, $columns);
 	}
 }

@@ -66,10 +66,6 @@ class HardwarePage extends Page {
 		// insert type, make, sn, date
 		foreach ($_POST['hardware'] as $hardware) {
 			
-		
-
-	
-			
 			if(empty($hardware['type'])){
 				$hardware['type'] = $hardware['newType'];	
 			}
@@ -77,14 +73,17 @@ class HardwarePage extends Page {
 				$hardware['make'] = $hardware['newMake'];	
 				
 			}
+			
 			$deviceQuery->mia_insert([
 				'type'      => $hardware['type'],
 				'make'      => $hardware['make'],
 				'serial_no' => $hardware['serial']
 			]);
-
 			$hardwareID = $wpdb->insert_id;
+
+			
 		}
+	
 		$_SESSION['mia_message'] = 'Hardware successfully added.';
 		return $this->mia_redirect('admin.php?page=hardware_update&id=' . $hardwareID);
 	}

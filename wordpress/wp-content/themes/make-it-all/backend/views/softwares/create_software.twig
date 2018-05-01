@@ -37,17 +37,17 @@
 										</p>
 									</div>
                                     <div class="col-sm-9 col-xs-12">
-                                    	<input name="software[1][name]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter Software Name" >	
+                                    	<input name="software[1][name]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter Software Name" validation="required">	
 									</div>
 								</div>
 								<div class="row mia-field-group">
 									<div class="col-sm-3 col-xs-12">
 										<p class="label">
-											Expiry Date <span class="required">*</span>
+											Expiry Date 
 										</p>
 
 										<p class="details">
-											Date the licence expires - don't change this if there's no licence. 
+											Date the licence expires - Press 'remove' if there is no licence.
 										</p>
 									</div>
 									<div class="col-sm-9 col-xs-12 has-button">
@@ -69,7 +69,7 @@
 										</div>
 										<a class="button button-primary pull-right mia-picker" href="javascript:void(0);">
 											Choose a time
-										<input type="text" name="software[1][expiry]" validation="required">
+										<input type="text" name="software[1][expiry]" validation="nullable">
 										</a>
 										<a class="button button-primary pull-right software-rml" href="javascript:void(0);">
 										Remove Licence
@@ -95,10 +95,10 @@
 										</p>
 									</div>
 									<div class="col-sm-9 col-xs-12">
-										<select name="software[1][type]" validation="required|integer">
+										<select name="software[1][type]" validation="required">
 											<option selected default disabled>Select a type here</option>
-											<option>Application</option>
-											<option>Operating System</option>
+											<option value="Application">Application</option>
+											<option value="Operating System">Operating System</option>
 										</select>
 									</div>
 								</div>

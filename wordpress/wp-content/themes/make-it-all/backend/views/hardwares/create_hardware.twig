@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="col-sm-9 col-xs-12 has-button">
                                     <div>
-                                        <select class="hardware-type-select" name="hardware[1][type]" validation="required|integer|in:1,2,3">
+                                        <select class="hardware-type-select" name="hardware[1][type]" validation="required">
                                     </select>
                                     </div>
                                     <a href="javascript:void(0);" class="button button-primary add-type" id="add-additional-type">Add additional type</a>
@@ -56,7 +56,7 @@
                                             </p>
                                         </div>
                                         <div class="col-sm-9 col-xs-12">
-                                            <input name="hardware[1][newType]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter Type Name" >
+                                            <input name="hardware[1][newType]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter Type Name" validation="nullable">
                                         </div>
                                     </div>
 
@@ -82,7 +82,7 @@
                                 </div>
                                 <div class="col-sm-9 col-xs-12 has-button">
                                     <div>
-                                        <select class="hardware-make-select" name="hardware[1][make]" validation="required|integer|in:1,2,3">
+                                        <select class="hardware-make-select" name="hardware[1][make]" validation="required">
 
 
                             </select>
@@ -106,7 +106,7 @@
                                             </p>
                                         </div>
                                         <div class="col-sm-9 col-xs-12">
-                                            <input name="hardware[1][newMake]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter Make Name" >
+                                            <input name="hardware[1][newMake]" spellcheck="true" validation="nullable" autocomplete="off" type="text" placeholder="Enter Make Name" >
                                         </div>
                                     </div>
 
@@ -129,7 +129,7 @@
                                     </p>
                                 </div>
                                 <div class="col-sm-9 col-xs-12">
-                                    <input name="hardware[1][serial]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter Serial Number" validation="required|min:3|max:255">
+                                    <input name="hardware[1][serial]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter Serial Number" validation="required">
                                 </div>
                             </div>
                         </div>

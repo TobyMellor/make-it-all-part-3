@@ -49,6 +49,9 @@ $(() => {
 
 	initAccordions();
 	clearAccordion($('.mia-panel-body')); // clear all fields
+	
+	
+	
 });
 
 function addTypeSelectActions($select) {
@@ -105,8 +108,15 @@ function addButtonListeners($accordian) {
 		
 		if(hideForm(typePanel, typeSelect)){
 			
+			$(this).closest('.accordion-body').find('.hardware-type-select').attr('validation','required');
+			
+			$(this).closest('.accordion-body').find('#type-information input').attr('validation','nullable');
+			
 		} else {
+			//When panel expands, adjust validation? 
 			typePanel.addClass('expanded');
+			$(this).closest('.accordion-body').find('.hardware-type-select').attr('validation','nullable');
+			$(this).closest('.accordion-body').find('#type-information input').attr('validation','required');			
 			$(this).closest('.accordion-body').find('.hardware-type-select').val('new');
 			
 		}	
@@ -120,9 +130,17 @@ function addButtonListeners($accordian) {
 		
 		if(hideForm(makePanel, makeSelect)){
 			
+			$(this).closest('.accordion-body').find('.hardware-make-select').attr('validation','required');
+			
+			$(this).closest('.accordion-body').find('#make-information input').attr('validation','nullable');
+			
 		} else {
 			makePanel.addClass('expanded');
 			$(this).closest('.accordion-body').find('.hardware-make-select').val('new');
+			
+			$(this).closest('.accordion-body').find('.hardware-make-select').attr('validation','nullable');
+			
+			$(this).closest('.accordion-body').find('#make-information input').attr('validation','required');			
 			
 		}	
 

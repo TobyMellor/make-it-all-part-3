@@ -22,6 +22,12 @@ $(() => {
 	$('select[name="software[type]"]').val(software ? software.operating_system : "");
 	}
 	
+$('form').submit(function(e) {
+	console.log("form submit");
+		if (!$(this).serializeObject(true).isValid())
+			e.preventDefault();
+	});	
+	
 	
 	
 	

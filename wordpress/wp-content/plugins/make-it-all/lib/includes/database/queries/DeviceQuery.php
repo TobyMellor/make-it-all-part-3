@@ -169,6 +169,10 @@ class DeviceQuery extends Query {
 	}
 
 	protected function validate($columns) {
-		return true;
+			$validator = v::key('type', v::stringType()->length(2, 65535))
+			->key('make',               v::stringType()->length(2, 65535))
+			->key('serial_no',          v::stringType()->length(2, 65535));
+
+		return $this->assert_validation($validator, $columns);
 	}
 }
