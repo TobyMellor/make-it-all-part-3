@@ -13,7 +13,7 @@ class HardwarePage extends Page {
 	protected $position = 4;
 
 	// what you see if you just click "Hardware"
-	public function read_pane(){
+	public function read_pane() {
 		parent::read_pane();
 
 		// handle single delete and bulk delete before rendering page
@@ -32,15 +32,12 @@ class HardwarePage extends Page {
 		}
 
 		if (isset($_GET['id'])) {
-			
 			$context = $this->get_required_data('Viewing Hardware');
 			$context = $this->get_hardware($context, $_GET['id']);
-		
 
 			$this->render_pane($context); // render page before inserting table
 		} else {
-			$context = $this->get_context('View Hardware');
-			$this->render_pane($context); // render page before inserting table
+			$this->render_pane($this->get_context('View Hardware')); // render page before inserting table
 
 			$hardwareTable = new HardwareTable();
 			$hardwareTable->prepare_items();
@@ -60,28 +57,15 @@ class HardwarePage extends Page {
 	}
 
 	protected function create_action() {
-		global $wpdb;
 		$deviceQuery = new DeviceQuery();
 
 		// insert type, make, sn, date
 		foreach ($_POST['hardware'] as $hardware) {
-			
-			if(empty($hardware['type'])){
-				$hardware['type'] = $hardware['newType'];	
-			}
-			if(empty($hardware['make'])){
-				$hardware['make'] = $hardware['newMake'];	
-				
-			}
-			
-			$deviceQuery->mia_insert([
-				'type'      => $hardware['type'],
-				'make'      => $hardware['make'],
+			$hardwareID = $deviceQuery->mia_insert([
+				'type'      => $hardware['type'] || $hardware['newType'],
+				'make'      => $hardware['make'] || $hardware['newMake'],
 				'serial_no' => $hardware['serial']
 			]);
-			$hardwareID = $wpdb->insert_id;
-
-			
 		}
 	
 		$_SESSION['mia_message'] = 'Hardware successfully added.';
@@ -105,28 +89,19 @@ class HardwarePage extends Page {
 	}
 	
 	protected function update_action() {
-		global $wpdb;
 		$deviceQuery = new DeviceQuery();
+
 		$hardware = $_POST['hardware'];
-	
 		$hardwareID = $hardware['id'];
 
-		if(empty($hardware['type'])){
-			$hardware['type'] = $hardware['newType'];	
-		}
-		if(empty($hardware['make'])){
-			$hardware['make'] = $hardware['newMake'];	
-				
-		}
 		$deviceQuery->mia_update(
 			$hardwareID,
 			[
-				'type'      => $hardware['type'],
-				'make'      => $hardware['make'],
+				'type'      => $hardware['type'] || $hardware['newType'],
+				'make'      => $hardware['make'] || $hardware['newMake'],
 				'serial_no' => $hardware['serial_no']
 			]
 		);
-		
 		
 		$_SESSION['mia_message'] = 'Hardware successfully updated.';
 		return $this->mia_redirect('admin.php?page=hardware_update&id=' . $hardwareID);
@@ -136,9 +111,9 @@ class HardwarePage extends Page {
 		$deviceQuery = new DeviceQuery();
 
 		$context['device_object'] = $deviceQuery->get_device($id)[0];
-		$context['device_tick'] = $deviceQuery->get_ticket_info($id);
+		$context['device_tick']   = $deviceQuery->get_ticket_info($id);
 		
-		//Want to also get additional info here
+		// want to also get additional info here
 		$context['device'] = json_encode($context['device_object']);
 
 		return $context;

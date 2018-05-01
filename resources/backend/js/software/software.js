@@ -1,40 +1,26 @@
 $(() => {
-
-	if(software){
-
-	let $heading = $('.mia-panel-heading'),
-		$select = $heading.find('select'),
-		$accordion = $('.accordion-body');
-	
-	
-	$('input[name="software[name]"]').val(software ? software.name : "");
-	var date = (software ? software.expiry_date : "");
-	
-	if(date === "0000-00-00 00:00:00"){
-		//No licence
-		$('.software-date-section').css({display : 'none'});
-		$('.software-no-date').css({display : 'flex'});
-	
-	}
+	if (software) {
+		let $heading   = $('.mia-panel-heading'),
+			$select    = $heading.find('select'),
+			$accordion = $('.accordion-body');
 		
-	$('.mia-picker input').datepicker('setDate', new Date(date));
-	$('select[name="software[type]"]').val(software ? software.operating_system : "");
+		$('input[name="software[name]"]').val(software ? software.name : "");
+
+		let date = (software ? software.expiry_date : "");
+		
+		if (date === "0000-00-00 00:00:00") {
+			// no licence
+			$('.software-date-section').css({display : 'none'});
+			$('.software-no-date').css({display : 'flex'});
+		}
+
+		$('.mia-picker input').datepicker('setDate', new Date(date));
+		$('select[name="software[type]"]').val(software ? software.operating_system : "");
 	}
 	
     $('form').submit(function(e) {
 		if (!$(this).serializeObject(true).isValid())
-		e.preventDefault();
-	});	
-	
-	$(document).on('keyup', '.accordions .accordion-body input[name*="name"]', function() {
-		let $headerText    = $(this).closest('.accordion-body').prev().find('.accordion-title'),
-			newHeaderText  = $(this).val().length <= 2 ? 'Software' : 'Software: ' + $(this).val();
-
-		$headerText.text(newHeaderText);
-	});	
-	
-	
-	
-	
+			e.preventDefault();
+	});
 });
 

@@ -1,16 +1,14 @@
 $(() => {
-	
-	let $heading = $('.mia-panel-heading'),
-		$select = $heading.find('select'),
+	let $heading   = $('.mia-panel-heading'),
+		$select    = $heading.find('select'),
 		$accordion = $('.accordion-body');
+
 	licenceListeners($accordion);
 	
-	
-	$('#change-software').change(function () {
+	$('#change-software').change(function() {
 		let softwareID = $(this).val();
 
 		window.location.href = window.location.pathname + '?page=software_update&id=' + softwareID;
-
 	});
 	
 	softwares.forEach((item) => {
@@ -24,46 +22,49 @@ $(() => {
 	
 	var date = (software ? software.expiry_date : "");
 	
-	if(date === "0000-00-00 00:00:00"){
-		//No licence
-		$('.software-date-section').css({display : 'none'});
-		$('.software-no-date').css({display : 'flex'});
-		
+	if (date === "0000-00-00 00:00:00") {
+		// no licence
+		$('.software-date-section').css({ display: 'none' });
+		$('.software-no-date').css({ display: 'flex' });
 	}
-	
 	
 	$('.mia-picker input').datepicker('setDate', new Date(date));
 	$('select[name="software[type]"]').val(software ? software.operating_system : "");
+	
+	$(document).on('keyup', '.accordions .accordion-body input[name*="name"]', function() {
+		let $headerText   = $(this).closest('.accordion-body').prev().find('.accordion-title'),
+			newHeaderText = $(this).val().length <= 2 ? 'Software' : 'Software: ' + $(this).val();
 
-	
-	
-	
-	
-});
-function licenceListeners($accordion){
-	let remove = $accordion.find('.software-rml');
-	let add = $accordion.find('.software-addl'); 
-	remove.click(function(){
-		console.log("remove clicked");
-	//Button is on licence panel, remove this panel and make the closes no date visible.
-		$accordion.find('.software-date-section').css({display : 'none'});
-		$accordion.find('.software-no-date').css({display : 'flex'});
-	//Set the date to null/ empty string.
-		setDate($accordion.find('.mia-picker input'), true);
-	
+		$headerText.text(newHeaderText);
 	});
-	add.click(function(){
-	//Remove this panel, make date visible.
-		$accordion.find('.software-no-date').css({display : 'none'});
-		$accordion.find('.software-date-section').css({display : 'flex'});
+});
+
+function licenceListeners($accordion) {
+	let $remove = $accordion.find('.software-rml'),
+		$add    = $accordion.find('.software-addl'); 
+
+	$remove.click(function(){
+		// button is on licence panel, remove this panel and make the closes no date visible.
+		$accordion.find('.software-date-section').css({ display: 'none' });
+		$accordion.find('.software-no-date').css({ display: 'flex' });
+		
+		// set the date to null/ empty string.
+		setDate($accordion.find('.mia-picker input'), true);
+	});
+
+	$add.click(function(){
+		// remove this panel, make date visible.
+		$accordion.find('.software-no-date').css({ display: 'none' });
+		$accordion.find('.software-date-section').css({ display: 'flex' });
+
 		setDate($accordion.find('.mia-picker input'));
 	});
 }
-function setDate(dateInput, date){
-	if(date){
+
+function setDate(dateInput, date) {
+	if (date) {
 		dateInput.datepicker('setDate', '');
 	} else {
 		dateInput.datepicker('setDate', new Date((software ? software.expiry_date : "")));	
 	}
-	
 }

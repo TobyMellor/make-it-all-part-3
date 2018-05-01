@@ -7,27 +7,22 @@ use MakeItAll\Includes\Views\Tables\SoftwareTable;
 use MakeItAll\Includes\Database\Queries\ProgramQuery;
 
 class SoftwarePage extends Page {
-	protected $name = 'Software';
-	protected $icon = 'dashicons-media-code';
+	protected $name     = 'Software';
+	protected $icon     = 'dashicons-media-code';
 	protected $position = 4;
 	
-	public function read_pane(){
+	public function read_pane() {
 		parent::read_pane();
 		
 		// handle single delete and bulk delete before rendering page
 		if (isset($_GET['action']) && $_GET['action'] === 'delete') {
 			if (current_user_can('edit_make_it_all')) {
-				
 				$programQuery = new ProgramQuery();
 
 				if (isset($_GET['software_id'])) {
-					
 					$programQuery->delete($_GET['software_id']);
-					
 				} else if (isset($_GET['software'])) {
-					
 					foreach ($_GET['software'] as $softwareID) {
-						
 						$programQuery->delete($softwareID);
 					}
 				}
@@ -35,26 +30,20 @@ class SoftwarePage extends Page {
 		}
 		
 		if (isset($_GET['id'])) {
-			//If ID in url show that ID, not the software table.
-			
+			// if ID in url show that ID, not the software table.
 			$context = $this->get_required_data('Viewing Software');
 			$context = $this->get_software($context, $_GET['id']);
 	
-		
-			
 			$this->render_pane($context);
 			
 		} else {
-			//Make and show software table.
-			
-			$context = $this->get_context('View Software');
-			$this->render_pane($context);
+			// make and show software table.
+			$this->render_pane($this->get_context('View Software'));
 			
 			$softwareTable = new SoftwareTable();
 			$softwareTable->prepare_items();
 			$softwareTable->display();
 		}
-		
 	}
 	
 	public function create_pane(){
@@ -64,27 +53,15 @@ class SoftwarePage extends Page {
 	}
 	
 	protected function create_action() {
-		global $wpdb;
-
 		$programQuery = new ProgramQuery();
 
 		// insert type, make, sn, date
 		foreach ($_POST['software'] as $software) {
-		
-		
-			$os = 0;
-			if($software['type'] == "Operating System"){
-				$os = 1;
-			}
-			
-
-			$programQuery->mia_insert([
+			$softwareID = $programQuery->mia_insert([
 				'name'      	   => $software['name'],
 				'expiry_date'      => date('Y-m-d H:i:s', strtotime($software['expiry'])),
-				'operating_system' => $os
+				'operating_system' => $software['type'] === "Operating System"
 			]);
-
-			$softwareID = $wpdb->insert_id;
 		}
 		
 	
@@ -108,10 +85,11 @@ class SoftwarePage extends Page {
 	}
 
 	protected function update_action() {
-		global $wpdb;
 		$programQuery = new ProgramQuery();
-		$software = $_POST['software'];
+
+		$software   = $_POST['software'];
 		$softwareID = $software['id'];
+
 		$programQuery->mia_update(
 			$softwareID,
 			[
@@ -121,10 +99,8 @@ class SoftwarePage extends Page {
 			]
 		);
 
-	
 		$_SESSION['mia_message'] = 'Software successfully updated.';
 		return $this->mia_redirect('admin.php?page=software_update&id=' . $softwareID);
-
 	}
 	
 	
@@ -132,9 +108,8 @@ class SoftwarePage extends Page {
 		$programQuery = new ProgramQuery();
 		$context = $this->get_context($pageName);
 
-		$context['softwares'] 			= json_encode($programQuery->get_software(null));
-		$context['operating_systems']   = json_encode($programQuery->get_opsystems());
-
+		$context['softwares'] 		  = json_encode($programQuery->get_software(null));
+		$context['operating_systems'] = json_encode($programQuery->get_opsystems());
 
 		return $context;
 	}
@@ -144,10 +119,8 @@ class SoftwarePage extends Page {
 
 		$context['software_object'] = $programQuery->get_software($id)[0];
 		$context['software'] 		= json_encode($context['software_object']);
-				$context['software_info'] = $programQuery->get_program_info($id);
+		$context['software_info']   = $programQuery->get_program_info($id);
 
 		return $context;
 	}
-	
-	
 }

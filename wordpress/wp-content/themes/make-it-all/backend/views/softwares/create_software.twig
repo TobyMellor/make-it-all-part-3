@@ -1,15 +1,14 @@
 {% extends "backend/views/layouts/page.twig" %}
+
 {% block main %}
-<div class="row">
-	<div class="col-xs-12 col-sm-12">
-		<form action="admin.php?page=software_create" method="POST">
-			<div class="mia-panel software-panel">
-		
+	<div class="row">
+		<div class="col-xs-12 col-sm-12">
+			<form action="admin.php?page=software_create" method="POST">
+				<div class="mia-panel software-panel">
 					<div class="mia-panel-heading">
 						<h2>Software Information</h2>
 						<p>Enter some information about one or more software items</p>
 					</div>
-					
 					<div class="mia-panel-body">
 						<div class="accordions">
 							<div class="accordion-handle row">
@@ -17,27 +16,24 @@
 									<div class="number-circle">1</div>
 								</div>
 								<div class="accordion-title col-xs-9">
-									New Software Item
+									New Software
 								</div>
 								<div class="accordion-actions">
 									<i class="fa fa-chevron-up"></i>
 								</div>
 							</div>
 							<div class="accordion-body" data-accordion-id="1">
-							<!-- Accordian Fields Here -->
-								
 								<div class="row mia-field-group">
 									<div class="col-xs-12 col-sm-3">
 										<p class="label">
 											Name <span class="required">*</span>
 										</p>
-
 										<p class="details">
 											Name of Software e.g Windows 7, Notepad etc.
 										</p>
 									</div>
-                                    <div class="col-sm-9 col-xs-12">
-                                    	<input name="software[1][name]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter Software Name" validation="required">	
+									<div class="col-sm-9 col-xs-12">
+										<input name="software[1][name]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter Software Name" validation="required">	
 									</div>
 								</div>
 								<div class="row mia-field-group">
@@ -45,43 +41,38 @@
 										<p class="label">
 											Expiry Date 
 										</p>
-
 										<p class="details">
 											Date the licence expires - Press 'remove' if there is no licence.
 										</p>
 									</div>
 									<div class="col-sm-9 col-xs-12 has-button">
-									<div class="software-date-section">
-
-										
-										<div class="date-time-picker">
-											<span></span>
-											<span>/</span>
-											<span></span>
-											<span>/</span>
-											<span></span>
-											<span></span>
-											<span></span>
-											<span>:</span>
-											<span></span>
-											<span>:</span>
-											<span></span>
-										</div>
-										<a class="button button-primary pull-right mia-picker" href="javascript:void(0);">
+										<div class="software-date-section">
+											<div class="date-time-picker">
+												<span></span>
+												<span>/</span>
+												<span></span>
+												<span>/</span>
+												<span></span>
+												<span></span>
+												<span></span>
+												<span>:</span>
+												<span></span>
+												<span>:</span>
+												<span></span>
+											</div>
+											<a class="button button-primary pull-right mia-picker" href="javascript:void(0);">
 											Choose a time
-										<input type="text" name="software[1][expiry]" validation="nullable">
-										</a>
-										<a class="button button-primary pull-right software-rml" href="javascript:void(0);">
-										Remove Licence
-										</a>
-
-									</div>
-									<div class="software-no-date">
-										<a class="button button-primary pull-right software-addl" href="javascript:void(0);">
-										Add Licence
-										</a>
-										
-									</div>
+											<input type="text" name="software[1][expiry]" validation="nullable">
+											</a>
+											<a class="button button-primary pull-right software-rml" href="javascript:void(0);">
+											Remove Licence
+											</a>
+										</div>
+										<div class="software-no-date">
+											<a class="button button-primary pull-right software-addl" href="javascript:void(0);">
+											Add Licence
+											</a>
+										</div>
 									</div>
 								</div>
 								<div class="row mia-field-group">
@@ -89,7 +80,6 @@
 										<p class="label">
 											Software Type <span class="required">*</span>
 										</p>
-
 										<p class="details">
 											Type of software.
 										</p>
@@ -102,8 +92,6 @@
 										</select>
 									</div>
 								</div>
-								
-								
 							</div>
 						</div>
 					</div>
@@ -117,19 +105,15 @@
 							<button class="button button-primary" type="submit">Submit software</button>
 						</div>
 					</div>
-			
-			</div>
-		</form>
+				</div>
+			</form>
+		</div>
 	</div>
-</div>
-
-
-
 {% endblock %}
 
 {% block scripts %}
 	<script>
-		var software = {{softwares}},
-			os		 = {{operating_systems}};
+		var software = {{ softwares }},
+			os		 = {{ operating_systems }};
 	</script>
 {% endblock %}

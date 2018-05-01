@@ -1,33 +1,34 @@
 @import "../main.scss";
 
-
-
-.software-panel .mia-panel-body{
+.software-panel .mia-panel-body {
 	padding: 0;
 }
-.software-rml{
+
+.software-rml {
 	margin-left: 40px;
 }
-.software-date-section{
+
+.software-date-section {
 	display: flex;
 	align-self: center;
+
+	.mia-picker {
+		margin-right: 20px;
+
+		input {
+			// visibility: none; and display: none; throw errors
+			background-color: #0085ba; 
+			border: none;
+			padding: 0 !important;
+			margin: 0 !important;
+			width: 0 !important;
+			height: 0 !important;
+		}
+	}
 }
-.software-date-section .mia-picker{
-	margin-right: 20px;
-}
-.software-no-date{
+
+.software-no-date {
 	display: none;
 	align-self: center;
 	margin: 0 auto;
-}
-.mia-picker {
-	input {
-		// visibility: none; and display: none; throw errors
-		background-color: #0085ba; 
-		border: none;
-		padding: 0 !important;
-		margin: 0 !important;
-		width: 0 !important;
-		height: 0 !important;
-	}
 }

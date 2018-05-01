@@ -46,7 +46,6 @@ class SoftwareTable extends Table {
 	 * @return Array
 	 */
 	protected function table_data() {
-		global $wpdb;
 		return (new ProgramQuery)->get_program_table(isset($_GET['s']) ? $_GET['s'] : null);
 	}
 	

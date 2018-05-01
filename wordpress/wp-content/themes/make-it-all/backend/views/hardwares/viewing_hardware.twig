@@ -1,167 +1,161 @@
 {% extends "backend/views/layouts/page.twig" %} {% block main %}
-<div class="row">
-	<div class="col-xs-12 col-sm-12 col-md-9">
-		<form action="admin.php?page=hardware_update" method="POST">
-			<input name="hardware[id]" type="text" hidden>
-			<div class="mia-panel ticket-panel">
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-9">
+			<form action="admin.php?page=hardware_update" method="POST">
+				<input name="hardware[id]" type="text" hidden>
+				<div class="mia-panel ticket-panel">
+					<div class="mia-panel-heading">
+						<div class="row">
+							<div class="col-sm-3 col-xs-12">
+								<h2>Hardware Information</h2>
+							</div>
+							<div class="col-sm-9 col-xs-12 defined">
+								<img src="/wp-content/uploads/make-it-all/arrow-down.png" style="opacity: 0;">
+							</div>
+						</div>
+					</div>
+					<div class="mia-panel-body negative-margin">
+						<div class="hardware-panel">
+							<div class="accordions">
+								<div class="accordion-handle row">
+									<div class="accordion-icon col-xs-3">
+										<div class="number-circle">{{ device_object.id }}</div>
+									</div>
+									<div class="accordion-title col-xs-9">Hardware Device: {{ device_object.serial_no }}</div>
+								</div>
+								<div class="accordion-body">
+									<div class="row mia-field-group">
+										<div class="col-xs-12 col-sm-3">
+											<p class="label">
+												Type <span class="required">*</span>
+											</p>
+
+											<p class="details">
+												Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+											</p>
+										</div>
+										<div class="col-sm-9 col-xs-12 has-button">
+											<div>
+												<select class="hardware-type-select" name="hardware[type]">
+													<option selected>{{ device_object.type }}</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="row mia-field-group">
+										<div class="col-xs-12 col-sm-3">
+											<p class="label">
+												Make <span class="required">*</span>
+											</p>
+
+											<p class="details">
+												Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+											</p>
+										</div>
+										<div class="col-sm-9 col-xs-12 has-button">
+											<div>
+												<select class="hardware-make-select" name="hardware[make]">
+													<option selected>{{ device_object.make }}</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="row mia-field-group">
+										<div class="col-sm-3 col-xs-12">
+											<p class="label">
+												Serial Number <span class="required">*</span>
+											</p>
+
+											<p class="details">
+												Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+											</p>
+										</div>
+										<div class="col-sm-9 col-xs-12">
+											<input class='hardware-serial' name="hardware[serial_no]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter serial number here" validation="required|min:3|max:255" value="{{ device_object.serial_no}}">
+										</div>
+									</div>
+								</div>
+								<div class="mia-panel-footer"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-3">
+			<div class="mia-panel mia-panel-short" data-slug="hardware_info">
 				<div class="mia-panel-heading">
-					<div class="row">
-						<div class="col-sm-3 col-xs-12">
-							<h2>Hardware Information</h2>
-						</div>
-						<div class="col-sm-9 col-xs-12 defined">
-							<img src="/wp-content/uploads/make-it-all/arrow-down.png" style="opacity: 0;">
-						</div>
-					</div>
+					Hardware Info
+					<i class="fa fa-chevron-up"></i>
 				</div>
-				<div class="mia-panel-body negative-margin">
-					<div class="hardware-panel">
-						<div class="accordions">
-							<div class="accordion-handle row">
-								<div class="accordion-icon col-xs-3">
-									<div class="number-circle">{{ device_object.id }}</div>
-								</div>
-								<div class="accordion-title col-xs-9">{{ device_object.serial_no }}</div>
-							</div>
-							<div class="accordion-body">
-								<div class="row mia-field-group">
-									<div class="col-xs-12 col-sm-3">
-										<p class="label">
-											Type <span class="required">*</span>
-										</p>
+				<div class="mia-panel-body">
+					<table class="wp-list-table widefat fixed striped">
+						<tbody>
 
-										<p class="details">
-											Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-										</p>
-									</div>
-									<div class="col-sm-9 col-xs-12 has-button">
-										<div>
-											<select class="hardware-type-select" name="hardware[type]">
-												<option selected>{{ device_object.type}}</option>
-											</select>
-										</div>
-									</div>
-								</div>
+							<tr>
+								<td>
+									<strong>Total Tickets</strong>
+								</td>
+								<td>{{ device_tick[0][0]}}</td>
 
+							</tr>
+							<tr>
+								<td>
+									<strong>Open Tickets</strong>
+								</td>
+								<td>{{ device_tick[0][1]}}</td>
 
+							</tr>
+							<tr>
+								<td>
+									<strong>Closed Tickets</strong>
+								</td>
+								<td>{{ device_tick[0][2]}}</td>
 
-								<div class="row mia-field-group">
-									<div class="col-xs-12 col-sm-3">
-										<p class="label">
-											Make <span class="required">*</span>
-										</p>
-
-										<p class="details">
-											Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-										</p>
-									</div>
-									<div class="col-sm-9 col-xs-12 has-button">
-										<div>
-											<select class="hardware-make-select" name="hardware[make]">
-												<option selected>{{ device_object.make}}</option>
-											</select>
-										</div>
-									</div>
-								</div>
-								<div class="row mia-field-group">
-									<div class="col-sm-3 col-xs-12">
-										<p class="label">
-											Serial Number <span class="required">*</span>
-										</p>
-
-										<p class="details">
-											Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-										</p>
-									</div>
-									<div class="col-sm-9 col-xs-12">
-										<input class='hardware-serial' name="hardware[serial_no]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter serial number here" validation="required|min:3|max:255" value="{{ device_object.serial_no}}">
-									</div>
-								</div>
-							</div>
-							<div class="mia-panel-footer"></div>
-						</div>
-					</div>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
-		</form>
-	</div>
-	<div class="col-xs-12 col-sm-12 col-md-3">
-		<div class="mia-panel mia-panel-short" data-slug="hardware_info">
-			<div class="mia-panel-heading">
-				Hardware Info
-				<i class="fa fa-chevron-up"></i>
-			</div>
-			<div class="mia-panel-body">
-				<table class="wp-list-table widefat fixed striped">
-					<tbody>
+			<div class="mia-panel mia-panel-short" data-slug="hardware_recent">
+				<div class="mia-panel-heading">
+					Recent Tickets
+					<i class="fa fa-chevron-up"></i>
+				</div>
+				<div class="mia-panel-body">
+					<table class="wp-list-table widefat fixed striped">
+						<tbody>
+							<tr>							
+								<td>
+									<strong>Ticket ID</strong>
+								</td>							
+								<td>
+									<strong>Ticket Title</strong>
+								</td>							
+								<td>
+									<strong>Link</strong>
+								</td>
+							</tr>
+							
+							{% for item in device_tick[1] %}
+							<tr>
+							<td> {{item[0]}}</td>
+							<td> {{item[1]}}</td>
+							<td><a href="admin.php?page=ticket&id={{item[0]}}">View</a></td>
+							</tr>
+							{% endfor %}
 
-						<tr>
-							<td>
-								<strong>Total Tickets</strong>
-							</td>
-							<td>{{ device_tick[0][0]}}</td>
-
-						</tr>
-						<tr>
-							<td>
-								<strong>Open Tickets</strong>
-							</td>
-							<td>{{ device_tick[0][1]}}</td>
-
-						</tr>
-						<tr>
-							<td>
-								<strong>Closed Tickets</strong>
-							</td>
-							<td>{{ device_tick[0][2]}}</td>
-
-						</tr>
-					</tbody>
-				</table>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
-		<div class="mia-panel mia-panel-short" data-slug="hardware_recent">
-			<div class="mia-panel-heading">
-				Recent Tickets
-				<i class="fa fa-chevron-up"></i>
-			</div>
-			<div class="mia-panel-body">
-				<table class="wp-list-table widefat fixed striped">
-					<tbody>
-						<tr>							
-							<td>
-								<strong>Ticket ID</strong>
-							</td>							
-							<td>
-								<strong>Ticket Title</strong>
-							</td>							
-							<td>
-								<strong>Link</strong>
-							</td>
-						</tr>
-						
-						{% for item in device_tick[1] %}
-						<tr>
-						<td> {{item[0]}}</td>
-						<td> {{item[1]}}</td>
-						<td><a href="admin.php?page=ticket&id={{item[0]}}">View</a></td>
-						</tr>
-						{% endfor %}
-
-					</tbody>
-				</table>
-			</div>
-		</div>
-
-
-
 	</div>
+{% endblock %}
 
-</div>
-{% endblock %} {% block scripts %}
-<script>
-	var devices = {{devices}},
-		device = {{device|default ('null')}};
-
-</script>
+{% block scripts %}
+	<script>
+		var devices = {{ devices }},
+			device  = {{ device|default('null') }};
+	</script>
 {% endblock %}
