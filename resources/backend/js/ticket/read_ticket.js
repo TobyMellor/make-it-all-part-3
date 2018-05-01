@@ -26,16 +26,29 @@ $(() => {
 			affectedItemType = $selectField.hasClass('add-hardware-device') ? 'devices' : 'programs', // is the new li a device, or app/OS?
 			affectedItems    = this[affectedItemType], // this.devices or this.programs
 			affectedItem     = this.getAffectedItem(affectedItems, Number($selectField.val())); // contains the info we need, e.g. .name, .id;
-
+		if(affectedItemType == 'devices'){
 		$affectedItems.append(`
 			<li>
 				<h4>${affectedItem.name || affectedItem.type}</h4>
 				<p>(${this.getTypeName(affectedItem)})</p>
-				<a class="button button-primary" href="javascript: void(0);">
+				<a class="button button-primary" href="admin.php?page=hardware&id=${affectedItem.id}">
 					<i class="fa fa-search"></i> View
 				</a>
 			</li>
-		`);
+		`);	
+		} else {
+					$affectedItems.append(`
+			<li>
+				<h4>${affectedItem.name || affectedItem.type}</h4>
+				<p>(${this.getTypeName(affectedItem)})</p>
+				<a class="button button-primary" href="admin.php?page=software&id=${affectedItem.id}">
+					<i class="fa fa-search"></i> View
+				</a>
+			</li>
+		`);	
+			
+		}
+
 
 		$selectField.parent().find('.no-affected-items').hide();
 	});
