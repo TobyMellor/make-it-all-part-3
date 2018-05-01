@@ -49,12 +49,12 @@
 										</p>
 
 										<p class="details">
-											Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+											Type of hardware, e.g Mouse, Printer, Monitor.
 										</p>
 									</div>
 									<div class="col-sm-9 col-xs-12 has-button">
 										<div>
-											<select class="hardware-type-select" name="hardware[type]">
+											<select class="hardware-type-select" name="hardware[type]" validation="required">
 												</select>
 										</div>
 										<a href="javascript:void(0);" class="button button-primary add-type" id="add-additional-type">Add additional type</a>
@@ -73,7 +73,7 @@
 										</p>
 									</div>
 									<div class="col-sm-9 col-xs-12">
-										<input name="hardware[newType]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter Type Name">
+										<input name="hardware[newType]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter Type Name" validation="nullable">
 									</div>
 								</div>
 
@@ -85,12 +85,12 @@
 										</p>
 
 										<p class="details">
-											Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+											Make of hardware, e.g Razer, Apple, Microsoft. 
 										</p>
 									</div>
 									<div class="col-sm-9 col-xs-12 has-button">
 										<div>
-											<select class="hardware-make-select" name="hardware[make]">
+											<select class="hardware-make-select" name="hardware[make]" validation="required">
 												</select>
 										</div>
 										<a href="javascript:void(0);" class="button button-primary add-make" id="add-additional-make">Add additional make</a>
@@ -108,7 +108,7 @@
 										</p>
 									</div>
 									<div class="col-sm-9 col-xs-12">
-										<input name="hardware[newMake]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter Make Name">
+										<input name="hardware[newMake]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter Make Name" validation="nullable">
 									</div>
 								</div>
 								<div class="row mia-field-group">
@@ -118,11 +118,11 @@
 										</p>
 
 										<p class="details">
-											Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+											Serial number of hardware - uniquely identifies the item. 
 										</p>
 									</div>
 									<div class="col-sm-9 col-xs-12">
-										<input class='hardware-serial' name="hardware[serial_no]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter serial number here" validation="required|min:3|max:255">
+										<input class='hardware-serial' name="hardware[serial_no]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter serial number here" validation="required">
 									</div>
 								</div>
 

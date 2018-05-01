@@ -65,9 +65,16 @@ $(() => {
 				typeSelect = $(this).closest('.accordion-body').find('.hardware-type-select');
 
 			if (hideForm(typePanel, typeSelect)) {
+				
+			$(this).closest('.accordion-body').find('.hardware-type-select').attr('validation','required');
+			
+			$(this).closest('.accordion-body').find('#type-information input').attr('validation','nullable');				
 
 			} else {
 				typePanel.addClass('expanded');
+				
+			$(this).closest('.accordion-body').find('.hardware-type-select').attr('validation','nullable');
+			$(this).closest('.accordion-body').find('#type-information input').attr('validation','required');					
 				$(this).closest('.accordion-body').find('.hardware-type-select').val('new');
 
 			}
