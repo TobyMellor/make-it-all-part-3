@@ -13,5 +13,8 @@
     },
     "autoload": {
     	"psr-4": {"MakeItAll\\": "lib/"}
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7"
     }
 }
