@@ -12,36 +12,13 @@ describe('StaffManager', function() {
 		});
 	});
 	
-	describe('getEmployeesWithPermission()', function() {// not sure
-		it('should return Array', function() {//not sure
-            //assert.typeOf(staffManager.getEmployeesWithPermission(, true), 'Array');
-            //assert.typeOf(staffManager.getEmployeesWithPermission(0, false), 'Array');			
-		});
-	});
-	
-	describe('currentUser()', function() {// not sure
-		it('', function() {			
-		});
-	});
-	
-	describe('getSpecialists()', function() {// not sure
+	describe('getSpecialists()', function() {
 		it('should return Array', function() {
             assert.typeOf(staffManager.getSpecialists(1), 'Array');			
 		});
 		
 		it('should return correct amount of specialists', function() {
             assert.lengthOf(staffManager.getSpecialists(1), 2);			
-		});
-	});
-
-	describe('hasSpecialism()', function() {
-		it('should return Boolean', function() {//not sure
-			//assert.isBoolean(staffManager.hasSpecialism(staffManager.staff, 1));
-		});
-	});
-	
-	describe('search()', function() {
-		it('', function() {
 		});
 	});
 });

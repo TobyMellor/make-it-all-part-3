@@ -26,7 +26,7 @@ describe('ExpertiseTypeManager', function() {
 		});
 		
 		it('should return correct amount of expertise types', function() {
-			assert.lengthOf(expertiseTypeManager.getExpertiseTypes([1, 2]), 2);//not sure
+			assert.lengthOf(expertiseTypeManager.getExpertiseTypes([1, 2]), 2);
 			assert.lengthOf(expertiseTypeManager.getExpertiseTypes([1]), 1);
 			assert.lengthOf(expertiseTypeManager.getExpertiseTypes([9999]), 0);
 		});
@@ -72,9 +72,4 @@ describe('ExpertiseTypeManager', function() {
 			assert.equal(expertiseTypeManager.getExpertiseTypeStaff(9999), null);
 		});
 	});
-
-    describe('search()', function() {
-		it('', function() {
-		});
-	});	
 });

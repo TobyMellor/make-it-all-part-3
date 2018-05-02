@@ -218,8 +218,6 @@ global.api = new API({
 	]
 });
 
-//Readjust Tests
-
 //
 // Run Ticket Tests
 //
@@ -230,9 +228,6 @@ new require('./tickets/CallTest.js');
 new require('./tickets/CommentTest.js');
 new require('./tickets/StatusTest.js');
 new require('./tickets/TicketStatusTest.js');
-//new require('./tickets/TicketPageTest.js');
-
-// [...]
 
 //
 // Run Staff Tests
@@ -241,27 +236,24 @@ new require('./tickets/TicketStatusTest.js');
 new require('./staff/StaffManagerTest.js');
 new require('./staff/EmployeeTest.js');
 
-// [...]
-
 //
-//Run Software Tests
+// Run Software Tests
 //
 
 new require('./software/SoftwareManagerTest.js');
 new require('./software/ProgramTest.js');
 
 //
-//Run Hardware Tests
+// Run Hardware Tests
 //
 
 new require('./hardware/HardwareManagerTest.js');
 new require('./hardware/DeviceTest.js');
 
 //
-//Run Problem Type Tests
+// Run Problem Type Tests
 //
 
 new require('./problem_types/ExpertiseTypeManagerTest.js');
 new require('./problem_types/ExpertiseTypeStaffTest.js');
 new require('./problem_types/ExpertiseTypeTest.js');
-//new require('./problem_types/ProblemTypePageTest.js');

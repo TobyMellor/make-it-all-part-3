@@ -75,16 +75,4 @@ describe('Ticket', function() {
 			assert.equal(ticket.expertise_type_staff.constructor.name, 'ExpertiseTypeStaff');
 		});
 	});
-	
-	describe('get assigned_to_operator()', function() {
-		it('should return a single instance of employee', function() {// not sure how it works with null
-			//assert.equal(ticket.assigned_to_operator.constructor.name, 'Employee');			
-		});
-	});
-	
-	describe('get expertise_type()', function() {
-		it('should return a single instance of expertise type', function() {//not sure
-			//assert.equal(ticket.expertise_type.constructor.name, 'ExpertiseType');
-		});
-	});
 });

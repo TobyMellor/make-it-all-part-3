@@ -28,13 +28,13 @@ describe('HardwareManager', function() {
 		});
 		
 		it('should return correct amount of devices', function() {
-			assert.lengthOf(hardwareManager.getDevicesOfTypeAndMake("device 1 type", "device 1 make"), 1);//array here?
+			assert.lengthOf(hardwareManager.getDevicesOfTypeAndMake("device 1 type", "device 1 make"), 1);
 		});
     });
 	
 	describe('getDevices()', function() {
 		it('should return Array', function() {
-			assert.typeOf(hardwareManager.getDevices([1]), 'Array');//array here?
+			assert.typeOf(hardwareManager.getDevices([1]), 'Array');
 		});
     });
 	

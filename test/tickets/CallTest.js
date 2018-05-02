@@ -6,7 +6,6 @@ describe('Call', function() {
 		it('should return single instance of employee', function() {
 			assert.equal(call.caller.constructor.name, 'Employee');
 		});
-		//null?
     });
 	
 	describe('get operator()', function() {

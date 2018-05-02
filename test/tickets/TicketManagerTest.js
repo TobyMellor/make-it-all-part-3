@@ -192,11 +192,6 @@ describe('TicketManager', function() {
 		});
 	});
 	
-	describe('search()', function() {
-		it('should return Array', function() {			
-		});
-	});
-	
 	describe('getTicketsByTicketIDs()', function() {
 		it('should return Array', function() {
 			assert.typeOf(ticketManager.getTicketsByTicketIDs([1]), 'Array');
