@@ -4,8 +4,14 @@ global.assert = require('chai').assert;
 // Some global variables are stored in .window, which is undefined in Node.js
 global.window = {};
 
+// the base path from this file
+let basePath = '../resources/frontend/js/';
+let testBasePath = __dirname + '/frontend/'
+
 // Make the API class available
-const API = require('../resources/frontend/js/pages/API').default;
+const API = require(basePath + 'pages/API').default;
+
+const path = require('path');
 
 // Load in some data to test with (only load in what the Manager needs)
 global.api = new API({
@@ -218,42 +224,45 @@ global.api = new API({
 	]
 });
 
+// the base path from the test files
+basePath = '../../' + basePath;
+
 //
 // Run Ticket Tests
 //
 
-new require('./tickets/TicketManagerTest.js');
-new require('./tickets/TicketTest.js');
-new require('./tickets/CallTest.js');
-new require('./tickets/CommentTest.js');
-new require('./tickets/StatusTest.js');
-new require('./tickets/TicketStatusTest.js');
+require(testBasePath + 'tickets/TicketManagerTest.js')(basePath);
+require(testBasePath + 'tickets/TicketTest.js')(basePath);
+require(testBasePath + 'tickets/CallTest.js')(basePath);
+require(testBasePath + 'tickets/CommentTest.js')(basePath);
+require(testBasePath + 'tickets/StatusTest.js')(basePath);
+require(testBasePath + 'tickets/TicketStatusTest.js')(basePath);
 
 //
 // Run Staff Tests
 //
 
-new require('./staff/StaffManagerTest.js');
-new require('./staff/EmployeeTest.js');
+require(testBasePath + 'staff/StaffManagerTest.js')(basePath);
+require(testBasePath + 'staff/EmployeeTest.js')(basePath);
 
 //
 // Run Software Tests
 //
 
-new require('./software/SoftwareManagerTest.js');
-new require('./software/ProgramTest.js');
+require(testBasePath + 'software/SoftwareManagerTest.js')(basePath);
+require(testBasePath + 'software/ProgramTest.js')(basePath);
 
 //
 // Run Hardware Tests
 //
 
-new require('./hardware/HardwareManagerTest.js');
-new require('./hardware/DeviceTest.js');
+require(testBasePath + 'hardware/HardwareManagerTest.js')(basePath);
+require(testBasePath + 'hardware/DeviceTest.js')(basePath);
 
 //
 // Run Problem Type Tests
 //
 
-new require('./problem_types/ExpertiseTypeManagerTest.js');
-new require('./problem_types/ExpertiseTypeStaffTest.js');
-new require('./problem_types/ExpertiseTypeTest.js');
+require(testBasePath + 'problem_types/ExpertiseTypeManagerTest.js')(basePath);
+require(testBasePath + 'problem_types/ExpertiseTypeStaffTest.js')(basePath);
+require(testBasePath + 'problem_types/ExpertiseTypeTest.js')(basePath);
