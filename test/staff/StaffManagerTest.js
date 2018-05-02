@@ -1,4 +1,4 @@
-const StaffManager = require('../../resources/assets/js/pages/staff/StaffManager').default,
+const StaffManager = require('../../resources/frontend/js/pages/staff/StaffManager').default,
 	  staffManager = new StaffManager();
 
 describe('StaffManager', function() {

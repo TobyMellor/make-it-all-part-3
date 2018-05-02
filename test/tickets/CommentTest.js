@@ -1,4 +1,4 @@
-const Comment = require('../../resources/assets/js/pages/tickets/Comment').default,
+const Comment = require('../../resources/frontend/js/pages/tickets/Comment').default,
 	  comment = new Comment(api.comments[0]);
 	  
 describe('Comment', function() {

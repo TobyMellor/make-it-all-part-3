@@ -1,4 +1,4 @@
-const ExpertiseType = require('../../resources/assets/js/pages/problem_types/ExpertiseType').default,
+const ExpertiseType = require('../../resources/frontend/js/pages/problem_types/ExpertiseType').default,
 	  expertiseType = new ExpertiseType(api.expertiseTypes[0]);
 
 describe('ExpertiseType', function() {

@@ -1,4 +1,4 @@
-const Call = require('../../resources/assets/js/pages/tickets/Call').default,
+const Call = require('../../resources/frontend/js/pages/tickets/Call').default,
 	  call = new Call(api.calls[0]);
 	  
 describe('Call', function() {

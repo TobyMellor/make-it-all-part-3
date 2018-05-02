@@ -1,4 +1,4 @@
-const Employee = require('../../resources/assets/js/pages/staff/Employee').default,
+const Employee = require('../../resources/frontend/js/pages/staff/Employee').default,
 	  employee = new Employee(api.staff[0]);
 
 describe('Employee', function() {

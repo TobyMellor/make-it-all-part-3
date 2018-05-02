@@ -1,4 +1,4 @@
-const Ticket = require('../../resources/assets/js/pages/tickets/Ticket').default,
+const Ticket = require('../../resources/frontend/js/pages/tickets/Ticket').default,
 	  ticket = new Ticket(api.tickets[0]);
 
 describe('Ticket', function() {

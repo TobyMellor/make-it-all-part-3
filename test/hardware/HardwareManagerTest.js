@@ -1,4 +1,4 @@
-const HardwareManager = require('../../resources/assets/js/pages/hardware/HardwareManager').default,
+const HardwareManager = require('../../resources/frontend/js/pages/hardware/HardwareManager').default,
 	  hardwareManager = new HardwareManager();
 	  
 describe('HardwareManager', function() {

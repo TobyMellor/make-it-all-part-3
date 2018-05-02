@@ -1,4 +1,4 @@
-const TicketStatus = require('../../resources/assets/js/pages/tickets/TicketStatus').default,
+const TicketStatus = require('../../resources/frontend/js/pages/tickets/TicketStatus').default,
 	  ticketStatus = new TicketStatus(api.ticketStatuses[0]);
 	  
 describe('TicketStatus', function() {

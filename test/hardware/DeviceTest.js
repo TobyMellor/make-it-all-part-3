@@ -1,4 +1,4 @@
-const Device = require('../../resources/assets/js/pages/hardware/Device').default,
+const Device = require('../../resources/frontend/js/pages/hardware/Device').default,
 	  device = new Device(api.devices[0]);
 	  
 describe('Device', function() {

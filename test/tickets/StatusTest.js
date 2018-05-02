@@ -1,4 +1,4 @@
-const Status = require('../../resources/assets/js/pages/tickets/Status').default,
+const Status = require('../../resources/frontend/js/pages/tickets/Status').default,
 	  status = new Status(api.statuses[0]);
 	  
 describe('Status', function() {

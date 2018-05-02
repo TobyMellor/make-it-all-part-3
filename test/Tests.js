@@ -5,7 +5,7 @@ global.assert = require('chai').assert;
 global.window = {};
 
 // Make the API class available
-const API = require('../resources/assets/js/pages/API').default;
+const API = require('../resources/frontend/js/pages/API').default;
 
 // Load in some data to test with (only load in what the Manager needs)
 global.api = new API({
@@ -49,27 +49,7 @@ global.api = new API({
 			"status": 1,
 			"created_at_human": "1 week ago",
 			"updated_at_human": "1 week ago"
-		}/*,
-		{
-			"id": 2,
-			"title": "Ticket 2 Title",
-			"description": "Ticket 2 Description",
-			"solution_id": 4,
-			"author_id": 2,
-			"assigned_to_operator_id": 1,
-			"expertise_type_staff_id": null,
-			"created_at": "2018-02-21 10:22:21",
-			"updated_at": "2018-02-21 12:46:37",
-			"calls": [1, 2],
-			"devices": [1],
-			"programs":[1],
-			"comments": [1, 2],
-			"status_history": [1],
-			"expertise_type": [1],
-			"status": 1,
-			"created_at_human": "1 week ago",
-			"updated_at_human": "1 week ago"
-		}*/	
+		}
 	],
 	statuses: [
 		{
@@ -235,9 +215,7 @@ global.api = new API({
 		    "expertise_type_id": 1,
 		    "tickets": [1]
 		}
-	]/*,
-	departments: [
-	]*/
+	]
 });
 
 //Readjust Tests

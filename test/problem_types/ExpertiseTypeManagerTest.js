@@ -1,4 +1,4 @@
-const ExpertiseTypeManager = require('../../resources/assets/js/pages/problem_types/ExpertiseTypeManager').default,
+const ExpertiseTypeManager = require('../../resources/frontend/js/pages/problem_types/ExpertiseTypeManager').default,
 	  expertiseTypeManager = new ExpertiseTypeManager();
 
 describe('ExpertiseTypeManager', function() {

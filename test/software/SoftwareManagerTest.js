@@ -1,4 +1,4 @@
-const SoftwareManager = require('../../resources/assets/js/pages/software/SoftwareManager').default,
+const SoftwareManager = require('../../resources/frontend/js/pages/software/SoftwareManager').default,
 	  softwareManager = new SoftwareManager();
 	  
 describe('SoftwareManager', function() {

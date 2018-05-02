@@ -1,4 +1,4 @@
-const Program = require('../../resources/assets/js/pages/software/Program').default,
+const Program = require('../../resources/frontend/js/pages/software/Program').default,
 	  program = new Program(api.programs[0]);
 	  
 describe('Program', function() {
