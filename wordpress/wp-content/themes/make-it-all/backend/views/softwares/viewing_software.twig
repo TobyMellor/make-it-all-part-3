@@ -38,7 +38,7 @@
 											</p>
 										</div>
 	                                    <div class="col-sm-9 col-xs-12">
-	                                    	<input name="software[name]" spellcheck="true" autocomplete="off" type="text" value="{{ software_object.name }}" >	
+	                                    	<input name="software[name]" spellcheck="true" autocomplete="off" type="text" value="{{ software_object.name }}" readonly>	
 										</div>
 									</div>
 									<div class="row mia-field-group">
@@ -68,7 +68,7 @@
 												</div>
 												<a class="button button-primary pull-right mia-picker" href="javascript:void(0);" style="visibility: hidden">
 													Choose a time
-													<input type="text" name="software[expiry]" validation="required" value='{{ software_object.expiry_date }}'>
+													<input type="text" name="software[expiry]" validation="required" value='{{ software_object.expiry_date }}' readonly>
 												</a>
 											</div>
 											<div class="software-no-date">
@@ -87,7 +87,7 @@
 											</p>
 										</div>
 										<div class="col-sm-9 col-xs-12">
-											<select name="software[type]" validation="required|integer">
+											<select name="software[type]" validation="required|integer" disabled>
 												<option value="0">Application</option>
 												<option value="1">Operating System</option>
 											</select>
