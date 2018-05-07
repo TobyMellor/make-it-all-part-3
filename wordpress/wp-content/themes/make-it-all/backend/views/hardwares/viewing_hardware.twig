@@ -31,12 +31,12 @@
 											</p>
 
 											<p class="details">
-												Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+												Type of hardware, e.g Computer, Calculator etc.
 											</p>
 										</div>
 										<div class="col-sm-9 col-xs-12 has-button">
 											<div>
-												<select class="hardware-type-select" name="hardware[type]">
+												<select class="hardware-type-select" name="hardware[type]" disabled>
 													<option selected>{{ device_object.type }}</option>
 												</select>
 											</div>
@@ -49,12 +49,12 @@
 											</p>
 
 											<p class="details">
-												Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+												Make of hardware e.g Microsoft, Apple, Razer.
 											</p>
 										</div>
 										<div class="col-sm-9 col-xs-12 has-button">
 											<div>
-												<select class="hardware-make-select" name="hardware[make]">
+												<select class="hardware-make-select" name="hardware[make]" disabled>
 													<option selected>{{ device_object.make }}</option>
 												</select>
 											</div>
@@ -67,11 +67,11 @@
 											</p>
 
 											<p class="details">
-												Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+												Serial number of hardware.
 											</p>
 										</div>
 										<div class="col-sm-9 col-xs-12">
-											<input class='hardware-serial' name="hardware[serial_no]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter serial number here" validation="required|min:3|max:255" value="{{ device_object.serial_no}}">
+											<input class='hardware-serial' name="hardware[serial_no]" spellcheck="true" autocomplete="off" type="text" placeholder="Enter serial number here" validation="required|min:3|max:255" value="{{ device_object.serial_no}}" readonly>
 										</div>
 									</div>
 								</div>
