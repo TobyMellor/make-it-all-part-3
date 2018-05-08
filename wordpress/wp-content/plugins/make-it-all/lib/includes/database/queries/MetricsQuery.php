@@ -12,15 +12,17 @@ class MetricsQuery extends Query {
 	
 	
 		
-	public function lookup_parent($parent_id){
+	public function lookup_parent($exp_info){
 		$expertiseQuery = new ExpertiseTypeQuery;
-		$info = $expertiseQuery->get_specific($parent_id)[0];
-		
-		if($info->{"parent_id"} == null){
-			return $info->{"name"};
+		if($exp_info->{"parent_id"} == NULL){
+			$name = $exp_info->{"name"};
+			return $name;
+			
 		} else {
 			//Parent id is not null
-			$this->lookup_parent($info->{"parent_id"});
+			$parent_id = $exp_info->{"parent_id"};
+			$newInfo = $expertiseQuery->get_specific($parent_id)[0];
+			return $this->lookup_parent($newInfo);
 		}
 	}
 	
@@ -39,20 +41,23 @@ class MetricsQuery extends Query {
 		
 		foreach($tickets as $ticket){
 			//Get most recent status.
-			$tickId = $ticket->{"id"};
+//			$tickId = $ticket->{"id"};
+//			
+//			$statusQuery = "
+//			SELECT *
+//			FROM {$this->prefix}ticket_status
+//			WHERE ticket_id = $tickId
+//			ORDER BY created_at DESC";
+//			
+//			$result = $this->get_results($statusQuery);
+//				
+//			//Most recent status
+//			if($result[0]->{"status_id"} == "3" || $result[0]->{"status_id"} == "3"){
+//				array_push($expertise_ids, $ticket->{"expertise_type_id"});
+//			}
 			
-			$statusQuery = "
-			SELECT *
-			FROM {$this->prefix}ticket_status
-			WHERE ticket_id = $tickId
-			ORDER BY created_at DESC";
 			
-			$result = $this->get_results($statusQuery);
-				
-			//Most recent status
-			if($result[0]->{"status_id"} == "3" || $result[0]->{"status_id"} == "3"){
-				array_push($expertise_ids, $ticket->{"expertise_type_id"});
-			}
+			array_push($expertise_ids, $ticket->{"expertise_type_id"});
 			
 			
 		}
@@ -64,7 +69,6 @@ class MetricsQuery extends Query {
 	
 			if($expertise_info->{"parent_id"} == null){
 				//No parent, give it to pi chart
-				
 				if(array_key_exists($expertise_info->{"name"}, $pi_data)){
 					$pi_data[$expertise_info->{"name"}]++;	
 				}else {
@@ -72,10 +76,9 @@ class MetricsQuery extends Query {
 				}
 				
 			} else {
-				
 				//Has parent, give it to function
 				//echo "sending to lookup: " . print_r($expertise_info, true) . "<br>";
-				$pname = $this->lookup_parent($expertise_info->{"parent_id"});
+				$pname = $this->lookup_parent($expertise_info);
 				if(array_key_exists($pname, $pi_data)){
 					$pi_data[$pname]++;	
 				}else {
