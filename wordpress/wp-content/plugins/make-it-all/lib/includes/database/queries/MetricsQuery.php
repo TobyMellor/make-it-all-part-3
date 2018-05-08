@@ -64,8 +64,9 @@ class MetricsQuery extends Query {
 	
 			if($expertise_info->{"parent_id"} == null){
 				//No parent, give it to pi chart
-				if($pi_data[$expertise_info->{"name"}]){
-					$pi_data[$expertise_info->{"name"}]++;
+				
+				if(array_key_exists($expertise_info->{"name"}, $pi_data)){
+					$pi_data[$expertise_info->{"name"}]++;	
 				}else {
 					$pi_data[$expertise_info->{"name"}] = 1;
 				}
@@ -75,8 +76,8 @@ class MetricsQuery extends Query {
 				//Has parent, give it to function
 				//echo "sending to lookup: " . print_r($expertise_info, true) . "<br>";
 				$pname = $this->lookup_parent($expertise_info->{"parent_id"});
-				if($pi_data[$pname]){
-					$pi_data[$pname]++;
+				if(array_key_exists($pname, $pi_data)){
+					$pi_data[$pname]++;	
 				}else {
 					$pi_data[$pname] = 1;
 				}
