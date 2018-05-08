@@ -8,16 +8,19 @@
 	margin: 0 auto;
 	
 }
+.metrics_wrapper canvas{
+	width: 100%;
+	height: 100%;
+	
+}
 .metrics_row {
 	display: flex;
 	flex-direction: row;
+	justify-content: space-around;
 	width: 90%;
 	margin-top: 20px;
 }
-.metrics_row canvas {
-	width: 100%;
-	height: 100%;
-}
+
 .metrics_header{
 	font-size: 24px;
 	display: block;
@@ -35,4 +38,16 @@
 }
 .met_sec input {
 	text-align: center;
+}
+.metrics_statistics{
+	min-width: 200px;
+	flex-basis: 0.5;
+	flex-grow: 1;
+}
+
+.metrics_pi{
+	max-height: 400px;
+	max-width: 700px;
+	flex-basis: 0.5;
+	flex-grow: 1;
 }

@@ -31,6 +31,26 @@ class ExpertiseTypeQuery extends Query {
 
 		return $expertiseTypes;
 	}
+	
+		public function get_specific($id) {
+		$expertiseTypes = $this->get_results(
+			"
+				SELECT id, name, parent_id
+				FROM {$this->prefix}{$this->table}
+				WHERE id = $id
+			"
+		);
+
+		foreach ($expertiseTypes as $expertiseType) {
+			$expertiseType->children = [];
+
+			foreach ($expertiseTypes as $expertiseTypeInner) {
+				if ($expertiseTypeInner->parent_id === $expertiseType->id) $expertiseType->children[] = $expertiseTypeInner->id;
+			}
+		}
+
+		return $expertiseTypes;
+	}
 
 	/**
 	 * Returns 3 of the most popular expertise types

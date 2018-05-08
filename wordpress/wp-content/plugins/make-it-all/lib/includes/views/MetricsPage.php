@@ -11,16 +11,23 @@ class MetricsPage extends Page {
 	protected $name     = 'Metrics';
 	protected $icon     = 'dashicons-chart-area';
 	protected $position = 4;
+	protected $pages = [];
 
 	// what you see if you just click "Metrics"
 	public function read_pane() {
 		parent::read_pane();
 		//I can get data here but should do this with AJAX? 
+
+		//Big list of exp types, get ones tickets have assigned
 		
+		
+		
+
 		$metricsQuery = new MetricsQuery(); 
 		$context = $this->get_context('View Metric');
 		$context["table1"] = json_encode($this->getTicketsMetric());
 		$context["general_stats"] = $metricsQuery->get_general_stats();
+		$context["pi_info"] = json_encode($metricsQuery->get_pi_info());
 		$this->render_pane($context);
 	}
 	

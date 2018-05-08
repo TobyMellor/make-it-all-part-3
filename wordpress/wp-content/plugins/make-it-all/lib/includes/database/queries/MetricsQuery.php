@@ -3,11 +3,95 @@
 namespace MakeItAll\Includes\Database\Queries;
 
 use MakeItAll\Includes\Database\Queries\Query;
+use MakeItAll\Includes\Database\Queries\ExpertiseTypeQuery;
 
 class MetricsQuery extends Query {
 	protected $table =   'ticket';
 	protected $device =  'device';
 	protected $program = 'program';
+	
+	
+		
+	public function lookup_parent($parent_id){
+		$expertiseQuery = new ExpertiseTypeQuery;
+		$info = $expertiseQuery->get_specific($parent_id)[0];
+		
+		if($info->{"parent_id"} == null){
+			return $info->{"name"};
+		} else {
+			//Parent id is not null
+			$this->lookup_parent($info->{"parent_id"});
+		}
+	}
+	
+	public function get_pi_info(){
+		$pi_data = [];
+		$expertise_ids = [];
+		//Get most frequent problems types with no parents
+		$expertiseQuery = new ExpertiseTypeQuery;
+	
+		//Want to get only open tickets
+		$tickets = $this->get_results("
+			SELECT id, expertise_type_id 
+			FROM {$this->prefix}{$this->table}
+		");
+		
+		
+		foreach($tickets as $ticket){
+			//Get most recent status.
+			$tickId = $ticket->{"id"};
+			
+			$statusQuery = "
+			SELECT *
+			FROM {$this->prefix}ticket_status
+			WHERE ticket_id = $tickId
+			ORDER BY created_at DESC";
+			
+			$result = $this->get_results($statusQuery);
+				
+			//Most recent status
+			if($result[0]->{"status_id"} == "3" || $result[0]->{"status_id"} == "3"){
+				array_push($expertise_ids, $ticket->{"expertise_type_id"});
+			}
+			
+			
+		}
+	
+	
+		foreach($expertise_ids as $id){
+			
+			$expertise_info = $expertiseQuery->get_specific($id)[0];
+	
+			if($expertise_info->{"parent_id"} == null){
+				//No parent, give it to pi chart
+				if($pi_data[$expertise_info->{"name"}]){
+					$pi_data[$expertise_info->{"name"}]++;
+				}else {
+					$pi_data[$expertise_info->{"name"}] = 1;
+				}
+				
+			} else {
+				
+				//Has parent, give it to function
+				//echo "sending to lookup: " . print_r($expertise_info, true) . "<br>";
+				$pname = $this->lookup_parent($expertise_info->{"parent_id"});
+				if($pi_data[$pname]){
+					$pi_data[$pname]++;
+				}else {
+					$pi_data[$pname] = 1;
+				}
+			}
+		}
+	
+		return $pi_data;
+		
+	
+
+	
+
+		
+	}
+
 	
 	
 	public function get_general_stats(){
@@ -28,7 +112,6 @@ class MetricsQuery extends Query {
 	
 		$ticket_info = [];
 		foreach($tickets as $ticket){
-			//Get the ID, then look up status?
 			$ticket_info[$ticket->{'id'}] = array($ticket->{'created_at_real'});
 		
 		}

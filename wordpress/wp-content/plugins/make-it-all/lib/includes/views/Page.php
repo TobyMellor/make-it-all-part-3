@@ -47,7 +47,6 @@ abstract class Page {
 			
 			//Dont want extra options for Metrics
 			
-			if($name != "Metrics"){
 			add_submenu_page(
 				$parentSlug,
 				$title, // page title
@@ -59,8 +58,6 @@ abstract class Page {
 					$options['callback'] // callback that renders the page, e.g. read_pane
 				]
 			);
-			}
-
 		}
 
 		$this->error   = isset($_SESSION['mia_error'])   ? $_SESSION['mia_error'] : null;

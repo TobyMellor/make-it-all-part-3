@@ -40,7 +40,9 @@
 				
 				
 				</div>
-				<div class="metrics_pi"></div>
+				<div class="metrics_pi">
+				<canvas id="chart2"></canvas>
+				</div>
 			</div>
 
 </div>
@@ -50,7 +52,8 @@
 {% endblock %}
 {% block scripts %}
 	<script>
-		var table1 = {{ table1 }};
+		var table1 = {{ table1 }},
+		pi	   = {{ pi_info }};
 	</script>
 {% endblock %}
 
