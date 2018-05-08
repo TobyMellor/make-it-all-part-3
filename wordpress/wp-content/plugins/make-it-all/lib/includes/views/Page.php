@@ -35,7 +35,7 @@ abstract class Page {
 
 		$parentSlug = $this->nameSlug = $this->get_string_as_slug($this->name);
 
-		add_menu_page('View ' . $name, ($name == "Hardware" || $name == "Software"? $name : $name . 's'), 'read_make_it_all', $parentSlug, [$this, 'read_pane'], $this->icon, $this->position);
+		add_menu_page('View ' . $name, ($name == "Hardware" || $name == "Metrics" || $name == "Software"? $name : $name . 's'), 'read_make_it_all', $parentSlug, [$this, 'read_pane'], $this->icon, $this->position);
 
 		// Create submenu for each page in Pages, e.g. Create [Ticket], Update [Ticket]
 		foreach ($this->pages as $pageName => $options) {
@@ -43,7 +43,10 @@ abstract class Page {
 
 			$title          = isset($options['page_action']) ? $pageName               : $pageName . ' ' . $name;
 			$pageActionSlug = isset($options['page_action']) ? $options['page_action'] : $parentSlug . '_' . $pageNameSlug;
-
+			
+			
+			//Dont want extra options for Metrics
+			
 			add_submenu_page(
 				$parentSlug,
 				$title, // page title
@@ -72,7 +75,6 @@ abstract class Page {
 	 */
 	public function enqueue_dependencies() {
 		$fileName = $this->nameSlug;
-
 		$this->enqueue_dependency('mia_' . $fileName, '/backend/css/' . $fileName . '/' . $fileName . '.css');
 		$this->enqueue_dependency('mia_' . $fileName, '/backend/js/' . $fileName . '/' . $fileName . '.js');
 
@@ -160,7 +162,9 @@ abstract class Page {
 			$this->get_string_as_slug($context['page_name']) .
 			'.twig',
 			$context
-		); // e.g. backend/tickets/create_ticket.twig
+		); // e.g. backend/tickets/create_ticket.twig			
+			
+		
 	}
 
 	/**
@@ -170,7 +174,7 @@ abstract class Page {
 	 *
 	 * @return String
 	 */
-	private function get_string_as_slug($string) {
+	public function get_string_as_slug($string) {
 		return 
 			str_replace(' ', '_',
 				str_replace('-', '_',

@@ -4,7 +4,7 @@ export default class CommentManager {
 		this.currentTicketId = currentTicketId;
 		this.currentCallId   = currentCallId;
 	}
-
+	
 	/**
 	 * Stores a new comment in the database
 	 *
