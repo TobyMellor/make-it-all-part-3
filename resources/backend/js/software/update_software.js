@@ -12,10 +12,9 @@ $(() => {
 	});
 	
 	softwares.forEach((item) => {
-		var type = "Application";
-		if(item.operating_system == "1") type = "Operating System";
+		let type = item.operating_system == "1" ? "Operating System" : "Application";
 		
-		$select.append(`<option value="${item.id}">#${item.id} – ${item.name} (` +  type + `)</option>`);
+		$select.append(`<option value="${item.id}">#${item.id} – ${item.name} (` + type + `)</option>`);
 	});
 	
 	$('#change-software').val(software ? software.id : "");
