@@ -12,12 +12,13 @@ $(() => {
 	});
 	
 	softwares.forEach((item) => {
-		$select.append(`
-			<option value="${item.id}">#${item.id} – ${item.name}</option>
-		`);
+		var type = "Application";
+		if(item.operating_system == "1") type = "Operating System";
+		
+		$select.append(`<option value="${item.id}">#${item.id} – ${item.name} (` +  type + `)</option>`);
 	});
 	
-	$('input[name="software[id]"]').val(software ? software.id : "");
+	$('#change-software').val(software ? software.id : "");
 	$('input[name="software[name]"]').val(software ? software.name : "");
 	
 	let date = (software ? software.expiry_date : "");
