@@ -1,0 +1,56 @@
+
+{% block main %}
+	<div class="metrics_wrapper">
+			<div class="metrics_row">
+				<canvas id="chart1"></canvas>	
+			</div>
+			<div class="metrics_row">
+				<div class="metrics_statistics">
+					<div class="metrics_header">
+					General Statistics
+					</div>
+					<div class="statistics">
+						<div class="met_sec">
+						<span class="met_sec_title">Average Ticket Solve Time</span>
+						<input id="average_solve_time" type="text" value="{{ general_stats[0] }}" readonly>	
+						</div>
+						
+						<div class="met_sec">
+						<span class="met_sec_title">Total Assigned Tickets</span>
+						<input id="total_assigned" type="text" value="{{ general_stats[1] }}" readonly>	
+						</div>	
+						
+						<div class="met_sec">
+						<span class="met_sec_title">Total Sovled Tickets</span>
+						<input id="total_solved" type="text" value="{{ general_stats[2] }}" readonly>	
+						</div>	
+						
+						<div class="met_sec">
+						<span class="met_sec_title">Total Devices</span>
+						<input id="total_devices" type="text" value="{{ general_stats[3] }}" readonly>	
+						</div>	
+						
+						<div class="met_sec">
+						<span class="met_sec_title">Total Programs</span>
+						<input id="total_programs" type="text" value="{{ general_stats[4] }}" readonly>	
+						</div>	
+					
+					</div>
+				
+				
+				
+				</div>
+				<div class="metrics_pi"></div>
+			</div>
+
+</div>
+	
+
+	
+{% endblock %}
+{% block scripts %}
+	<script>
+		var table1 = {{ table1 }};
+	</script>
+{% endblock %}
+
