@@ -3,6 +3,7 @@
 namespace MakeItAll\Includes\Views;
 
 use MakeItAll\Includes\Views\Page;
+use Timber;
 
 use MakeItAll\Includes\Database\Queries\MetricsQuery;
 
@@ -60,6 +61,17 @@ class MetricsPage extends Page {
 		return $ticketData;
 	
 		
+	}
+	
+	protected function render_pane($context){
+		Timber::render(
+			'backend/views/' .
+			$this->nameSlug . '/' .
+			$this->get_string_as_slug($context['page_name']) .
+			'.twig',
+			$context
+		); 		
+			
 	}
 	
 		public function create_pane() {

@@ -156,17 +156,6 @@ abstract class Page {
 	 * @return @void
 	 */
 	protected function render_pane($context) {
-		if($this->nameSlug == "metrics"){
-			
-		Timber::render(
-			'backend/views/' .
-			$this->nameSlug . '/' .
-			$this->get_string_as_slug($context['page_name']) .
-			'.twig',
-			$context
-		); // e.g. backend/tickets/create_ticket.twig			
-			
-		} else {
 		Timber::render(
 			'backend/views/' .
 			$this->nameSlug . 's/' .
@@ -175,9 +164,7 @@ abstract class Page {
 			$context
 		); // e.g. backend/tickets/create_ticket.twig			
 			
-		}
 		
-
 	}
 
 	/**
@@ -187,7 +174,7 @@ abstract class Page {
 	 *
 	 * @return String
 	 */
-	private function get_string_as_slug($string) {
+	public function get_string_as_slug($string) {
 		return 
 			str_replace(' ', '_',
 				str_replace('-', '_',
