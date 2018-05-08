@@ -26,6 +26,7 @@ abstract class Query {
 	 * @return void
 	 */
 	protected function get_results($query) {
+	
 		$results = $this->wpdb->get_results($query);
 
 		if (sizeOf($results) > 0 && isset($results[0]->created_at) && isset($results[0]->updated_at)) {
