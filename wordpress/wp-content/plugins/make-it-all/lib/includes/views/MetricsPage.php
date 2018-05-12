@@ -68,6 +68,22 @@ class MetricsPage extends Page {
 			$context
 		); 			
 	}
+	
+	public function add_api_endpoints(){
+		register_rest_route($this->apiNamespace, '/problem-children',
+		[
+			'methods' => 'GET',
+			'callback' => function($request) {
+				$expert_type = $request->get_params()['type'];
+				$metricsQuery = new MetricsQuery(); 
+				
+				$data =  $metricsQuery->get_children($expert_type);
+				
+				return $data;
+			
+			},
+		]);
+	}
 
 	public function create_pane() {
 		parent::create_pane();

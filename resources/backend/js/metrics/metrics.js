@@ -14,7 +14,7 @@ $(() => {
 	}
 
 	let pi_labels = [];
-	let pi_data    = [];
+	let pi_data = [];
 	let pi_colours = ['#5B49C4', '#7565cd', '#978bda', '#bab2e6', '#D88903', '#FFC96C'];
 
 	$.each(pi, function (label, value) {
@@ -81,6 +81,49 @@ $(() => {
 				borderColor: pi_colours
 
 			}]
+		},
+		options: {
+			onClick: function (evt, elements) {
+				if (elements[0] != null) {
+					var ind_click = elements[0]._index;
+					var type_clicked = myPieChart.data.labels[ind_click];
+					$.ajax({
+						url: '/wp-json/make-it-all/v1/problem-children',
+						type: 'GET',
+						data: {
+							type: type_clicked
+						}
+					}).done((response) => {
+						if (JSON.stringify(response) != "[]") {
+							var pi_lb = [];
+							var pi_dat = [];
+							$.each(response, function (label, value) {
+								pi_lb.push(label);
+								pi_dat.push(value);
+							});
+							myPieChart.data.datasets[0].data = pi_dat;
+							myPieChart.data.labels = [];
+							myPieChart.data.labels = pi_lb;
+							myPieChart.update();
+
+							//Make reset button visible. 
+							$('#metrics_reset').css('display', 'initial');
+						}
+
+					});
+				}
+			}
 		}
 	});
+
+	$('#metrics_reset').click(function () {
+		//Reset pi and make this button hidden.
+
+		myPieChart.data.datasets[0].data = pi_data;
+		myPieChart.data.labels = [];
+		myPieChart.data.labels = pi_labels;
+		myPieChart.update();
+		$(this).css('display', 'none');
+	})
+
 });

@@ -9,6 +9,7 @@ class MetricsQuery extends Query {
 	protected $table   = 'ticket';
 	protected $device  = 'device';
 	protected $program = 'program';
+	protected $exptype = 'expertise_type';
 		
 	public function lookup_parent($exp_info){
 		$expertiseQuery = new ExpertiseTypeQuery;
@@ -23,6 +24,43 @@ class MetricsQuery extends Query {
 		$newInfo = $expertiseQuery->get_specific($parent_id)[0];
 
 		return $this->lookup_parent($newInfo);
+	}
+	
+	public function get_children($parent){
+		//Recieved parent as string, get number of tickets with problems
+		$pi_data = [];
+		$expertiseQuery = new ExpertiseTypeQuery;
+		$id = $this->get_results("
+			SELECT *
+			FROM {$this->prefix}expertise_type
+			WHERE name = '$parent'
+		");
+		$id = $id[0]->{"id"};
+		//Get specific isnt working? 
+		$parent_data = $expertiseQuery->get()[$id - 1];
+		$children = $parent_data->{"children"};
+		$query = "
+			SELECT id, expertise_type_id 
+			FROM {$this->prefix}{$this->table}
+			WHERE ";
+		for($i = 0; $i < sizeof($children); $i++){
+			if($i == sizeof($children) - 1){
+				$query .= " expertise_type_id = " . $children[$i] . " ";	
+			} else {
+				$query .= " expertise_type_id = " . $children[$i] . " OR";		
+			}
+			
+		}
+		$tickets = $this->get_results($query);
+		foreach($tickets as $ticket){
+			$expertise_info = $expertiseQuery->get_specific($ticket->{'expertise_type_id'})[0];
+				if (array_key_exists($expertise_info->name, $pi_data)) {
+					$pi_data[$expertise_info->name]++;	
+				} else {
+					$pi_data[$expertise_info->name] = 1;
+				}
+		}
+		return $pi_data;
 	}
 	
 	public function get_pi_info() {
