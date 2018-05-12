@@ -69,7 +69,7 @@ $(() => {
 		}
 	});
 
-	let ctx = document.getElementById('chart2').getContext('2d');
+	ctx = document.getElementById('chart2').getContext('2d');
 
 	let myPieChart = new Chart(ctx, {
 		type: 'pie',
