@@ -59,7 +59,6 @@ class MetricsQuery extends Query {
 			$name = $expertise_info->{"name"};
 			$num = $this->get_num($children[$i]);
 			
-			
 			$p_data = $expertiseQuery->get()[$children[$i] - 1];
 			$c_children = $p_data->{"children"};
 			
@@ -68,15 +67,12 @@ class MetricsQuery extends Query {
 				for($j = 0; $j < sizeof($c_children); $j++){
 					$num += $this->get_num($c_children[$j]);
 					
-					$ddd = $expertiseQuery->get()[$c_children[$j] - 1];
-					$ccc = $ddd->{"children"};
-				
-					array_merge($todo, $ccc);
-	
+					$newData = $expertiseQuery->get()[$c_children[$j] - 1];
+					$newChildren = $newData->{"children"};
+					array_merge($todo, $newChildren);
 				}
 				$c_children = [];
 				array_merge($c_children, $todo);
-				
 				
 			}
 			if (array_key_exists($name, $pi_data)) {
