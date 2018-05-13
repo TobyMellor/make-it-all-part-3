@@ -1,16 +1,19 @@
 export default class DragController {
 	constructor() {
 		let dragController = this,
-			$dragging      = null; // the element the user is dragging
+			$dragging      = null,
+			mouseMovementStart = {}; // the element the user is dragging
 
-		this.runwaySelector = '.type-column'; // where can an element be dropped without deleting it?
-		this.planeSelector  = this.runwaySelector + ' > li'; // what are the draggable elements?
+		this.minMouseMovement = 35;
+		this.runwaySelector   = '.type-column'; // where can an element be dropped without deleting it?
+		this.planeSelector    = this.runwaySelector + ' > li'; // what are the draggable elements?
 
 		$(function() {
 			$(document)
 				// set the element that we're dragging
 				.on('mousedown', this.planeSelector, function(e) {
 					$dragging = $(e.target).closest(dragController.planeSelector);
+					mouseMovementStart = {x: e.offsetX, y: e.offsetY};
 				})
 				// the user has the mousedown and have moved their mouse. Add the dragging class
 				.on('dragstart', this.planeSelector, function(e) {
@@ -20,8 +23,14 @@ export default class DragController {
 					// only fire this when dragging
 					if (e.buttons === 1) {
 						if (!$dragging) return;
-
-						if (!$dragging.hasClass('dragging')) $(document).trigger('dragstart');
+						
+						if (!$dragging.hasClass('dragging')) {
+							if (dragController.isDraggingMouse(mouseMovementStart, e.offsetX, e.offsetY)) {
+								$(document).trigger('dragstart');
+							} else {
+								return;
+							}
+						}
 
 						// get the position of the mouse
 						let posX = e.pageX - document.getElementById('adminmenuwrap').offsetWidth - 8,
@@ -64,7 +73,7 @@ export default class DragController {
 					}
 				})
 				.on('mouseup', this.planeSelector, function() {
-					if ($dragging !== null && $dragging.is(dragController.planeSelector)) {
+					if ($dragging !== null && $dragging.is(dragController.planeSelector) && $dragging.hasClass('dragging')) {
 						if (!$dragging.hasClass('not-allowed')) {
 							let $elementDraggedInto = dragController.getElementDraggedInto(
 								parseInt($dragging.css('left')),
@@ -114,5 +123,14 @@ export default class DragController {
 			right  = left + $element.width();
 
 		return posX >= left && posX <= right && posY >= top && posY <= bottom;
+	}
+
+	isDraggingMouse(mouseMovementStart, currentX, currentY) {
+		let delta = 0;
+
+		delta += Math.abs(mouseMovementStart.x - currentX);
+		delta += Math.abs(mouseMovementStart.y - currentY);
+
+		return delta >= this.minMouseMovement;
 	}
 }
