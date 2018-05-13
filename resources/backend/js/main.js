@@ -18,9 +18,8 @@ $(() => {
 
 	// Remove filter/status, clear the select field
 	$(document).on('click', '.filter.removeable', function() {
-		$(this).closest('.has-button').find('select').prop('selectedIndex', 0).trigger('change');
-
 		$(this).fadeOut(250, function() {
+			$(this).closest('.has-button').find('select').prop('selectedIndex', 0).trigger('change');
 			$(this).remove();
 		});
 	});
@@ -47,8 +46,6 @@ $(() => {
 		$('.accordions .accordion-handle .fa:not(.fa-trash-o), .mia-panel-short .mia-panel-heading .fa').removeClass().addClass('fa fa-chevron-up');
 		$('.accordions .accordion-handle.ui-state-active .fa:not(.fa-trash-o), .mia-panel-short .mia-panel-heading.ui-state-active .fa').removeClass().addClass('fa fa-chevron-down');
 	});
-
-
 
 	// if a panel has a slug, modify sessionStorage's collapsed_mia_panel_shorts
 	$(document).on('click', '.mia-panel-heading', function() {
