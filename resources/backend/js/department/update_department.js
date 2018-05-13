@@ -20,7 +20,6 @@ $(() => {
 	if (!department) {
 		sessionStorage.setItem('shouldShowArrow', true); return;
 	}
-
 	// arrow functionality, don't show the arrow if they accessed the page directly
 	if (sessionStorage.getItem('shouldShowArrow')) {
 		sessionStorage.removeItem('shouldShowArrow');
@@ -38,4 +37,11 @@ $(() => {
 
 	$('input[name="department[name]"]').val(department.name);
 	$('input[name="department[phone_number]"]').val(department.phone_number);
+
+	$(document).on('keyup', '.accordions .accordion-body input[name*="name"]', function() {
+		let $headerText    = $(this).closest('.accordion-body').prev().find('.accordion-title'),
+			newHeaderText  = $(this).val().length <= 2 ? 'Department' : 'Department: ' + $(this).val();
+
+		$headerText.text(newHeaderText);
+	});
 });

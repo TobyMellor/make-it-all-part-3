@@ -34,10 +34,12 @@ $(() => {
 	});
 
 	$('#add-new-ticket').click(loadNewTicket);
-	$('#change-ticket').click(function() {
+
+	$('#change-ticket').change(function() {
 		loadExistingTicket($(this).val());
 
 		$(this).find('option:selected').remove();
+		$(this).val('');
 	});
 
 	$(document).on('click', '.accordion-handle .accordion-actions .fa-trash-o', function() {
@@ -55,7 +57,7 @@ window.loadExistingTicket = function(id) {
 			let $accordion = $('.accordion-handle:nth-last-child(2), .accordion-body:last-child');
 
 			// deinit all TinyMCE's before cloning
-			tinyMCE.EditorManager.editors.forEach((editor) => {
+			tinyMCE.EditorManager.editors.forEach(editor => {
 				tinyMCE.get(editor.id).remove();
 			});
 
@@ -67,6 +69,9 @@ window.loadExistingTicket = function(id) {
 }
 
 window.loadNewTicket = function(existingTicketId = null) {
+	// deinit all TinyMCE's before cloning
+	deinitTinyMCE();
+	
 	let $accordions    = $('.accordions'),
 		newAccordionId = existingTicketId || 'new][' + (Math.floor(Math.random() * 9999) + 10000),
 		$newAccordion  = cloneAccordion($accordions, newAccordionId);
@@ -78,12 +83,15 @@ window.loadNewTicket = function(existingTicketId = null) {
 
 	$accordions.accordion('refresh');
 	$newAccordion.click(); // expand new accordion
+
+	// reinitialize after appending new accordion
+	initTinyMCE();
 }
 
 function loadExistingTickets() {
 	let $changeTicket = $('#change-ticket');
 
-	$changeTicket.html(`<option disabled selected>Select a ticket here…</option>`);
+	$changeTicket.html(`<option disabled selected value="">Select a ticket here…</option>`);
 
 	tickets.forEach(ticket => {
 		if (ticket.id !== firstTicketId) {

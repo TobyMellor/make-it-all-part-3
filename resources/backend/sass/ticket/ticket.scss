@@ -12,15 +12,19 @@
 		}
 
 		#caller-information {
-			flex-basis: 0px;
+			flex-basis: 0;
+			max-height: 0;
 			overflow: hidden;
 
 			&.expanded {
 				flex-basis: 40%;
+				max-height: initial;
 			}
 
 			.mia-panel-heading {
 				min-width: 210px;
+				display: flex;
+				flex-direction: column;
 			}
 		}
 
@@ -44,6 +48,9 @@
 
 .staff-information {
 	margin: 16px -16px -16px -16px;
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
 
 	.mia-field-group {
 		& > div {
@@ -57,6 +64,10 @@
 
 		.mia-permissions {
 			line-height: 16px;
+		}
+
+		&:last-child {
+			flex-grow: 1;
 		}
 	}
 }
@@ -489,7 +500,9 @@
 
 .follow-up-call-page {
 	.accordion-handle:first-child {
-		background-color: #f39c12;
+		background-color: $orange;
+
+		border-bottom: 2px solid $orange-hover;
 	}
 	
 	#add-new-ticket {
@@ -498,9 +511,17 @@
 
 	.mia-panel-footer {
 		position: relative;
+		
+		.mia-button-group {
+			display: block;
+			margin-top: 12px;
+
+			&:first-child {
+				margin-top: 0;
+			}
+		}
 
 		.mia-button-group:last-child {
-			display: block;
 			margin-top: 12px;
 		}
 
@@ -548,6 +569,16 @@
 			overflow: hidden;
 			max-height: 50px;
 			font-size: 24px;
+
+			a {
+				color: $black;
+				outline: none;
+				box-shadow: none;
+
+				&:hover {
+					color: $black-hover;
+				}
+			}
 		}
 
 		p {
@@ -560,7 +591,7 @@
 			margin: 0 auto;
 		}
 
-		a {
+		> a {
 			position: absolute;
 			bottom: 8px;
 			left: calc(50% - 65px);

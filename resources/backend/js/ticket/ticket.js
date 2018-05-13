@@ -3,7 +3,7 @@ import AffectedItemsManager from "../AffectedItemsManager";
 import StaffManager from "../StaffManager";
 
 $(() => {
-		$(document).on('click', '.accordion-handle .accordion-actions .fa-trash-o', function() {
+	$(document).on('click', '.accordion-handle .accordion-actions .fa-trash-o', function() {
 		if (!confirm('Are you sure you want to delete this ticket?')) return;
 
 		let $accordionHandle = $(this).closest('.accordion-handle');
@@ -128,6 +128,16 @@ $(() => {
 
 	initTinyMCE();
 });
+
+window.deinitTinyMCE = function() {
+	tinyMCE.EditorManager.editors.forEach((editor) => {
+		tinyMCE.get(editor.id).remove();
+	});
+
+	tinyMCE.EditorManager.editors.forEach((editor) => {
+		tinyMCE.get(editor.id).remove();
+	});
+}
 
 window.initTinyMCE = function() {
 	tinyMCE.init({

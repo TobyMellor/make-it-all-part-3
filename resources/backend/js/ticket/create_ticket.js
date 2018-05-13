@@ -18,9 +18,7 @@ $(() => {
 
 	$('#add-additional-ticket').click(function() {
 		// deinit all TinyMCE's before cloning
-		tinyMCE.EditorManager.editors.forEach((editor) => {
-			tinyMCE.get(editor.id).remove();
-		});
+		deinitTinyMCE();
 
 		let $accordions    = $(this).closest('.mia-panel').find('.accordions'),
 			newAccordionId = Number($('.accordions .accordion-handle:nth-last-child(2) .number-circle').text()) + 1,

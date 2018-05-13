@@ -59,9 +59,10 @@ function cloneAccordion($accordions, newAccordionId) {
 	return $newAccordion;
 }
 
-function clearAccordion($accordion) {
+function clearAccordion($accordion, newAccordionId) {
 	// set input/textarea/select fields to default values
 	$accordion.find('input').val('');
+	$accordion.find('.accordion-icon .number-circle').text(newAccordionId);
 }
 
 function initAccordions() {

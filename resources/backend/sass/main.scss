@@ -103,6 +103,10 @@ table {
 	}
 }
 
+.wp-list-table tr:not(.inline-edit-row):not(.no-items) td:not(.check-column) {
+	display: table-cell;
+}
+
 //
 // Common Make-It-All styles for Admin pages
 //

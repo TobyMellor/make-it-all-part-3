@@ -163,8 +163,6 @@ abstract class Page {
 			'.twig',
 			$context
 		); // e.g. backend/tickets/create_ticket.twig			
-			
-		
 	}
 
 	/**

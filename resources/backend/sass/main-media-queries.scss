@@ -8,7 +8,7 @@ $wordpress-mobile: 782px;
 $breakpoint-xs: 767px;
 
 @media (max-width: $breakpoint-xs) {
-	.mia-panel .mia-panel-body .accordion-body, .mia-panel.call-panel #call-information .mia-panel-body {
+	.accordion-body, .mia-panel.call-panel #call-information .mia-panel-body {
 		> .mia-field-group {
 			&:first-child > div:first-child {
 				border-top: 0;
