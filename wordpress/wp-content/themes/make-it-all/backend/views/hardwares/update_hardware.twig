@@ -218,9 +218,9 @@
 
 {% block scripts %}
 	<script>
-		var devices	= {{devices}},
-			types   = {{types}},
-			makes   = {{makes}},
-			device	= {{device|default ('null')}};
+		var devices	= {{ devices }},
+			types   = {{ types }},
+			makes   = {{ makes }},
+			device	= {{ device|default(null) }};
 	</script>
 {% endblock %}
