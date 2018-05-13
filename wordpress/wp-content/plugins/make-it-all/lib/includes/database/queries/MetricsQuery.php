@@ -39,6 +39,19 @@ class MetricsQuery extends Query {
 		//Get specific isnt working? 
 		$parent_data = $expertiseQuery->get()[$id - 1];
 		$children = $parent_data->{"children"};
+		
+		for($i = 0; $i < sizeof($children); $i++){
+			$exp_info = $expertiseQuery->get_specific($children[$i])[0];	
+			$pi_data[$exp_info->{"name"}] = 0;
+			
+		}
+		
+		
+	
+
+	
+		
+		
 		$query = "
 			SELECT id, expertise_type_id 
 			FROM {$this->prefix}{$this->table}
@@ -51,6 +64,7 @@ class MetricsQuery extends Query {
 			}
 			
 		}
+		
 		$tickets = $this->get_results($query);
 		foreach($tickets as $ticket){
 			$expertise_info = $expertiseQuery->get_specific($ticket->{'expertise_type_id'})[0];
@@ -66,8 +80,23 @@ class MetricsQuery extends Query {
 	public function get_pi_info() {
 		$pi_data = [];
 		$expertise_ids = [];
+		
+		
+		//Get all expertise types with no parents. 
+		$allTypes = $this->get_results("
+			SELECT id, name
+			FROM {$this->prefix}{$this->exptype}
+			WHERE parent_id IS NULL
+		");
+		foreach($allTypes as $type){
+			//Push the type to the pi_data array. 
 
-		// get most frequent problems types with no parents
+			$pi_data[$type->name] = 0;
+		}
+
+		
+		
+		//From these expertise types, get number of tickets
 		$expertiseQuery = new ExpertiseTypeQuery;
 	
 		// want to get only open tickets

@@ -15,7 +15,7 @@ $(() => {
 
 	let pi_labels = [];
 	let pi_data = [];
-	let pi_colours = ['#5B49C4', '#7565cd', '#978bda', '#bab2e6', '#D88903', '#FFC96C'];
+	let pi_colours = ['#5B49C4', '#7565cd', '#978bda', '#bab2e6', '#D88903', '#FFC96C', '#ffda99', '#fff6e6', '	#ff6b6b'];
 
 	$.each(pi, function (label, value) {
 		pi_labels.push(label);
@@ -78,7 +78,7 @@ $(() => {
 			datasets: [{
 				data: pi_data,
 				backgroundColor: pi_colours,
-				borderColor: pi_colours
+				borderColor: 'transparent'
 
 			}]
 		},
@@ -87,14 +87,19 @@ $(() => {
 				if (elements[0] != null) {
 					var ind_click = elements[0]._index;
 					var type_clicked = myPieChart.data.labels[ind_click];
+					console.log("making ajax");
 					$.ajax({
-						url: '/wp-json/make-it-all/v1/problem-children',
+						url: '/wordpress/wp-json/make-it-all/v1/problem-children',
 						type: 'GET',
 						data: {
 							type: type_clicked
 						}
 					}).done((response) => {
+						console.log("hello d0ne");
+						console.log(JSON.stringify(response));
 						if (JSON.stringify(response) != "[]") {
+							
+							
 							var pi_lb = [];
 							var pi_dat = [];
 							$.each(response, function (label, value) {
