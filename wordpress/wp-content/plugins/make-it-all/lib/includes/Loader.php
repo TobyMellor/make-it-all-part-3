@@ -125,14 +125,14 @@ class Loader {
 		 */
 		$pageName = $basePageName . 'StaffPage';
 		$page     = new $pageName;
-		add_action( 'admin_head', [$this, 'add_my_favicon']); //admin end
-		
 
 		$this->add_action('admin_menu', $page, 'init');
 		$this->add_action('show_user_profile', $page, 'read_pane');
 		$this->add_action('edit_user_profile', $page, 'read_pane');
 		$this->add_action('personal_options_update', $page, 'update_action');
 		$this->add_action('edit_user_profile_update', $page, 'update_action');
+		
+		add_action('admin_head', [$this, 'add_my_favicon']); // admin end
 
 		/**
 		 * Allow $_SESSION to be used in this plugin if it's not already enabled
@@ -170,10 +170,8 @@ class Loader {
 		}
 	}
 	
-		function add_my_favicon() {
-    	$favicon_path = get_template_directory_uri().'/favicon.ico';    
+	function add_my_favicon() {
+    	$favicon_path = get_template_directory_uri() . '/favicon.ico';    
     	echo '<link rel="shortcut icon" href="' . $favicon_path . '" />';
-		
-}
-	
+	}
 }

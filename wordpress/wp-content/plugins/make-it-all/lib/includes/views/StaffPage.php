@@ -10,10 +10,10 @@ use MakeItAll\Includes\Database\Queries\ExpertiseTypeStaffQuery;
 use MakeItAll\Includes\Database\Queries\DepartmentQuery;
 
 class StaffPage extends Page {
-	protected $name = 'User';
+	protected $name     = 'User';
+	protected $nameSlug = 'user';
 
 	public function init() {
-		echo 'nice';
 		add_action('admin_enqueue_scripts', [$this, 'enqueue_dependencies']);
 	}
 
@@ -23,7 +23,6 @@ class StaffPage extends Page {
 	 * @return @void
 	 */
 	public function read_pane() {
-		echo 'BOOM';
 		$context = $this->get_context('extra_profile_info');
 
 		$context['employees']            = json_encode((new UserQuery)->get());
