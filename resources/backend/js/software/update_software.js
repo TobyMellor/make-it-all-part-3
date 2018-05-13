@@ -17,7 +17,8 @@ $(() => {
 		$select.append(`<option value="${item.id}">#${item.id} – ${item.name} (` + type + `)</option>`);
 	});
 	
-	$('#change-software').val(software ? software.id : "");
+	$('#change-software').val(software ? software.id : 0);
+	$('input[name="software[id]"]').val(software ? software.id : 0);
 	$('input[name="software[name]"]').val(software ? software.name : "");
 	
 	let date = (software ? software.expiry_date : "");

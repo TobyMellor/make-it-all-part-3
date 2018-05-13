@@ -9,6 +9,7 @@ class MetricsQuery extends Query {
 	protected $table   = 'ticket';
 	protected $device  = 'device';
 	protected $program = 'program';
+	protected $exptype = 'expertise_type';
 		
 	public function lookup_parent($exp_info){
 		$expertiseQuery = new ExpertiseTypeQuery;
@@ -25,11 +26,77 @@ class MetricsQuery extends Query {
 		return $this->lookup_parent($newInfo);
 	}
 	
+	public function get_children($parent){
+		//Recieved parent as string, get number of tickets with problems
+		$pi_data = [];
+		$expertiseQuery = new ExpertiseTypeQuery;
+		$id = $this->get_results("
+			SELECT *
+			FROM {$this->prefix}expertise_type
+			WHERE name = '$parent'
+		");
+		$id = $id[0]->{"id"};
+		//Get specific isnt working? 
+		$parent_data = $expertiseQuery->get()[$id - 1];
+		$children = $parent_data->{"children"};
+		
+		for($i = 0; $i < sizeof($children); $i++){
+			$exp_info = $expertiseQuery->get_specific($children[$i])[0];	
+			$pi_data[$exp_info->{"name"}] = 0;
+			
+		}
+		
+		
+	
+
+	
+		
+		
+		$query = "
+			SELECT id, expertise_type_id 
+			FROM {$this->prefix}{$this->table}
+			WHERE ";
+		for($i = 0; $i < sizeof($children); $i++){
+			if($i == sizeof($children) - 1){
+				$query .= " expertise_type_id = " . $children[$i] . " ";	
+			} else {
+				$query .= " expertise_type_id = " . $children[$i] . " OR";		
+			}
+			
+		}
+		
+		$tickets = $this->get_results($query);
+		foreach($tickets as $ticket){
+			$expertise_info = $expertiseQuery->get_specific($ticket->{'expertise_type_id'})[0];
+				if (array_key_exists($expertise_info->name, $pi_data)) {
+					$pi_data[$expertise_info->name]++;	
+				} else {
+					$pi_data[$expertise_info->name] = 1;
+				}
+		}
+		return $pi_data;
+	}
+	
 	public function get_pi_info() {
 		$pi_data = [];
 		$expertise_ids = [];
+		
+		
+		//Get all expertise types with no parents. 
+		$allTypes = $this->get_results("
+			SELECT id, name
+			FROM {$this->prefix}{$this->exptype}
+			WHERE parent_id IS NULL
+		");
+		foreach($allTypes as $type){
+			//Push the type to the pi_data array. 
 
-		// get most frequent problems types with no parents
+			$pi_data[$type->name] = 0;
+		}
+
+		
+		
+		//From these expertise types, get number of tickets
 		$expertiseQuery = new ExpertiseTypeQuery;
 	
 		// want to get only open tickets

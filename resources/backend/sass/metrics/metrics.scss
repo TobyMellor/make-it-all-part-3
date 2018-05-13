@@ -28,6 +28,15 @@
 	padding-bottom: 20px;
 }
 
+#metrics_reset{
+	cursor: pointer;
+	display: none;
+	
+}
+#metrics_reset:hover{
+	color: orange;
+}
+
 .metrics_header {
 	font-size: 24px;
 	display: block;
