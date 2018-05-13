@@ -68,7 +68,11 @@ window.loadExistingTicket = function(id) {
 		});
 }
 
-window.loadNewTicket = function(existingTicketId = null) {
+window.loadNewTicket = function(existingTicketId = null) {		// deinit all TinyMCE's before cloning
+	tinyMCE.EditorManager.editors.forEach((editor) => {
+		tinyMCE.get(editor.id).remove();
+	});
+
 	let $accordions    = $('.accordions'),
 		newAccordionId = existingTicketId || 'new][' + (Math.floor(Math.random() * 9999) + 10000),
 		$newAccordion  = cloneAccordion($accordions, newAccordionId);
@@ -80,6 +84,9 @@ window.loadNewTicket = function(existingTicketId = null) {
 
 	$accordions.accordion('refresh');
 	$newAccordion.click(); // expand new accordion
+
+	// reinitialize after appending new accordion
+	initTinyMCE();
 }
 
 function loadExistingTickets() {
