@@ -19,9 +19,13 @@ $(() => {
 		`);
 	});
 
-	$('input[name="hardware[id]"]').val(device ? device.id : "");
+	
+	$('input[name="hardware[id]"]').val(device ? device['id'] : "");
+	if(device.id){
+		$('#change-hardware').val(device ? device.id : "");	
+	}
 	$('#change-hardware option[value="' + (device ? device.id : "") + '"]').prop('selected', true);
-	$('.hardware-type-select option[value="' + (device ? device.type : "") + '"]').prop('selected', true);
+	
 	$('.hardware-make-select option[value="' + (device ? device.make : "") + '"]').prop('selected', true);
 	$('.hardware-serial').val((device ? device.serial_no : ""));
 

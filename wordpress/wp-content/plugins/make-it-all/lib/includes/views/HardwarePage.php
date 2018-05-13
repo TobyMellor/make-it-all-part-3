@@ -87,6 +87,8 @@ class HardwarePage extends Page {
 			$hardwareID = $_GET['id'];
 			// ticket's current data
 			$context = $this->get_hardware($context, $hardwareID);
+		} else {
+			$context["device"] = [];
 		}
 
 		$this->render_pane($context);
