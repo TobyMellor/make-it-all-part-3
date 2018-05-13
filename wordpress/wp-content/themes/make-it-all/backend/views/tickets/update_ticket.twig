@@ -4,7 +4,7 @@
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 {{ ticket is defined ? 'col-md-9' : 'col-md-12' }}">
 			<form action="admin.php?page=ticket_update" method="POST">
-				<input name="ticket[id]" type="text" hidden>
+				<input name="ticket[id]" type="text" hidden value="{{ ticket.id }}">
 				<input name="ticket[solution_id]" type="text" hidden>
 				<div class="mia-panel ticket-panel">
 					<div class="mia-panel-heading">

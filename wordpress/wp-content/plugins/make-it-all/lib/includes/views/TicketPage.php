@@ -214,6 +214,8 @@ class TicketPage extends Page {
 	protected function update_action() {
 		$ticket = $_POST['ticket'];
 
+		var_dump($ticket);
+
 		$this->update_ticket($ticket);
 
 		return $this->mia_redirect('admin.php?page=ticket&id=' . $ticket['id']);
