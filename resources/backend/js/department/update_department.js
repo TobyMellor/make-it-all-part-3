@@ -20,7 +20,6 @@ $(() => {
 	if (!department) {
 		sessionStorage.setItem('shouldShowArrow', true); return;
 	}
-
 	// arrow functionality, don't show the arrow if they accessed the page directly
 	if (sessionStorage.getItem('shouldShowArrow')) {
 		sessionStorage.removeItem('shouldShowArrow');
