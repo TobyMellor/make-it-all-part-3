@@ -59,6 +59,11 @@ $(() => {
 			]
 		},
 		options: {
+			    elements: {
+        		line: {
+            		tension: 0.2
+        		}
+				},
 			scales: {
 				yAxes: [{
 					ticks: {
@@ -87,7 +92,6 @@ $(() => {
 				if (elements[0] != null) {
 					var ind_click = elements[0]._index;
 					var type_clicked = myPieChart.data.labels[ind_click];
-					console.log("making ajax");
 					$.ajax({
 						url: '/wordpress/wp-json/make-it-all/v1/problem-children',
 						type: 'GET',
@@ -95,11 +99,8 @@ $(() => {
 							type: type_clicked
 						}
 					}).done((response) => {
-						console.log("hello d0ne");
 						console.log(JSON.stringify(response));
 						if (JSON.stringify(response) != "[]") {
-							
-							
 							var pi_lb = [];
 							var pi_dat = [];
 							$.each(response, function (label, value) {
@@ -117,7 +118,14 @@ $(() => {
 
 					});
 				}
-			}
+			},
+			hover: {
+      			onHover: function(e) {
+         		var point = this.getElementAtEvent(e);
+         		if (point.length) e.target.style.cursor = 'pointer';
+         		else e.target.style.cursor = 'default';
+      }
+   }
 		}
 	});
 

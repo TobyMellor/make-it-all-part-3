@@ -26,8 +26,21 @@ class MetricsQuery extends Query {
 		return $this->lookup_parent($newInfo);
 	}
 	
+	public function get_num($id){
+		//gets tickets with this id and tickets with children of this id.
+		$expertiseQuery = new ExpertiseTypeQuery;
+		$query = "
+		SELECT id, expertise_type_id
+		FROM {$this->prefix}{$this->table}
+		WHERE expertise_type_id = $id";
+		$tickets = $this->get_results($query);
+		return sizeof($tickets);
+		
+
+	}
+	
 	public function get_children($parent){
-		//Recieved parent as string, get number of tickets with problems
+		//Recieved parent as string, get first level children and number of issues.
 		$pi_data = [];
 		$expertiseQuery = new ExpertiseTypeQuery;
 		$id = $this->get_results("
@@ -35,46 +48,46 @@ class MetricsQuery extends Query {
 			FROM {$this->prefix}expertise_type
 			WHERE name = '$parent'
 		");
+		
 		$id = $id[0]->{"id"};
-		//Get specific isnt working? 
 		$parent_data = $expertiseQuery->get()[$id - 1];
 		$children = $parent_data->{"children"};
 		
 		for($i = 0; $i < sizeof($children); $i++){
-			$exp_info = $expertiseQuery->get_specific($children[$i])[0];	
-			$pi_data[$exp_info->{"name"}] = 0;
 			
-		}
-		
-		
-	
-
-	
-		
-		
-		$query = "
-			SELECT id, expertise_type_id 
-			FROM {$this->prefix}{$this->table}
-			WHERE ";
-		for($i = 0; $i < sizeof($children); $i++){
-			if($i == sizeof($children) - 1){
-				$query .= " expertise_type_id = " . $children[$i] . " ";	
-			} else {
-				$query .= " expertise_type_id = " . $children[$i] . " OR";		
-			}
+			$expertise_info = $expertiseQuery->get_specific($children[$i])[0];
+			$name = $expertise_info->{"name"};
+			$num = $this->get_num($children[$i]);
 			
-		}
-		
-		$tickets = $this->get_results($query);
-		foreach($tickets as $ticket){
-			$expertise_info = $expertiseQuery->get_specific($ticket->{'expertise_type_id'})[0];
-				if (array_key_exists($expertise_info->name, $pi_data)) {
-					$pi_data[$expertise_info->name]++;	
-				} else {
-					$pi_data[$expertise_info->name] = 1;
+			
+			$p_data = $expertiseQuery->get()[$children[$i] - 1];
+			$c_children = $p_data->{"children"};
+			
+			while(sizeof($c_children) != 0){
+				$todo = [];
+				for($j = 0; $j < sizeof($c_children); $j++){
+					$num += $this->get_num($c_children[$j]);
+					
+					$ddd = $expertiseQuery->get()[$c_children[$j] - 1];
+					$ccc = $ddd->{"children"};
+				
+					array_merge($todo, $ccc);
+	
 				}
-		}
-		return $pi_data;
+				$c_children = [];
+				array_merge($c_children, $todo);
+				
+				
+			}
+			if (array_key_exists($name, $pi_data)) {
+					$pi_data[$name] = $num;	
+				} else {
+					$pi_data[$name] = $num;
+				}
+																
+	}
+	return $pi_data;
+		
 	}
 	
 	public function get_pi_info() {
@@ -186,7 +199,7 @@ class MetricsQuery extends Query {
 			$time += strtotime($dates[1]) - strtotime($dates[0]);
 		}
 
-		$average_solve_time = round(($time / $number_resolved) / 60, 4) ;
+		$average_solve_time = round(($time / $number_resolved) / 60, 1) ;
 		
 		// total devices.
 		$devices = $this->get_results("
