@@ -23,6 +23,8 @@
 
 			.mia-panel-heading {
 				min-width: 210px;
+				display: flex;
+				flex-direction: column;
 			}
 		}
 
@@ -48,6 +50,7 @@
 	margin: 16px -16px -16px -16px;
 	display: flex;
 	flex-direction: column;
+	flex-grow: 1;
 
 	.mia-field-group {
 		& > div {
@@ -497,7 +500,9 @@
 
 .follow-up-call-page {
 	.accordion-handle:first-child {
-		background-color: #f39c12;
+		background-color: $orange;
+
+		border-bottom: 2px solid $orange-hover;
 	}
 	
 	#add-new-ticket {
