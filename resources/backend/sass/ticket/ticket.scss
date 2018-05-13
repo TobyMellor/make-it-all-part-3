@@ -12,11 +12,13 @@
 		}
 
 		#caller-information {
-			flex-basis: 0px;
+			flex-basis: 0;
+			max-height: 0;
 			overflow: hidden;
 
 			&.expanded {
 				flex-basis: 40%;
+				max-height: initial;
 			}
 
 			.mia-panel-heading {
