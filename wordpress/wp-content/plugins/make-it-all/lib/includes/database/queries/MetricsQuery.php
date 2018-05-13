@@ -28,12 +28,14 @@ class MetricsQuery extends Query {
 	
 	public function get_num($id){
 		//gets tickets with this id and tickets with children of this id.
+		
 		$expertiseQuery = new ExpertiseTypeQuery;
-		$query = "
-		SELECT id, expertise_type_id
-		FROM {$this->prefix}{$this->table}
-		WHERE expertise_type_id = $id";
+		$query = "SELECT *
+				  FROM `{$this->prefix}{$this->table}`
+				  WHERE expertise_type_id = $id ";
+		
 		$tickets = $this->get_results($query);
+	
 		return sizeof($tickets);
 		
 
@@ -49,32 +51,32 @@ class MetricsQuery extends Query {
 			WHERE name = '$parent'
 		");
 		
-		$id = $id[0]->{"id"};
-		$parent_data = $expertiseQuery->get()[$id - 1];
-		$children = $parent_data->{"children"};
 		
+		$parent_data = $expertiseQuery->get_specific($id[0]->{"id"})[0];
+		$children = $parent_data->{"children"};
 		for($i = 0; $i < sizeof($children); $i++){
 			
-			$expertise_info = $expertiseQuery->get_specific($children[$i])[0];
-			$name = $expertise_info->{"name"};
+			$child_data = $expertiseQuery->get_specific($children[$i])[0];
+			$name = $child_data->{"name"};
 			$num = $this->get_num($children[$i]);
-			
-			$p_data = $expertiseQuery->get()[$children[$i] - 1];
-			$c_children = $p_data->{"children"};
+			$c_children = $child_data->{"children"};
 			
 			while(sizeof($c_children) != 0){
+				
 				$todo = [];
 				for($j = 0; $j < sizeof($c_children); $j++){
-					$num += $this->get_num($c_children[$j]);
 					
-					$newData = $expertiseQuery->get()[$c_children[$j] - 1];
+					$num += $this->get_num($c_children[$j]);
+					$newData = $expertiseQuery->get_specific($c_children[$j])[0];
 					$newChildren = $newData->{"children"};
-					array_merge($todo, $newChildren);
+					$todo = array_merge($todo, $newChildren);
+					
 				}
-				$c_children = [];
-				array_merge($c_children, $todo);
 				
+				$c_children = [];
+				$c_children = array_merge($c_children, $todo);	
 			}
+			
 			if (array_key_exists($name, $pi_data)) {
 					$pi_data[$name] = $num;	
 				} else {
@@ -82,8 +84,8 @@ class MetricsQuery extends Query {
 				}
 																
 	}
-	return $pi_data;
 		
+	 return $pi_data;
 	}
 	
 	public function get_pi_info() {
@@ -99,7 +101,6 @@ class MetricsQuery extends Query {
 		");
 		foreach($allTypes as $type){
 			//Push the type to the pi_data array. 
-
 			$pi_data[$type->name] = 0;
 		}
 

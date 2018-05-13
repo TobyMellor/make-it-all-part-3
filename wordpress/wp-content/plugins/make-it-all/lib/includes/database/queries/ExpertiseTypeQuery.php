@@ -40,11 +40,11 @@ class ExpertiseTypeQuery extends Query {
 				WHERE id = $id
 			"
 		);
-
+		$allTypes = $this->get();
 		foreach ($expertiseTypes as $expertiseType) {
 			$expertiseType->children = [];
 
-			foreach ($expertiseTypes as $expertiseTypeInner) {
+			foreach ($allTypes as $expertiseTypeInner) {
 				if ($expertiseTypeInner->parent_id === $expertiseType->id) $expertiseType->children[] = $expertiseTypeInner->id;
 			}
 		}
