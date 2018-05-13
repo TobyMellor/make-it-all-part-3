@@ -13,6 +13,7 @@ class StaffPage extends Page {
 	protected $name = 'User';
 
 	public function init() {
+		echo 'nice';
 		add_action('admin_enqueue_scripts', [$this, 'enqueue_dependencies']);
 	}
 
@@ -22,6 +23,7 @@ class StaffPage extends Page {
 	 * @return @void
 	 */
 	public function read_pane() {
+		echo 'BOOM';
 		$context = $this->get_context('extra_profile_info');
 
 		$context['employees']            = json_encode((new UserQuery)->get());
