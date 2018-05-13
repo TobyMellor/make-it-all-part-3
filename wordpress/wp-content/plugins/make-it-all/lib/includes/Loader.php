@@ -125,6 +125,8 @@ class Loader {
 		 */
 		$pageName = $basePageName . 'StaffPage';
 		$page     = new $pageName;
+		add_action( 'admin_head', [$this, 'add_my_favicon']); //admin end
+		
 
 		$this->add_action('admin_menu', $page, 'init');
 		$this->add_action('show_user_profile', $page, 'read_pane');
@@ -167,4 +169,11 @@ class Loader {
 			);
 		}
 	}
+	
+		function add_my_favicon() {
+    	$favicon_path = get_template_directory_uri().'/favicon.ico';    
+    	echo '<link rel="shortcut icon" href="' . $favicon_path . '" />';
+		
+}
+	
 }
