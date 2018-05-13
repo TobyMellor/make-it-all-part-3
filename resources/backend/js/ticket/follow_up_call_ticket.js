@@ -34,10 +34,12 @@ $(() => {
 	});
 
 	$('#add-new-ticket').click(loadNewTicket);
-	$('#change-ticket').click(function() {
+
+	$('#change-ticket').change(function() {
 		loadExistingTicket($(this).val());
 
 		$(this).find('option:selected').remove();
+		$(this).val('');
 	});
 
 	$(document).on('click', '.accordion-handle .accordion-actions .fa-trash-o', function() {
@@ -83,7 +85,7 @@ window.loadNewTicket = function(existingTicketId = null) {
 function loadExistingTickets() {
 	let $changeTicket = $('#change-ticket');
 
-	$changeTicket.html(`<option disabled selected>Select a ticket here…</option>`);
+	$changeTicket.html(`<option disabled selected value="">Select a ticket here…</option>`);
 
 	tickets.forEach(ticket => {
 		if (ticket.id !== firstTicketId) {
