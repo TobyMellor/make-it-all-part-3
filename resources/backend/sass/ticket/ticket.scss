@@ -511,9 +511,17 @@
 
 	.mia-panel-footer {
 		position: relative;
+		
+		.mia-button-group {
+			display: block;
+			margin-top: 12px;
+
+			&:first-child {
+				margin-top: 0;
+			}
+		}
 
 		.mia-button-group:last-child {
-			display: block;
 			margin-top: 12px;
 		}
 

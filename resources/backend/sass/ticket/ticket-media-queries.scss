@@ -14,18 +14,6 @@ $breakpoint-xs: 767px;
 // Specific Breakpoints
 //
 
-@media (max-width: 1219px) {
-	#caller-information.expanded {
-		height: 285px;
-	}
-
-	.mia-panel-heading {
-		img {
-			display: none;
-		}
-	}
-}
-
 @media (max-width: 1361px) {
 	.call-panel {
 		> .row #caller-information {
@@ -53,6 +41,18 @@ $breakpoint-xs: 767px;
 	}
 }
 
+@media (max-width: 1219px) {
+	#caller-information.expanded {
+		height: 285px;
+	}
+
+	.mia-panel-heading {
+		img {
+			display: none;
+		}
+	}
+}
+
 @media (max-width: 782px) {
 	.mia-panel {
 		.mia-picker {
@@ -68,19 +68,19 @@ $breakpoint-xs: 767px;
 				}
 
 				&.pull-right {
+					position: initial;
+				}
+
+				&.pull-right, .pull-right {
 					float: initial;
 				}
 
-				a {
-					display: block;
-					float: right;
+				#add-new-ticket {
+					float: initial;
+					display: initial;
 				}
 			}
 		}
-	}
-
-	.wp-list-table tr:not(.inline-edit-row):not(.no-items) td:not(.check-column) {
-		display: table-cell;
 	}
 }
 
@@ -104,5 +104,9 @@ $breakpoint-xs: 767px;
 		.mia-picker {
 			margin-top: 12px;
 		}
+	}
+
+	.assign-options {
+		flex-direction: column;
 	}
 }
