@@ -105,8 +105,23 @@ abstract class Table extends WP_List_Table {
 			$order = $_GET['order'];
 		}
 
-		$result = strcmp($a->{$orderBy}, $b->{$orderBy});
-
+		if(is_numeric($a->{$orderBy}[0])){
+			
+			if(intval($a->{$orderBy}) > intval($b->{$orderBy})){
+			   $result = 1;	
+			} else if(intval($a->{$orderBy}) < intval($b->{$orderBy})) {
+				$result = -1;
+			} else {
+				$result = 0;
+			}
+	
+	
+			
+			
+		} else {
+			$result = strcmp($a->{$orderBy}, $b->{$orderBy});	
+		}
+	
 		if ($order === 'asc') {
 			return $result;
 		}
