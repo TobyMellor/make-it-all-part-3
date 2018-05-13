@@ -93,7 +93,7 @@ $(() => {
 					var ind_click = elements[0]._index;
 					var type_clicked = myPieChart.data.labels[ind_click];
 					$.ajax({
-						url: '/wordpress/wp-json/make-it-all/v1/problem-children',
+						url: '/wp-json/make-it-all/v1/problem-children',
 						type: 'GET',
 						data: {
 							type: type_clicked
