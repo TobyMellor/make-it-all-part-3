@@ -137,7 +137,7 @@ class TicketQuery extends Query {
 					ON status.id = ticket_status.status_id
 				LEFT JOIN {$this->prefix}comment AS comment
 					ON comment.id = ticket.solution_id
-				WHERE ticket.id = {$ticketId};
+				WHERE ticket.id = {sanitize_key($ticketId)};
 			"
 		);
 	}
@@ -162,7 +162,7 @@ class TicketQuery extends Query {
 					ON staff_caller.id = mia_call.caller_id
 				JOIN {$this->rawPrefix}users AS staff_operator
 					ON staff_operator.id = mia_call.operator_id
-				WHERE call_ticket.ticket_id = {$ticketId}
+				WHERE call_ticket.ticket_id = {sanitize_key($ticketId)}
 			"
 		);
 	}
@@ -196,7 +196,7 @@ class TicketQuery extends Query {
 				JOIN {$this->prefix}status AS status
 					ON status.id = ticket_status.status_id
 				WHERE ticket.id = {$ticketId}
-					AND similar_ticket.id <> {$ticketId}
+					AND similar_ticket.id <> {sanitize_key($ticketId)}
 			"
 		);
 	}
@@ -218,7 +218,7 @@ class TicketQuery extends Query {
 					ON staff.id = ticket_status.user_id
 				JOIN {$this->prefix}status AS status
 					ON status.id = ticket_status.status_id
-				WHERE ticket_status.ticket_id = {$ticketId}
+				WHERE ticket_status.ticket_id = {sanitize_key($ticketId)}
 			"
 		);
 	}
@@ -266,9 +266,9 @@ class TicketQuery extends Query {
 						ON call_ticket.ticket_id = original_ticket.id
 					JOIN {$this->prefix}call AS first_call
 						ON first_call.id = call_ticket.call_id
-					WHERE original_ticket.id = {$ticketId}
+					WHERE original_ticket.id = {sanitize_key($ticketId)}
 				)
-				AND ticket.id <> {$ticketId};
+				AND ticket.id <> {sanitize_key($ticketId)};
 			"
 		);
 	}

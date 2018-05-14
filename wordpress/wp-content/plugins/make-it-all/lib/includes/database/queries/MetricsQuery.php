@@ -243,7 +243,7 @@ class MetricsQuery extends Query {
 		
 		foreach ($tickets as $record) {
 			// push id to lookup in status table.
-			array_push($ticket_ids, $record->id);
+			array_push($ticket_ids, sanitize_key($record->id));
 		}
 		
 		if ($ticket_ids) {

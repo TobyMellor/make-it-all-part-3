@@ -22,7 +22,7 @@ class TicketDeviceQuery extends Query {
 				"
 					SELECT device_id
 					FROM {$this->prefix}{$this->table}
-					WHERE ticket_id = {$ticketId}
+					WHERE ticket_id = {sanitize_key($ticketId)}
 				"
 			)
 		);

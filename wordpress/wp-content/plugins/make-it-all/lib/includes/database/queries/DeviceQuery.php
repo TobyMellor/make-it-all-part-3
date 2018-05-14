@@ -103,7 +103,7 @@ class DeviceQuery extends Query {
 			"
 				SELECT * 
 				FROM {$this->prefix}ticket_{$this->table}
-				WHERE device_id LIKE $id
+				WHERE device_id LIKE {sanitize_key($id)}
 			"
 		);
 		//So total ticket is the size of the array, need additional queries for other info. 
