@@ -54,7 +54,7 @@ class DepartmentQuery extends Query {
 			"
 				SELECT *
 				FROM {$this->prefix}{$this->table}
-				WHERE id = {$departmentId}
+				WHERE id = {sanitize_key($departmentId)}
 			"
 		);
 	}	

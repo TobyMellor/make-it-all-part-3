@@ -8,6 +8,7 @@ use MakeItAll\Includes\Database\Queries\UserQuery;
 use MakeItAll\Includes\Database\Queries\ExpertiseTypeQuery;
 use MakeItAll\Includes\Database\Queries\ExpertiseTypeStaffQuery;
 use MakeItAll\Includes\Database\Queries\DepartmentQuery;
+use MakeItAll\Includes\Database\Queries\HolidayQuery;
 
 class StaffPage extends Page {
 	protected $name     = 'User';
@@ -15,6 +16,8 @@ class StaffPage extends Page {
 
 	public function init() {
 		add_action('admin_enqueue_scripts', [$this, 'enqueue_dependencies']);
+
+		(new HolidayQuery)->check();
 	}
 
 	/**
@@ -25,7 +28,7 @@ class StaffPage extends Page {
 	public function read_pane() {
 		$context = $this->get_context('extra_profile_info');
 
-		$context['employees']            = json_encode((new UserQuery)->get());
+		$context['employees']            = (new UserQuery)->get();
 		$context['expertise_types']      = json_encode((new ExpertiseTypeQuery)->get());
 		$context['expertise_type_staff'] = json_encode((new ExpertiseTypeStaffQuery)->get());
 		$context['departments_obj']      = (new DepartmentQuery)->get();
@@ -37,6 +40,7 @@ class StaffPage extends Page {
 		$context['viewing_user']->job_title     = get_user_meta($viewingUserId, 'job_title', true);
 		$context['viewing_user']->department_id = get_user_meta($viewingUserId, 'department_id', true);
 		$context['viewing_user']->phone_number  = get_user_meta($viewingUserId, 'phone_number', true);
+		$context['viewing_user']->holidays      = (new HolidayQuery)->get_by_user_id($viewingUserId);
 
 		// Administrator > Analyst > Operator > Viewer
 		// Analyst = Author, Operator = Contributor, Viewer = Subscriber
@@ -50,7 +54,7 @@ class StaffPage extends Page {
 			case 'subscriber': 
 				$context['viewing_user']->viewer = true;
 		}
-
+		
 		$this->render_pane($context);
 	}
 

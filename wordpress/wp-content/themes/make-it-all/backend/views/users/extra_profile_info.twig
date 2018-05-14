@@ -35,8 +35,49 @@
 	</div>
 </div>
 
+<table class="form-table">
+	<tbody>
+		<tr class="user-email-wrap">
+			<th><label>Holiday</label></th>
+			<td>
+				{% if viewing_user.holidays|length == 0 %}
+					This user is not currently on holiday
+				{% else %}
+					This user is currently on holiday
+				{% endif %}
+			</td>
+		</tr>
+		<tr>
+			<th><label>Replacement during holiday</label></th>
+			<td>
+				<select name="holiday[user_id]" class="regular-text ltr" autocomplete="off">
+					<option selected="selected">Choose a replacement employee here</option>
+					{% for employee in employees %}
+						<option value="{{ employee.id }}">
+							#{{ employee.id }} – {{ employee.display_name }}
+						</option>
+					{% endfor %}
+				</select>		
+			</td>
+		</tr>
+		<tr>
+			<th><label>Date of Return</label></th>
+			<td>
+				<a class="button button-primary mia-picker" href="javascript:void(0);">
+					{% if viewing_user.holidays|length == 0 %}
+						Choose return date
+					{% else %}
+						Change return date
+					{% endif %}
+					<input type="text" name="holiday[return_date]" validation="nullable">
+				</a>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
 <script>
-	var employees          = {{ employees }},
+	var employees          = {{ employees|json_encode }},
 		expertiseTypes     = {{ expertise_types }},
 		expertiseTypeStaff = {{ expertise_type_staff }},
 		currentUserId      = {{ viewing_user.ID }};

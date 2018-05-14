@@ -37,7 +37,7 @@ class ExpertiseTypeQuery extends Query {
 			"
 				SELECT id, name, parent_id
 				FROM {$this->prefix}{$this->table}
-				WHERE id = $id
+				WHERE id = {sanitize_key($id)}
 			"
 		);
 		$allTypes = $this->get();

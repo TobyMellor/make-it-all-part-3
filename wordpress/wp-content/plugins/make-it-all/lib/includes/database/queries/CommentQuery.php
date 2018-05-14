@@ -42,7 +42,7 @@ class CommentQuery extends Query {
 					ON users.id = comment.author_id
 				JOIN {$this->prefix}ticket AS ticket
 					ON ticket.id = comment.ticket_id
-				WHERE ticket.id = {$ticketId}
+				WHERE ticket.id = {sanitize_key($ticketId)}
 				ORDER BY (comment.id = ticket.solution_id) DESC
 			"
 		);
@@ -63,7 +63,7 @@ class CommentQuery extends Query {
 				FROM {$this->prefix}ticket AS ticket
 				JOIN {$this->prefix}comment AS comment
 					ON ticket.id = comment.ticket_id
-				WHERE comment.id = {$commentId}
+				WHERE comment.id = {sanitize_key($commentId)}
 			"
 		)[0];
 

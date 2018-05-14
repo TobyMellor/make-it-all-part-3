@@ -30,7 +30,8 @@ class Migrator {
 		'CreateCallTicketTable',
 		'CreateTicketStatusTable',
 		'CreateTicketProgramTable',
-		'CreateTicketDeviceTable'
+		'CreateTicketDeviceTable',
+		'CreateHolidayTable'
 	];
 
 	/**
